@@ -17,6 +17,33 @@ sys.path.append('..')
 from utf_utils import transform_german_word
 from utils import build_ppmi_vecs, read_lancaster_ratings
 
+def read_italian_cereb_tms(lang):
+    sims = dict()
+    test_vocab = set()
+    lines = list()
+    with open(os.path.join('..', 'tms', 'data', 'italian_tms_cereb.tsv')) as i:
+        for l_i, l in enumerate(i):
+            line = l.strip().split('\t')
+            if l_i == 0:
+                header = [w for w in line]
+                continue
+            lines.append(line)
+    conds = set([l[header.index('condition')] for l in lines])
+    for name in conds:
+        if lang == 'it':
+            current_cond = [l for l in lines if l[header.index('condition')]==name]
+            log_rts = [numpy.log10(float(l[header.index('RTs')].replace(',', '.'))) for l in current_cond]
+            w_ones = [l[header.index('noun')].lower() for l in current_cond]
+            w_twos = [l[header.index('adj')].lower() for l in current_cond]
+            vocab_w_ones = [w for ws in w_ones for w in [ws, ws.capitalize()]]
+            test_vocab = test_vocab.union(set(vocab_w_ones))
+            vocab_w_twos = [w for ws in w_twos for w in [ws, ws.capitalize()]]
+            test_vocab = test_vocab.union(set(vocab_w_twos))
+            sims[name]= [((w_one, w_two), rt) for w_one, w_two, rt in zip(w_ones, w_twos, log_rts)]
+        else:
+            sims[name] = list()
+    return sims, test_vocab
+
 def read_german_ifg_tms(lang):
     sims = dict()
     test_vocab = set()
@@ -96,6 +123,30 @@ def read_simlex(lang):
             sims[key] = val
     return sims, test_vocab
 
+def read_ws353(lang):
+    if lang == 'de':
+        file_path = os.path.join('data', 'MWS353_German.txt')
+    if lang == 'it':
+        file_path = os.path.join('data', 'MWS353_Italian.txt')
+    if lang == 'en':
+        file_path = os.path.join('data', 'MWS353_English.txt')
+    indices = [0, 1, -1]
+    sep = ','
+    assert os.path.exists(file_path)
+    sims = dict()
+    test_vocab = set()
+    with open(file_path) as i:
+        for l_i, l in enumerate(i):
+            if l_i == 0:
+                continue
+            line = l.strip().split(sep)
+            key = tuple(sorted([line[indices[0]], line[indices[1]]]))
+            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            test_vocab = test_vocab.union(norm_key)
+            val = float(line[indices[2]].replace(',', '.'))
+            sims[key] = val
+    return sims, test_vocab
+
 def read_men(lang):
     sims = dict()
     test_vocab = set()
@@ -117,17 +168,25 @@ def read_men(lang):
     return sims, test_vocab
 
 languages = [
-             #'en',
-             #'de',
+             'en',
+             'de',
              'it',
              ]
 rows = dict()
 for lang in languages:
     men, men_vocab = read_men(lang)
     simlex, simlex_vocab = read_simlex(lang)
+    ws353, ws353_vocab = read_ws353(lang)
     fern_one, fern_two, fern_vocab = read_fern(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
-    basic_vocab = men_vocab.union(simlex_vocab.union(fern_vocab.union(germ_tms_ifg_vocab)))
+    ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
+    basic_vocab = men_vocab.union(
+                                  simlex_vocab,
+                                  ws353_vocab,
+                                  fern_vocab,
+                                  germ_tms_ifg_vocab,
+                                  ita_tms_cereb_vocab,
+                                  )
     rows[lang] = sorted(basic_vocab)
 
 results = dict()
@@ -154,24 +213,26 @@ for lang in languages:
     models[lang] = dict()
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
+    '''
     for case in [
                  'fasttext',
                  'fasttext_aligned',
                  ]:
         print(case)
-        if case in results[lang].keys():
-            continue
+        #if case in results[lang].keys():
+        #    continue
         if case == 'fasttext':
             model = fasttext.load_model('../../../dataset/word_vectors/{}/cc.{}.300.bin'.format(lang, lang))
             vocab = model.words
         elif case == 'fasttext_aligned':
-            with open(os.path.join('..', 'pickles', 
+            with open(os.path.join('pickles', 
                                    'ft_{}_aligned.pkl'.format(lang)
                                    ), 'rb') as i:
                 model = pickle.load(i)
             vocab = model.keys()
         models[lang][case] = {w : model[w] for w in vocab}
         vocabs[lang][case] = [w for w in vocab]
+    '''
     for corpus in [
                #'bnc',
                'wac',
@@ -182,7 +243,10 @@ for lang in languages:
                ]:
         print(corpus)
         if lang == 'en':
-            min_count = 100
+            if corpus == 'cc100':
+                min_count = 500
+            else:
+                min_count = 100
         else:
             if corpus == 'cc100':
                 min_count = 100
@@ -201,16 +265,6 @@ for lang in languages:
                                ), 'rb') as i:
             freqs = pickle.load(i)
         print('total size of the corpus: {:,} tokens'.format(sum(freqs.values())))
-        '''
-        if 'wiki' not in corpus:
-        with open(os.path.join(
-                               '..', '..', 'psychorpus',
-                               'pickles', lang, corpus, 
-                               '{}_{}_coocs_uncased_min_{}_win_4_no_entities.pkl'.format(lang, corpus, min_count),
-                               ), 'rb') as i:
-            coocs = pickle.load(i)
-        else:
-        '''
         with open(os.path.join(
                                '..', '..', 'psychorpus',
                                'pickles', lang, corpus, 
@@ -246,8 +300,8 @@ for lang in languages:
                                            'lo-perceptual',
                                            ]: 
                         key = 'ppmi_{}_lancaster_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
-                        if key in results[lang].keys():
-                            continue
+                        #if key in results[lang].keys():
+                        #    continue
                         #ctx_words = [w for w in inv_sorted_ratings
                         #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=False)
                         ### using the basic required vocab for all tests as a basis set of words
@@ -295,8 +349,8 @@ for lang in languages:
                     ### using the basic required vocab for all tests as a basis set of words
                     #ctx_words = [w for w in sorted_ratings[:freq]]
                     key = 'ppmi_{}_abs_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
-                    if key in results[lang].keys():
-                        continue
+                    #if key in results[lang].keys():
+                    #    continue
                     if selection_mode == 'top':
                         if row_mode == 'rowincol':
                             ctx_words = set([w for w in sorted_freqs[:freq]]+row_words)
@@ -314,7 +368,7 @@ for lang in languages:
                     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
                     models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
                     vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
-        '''
+    '''
 
     pruned_ratings = {w : dct for w, dct in ratings.items() if w in freqs.keys() and vocab[w]!=0}
     percent = int(len(pruned_ratings.items())*0.001)
@@ -349,21 +403,32 @@ for lang, lang_models in models.items():
     print('\n{}\n'.format(lang))
     men, men_vocab = read_men(lang)
     simlex, simlex_vocab = read_simlex(lang)
+    ws353, ws353_vocab = read_ws353(lang)
     fern_one, fern_two, fern_vocab = read_fern(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
+    ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
     germ_tms_aifg = germ_tms_ifg['aIFG']
     germ_tms_vertex = germ_tms_ifg['vertex']
+    ita_tms_cer = ita_tms_cereb['cedx']
+    ita_tms_vertex = ita_tms_cereb['cz']
     for case, model in lang_models.items():
         if case not in results[lang].keys():
             results[lang][case] = dict()
         vocab = vocabs[lang][case]
         for dataset_name, dataset in [
+                        ### similarity/relatedness
+                        ('simlex999-sim', simlex),
+                        ('ws353', ws353),
                         ('men', men), 
+                        ### semantic network brain RSA
                         ('fern1', fern_one),
                         ('fern2', fern_two),
+                        ## german TMS
                         ('tms aIFG', germ_tms_aifg),
                         ('tms vertex', germ_tms_vertex),
-                        ('simlex999-sim', simlex),
+                        ## italian TMS
+                        ('tms cereb', ita_tms_cer),
+                        ('tms vertex', ita_tms_vertex),
                         ]:
             #if dataset_name in results[lang][case].keys():
             #    continue
@@ -381,9 +446,10 @@ for lang, lang_models in models.items():
                         print([ws, transform_german_word(ws[0]), transform_german_word(ws[1])])
                         marker = False
                 else:
-                    for w in ws:
-                        if w not in vocab:
-                            marker = False
+                    w_ones = [w for w in [ws[0], ws[0].capitalize()] if w in vocab]
+                    w_twos = [w for w in [ws[1], ws[1].capitalize()] if w in vocab]
+                    if len(w_ones)<1 or len(w_twos)<1:
+                        marker = False
                 if marker:
                     #test_sims[ws] = val
                     test_sims.append((ws, val))
@@ -398,6 +464,7 @@ for lang, lang_models in models.items():
                 else:
                     real.append(v)
                 if lang == 'de':
+                    ### all possible transformations...
                     w_ones = [w for w in transform_german_word(k[0]) if w in vocab]
                     w_twos = [w for w in transform_german_word(k[1]) if w in vocab]
                     current_pred = list()
@@ -408,10 +475,21 @@ for lang, lang_models in models.items():
                     current_pred = numpy.average(current_pred)
                     #print(current_pred)
                 else:
-                    current_pred = 1 - scipy.spatial.distance.cosine(model[k[0]], model[k[1]])
+                    ### both uppercase and lowercase
+                    w_ones = [w for w in [k[0], k[0].capitalize()] if w in vocab]
+                    w_twos = [w for w in [k[1], k[1].capitalize()] if w in vocab]
+                    current_pred = list()
+                    for w in w_ones:
+                        for w_two in w_twos:
+                            partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
+                            current_pred.append(partial_pred)
+                    current_pred = numpy.average(current_pred)
+                    #print(current_pred)
+                    #current_pred = 1 - scipy.spatial.distance.cosine(model[k[0]], model[k[1]])
                 pred.append(current_pred)
             try:
-                corr = scipy.stats.pearsonr(real, pred).statistic
+                #corr = scipy.stats.pearsonr(real, pred).statistic
+                corr = scipy.stats.spearmanr(real, pred).statistic
             except ValueError:
                 print('error with {}'.format([lang, case, dataset_name]))
                 continue
