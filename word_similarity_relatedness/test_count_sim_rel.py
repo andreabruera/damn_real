@@ -17,6 +17,110 @@ sys.path.append('..')
 from utf_utils import transform_german_word
 from utils import build_ppmi_vecs, read_lancaster_ratings
 
+def test_model(lang, case, model, vocab, results, datasets):
+    if lang not in results.keys():
+        results[lang] = dict()
+    print('\n{}\n'.format(lang))
+    #for case, model in lang_models.items():
+    #    if case not in results[lang].keys():
+    #        results[lang][case] = dict()
+    #    vocab = vocabs[lang][case]
+    present_words = list()
+    for w in rows[lang]:
+        try:
+            vocab.index(w)
+        except ValueError:
+            continue
+        present_words.append(w)
+    for dataset_name, dataset in datasets[lang].items():
+        if case not in results[lang].keys():
+            results[lang][case] = dict()
+        missing_words = set()
+        test_sims = list()
+        if 'tms' not in dataset_name:
+            all_dataset = [(k, v) for k, v in dataset.items()]
+        else:
+            all_dataset = [k for k in dataset]
+        for ws, val in all_dataset:
+            marker = True
+            w_ones = list()
+            w_twos = list()
+            if lang == 'de':
+                for w in transform_german_word(ws[0]):
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_ones.append(w)
+                for w in transform_german_word(ws[1]):
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_twos.append(w)
+                if len(w_ones)<1:
+                    missing_words.add(ws[0])
+                if len(w_twos)<1:
+                    missing_words.add(ws[1])
+                if len(w_ones)<1 or len(w_twos)<1:
+                    marker = False
+            else:
+                for w in [ws[0], ws[0].capitalize()]:
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_ones.append(w)
+                for w in [ws[1], ws[1].capitalize()]:
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_twos.append(w)
+                #w_ones = [w for w in [ws[0], ws[0].capitalize()] if w in vocab]
+                #w_twos = [w for w in [ws[1], ws[1].capitalize()] if w in vocab]
+                if len(w_ones)<1:
+                    missing_words.add(ws[0])
+                if len(w_twos)<1:
+                    missing_words.add(ws[1])
+                if len(w_ones)<1 or len(w_twos)<1:
+                    #print(ws)
+                    marker = False
+            if marker:
+                #test_sims[ws] = val
+                test_sims.append((w_ones, w_twos, val))
+        if len(test_sims) == 0:
+            continue
+        print('missing words: {}'.format(missing_words))
+        real = list()
+        pred = list()
+        #for k, v in test_sims.items():
+        for w_ones, w_twos, v in test_sims:
+            if 'tms' in dataset_name:
+                real.append(1 - v)
+            else:
+                real.append(v)
+            ### all possible transformations...
+            current_pred = list()
+            for w in w_ones:
+                for w_two in w_twos:
+                    partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
+                    current_pred.append(partial_pred)
+            current_pred = numpy.average(current_pred)
+            pred.append(current_pred)
+        try:
+            #corr = scipy.stats.pearsonr(real, pred).statistic
+            corr = scipy.stats.spearmanr(real, pred).statistic
+        except ValueError:
+            print('error with {}'.format([lang, case, dataset_name]))
+            continue
+        print('\n')
+        print('{} model'.format(case))
+        print('correlation with {} dataset:'.format(dataset_name))
+        print(corr)
+        results[lang][case][dataset_name] = corr
+    return results
+
 def read_italian_cereb_tms(lang):
     sims = dict()
     test_vocab = set()
@@ -167,12 +271,26 @@ def read_men(lang):
                 sims[key] = val
     return sims, test_vocab
 
+def read_mitchell(lang):
+    assert lang == 'en'
+    dimensions = list()
+    with open(os.path.join('..', 'data', 'dimensions.tsv')) as i:
+        for l in i:
+            line = l.strip().split()
+            assert len(line) >= 2
+            dimensions.append(line)
+    assert len(dimensions) == 25
+
+    return dimensions
+
 languages = [
              'en',
              'de',
              'it',
              ]
+
 rows = dict()
+datasets = dict()
 for lang in languages:
     men, men_vocab = read_men(lang)
     simlex, simlex_vocab = read_simlex(lang)
@@ -188,9 +306,26 @@ for lang in languages:
                                   ita_tms_cereb_vocab,
                                   )
     rows[lang] = sorted(basic_vocab)
+    datasets[lang] = dict()
+    for dataset_name, dataset in [
+                    ### similarity/relatedness
+                    ('simlex999-sim', simlex),
+                    ('ws353', ws353),
+                    ('men', men), 
+                    ### semantic network brain RSA
+                    ('fern1', fern_one),
+                    ('fern2', fern_two),
+                    ## german TMS
+                    ('tms aIFG', germ_tms_ifg['aIFG']),
+                    ('tms vertex', germ_tms_ifg['vertex']),
+                    ## italian TMS
+                    ('tms cereb', ita_tms_cereb['cedx']),
+                    ('tms vertex', ita_tms_cereb['cz']),
+                    ]:
+        datasets[lang][dataset_name] = dataset
 
 results = dict()
-results_file = 'evaluation.tsv'
+results_file = 'mitchell_evaluation.tsv'
 if os.path.exists(results_file):
     with open(results_file) as i:
         for l in i:
@@ -213,7 +348,6 @@ for lang in languages:
     models[lang] = dict()
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
-    '''
     for case in [
                  'fasttext',
                  'fasttext_aligned',
@@ -225,14 +359,16 @@ for lang in languages:
             model = fasttext.load_model('../../../dataset/word_vectors/{}/cc.{}.300.bin'.format(lang, lang))
             vocab = model.words
         elif case == 'fasttext_aligned':
-            with open(os.path.join('pickles', 
+            with open(os.path.join('..', 'pickles', 
                                    'ft_{}_aligned.pkl'.format(lang)
                                    ), 'rb') as i:
                 model = pickle.load(i)
             vocab = model.keys()
-        models[lang][case] = {w : model[w] for w in vocab}
-        vocabs[lang][case] = [w for w in vocab]
-    '''
+        #models[lang][case] = {w : model[w] for w in vocab}
+        #vocabs[lang][case] = [w for w in vocab]
+        model = {w : model[w] for w in vocab}
+        vocab = [w for w in vocab]
+        results = test_model(lang, case, model, vocab, results, datasets)
     for corpus in [
                #'bnc',
                'wac',
@@ -274,6 +410,20 @@ for lang in languages:
         ### selecting dimensions from ratings
         row_words = [w for w in rows[lang] if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
         if lang == 'en':
+            ### mitchell
+            for row_mode in ['', 'rowincol']:
+                key = 'ppmi_{}_mitchell_{}_words'.format(corpus, row_mode)
+                if row_mode == 'rowincol':
+                    ctx_words = set([w for ws in read_mitchell(lang) for w in ws] + row_words)
+                else:
+                    ctx_words = [w for ws in read_mitchell(lang) for w in ws]
+                trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
+                #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
+                model = {k : v for k, v in trans_pmi_vecs.items()}
+                #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
+                curr_vocab = [w for w in trans_pmi_vecs.keys()]
+                results = test_model(lang, key, model, curr_vocab, results, datasets)
+            ### lancaster
             filt_ratings = {w : freqs[w] for w in lancaster_ratings.keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
             sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1], reverse=True)]
             filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings.items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
@@ -330,8 +480,11 @@ for lang in languages:
                                 ctx_words = [sorted_ratings[i] for i in idxs]
                         ctx_idxs = [vocab[w] for w in ctx_words]
                         trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                        models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
-                        vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
+                        #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
+                        model = {k : v for k, v in trans_pmi_vecs.items()}
+                        #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
+                        curr_vocab = [w for w in trans_pmi_vecs.keys()]
+                        results = test_model(lang, key, model, curr_vocab, results, datasets)
         ### top-n frequencies
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
@@ -366,10 +519,12 @@ for lang in languages:
                     ### using the basic required vocab for all tests as a basis set of words
                     ctx_idxs = [vocab[w] for w in ctx_words]
                     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                    models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
-                    vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
+                    #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
+                    #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
+                    model = {k : v for k, v in trans_pmi_vecs.items()}
+                    curr_vocab = [w for w in trans_pmi_vecs.keys()]
+                    results = test_model(lang, key, model, curr_vocab, results, datasets)
     '''
-
     pruned_ratings = {w : dct for w, dct in ratings.items() if w in freqs.keys() and vocab[w]!=0}
     percent = int(len(pruned_ratings.items())*0.001)
     #percent = int(len(pruned_ratings.items())*0.05)
@@ -396,108 +551,6 @@ for lang in languages:
     ### things are better when including in the rows the words from MEN...
     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=True)
     '''
-
-for lang, lang_models in models.items():
-    if lang not in results.keys():
-        results[lang] = dict()
-    print('\n{}\n'.format(lang))
-    men, men_vocab = read_men(lang)
-    simlex, simlex_vocab = read_simlex(lang)
-    ws353, ws353_vocab = read_ws353(lang)
-    fern_one, fern_two, fern_vocab = read_fern(lang)
-    germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
-    ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
-    germ_tms_aifg = germ_tms_ifg['aIFG']
-    germ_tms_vertex = germ_tms_ifg['vertex']
-    ita_tms_cer = ita_tms_cereb['cedx']
-    ita_tms_vertex = ita_tms_cereb['cz']
-    for case, model in lang_models.items():
-        if case not in results[lang].keys():
-            results[lang][case] = dict()
-        vocab = vocabs[lang][case]
-        for dataset_name, dataset in [
-                        ### similarity/relatedness
-                        ('simlex999-sim', simlex),
-                        ('ws353', ws353),
-                        ('men', men), 
-                        ### semantic network brain RSA
-                        ('fern1', fern_one),
-                        ('fern2', fern_two),
-                        ## german TMS
-                        ('tms aIFG', germ_tms_aifg),
-                        ('tms vertex', germ_tms_vertex),
-                        ## italian TMS
-                        ('tms cereb', ita_tms_cer),
-                        ('tms vertex', ita_tms_vertex),
-                        ]:
-            #if dataset_name in results[lang][case].keys():
-            #    continue
-            test_sims = list()
-            if 'tms' not in dataset_name:
-                all_dataset = [(k, v) for k, v in dataset.items()]
-            else:
-                all_dataset = [k for k in dataset]
-            for ws, val in all_dataset:
-                marker = True
-                if lang == 'de':
-                    w_ones = [w for w in transform_german_word(ws[0]) if w in vocab]
-                    w_twos = [w for w in transform_german_word(ws[1]) if w in vocab]
-                    if len(w_ones)<1 or len(w_twos)<1:
-                        print([ws, transform_german_word(ws[0]), transform_german_word(ws[1])])
-                        marker = False
-                else:
-                    w_ones = [w for w in [ws[0], ws[0].capitalize()] if w in vocab]
-                    w_twos = [w for w in [ws[1], ws[1].capitalize()] if w in vocab]
-                    if len(w_ones)<1 or len(w_twos)<1:
-                        marker = False
-                if marker:
-                    #test_sims[ws] = val
-                    test_sims.append((ws, val))
-            if len(test_sims) == 0:
-                continue
-            real = list()
-            pred = list()
-            #for k, v in test_sims.items():
-            for k, v in test_sims:
-                if 'tms' in dataset_name:
-                    real.append(1 - v)
-                else:
-                    real.append(v)
-                if lang == 'de':
-                    ### all possible transformations...
-                    w_ones = [w for w in transform_german_word(k[0]) if w in vocab]
-                    w_twos = [w for w in transform_german_word(k[1]) if w in vocab]
-                    current_pred = list()
-                    for w in w_ones:
-                        for w_two in w_twos:
-                            partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
-                            current_pred.append(partial_pred)
-                    current_pred = numpy.average(current_pred)
-                    #print(current_pred)
-                else:
-                    ### both uppercase and lowercase
-                    w_ones = [w for w in [k[0], k[0].capitalize()] if w in vocab]
-                    w_twos = [w for w in [k[1], k[1].capitalize()] if w in vocab]
-                    current_pred = list()
-                    for w in w_ones:
-                        for w_two in w_twos:
-                            partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
-                            current_pred.append(partial_pred)
-                    current_pred = numpy.average(current_pred)
-                    #print(current_pred)
-                    #current_pred = 1 - scipy.spatial.distance.cosine(model[k[0]], model[k[1]])
-                pred.append(current_pred)
-            try:
-                #corr = scipy.stats.pearsonr(real, pred).statistic
-                corr = scipy.stats.spearmanr(real, pred).statistic
-            except ValueError:
-                print('error with {}'.format([lang, case, dataset_name]))
-                continue
-            print('\n')
-            print('{} model'.format(case))
-            print('correlation with {} dataset:'.format(dataset_name))
-            print(corr)
-            results[lang][case][dataset_name] = corr
 
 ### writing to file
 with open(results_file, 'w') as o:
