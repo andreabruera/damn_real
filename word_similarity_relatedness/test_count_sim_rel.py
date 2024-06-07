@@ -284,9 +284,9 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             'en',
+             #'en',
              'de',
-             'it',
+             #'it',
              ]
 
 rows = dict()
@@ -309,23 +309,24 @@ for lang in languages:
     datasets[lang] = dict()
     for dataset_name, dataset in [
                     ### similarity/relatedness
-                    ('simlex999-sim', simlex),
-                    ('ws353', ws353),
-                    ('men', men), 
+                    #('simlex999-sim', simlex),
+                    #('ws353', ws353),
+                    #('men', men), 
                     ### semantic network brain RSA
-                    ('fern1', fern_one),
-                    ('fern2', fern_two),
+                    #('fern1', fern_one),
+                    #('fern2', fern_two),
                     ## german TMS
-                    ('tms aIFG', germ_tms_ifg['aIFG']),
+                    #('tms aIFG', germ_tms_ifg['aIFG']),
                     ('tms vertex', germ_tms_ifg['vertex']),
                     ## italian TMS
-                    ('tms cereb', ita_tms_cereb['cedx']),
-                    ('tms vertex', ita_tms_cereb['cz']),
+                    #('tms cereb', ita_tms_cereb['cedx']),
+                    #('tms vertex', ita_tms_cereb['cz']),
                     ]:
         datasets[lang][dataset_name] = dataset
+import pdb; pdb.set_trace()
 
 results = dict()
-results_file = 'mitchell_evaluation.tsv'
+results_file = 'evaluation.tsv'
 if os.path.exists(results_file):
     with open(results_file) as i:
         for l in i:
