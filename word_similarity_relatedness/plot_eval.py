@@ -51,7 +51,8 @@ for lang, l_res in results.items():
         ax.set_ylim(bottom=bottom, top=top)
         all_vals = list()
         fts = [k for k in t_res.keys() if 'fast' in k or 'mitch' in k]
-        others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k}
+        #others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k}
+        others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k and 'freq_top' in k}
         all_vals = [val[0] for v in others.values() for val in v] + [0.]
         ax.hlines(
                   y=0,
