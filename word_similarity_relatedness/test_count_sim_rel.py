@@ -316,14 +316,14 @@ for lang in languages:
                     #('fern1', fern_one),
                     #('fern2', fern_two),
                     ## german TMS
+                    ('tms pIFG', germ_tms_ifg['pIFG']),
                     #('tms aIFG', germ_tms_ifg['aIFG']),
-                    ('tms vertex', germ_tms_ifg['vertex']),
+                    #('tms vertex', germ_tms_ifg['vertex']),
                     ## italian TMS
                     #('tms cereb', ita_tms_cereb['cedx']),
                     #('tms vertex', ita_tms_cereb['cz']),
                     ]:
         datasets[lang][dataset_name] = dataset
-import pdb; pdb.set_trace()
 
 results = dict()
 results_file = 'evaluation.tsv'
