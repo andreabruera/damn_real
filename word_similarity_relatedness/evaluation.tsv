@@ -5679,12 +5679,12 @@ de	fasttext	de tms vertex	0.18484142555870572
 de	fasttext	de tms pIFG	0.19347759581368615
 de	fasttext	de tms aIFG	0.225970845815161
 de	fasttext	de tms pIPL sham	-0.011215114729343131
-de	fasttext	de tms pIPL	0.052452731840863964
-de	fasttext	de tms sham	0.039792176856881
-de	fasttext	de tms pIPL sound sham	-0.029789371902229075
-de	fasttext	de tms pIPL action sham	0.10807659234286526
-de	fasttext	de tms sound pIPL	-0.02819939615461135
-de	fasttext	de tms action pIPL	0.12894270735519528
+de	fasttext	de tms pIPL	0.122143510334463
+de	fasttext	de tms sham	0.1383290432488728
+de	fasttext	de tms pIPL sound sham	0.11517946021289555
+de	fasttext	de tms pIPL action sham	0.16734735114737015
+de	fasttext	de tms sound pIPL	0.0867056375975479
+de	fasttext	de tms action pIPL	0.16368002965224798
 de	fasttext_aligned	simlex999-sim	0.4158272216946795
 de	fasttext_aligned	ws353	0.678054582913429
 de	fasttext_aligned	tms aIFG	0.1740316922139454
@@ -5694,12 +5694,12 @@ de	fasttext_aligned	de tms vertex	0.19337726274057931
 de	fasttext_aligned	de tms pIFG	0.18908927321442065
 de	fasttext_aligned	de tms aIFG	0.19860471633955457
 de	fasttext_aligned	de tms pIPL sham	-0.005066826050704964
-de	fasttext_aligned	de tms pIPL	0.05161856584417391
-de	fasttext_aligned	de tms sham	0.05806341409028403
-de	fasttext_aligned	de tms pIPL sound sham	0.00040896950718706954
-de	fasttext_aligned	de tms pIPL action sham	0.11351335861962651
-de	fasttext_aligned	de tms sound pIPL	-0.034156623003551705
-de	fasttext_aligned	de tms action pIPL	0.12248757467187683
+de	fasttext_aligned	de tms pIPL	0.1021602360701471
+de	fasttext_aligned	de tms sham	0.13061218846938996
+de	fasttext_aligned	de tms pIPL sound sham	0.10614747801952915
+de	fasttext_aligned	de tms pIPL action sham	0.1611591598982019
+de	fasttext_aligned	de tms sound pIPL	0.05742391653143372
+de	fasttext_aligned	de tms action pIPL	0.15377703612207555
 de	ppmi_wac_abs_freq_top__100_words	simlex999-sim	0.23488617333510836
 de	ppmi_wac_abs_freq_top__100_words	ws353	0.3010073344532608
 de	ppmi_wac_abs_freq_top__100_words	tms aIFG	0.1935718616199954
@@ -5708,6 +5708,12 @@ de	ppmi_wac_abs_freq_top__100_words	tms pIFG	0.15593049893345157
 de	ppmi_wac_abs_freq_top__100_words	de tms vertex	0.15042855164821078
 de	ppmi_wac_abs_freq_top__100_words	de tms pIFG	0.20378844733341936
 de	ppmi_wac_abs_freq_top__100_words	de tms aIFG	0.23375596991759154
+de	ppmi_wac_abs_freq_top__100_words	de tms pIPL	0.08867040405648363
+de	ppmi_wac_abs_freq_top__100_words	de tms sham	0.09436382475714077
+de	ppmi_wac_abs_freq_top__100_words	de tms pIPL sound sham	0.07435351001361525
+de	ppmi_wac_abs_freq_top__100_words	de tms pIPL action sham	0.11805611800505658
+de	ppmi_wac_abs_freq_top__100_words	de tms sound pIPL	0.054237348430934376
+de	ppmi_wac_abs_freq_top__100_words	de tms action pIPL	0.13028229192834592
 de	ppmi_wac_abs_freq_random__100_words	simlex999-sim	0.02265779248842926
 de	ppmi_wac_abs_freq_random__100_words	ws353	0.18234399760610961
 de	ppmi_wac_abs_freq_random__100_words	tms aIFG	-0.08487860026451531
@@ -5716,6 +5722,12 @@ de	ppmi_wac_abs_freq_random__100_words	tms pIFG	-0.0535735030096911
 de	ppmi_wac_abs_freq_random__100_words	de tms vertex	-0.09683760897090876
 de	ppmi_wac_abs_freq_random__100_words	de tms pIFG	-0.06479874862650364
 de	ppmi_wac_abs_freq_random__100_words	de tms aIFG	-0.07895376149982175
+de	ppmi_wac_abs_freq_random__100_words	de tms pIPL	0.02722488527843496
+de	ppmi_wac_abs_freq_random__100_words	de tms sham	0.04293352256406335
+de	ppmi_wac_abs_freq_random__100_words	de tms pIPL sound sham	0.06109857566759617
+de	ppmi_wac_abs_freq_random__100_words	de tms pIPL action sham	0.02691888126170858
+de	ppmi_wac_abs_freq_random__100_words	de tms sound pIPL	0.028981573707486122
+de	ppmi_wac_abs_freq_random__100_words	de tms action pIPL	0.02745441106291472
 de	ppmi_wac_abs_freq_top_rowincol_100_words	simlex999-sim	0.27702711019346926
 de	ppmi_wac_abs_freq_top_rowincol_100_words	ws353	0.4853110064411591
 de	ppmi_wac_abs_freq_top_rowincol_100_words	tms aIFG	0.16354735335837844
@@ -5734,6 +5746,12 @@ de	ppmi_wac_abs_freq_top__200_words	tms pIFG	0.1406724860509182
 de	ppmi_wac_abs_freq_top__200_words	de tms vertex	0.1530059995855223
 de	ppmi_wac_abs_freq_top__200_words	de tms pIFG	0.18320927205630802
 de	ppmi_wac_abs_freq_top__200_words	de tms aIFG	0.25914919275727555
+de	ppmi_wac_abs_freq_top__200_words	de tms pIPL	0.10698033313573418
+de	ppmi_wac_abs_freq_top__200_words	de tms sham	0.1227299305175931
+de	ppmi_wac_abs_freq_top__200_words	de tms pIPL sound sham	0.11508768895277967
+de	ppmi_wac_abs_freq_top__200_words	de tms pIPL action sham	0.1341407078856631
+de	ppmi_wac_abs_freq_top__200_words	de tms sound pIPL	0.080799681036515
+de	ppmi_wac_abs_freq_top__200_words	de tms action pIPL	0.14173458416865353
 de	ppmi_wac_abs_freq_random__200_words	simlex999-sim	0.017240316674512007
 de	ppmi_wac_abs_freq_random__200_words	ws353	0.05266397346321927
 de	ppmi_wac_abs_freq_random__200_words	tms aIFG	-0.0263381986667655
@@ -5742,6 +5760,12 @@ de	ppmi_wac_abs_freq_random__200_words	tms pIFG	-0.07189320316014425
 de	ppmi_wac_abs_freq_random__200_words	de tms vertex	-0.05890643723386469
 de	ppmi_wac_abs_freq_random__200_words	de tms pIFG	-0.06869342742081973
 de	ppmi_wac_abs_freq_random__200_words	de tms aIFG	-0.007430604701303955
+de	ppmi_wac_abs_freq_random__200_words	de tms pIPL	0.03127606217871797
+de	ppmi_wac_abs_freq_random__200_words	de tms sham	0.04211672577075409
+de	ppmi_wac_abs_freq_random__200_words	de tms pIPL sound sham	0.03032639991129576
+de	ppmi_wac_abs_freq_random__200_words	de tms pIPL action sham	0.058625653322342645
+de	ppmi_wac_abs_freq_random__200_words	de tms sound pIPL	0.019135723097163517
+de	ppmi_wac_abs_freq_random__200_words	de tms action pIPL	0.04820497047037835
 de	ppmi_wac_abs_freq_top_rowincol_200_words	simlex999-sim	0.2785892893226511
 de	ppmi_wac_abs_freq_top_rowincol_200_words	ws353	0.48331273854982415
 de	ppmi_wac_abs_freq_top_rowincol_200_words	tms aIFG	0.16579497746480434
@@ -5760,6 +5784,12 @@ de	ppmi_wac_abs_freq_top__500_words	tms pIFG	0.17289014447730222
 de	ppmi_wac_abs_freq_top__500_words	de tms vertex	0.19557683412800592
 de	ppmi_wac_abs_freq_top__500_words	de tms pIFG	0.2237070839081813
 de	ppmi_wac_abs_freq_top__500_words	de tms aIFG	0.27051489263922623
+de	ppmi_wac_abs_freq_top__500_words	de tms pIPL	0.12281951165155837
+de	ppmi_wac_abs_freq_top__500_words	de tms sham	0.14063464994258282
+de	ppmi_wac_abs_freq_top__500_words	de tms pIPL sound sham	0.10666090111881162
+de	ppmi_wac_abs_freq_top__500_words	de tms pIPL action sham	0.1801097455663711
+de	ppmi_wac_abs_freq_top__500_words	de tms sound pIPL	0.08419129016768435
+de	ppmi_wac_abs_freq_top__500_words	de tms action pIPL	0.1704347056905875
 de	ppmi_wac_abs_freq_random__500_words	simlex999-sim	0.06224881905792798
 de	ppmi_wac_abs_freq_random__500_words	ws353	0.09038405409207681
 de	ppmi_wac_abs_freq_random__500_words	tms aIFG	0.03013756266214825
@@ -5768,6 +5798,12 @@ de	ppmi_wac_abs_freq_random__500_words	tms pIFG	0.021915500050275406
 de	ppmi_wac_abs_freq_random__500_words	de tms vertex	0.06808109270761767
 de	ppmi_wac_abs_freq_random__500_words	de tms pIFG	0.03350543250408324
 de	ppmi_wac_abs_freq_random__500_words	de tms aIFG	0.06423680086470276
+de	ppmi_wac_abs_freq_random__500_words	de tms pIPL	0.017706380878756534
+de	ppmi_wac_abs_freq_random__500_words	de tms sham	0.02744211592501429
+de	ppmi_wac_abs_freq_random__500_words	de tms pIPL sound sham	0.004036451874187242
+de	ppmi_wac_abs_freq_random__500_words	de tms pIPL action sham	0.05543820817220421
+de	ppmi_wac_abs_freq_random__500_words	de tms sound pIPL	-0.0037181817693529733
+de	ppmi_wac_abs_freq_random__500_words	de tms action pIPL	0.04012969030856983
 de	ppmi_wac_abs_freq_top_rowincol_500_words	simlex999-sim	0.2825784303070824
 de	ppmi_wac_abs_freq_top_rowincol_500_words	ws353	0.473055538315584
 de	ppmi_wac_abs_freq_top_rowincol_500_words	tms aIFG	0.1686409864483871
@@ -5786,6 +5822,12 @@ de	ppmi_wac_abs_freq_top__750_words	tms pIFG	0.18431103029171095
 de	ppmi_wac_abs_freq_top__750_words	de tms vertex	0.20205271433624275
 de	ppmi_wac_abs_freq_top__750_words	de tms pIFG	0.2300487704701459
 de	ppmi_wac_abs_freq_top__750_words	de tms aIFG	0.27824345317292953
+de	ppmi_wac_abs_freq_top__750_words	de tms pIPL	0.12659200088014913
+de	ppmi_wac_abs_freq_top__750_words	de tms sham	0.1482082990423802
+de	ppmi_wac_abs_freq_top__750_words	de tms pIPL sound sham	0.11987492877025593
+de	ppmi_wac_abs_freq_top__750_words	de tms pIPL action sham	0.18297052438096537
+de	ppmi_wac_abs_freq_top__750_words	de tms sound pIPL	0.09619550044953719
+de	ppmi_wac_abs_freq_top__750_words	de tms action pIPL	0.1647959186777623
 de	ppmi_wac_abs_freq_random__750_words	simlex999-sim	0.07399412280279465
 de	ppmi_wac_abs_freq_random__750_words	ws353	0.13758329227979316
 de	ppmi_wac_abs_freq_random__750_words	tms aIFG	0.04702712275184253
@@ -5794,6 +5836,12 @@ de	ppmi_wac_abs_freq_random__750_words	tms pIFG	0.034619458700434355
 de	ppmi_wac_abs_freq_random__750_words	de tms vertex	0.08533340123009904
 de	ppmi_wac_abs_freq_random__750_words	de tms pIFG	0.05768747939097749
 de	ppmi_wac_abs_freq_random__750_words	de tms aIFG	0.07850669593727241
+de	ppmi_wac_abs_freq_random__750_words	de tms pIPL	0.04782475159992391
+de	ppmi_wac_abs_freq_random__750_words	de tms sham	0.0672435739568845
+de	ppmi_wac_abs_freq_random__750_words	de tms pIPL sound sham	0.041543447937320156
+de	ppmi_wac_abs_freq_random__750_words	de tms pIPL action sham	0.09649194311488765
+de	ppmi_wac_abs_freq_random__750_words	de tms sound pIPL	0.010032397220194639
+de	ppmi_wac_abs_freq_random__750_words	de tms action pIPL	0.08959923190506686
 de	ppmi_wac_abs_freq_top_rowincol_750_words	simlex999-sim	0.285823447054015
 de	ppmi_wac_abs_freq_top_rowincol_750_words	ws353	0.46221844041215665
 de	ppmi_wac_abs_freq_top_rowincol_750_words	tms aIFG	0.1718136539429352
@@ -5812,6 +5860,12 @@ de	ppmi_wac_abs_freq_top__1000_words	tms pIFG	0.19388824040040792
 de	ppmi_wac_abs_freq_top__1000_words	de tms vertex	0.20799030745871505
 de	ppmi_wac_abs_freq_top__1000_words	de tms pIFG	0.23750063308229816
 de	ppmi_wac_abs_freq_top__1000_words	de tms aIFG	0.27517335308478624
+de	ppmi_wac_abs_freq_top__1000_words	de tms pIPL	0.12442890097467724
+de	ppmi_wac_abs_freq_top__1000_words	de tms sham	0.14325705507288403
+de	ppmi_wac_abs_freq_top__1000_words	de tms pIPL sound sham	0.11041473951827618
+de	ppmi_wac_abs_freq_top__1000_words	de tms pIPL action sham	0.1821549124566664
+de	ppmi_wac_abs_freq_top__1000_words	de tms sound pIPL	0.08880270208947588
+de	ppmi_wac_abs_freq_top__1000_words	de tms action pIPL	0.16631212394189984
 de	ppmi_wac_abs_freq_random__1000_words	simlex999-sim	0.06734287305640377
 de	ppmi_wac_abs_freq_random__1000_words	ws353	0.14586461585483573
 de	ppmi_wac_abs_freq_random__1000_words	tms aIFG	0.05785936284140555
@@ -5820,6 +5874,12 @@ de	ppmi_wac_abs_freq_random__1000_words	tms pIFG	0.07397097242343423
 de	ppmi_wac_abs_freq_random__1000_words	de tms vertex	0.11379322768913419
 de	ppmi_wac_abs_freq_random__1000_words	de tms pIFG	0.08857937547974469
 de	ppmi_wac_abs_freq_random__1000_words	de tms aIFG	0.09607204354625555
+de	ppmi_wac_abs_freq_random__1000_words	de tms pIPL	0.0670518893697056
+de	ppmi_wac_abs_freq_random__1000_words	de tms sham	0.07799602114970566
+de	ppmi_wac_abs_freq_random__1000_words	de tms pIPL sound sham	0.05573471417732317
+de	ppmi_wac_abs_freq_random__1000_words	de tms pIPL action sham	0.10552569647343225
+de	ppmi_wac_abs_freq_random__1000_words	de tms sound pIPL	0.025548881396537063
+de	ppmi_wac_abs_freq_random__1000_words	de tms action pIPL	0.11283409271322452
 de	ppmi_wac_abs_freq_top_rowincol_1000_words	simlex999-sim	0.285868566871248
 de	ppmi_wac_abs_freq_top_rowincol_1000_words	ws353	0.457652415380003
 de	ppmi_wac_abs_freq_top_rowincol_1000_words	tms aIFG	0.17436738394364623
@@ -5838,6 +5898,12 @@ de	ppmi_wac_abs_freq_top__2500_words	tms pIFG	0.2027422826200192
 de	ppmi_wac_abs_freq_top__2500_words	de tms vertex	0.21129906695152037
 de	ppmi_wac_abs_freq_top__2500_words	de tms pIFG	0.24314405486151303
 de	ppmi_wac_abs_freq_top__2500_words	de tms aIFG	0.26600756205026665
+de	ppmi_wac_abs_freq_top__2500_words	de tms pIPL	0.11598776193709272
+de	ppmi_wac_abs_freq_top__2500_words	de tms sham	0.11614487403220568
+de	ppmi_wac_abs_freq_top__2500_words	de tms pIPL sound sham	0.10080311497971779
+de	ppmi_wac_abs_freq_top__2500_words	de tms pIPL action sham	0.13483356560773532
+de	ppmi_wac_abs_freq_top__2500_words	de tms sound pIPL	0.09753346583875153
+de	ppmi_wac_abs_freq_top__2500_words	de tms action pIPL	0.14053408075854357
 de	ppmi_wac_abs_freq_random__2500_words	simlex999-sim	0.13256758725780057
 de	ppmi_wac_abs_freq_random__2500_words	ws353	0.24743516187038678
 de	ppmi_wac_abs_freq_random__2500_words	tms aIFG	0.16349999623030587
@@ -5846,6 +5912,12 @@ de	ppmi_wac_abs_freq_random__2500_words	tms pIFG	0.20404241483962018
 de	ppmi_wac_abs_freq_random__2500_words	de tms vertex	0.20363281324299937
 de	ppmi_wac_abs_freq_random__2500_words	de tms pIFG	0.22839709335889274
 de	ppmi_wac_abs_freq_random__2500_words	de tms aIFG	0.2183844388657128
+de	ppmi_wac_abs_freq_random__2500_words	de tms pIPL	0.09523614924379241
+de	ppmi_wac_abs_freq_random__2500_words	de tms sham	0.10805405887793705
+de	ppmi_wac_abs_freq_random__2500_words	de tms pIPL sound sham	0.11491692286536294
+de	ppmi_wac_abs_freq_random__2500_words	de tms pIPL action sham	0.10697167636392978
+de	ppmi_wac_abs_freq_random__2500_words	de tms sound pIPL	0.0820396886576938
+de	ppmi_wac_abs_freq_random__2500_words	de tms action pIPL	0.11144414338417694
 de	ppmi_wac_abs_freq_top_rowincol_2500_words	simlex999-sim	0.2926094065501858
 de	ppmi_wac_abs_freq_top_rowincol_2500_words	ws353	0.4473746956897763
 de	ppmi_wac_abs_freq_top_rowincol_2500_words	tms aIFG	0.1934645440743149
@@ -5864,6 +5936,12 @@ de	ppmi_wac_abs_freq_top__5000_words	tms pIFG	0.2143707607621783
 de	ppmi_wac_abs_freq_top__5000_words	de tms vertex	0.2221690898761915
 de	ppmi_wac_abs_freq_top__5000_words	de tms pIFG	0.2558188914275919
 de	ppmi_wac_abs_freq_top__5000_words	de tms aIFG	0.2774477159537731
+de	ppmi_wac_abs_freq_top__5000_words	de tms pIPL	0.11387673367134872
+de	ppmi_wac_abs_freq_top__5000_words	de tms sham	0.1128048937541486
+de	ppmi_wac_abs_freq_top__5000_words	de tms pIPL sound sham	0.11031056699748681
+de	ppmi_wac_abs_freq_top__5000_words	de tms pIPL action sham	0.11699167280247504
+de	ppmi_wac_abs_freq_top__5000_words	de tms sound pIPL	0.10317923556961052
+de	ppmi_wac_abs_freq_top__5000_words	de tms action pIPL	0.12825990585439656
 de	ppmi_wac_abs_freq_random__5000_words	simlex999-sim	0.17154723331509336
 de	ppmi_wac_abs_freq_random__5000_words	ws353	0.3101392767641101
 de	ppmi_wac_abs_freq_random__5000_words	tms aIFG	0.20506667792383104
@@ -5872,6 +5950,12 @@ de	ppmi_wac_abs_freq_random__5000_words	tms pIFG	0.23211162826116133
 de	ppmi_wac_abs_freq_random__5000_words	de tms vertex	0.19963098637955817
 de	ppmi_wac_abs_freq_random__5000_words	de tms pIFG	0.27748425024336526
 de	ppmi_wac_abs_freq_random__5000_words	de tms aIFG	0.25296160150788516
+de	ppmi_wac_abs_freq_random__5000_words	de tms pIPL	0.11739582001000372
+de	ppmi_wac_abs_freq_random__5000_words	de tms sham	0.13112377465198846
+de	ppmi_wac_abs_freq_random__5000_words	de tms pIPL sound sham	0.12827633798702595
+de	ppmi_wac_abs_freq_random__5000_words	de tms pIPL action sham	0.13735239137296865
+de	ppmi_wac_abs_freq_random__5000_words	de tms sound pIPL	0.09207835046914258
+de	ppmi_wac_abs_freq_random__5000_words	de tms action pIPL	0.14698517399384575
 de	ppmi_wac_abs_freq_top_rowincol_5000_words	simlex999-sim	0.28733027352954393
 de	ppmi_wac_abs_freq_top_rowincol_5000_words	ws353	0.4311320593592644
 de	ppmi_wac_abs_freq_top_rowincol_5000_words	tms aIFG	0.2166819330274852
@@ -5890,6 +5974,12 @@ de	ppmi_wac_abs_freq_top__7500_words	tms pIFG	0.22024074797636498
 de	ppmi_wac_abs_freq_top__7500_words	de tms vertex	0.2240289360069256
 de	ppmi_wac_abs_freq_top__7500_words	de tms pIFG	0.2650487952659975
 de	ppmi_wac_abs_freq_top__7500_words	de tms aIFG	0.28954839162431134
+de	ppmi_wac_abs_freq_top__7500_words	de tms pIPL	0.11430889885287443
+de	ppmi_wac_abs_freq_top__7500_words	de tms sham	0.10762253805555037
+de	ppmi_wac_abs_freq_top__7500_words	de tms pIPL sound sham	0.11009657325029235
+de	ppmi_wac_abs_freq_top__7500_words	de tms pIPL action sham	0.10612375190777978
+de	ppmi_wac_abs_freq_top__7500_words	de tms sound pIPL	0.10674992221340289
+de	ppmi_wac_abs_freq_top__7500_words	de tms action pIPL	0.12497312466308347
 de	ppmi_wac_abs_freq_random__7500_words	simlex999-sim	0.1709156616304164
 de	ppmi_wac_abs_freq_random__7500_words	ws353	0.3728744520456649
 de	ppmi_wac_abs_freq_random__7500_words	tms aIFG	0.16883359783172958
@@ -5898,6 +5988,12 @@ de	ppmi_wac_abs_freq_random__7500_words	tms pIFG	0.18389105868960037
 de	ppmi_wac_abs_freq_random__7500_words	de tms vertex	0.1653135000368049
 de	ppmi_wac_abs_freq_random__7500_words	de tms pIFG	0.23430616548406064
 de	ppmi_wac_abs_freq_random__7500_words	de tms aIFG	0.20833202648130458
+de	ppmi_wac_abs_freq_random__7500_words	de tms pIPL	0.11437640183087319
+de	ppmi_wac_abs_freq_random__7500_words	de tms sham	0.12907485086031498
+de	ppmi_wac_abs_freq_random__7500_words	de tms pIPL sound sham	0.12420024088706422
+de	ppmi_wac_abs_freq_random__7500_words	de tms pIPL action sham	0.13651327957654785
+de	ppmi_wac_abs_freq_random__7500_words	de tms sound pIPL	0.08954521415414153
+de	ppmi_wac_abs_freq_random__7500_words	de tms action pIPL	0.14233539022174452
 de	ppmi_wac_abs_freq_top_rowincol_7500_words	simlex999-sim	0.28365567468274366
 de	ppmi_wac_abs_freq_top_rowincol_7500_words	ws353	0.4142046977039817
 de	ppmi_wac_abs_freq_top_rowincol_7500_words	tms aIFG	0.2273034811156711
@@ -5916,6 +6012,12 @@ de	ppmi_wac_abs_freq_top__10000_words	tms pIFG	0.2201675496263335
 de	ppmi_wac_abs_freq_top__10000_words	de tms vertex	0.2260485632204319
 de	ppmi_wac_abs_freq_top__10000_words	de tms pIFG	0.2605664056718917
 de	ppmi_wac_abs_freq_top__10000_words	de tms aIFG	0.2908401042575853
+de	ppmi_wac_abs_freq_top__10000_words	de tms pIPL	0.11579328594192098
+de	ppmi_wac_abs_freq_top__10000_words	de tms sham	0.10959460562434906
+de	ppmi_wac_abs_freq_top__10000_words	de tms pIPL sound sham	0.11824380582236291
+de	ppmi_wac_abs_freq_top__10000_words	de tms pIPL action sham	0.10175484036275234
+de	ppmi_wac_abs_freq_top__10000_words	de tms sound pIPL	0.11280210250671295
+de	ppmi_wac_abs_freq_top__10000_words	de tms action pIPL	0.12203578219590189
 de	ppmi_wac_abs_freq_random__10000_words	simlex999-sim	0.18938789561670932
 de	ppmi_wac_abs_freq_random__10000_words	ws353	0.39886204760130856
 de	ppmi_wac_abs_freq_random__10000_words	tms aIFG	0.17781124567997428
@@ -5924,6 +6026,12 @@ de	ppmi_wac_abs_freq_random__10000_words	tms pIFG	0.15622119112040467
 de	ppmi_wac_abs_freq_random__10000_words	de tms vertex	0.1430041614392623
 de	ppmi_wac_abs_freq_random__10000_words	de tms pIFG	0.1948065766819556
 de	ppmi_wac_abs_freq_random__10000_words	de tms aIFG	0.22076726344215186
+de	ppmi_wac_abs_freq_random__10000_words	de tms pIPL	0.13397354883350207
+de	ppmi_wac_abs_freq_random__10000_words	de tms sham	0.14379829459701038
+de	ppmi_wac_abs_freq_random__10000_words	de tms pIPL sound sham	0.14792204891183047
+de	ppmi_wac_abs_freq_random__10000_words	de tms pIPL action sham	0.14270124406205426
+de	ppmi_wac_abs_freq_random__10000_words	de tms sound pIPL	0.11227217360693625
+de	ppmi_wac_abs_freq_random__10000_words	de tms action pIPL	0.16186965610668633
 de	ppmi_wac_abs_freq_top_rowincol_10000_words	simlex999-sim	0.2795451824276503
 de	ppmi_wac_abs_freq_top_rowincol_10000_words	ws353	0.3954887234685317
 de	ppmi_wac_abs_freq_top_rowincol_10000_words	tms aIFG	0.23528396799459386
@@ -5942,6 +6050,12 @@ de	ppmi_wac_abs_freq_top__12500_words	tms pIFG	0.2209100072733705
 de	ppmi_wac_abs_freq_top__12500_words	de tms vertex	0.22395818665989795
 de	ppmi_wac_abs_freq_top__12500_words	de tms pIFG	0.26233242783189487
 de	ppmi_wac_abs_freq_top__12500_words	de tms aIFG	0.29331035965492314
+de	ppmi_wac_abs_freq_top__12500_words	de tms pIPL	0.11492311410503181
+de	ppmi_wac_abs_freq_top__12500_words	de tms sham	0.10938129314458488
+de	ppmi_wac_abs_freq_top__12500_words	de tms pIPL sound sham	0.12149598143356045
+de	ppmi_wac_abs_freq_top__12500_words	de tms pIPL action sham	0.09760488798343848
+de	ppmi_wac_abs_freq_top__12500_words	de tms sound pIPL	0.11392729969850866
+de	ppmi_wac_abs_freq_top__12500_words	de tms action pIPL	0.11866315547033576
 de	ppmi_wac_abs_freq_random__12500_words	simlex999-sim	0.22168071305680617
 de	ppmi_wac_abs_freq_random__12500_words	ws353	0.4442662541736459
 de	ppmi_wac_abs_freq_random__12500_words	tms aIFG	0.17334352850886708
@@ -5950,6 +6064,12 @@ de	ppmi_wac_abs_freq_random__12500_words	tms pIFG	0.16490686224415957
 de	ppmi_wac_abs_freq_random__12500_words	de tms vertex	0.14280669477572255
 de	ppmi_wac_abs_freq_random__12500_words	de tms pIFG	0.19939512468575418
 de	ppmi_wac_abs_freq_random__12500_words	de tms aIFG	0.21587206118239813
+de	ppmi_wac_abs_freq_random__12500_words	de tms pIPL	0.1264604166825762
+de	ppmi_wac_abs_freq_random__12500_words	de tms sham	0.13919184684605837
+de	ppmi_wac_abs_freq_random__12500_words	de tms pIPL sound sham	0.14432095314462312
+de	ppmi_wac_abs_freq_random__12500_words	de tms pIPL action sham	0.13684777014243737
+de	ppmi_wac_abs_freq_random__12500_words	de tms sound pIPL	0.10627036287940952
+de	ppmi_wac_abs_freq_random__12500_words	de tms action pIPL	0.15218523392829453
 de	ppmi_wac_abs_freq_top_rowincol_12500_words	simlex999-sim	0.2732863474788855
 de	ppmi_wac_abs_freq_top_rowincol_12500_words	ws353	0.38488477416645955
 de	ppmi_wac_abs_freq_top_rowincol_12500_words	tms aIFG	0.2412758173574793
@@ -5968,6 +6088,12 @@ de	ppmi_wac_abs_freq_top__15000_words	tms pIFG	0.22036405513939997
 de	ppmi_wac_abs_freq_top__15000_words	de tms vertex	0.22475822827436748
 de	ppmi_wac_abs_freq_top__15000_words	de tms pIFG	0.26194039075667014
 de	ppmi_wac_abs_freq_top__15000_words	de tms aIFG	0.29712732929781815
+de	ppmi_wac_abs_freq_top__15000_words	de tms pIPL	0.11654260165981516
+de	ppmi_wac_abs_freq_top__15000_words	de tms sham	0.10905615469427819
+de	ppmi_wac_abs_freq_top__15000_words	de tms pIPL sound sham	0.1214800532002848
+de	ppmi_wac_abs_freq_top__15000_words	de tms pIPL action sham	0.09659355152957384
+de	ppmi_wac_abs_freq_top__15000_words	de tms sound pIPL	0.11682852373996847
+de	ppmi_wac_abs_freq_top__15000_words	de tms action pIPL	0.11898830320308246
 de	ppmi_wac_abs_freq_random__15000_words	simlex999-sim	0.23980363849734196
 de	ppmi_wac_abs_freq_random__15000_words	ws353	0.43570641112718067
 de	ppmi_wac_abs_freq_random__15000_words	tms aIFG	0.1997996448463023
@@ -5976,6 +6102,12 @@ de	ppmi_wac_abs_freq_random__15000_words	tms pIFG	0.17874222474901147
 de	ppmi_wac_abs_freq_random__15000_words	de tms vertex	0.16607299484331328
 de	ppmi_wac_abs_freq_random__15000_words	de tms pIFG	0.21774467974911668
 de	ppmi_wac_abs_freq_random__15000_words	de tms aIFG	0.23627150551847492
+de	ppmi_wac_abs_freq_random__15000_words	de tms pIPL	0.1301947716515492
+de	ppmi_wac_abs_freq_random__15000_words	de tms sham	0.136841004356547
+de	ppmi_wac_abs_freq_random__15000_words	de tms pIPL sound sham	0.14323317511044784
+de	ppmi_wac_abs_freq_random__15000_words	de tms pIPL action sham	0.13422018341620984
+de	ppmi_wac_abs_freq_random__15000_words	de tms sound pIPL	0.09938117127206095
+de	ppmi_wac_abs_freq_random__15000_words	de tms action pIPL	0.16653268582627487
 de	ppmi_wac_abs_freq_top_rowincol_15000_words	simlex999-sim	0.26776872581166894
 de	ppmi_wac_abs_freq_top_rowincol_15000_words	ws353	0.38059576179012544
 de	ppmi_wac_abs_freq_top_rowincol_15000_words	tms aIFG	0.2449808088285093
@@ -5994,6 +6126,12 @@ de	ppmi_wac_abs_freq_top__17500_words	tms pIFG	0.22107772048651123
 de	ppmi_wac_abs_freq_top__17500_words	de tms vertex	0.22998212277443814
 de	ppmi_wac_abs_freq_top__17500_words	de tms pIFG	0.2648554815719903
 de	ppmi_wac_abs_freq_top__17500_words	de tms aIFG	0.3003370543315611
+de	ppmi_wac_abs_freq_top__17500_words	de tms pIPL	0.11728548454768704
+de	ppmi_wac_abs_freq_top__17500_words	de tms sham	0.11001495366530699
+de	ppmi_wac_abs_freq_top__17500_words	de tms pIPL sound sham	0.12316748823996834
+de	ppmi_wac_abs_freq_top__17500_words	de tms pIPL action sham	0.09684443839199752
+de	ppmi_wac_abs_freq_top__17500_words	de tms sound pIPL	0.118485553839033
+de	ppmi_wac_abs_freq_top__17500_words	de tms action pIPL	0.11881808224725497
 de	ppmi_wac_abs_freq_random__17500_words	simlex999-sim	0.2279997622142077
 de	ppmi_wac_abs_freq_random__17500_words	ws353	0.43328169541142825
 de	ppmi_wac_abs_freq_random__17500_words	tms aIFG	0.20848403126787846
@@ -6002,6 +6140,12 @@ de	ppmi_wac_abs_freq_random__17500_words	tms pIFG	0.17914697858400921
 de	ppmi_wac_abs_freq_random__17500_words	de tms vertex	0.16586451655325316
 de	ppmi_wac_abs_freq_random__17500_words	de tms pIFG	0.2253042938624832
 de	ppmi_wac_abs_freq_random__17500_words	de tms aIFG	0.24390530797644133
+de	ppmi_wac_abs_freq_random__17500_words	de tms pIPL	0.1304867789720477
+de	ppmi_wac_abs_freq_random__17500_words	de tms sham	0.13712640856357877
+de	ppmi_wac_abs_freq_random__17500_words	de tms pIPL sound sham	0.14747480160973642
+de	ppmi_wac_abs_freq_random__17500_words	de tms pIPL action sham	0.13067407517493765
+de	ppmi_wac_abs_freq_random__17500_words	de tms sound pIPL	0.10297038162390956
+de	ppmi_wac_abs_freq_random__17500_words	de tms action pIPL	0.16365707793290177
 de	ppmi_wac_abs_freq_top_rowincol_17500_words	simlex999-sim	0.2614315047936078
 de	ppmi_wac_abs_freq_top_rowincol_17500_words	ws353	0.3727965842146885
 de	ppmi_wac_abs_freq_top_rowincol_17500_words	tms aIFG	0.24808322737628422
@@ -6020,6 +6164,12 @@ de	ppmi_wac_abs_freq_top__20000_words	tms pIFG	0.2206264905325865
 de	ppmi_wac_abs_freq_top__20000_words	de tms vertex	0.2281911169470215
 de	ppmi_wac_abs_freq_top__20000_words	de tms pIFG	0.2615872549597445
 de	ppmi_wac_abs_freq_top__20000_words	de tms aIFG	0.3002060489950708
+de	ppmi_wac_abs_freq_top__20000_words	de tms pIPL	0.11696881912448635
+de	ppmi_wac_abs_freq_top__20000_words	de tms sham	0.11068068547142063
+de	ppmi_wac_abs_freq_top__20000_words	de tms pIPL sound sham	0.1244641256435608
+de	ppmi_wac_abs_freq_top__20000_words	de tms pIPL action sham	0.09684052850590115
+de	ppmi_wac_abs_freq_top__20000_words	de tms sound pIPL	0.11823071838607674
+de	ppmi_wac_abs_freq_top__20000_words	de tms action pIPL	0.11832007360657475
 de	ppmi_wac_abs_freq_random__20000_words	simlex999-sim	0.21933736629753406
 de	ppmi_wac_abs_freq_random__20000_words	ws353	0.4375628271271298
 de	ppmi_wac_abs_freq_random__20000_words	tms aIFG	0.21445638603774317
@@ -6028,6 +6178,12 @@ de	ppmi_wac_abs_freq_random__20000_words	tms pIFG	0.19409565626272504
 de	ppmi_wac_abs_freq_random__20000_words	de tms vertex	0.1810991613101876
 de	ppmi_wac_abs_freq_random__20000_words	de tms pIFG	0.23851992464332109
 de	ppmi_wac_abs_freq_random__20000_words	de tms aIFG	0.2507134919804588
+de	ppmi_wac_abs_freq_random__20000_words	de tms pIPL	0.1250093963100765
+de	ppmi_wac_abs_freq_random__20000_words	de tms sham	0.1317641531462888
+de	ppmi_wac_abs_freq_random__20000_words	de tms pIPL sound sham	0.13899470055916102
+de	ppmi_wac_abs_freq_random__20000_words	de tms pIPL action sham	0.12880020173893386
+de	ppmi_wac_abs_freq_random__20000_words	de tms sound pIPL	0.0944322571320449
+de	ppmi_wac_abs_freq_random__20000_words	de tms action pIPL	0.1608237582026409
 de	ppmi_wac_abs_freq_top_rowincol_20000_words	simlex999-sim	0.2573244065351904
 de	ppmi_wac_abs_freq_top_rowincol_20000_words	ws353	0.3666304876907086
 de	ppmi_wac_abs_freq_top_rowincol_20000_words	tms aIFG	0.2521181569345084
@@ -6046,6 +6202,12 @@ de	ppmi_wac_abs_freq_top__25000_words	tms pIFG	0.22155416265535213
 de	ppmi_wac_abs_freq_top__25000_words	de tms vertex	0.23175647688931852
 de	ppmi_wac_abs_freq_top__25000_words	de tms pIFG	0.26483915140968955
 de	ppmi_wac_abs_freq_top__25000_words	de tms aIFG	0.30431253175478185
+de	ppmi_wac_abs_freq_top__25000_words	de tms pIPL	0.1215537755523281
+de	ppmi_wac_abs_freq_top__25000_words	de tms sham	0.11530799992170895
+de	ppmi_wac_abs_freq_top__25000_words	de tms pIPL sound sham	0.1301536354135845
+de	ppmi_wac_abs_freq_top__25000_words	de tms pIPL action sham	0.10090160146564851
+de	ppmi_wac_abs_freq_top__25000_words	de tms sound pIPL	0.12398660905391232
+de	ppmi_wac_abs_freq_top__25000_words	de tms action pIPL	0.12197145109242648
 de	ppmi_wac_abs_freq_random__25000_words	simlex999-sim	0.23682007136989253
 de	ppmi_wac_abs_freq_random__25000_words	ws353	0.42816372675157655
 de	ppmi_wac_abs_freq_random__25000_words	tms aIFG	0.2177712704930013
@@ -6054,6 +6216,12 @@ de	ppmi_wac_abs_freq_random__25000_words	tms pIFG	0.2013958364738954
 de	ppmi_wac_abs_freq_random__25000_words	de tms vertex	0.18000030521843294
 de	ppmi_wac_abs_freq_random__25000_words	de tms pIFG	0.2437173719676697
 de	ppmi_wac_abs_freq_random__25000_words	de tms aIFG	0.2522837578387732
+de	ppmi_wac_abs_freq_random__25000_words	de tms pIPL	0.13098260506761122
+de	ppmi_wac_abs_freq_random__25000_words	de tms sham	0.1399756270528059
+de	ppmi_wac_abs_freq_random__25000_words	de tms pIPL sound sham	0.15483191402383886
+de	ppmi_wac_abs_freq_random__25000_words	de tms pIPL action sham	0.12874241599532654
+de	ppmi_wac_abs_freq_random__25000_words	de tms sound pIPL	0.11477158311562405
+de	ppmi_wac_abs_freq_random__25000_words	de tms action pIPL	0.15133870507667507
 de	ppmi_wac_abs_freq_top_rowincol_25000_words	simlex999-sim	0.24979721469007427
 de	ppmi_wac_abs_freq_top_rowincol_25000_words	ws353	0.36236407645430174
 de	ppmi_wac_abs_freq_top_rowincol_25000_words	tms aIFG	0.2576653284656856
@@ -6072,6 +6240,12 @@ de	ppmi_tagged_wiki_abs_freq_top__100_words	tms pIFG	0.12890914350585142
 de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms vertex	0.19310877267585588
 de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms pIFG	0.16984196555955944
 de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms aIFG	0.1964727678435559
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms pIPL	0.12584595878527988
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms sham	0.15630968610139234
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms pIPL sound sham	0.17753719375418017
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms pIPL action sham	0.1386265040984826
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms sound pIPL	0.11316329229119539
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms action pIPL	0.14435777633574948
 de	ppmi_tagged_wiki_abs_freq_random__100_words	simlex999-sim	0.01570535179718351
 de	ppmi_tagged_wiki_abs_freq_random__100_words	ws353	0.1405246460593963
 de	ppmi_tagged_wiki_abs_freq_random__100_words	tms aIFG	-0.07790668373044607
@@ -6080,6 +6254,12 @@ de	ppmi_tagged_wiki_abs_freq_random__100_words	tms pIFG	0.0005157965046967122
 de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms vertex	-0.014755925815482124
 de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms pIFG	-0.014788302735484675
 de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms aIFG	-0.08968314258701426
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms pIPL	0.003463528434689579
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms sham	0.010798096912249327
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms pIPL sound sham	-0.015636533233943508
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms pIPL action sham	0.04053542786793893
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms sound pIPL	-0.014590889347444298
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms action pIPL	0.028322082851434567
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	simlex999-sim	0.24693015160033377
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	ws353	0.46928621990459046
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	tms aIFG	0.23210649953119697
@@ -6098,6 +6278,12 @@ de	ppmi_tagged_wiki_abs_freq_top__200_words	tms pIFG	0.13543801531156768
 de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms vertex	0.18854118760775568
 de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms pIFG	0.17694097657837954
 de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms aIFG	0.19866377539228786
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms pIPL	0.13076690161359214
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms sham	0.15738798978729934
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms pIPL sound sham	0.17680914966920802
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms pIPL action sham	0.1436314872985163
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms sound pIPL	0.13735990324021102
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms action pIPL	0.13060174393842805
 de	ppmi_tagged_wiki_abs_freq_random__200_words	simlex999-sim	0.04924112099241906
 de	ppmi_tagged_wiki_abs_freq_random__200_words	ws353	0.10908913216684471
 de	ppmi_tagged_wiki_abs_freq_random__200_words	tms aIFG	-0.036873993155342615
@@ -6106,6 +6292,12 @@ de	ppmi_tagged_wiki_abs_freq_random__200_words	tms pIFG	0.0371514042225725
 de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms vertex	-0.019874058053994403
 de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms pIFG	0.038628158892990455
 de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms aIFG	-0.03437637697069265
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms pIPL	-0.015497905876252412
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms sham	0.018043686018570572
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms pIPL sound sham	0.0022483470469240696
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms pIPL action sham	0.0358779833251128
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms sound pIPL	-0.04446669645781266
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms action pIPL	0.015709649944689007
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	simlex999-sim	0.24459859861547342
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	ws353	0.47038126614933673
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	tms aIFG	0.23353090111976454
@@ -6124,6 +6316,12 @@ de	ppmi_tagged_wiki_abs_freq_top__500_words	tms pIFG	0.14328377970975953
 de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms vertex	0.19856485061766097
 de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms pIFG	0.18697485184872864
 de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms aIFG	0.19175689068376653
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms pIPL	0.14332018842342542
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms sham	0.16081799178356082
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms pIPL sound sham	0.17498802414594336
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms pIPL action sham	0.15211784720392174
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms sound pIPL	0.14486847026408523
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms action pIPL	0.14650121758121754
 de	ppmi_tagged_wiki_abs_freq_random__500_words	simlex999-sim	0.07524312338984858
 de	ppmi_tagged_wiki_abs_freq_random__500_words	ws353	0.14185540757854406
 de	ppmi_tagged_wiki_abs_freq_random__500_words	tms aIFG	-0.029188347503415233
@@ -6132,6 +6330,12 @@ de	ppmi_tagged_wiki_abs_freq_random__500_words	tms pIFG	0.006610462869897554
 de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms vertex	-0.018642971087299728
 de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms pIFG	-0.0032485150488443205
 de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms aIFG	-0.028181066507316988
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms pIPL	0.024819515971445723
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms sham	0.05162435136274613
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms pIPL sound sham	0.011340051521715385
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms pIPL action sham	0.09209129053728513
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms sound pIPL	-0.00980275957281969
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms action pIPL	0.05951913831280066
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	simlex999-sim	0.24675250674693544
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	ws353	0.46716404985615806
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	tms aIFG	0.23524839402974843
@@ -6150,6 +6354,12 @@ de	ppmi_tagged_wiki_abs_freq_top__750_words	tms pIFG	0.14842333540950034
 de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms vertex	0.20663157779847618
 de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms pIFG	0.19044143407090489
 de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms aIFG	0.20465856123543744
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms pIPL	0.13068022553531436
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms sham	0.14714968228726888
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms pIPL sound sham	0.15874847509466383
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms pIPL action sham	0.1413133901938914
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms sound pIPL	0.12066497366520502
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms action pIPL	0.14577771266292044
 de	ppmi_tagged_wiki_abs_freq_random__750_words	simlex999-sim	0.06173749312769481
 de	ppmi_tagged_wiki_abs_freq_random__750_words	ws353	0.17990997255094032
 de	ppmi_tagged_wiki_abs_freq_random__750_words	tms aIFG	-0.022333166888712872
@@ -6158,6 +6368,12 @@ de	ppmi_tagged_wiki_abs_freq_random__750_words	tms pIFG	-0.03244699584979798
 de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms vertex	-0.013086723613435748
 de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms pIFG	-0.0363847854937535
 de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms aIFG	-0.02927688874257024
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms pIPL	0.043754108754693016
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms sham	0.06018968630268739
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms pIPL sound sham	0.035277879316279744
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms pIPL action sham	0.08689341935574678
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms sound pIPL	0.016863303792489594
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms action pIPL	0.07016680050524945
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	simlex999-sim	0.25027699336623915
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	ws353	0.4612866462840447
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	tms aIFG	0.235518679060502
@@ -6176,6 +6392,12 @@ de	ppmi_tagged_wiki_abs_freq_top__1000_words	tms pIFG	0.1632755952860819
 de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms vertex	0.21737030946327543
 de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms pIFG	0.20517003241203632
 de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms aIFG	0.21396982497720704
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms pIPL	0.13005564595096694
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms sham	0.14637681909636616
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms pIPL sound sham	0.16182485251127837
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms pIPL action sham	0.13637422640549307
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms sound pIPL	0.11979026695854911
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms action pIPL	0.1447112908717771
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	simlex999-sim	0.056416176057186754
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	ws353	0.24745763585267988
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	tms aIFG	-0.0076328221060926555
@@ -6184,6 +6406,12 @@ de	ppmi_tagged_wiki_abs_freq_random__1000_words	tms pIFG	-0.01570098982354376
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms vertex	-0.004807923746106224
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms pIFG	-0.02193473864210733
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms aIFG	-0.006699434298588782
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms pIPL	0.04262538410541547
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms sham	0.05878589342172215
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms pIPL sound sham	0.03662227911752626
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms pIPL action sham	0.0836767570008578
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms sound pIPL	0.013739239970064116
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms action pIPL	0.07246057616299018
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	simlex999-sim	0.25466961238324015
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	ws353	0.4594490030162253
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	tms aIFG	0.23549195572936896
@@ -6202,6 +6430,12 @@ de	ppmi_tagged_wiki_abs_freq_top__2500_words	tms pIFG	0.16943903377189704
 de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms vertex	0.22125742000049065
 de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms pIFG	0.20982698673090752
 de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms aIFG	0.2263203867954738
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms pIPL	0.12031045841176323
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms sham	0.12610371577868926
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms pIPL sound sham	0.14711275800547716
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms pIPL action sham	0.11017174781191853
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms sound pIPL	0.11444040854796395
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms action pIPL	0.1287019193095239
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	simlex999-sim	0.13463579997387465
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	ws353	0.31382388752072016
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	tms aIFG	0.08433884431736449
@@ -6210,6 +6444,12 @@ de	ppmi_tagged_wiki_abs_freq_random__2500_words	tms pIFG	0.07182152614944577
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms vertex	0.11389325526086187
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms pIFG	0.08427067604576521
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms aIFG	0.10402988050101865
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms pIPL	0.07632963385698878
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms sham	0.08619322551633389
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms pIPL sound sham	0.0771359949254711
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms pIPL action sham	0.09514377994846578
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms sound pIPL	0.056929133110590176
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms action pIPL	0.09440687437387728
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	simlex999-sim	0.2643877651317074
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	ws353	0.42399251381959074
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	tms aIFG	0.23833888661043018
@@ -6228,6 +6468,12 @@ de	ppmi_tagged_wiki_abs_freq_top__5000_words	tms pIFG	0.18042262843905946
 de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms vertex	0.22381941218100024
 de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms pIFG	0.21572306466951863
 de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms aIFG	0.24024341483349673
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms pIPL	0.11087374528867756
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms sham	0.11555948566152933
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms pIPL sound sham	0.14562926882963498
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms pIPL action sham	0.08907965946214945
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms sound pIPL	0.10520264541291507
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms action pIPL	0.11703118341126872
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	simlex999-sim	0.19202759467373692
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	ws353	0.33520399694126457
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	tms aIFG	0.20917504843927312
@@ -6236,6 +6482,12 @@ de	ppmi_tagged_wiki_abs_freq_random__5000_words	tms pIFG	0.15760281188174768
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms vertex	0.2163221556529799
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms pIFG	0.20132280715879616
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms aIFG	0.23679677284902315
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms pIPL	0.09221271441945038
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms sham	0.1008437718492446
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms pIPL sound sham	0.11590647602134145
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms pIPL action sham	0.08964519035872237
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms sound pIPL	0.08931571165110415
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms action pIPL	0.09331157091382544
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	simlex999-sim	0.26632798123250784
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	ws353	0.3969112840897481
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	tms aIFG	0.23690336518448982
@@ -6254,6 +6506,12 @@ de	ppmi_tagged_wiki_abs_freq_top__7500_words	tms pIFG	0.18942328588241597
 de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms vertex	0.23063473991200148
 de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms pIFG	0.22525726387559863
 de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms aIFG	0.25455426646272755
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms pIPL	0.10925837797206185
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms sham	0.10863494613182663
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms pIPL sound sham	0.14042117682908548
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms pIPL action sham	0.07943507937536279
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms sound pIPL	0.10627043649422484
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms action pIPL	0.11223885501198047
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	simlex999-sim	0.2081911060229708
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	ws353	0.3385885725190713
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	tms aIFG	0.24802362626062424
@@ -6262,6 +6520,12 @@ de	ppmi_tagged_wiki_abs_freq_random__7500_words	tms pIFG	0.1786304637643319
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms vertex	0.24364670150572823
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms pIFG	0.20931487811510066
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms aIFG	0.2808236141776009
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms pIPL	0.10433167042906609
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms sham	0.11780278959038895
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms pIPL sound sham	0.14744467041645504
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms pIPL action sham	0.08996820019487253
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms sound pIPL	0.11456094041117468
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms action pIPL	0.09258537182879938
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	simlex999-sim	0.26037718385305547
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	ws353	0.37629747320352397
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	tms aIFG	0.23945972372141824
@@ -6280,6 +6544,12 @@ de	ppmi_tagged_wiki_abs_freq_top__10000_words	tms pIFG	0.19809047880412262
 de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms vertex	0.23504980297949196
 de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms pIFG	0.23454639175980532
 de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms aIFG	0.2647142646075091
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms pIPL	0.10634131444491605
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms sham	0.10474024439056856
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms pIPL sound sham	0.14090345675000784
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms pIPL action sham	0.07073819909827475
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms sound pIPL	0.1085996223199958
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms action pIPL	0.10317979765485627
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	simlex999-sim	0.21181898767322752
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	ws353	0.3659269300341492
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	tms aIFG	0.2463649379996819
@@ -6288,6 +6558,12 @@ de	ppmi_tagged_wiki_abs_freq_random__10000_words	tms pIFG	0.18957973703252226
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms vertex	0.2288634642385371
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms pIFG	0.21354585171934495
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms aIFG	0.27699014522987814
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms pIPL	0.10595996451109045
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms sham	0.1220611677872304
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms pIPL sound sham	0.1545544694791811
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms pIPL action sham	0.09094477324851437
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms sound pIPL	0.11262174703362032
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms action pIPL	0.09814526419211139
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	simlex999-sim	0.2550486499782104
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	ws353	0.36337254764285304
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	tms aIFG	0.2427199731990856
@@ -6306,6 +6582,12 @@ de	ppmi_tagged_wiki_abs_freq_top__12500_words	tms pIFG	0.20088392729401372
 de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms vertex	0.2362127398462199
 de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms pIFG	0.23470110488343943
 de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms aIFG	0.26731496616256306
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms pIPL	0.10405075627187396
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms sham	0.10227937823090304
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms pIPL sound sham	0.13930376420178442
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms pIPL action sham	0.06703265965927924
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms sound pIPL	0.10705424848420735
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms action pIPL	0.09967851763095965
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	simlex999-sim	0.21661826249548147
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	ws353	0.3695874546082659
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	tms aIFG	0.25460252733921074
@@ -6314,6 +6596,12 @@ de	ppmi_tagged_wiki_abs_freq_random__12500_words	tms pIFG	0.1970856865757945
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms vertex	0.2327230326217408
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms pIFG	0.21911877165542248
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms aIFG	0.28509749727153283
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms pIPL	0.10737100165327909
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms sham	0.12273109624370161
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms pIPL sound sham	0.1518047059402416
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms pIPL action sham	0.09527033854841829
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms sound pIPL	0.11104965844876043
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms action pIPL	0.10260995374166254
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	simlex999-sim	0.25170078218924474
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	ws353	0.35400542554393005
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	tms aIFG	0.24288985635287877
@@ -6332,6 +6620,12 @@ de	ppmi_tagged_wiki_abs_freq_top__15000_words	tms pIFG	0.20178328550877375
 de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms vertex	0.23665654287761648
 de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms pIFG	0.23390242186388616
 de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms aIFG	0.270234269513143
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms pIPL	0.10323674007015023
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms sham	0.10042723126988172
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms pIPL sound sham	0.13776726752938778
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms pIPL action sham	0.0643329405050288
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms sound pIPL	0.10902931395774622
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms action pIPL	0.0962266743155341
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	simlex999-sim	0.2257144794332482
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	ws353	0.38885628179832943
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	tms aIFG	0.2691606215454552
@@ -6340,6 +6634,12 @@ de	ppmi_tagged_wiki_abs_freq_random__15000_words	tms pIFG	0.21106400662561425
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms vertex	0.24160465480897883
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms pIFG	0.24554526599224083
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms aIFG	0.30909896846289653
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms pIPL	0.10984352649518157
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms sham	0.12360659555339426
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms pIPL sound sham	0.15557482085948762
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms pIPL action sham	0.0937621871033793
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms sound pIPL	0.11627533011917286
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms action pIPL	0.10237655290856444
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	simlex999-sim	0.2472979094354578
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	ws353	0.3453773256027613
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	tms aIFG	0.24560685974060448
@@ -6358,6 +6658,12 @@ de	ppmi_tagged_wiki_abs_freq_top__17500_words	tms pIFG	0.19975550320922564
 de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms vertex	0.23574640665390983
 de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms pIFG	0.23491515101159716
 de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms aIFG	0.2666087828656584
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms pIPL	0.1045405046177878
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms sham	0.10051516944638811
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms pIPL sound sham	0.1390692561951866
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms pIPL action sham	0.06299865597296135
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms sound pIPL	0.11134725122550435
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms action pIPL	0.09673532883797308
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	simlex999-sim	0.23292040067449424
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	ws353	0.38595055304937875
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	tms aIFG	0.25690129047461574
@@ -6366,6 +6672,12 @@ de	ppmi_tagged_wiki_abs_freq_random__17500_words	tms pIFG	0.19563850905267482
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms vertex	0.2236419455162619
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms pIFG	0.23209975995559332
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms aIFG	0.2946949897058095
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms pIPL	0.10550265535602099
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms sham	0.11842432994464505
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms pIPL sound sham	0.14977320805908653
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms pIPL action sham	0.08855517334654239
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms sound pIPL	0.10814798808216063
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms action pIPL	0.10158351734053019
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	simlex999-sim	0.24356191920176667
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	ws353	0.3382782930548352
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	tms aIFG	0.24384355100662913
@@ -6384,6 +6696,12 @@ de	ppmi_tagged_wiki_abs_freq_top__20000_words	tms pIFG	0.1977871159887884
 de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms vertex	0.23682345037887512
 de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms pIFG	0.2345937282094969
 de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms aIFG	0.26723977549722494
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms pIPL	0.10307674484315392
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms sham	0.09848199427329839
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms pIPL sound sham	0.13844307072782536
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms pIPL action sham	0.05939859158348119
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms sound pIPL	0.11101838682740099
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms action pIPL	0.0937818662544856
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	simlex999-sim	0.22921686648925804
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	ws353	0.37475581137051395
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	tms aIFG	0.25452128490972087
@@ -6392,6 +6710,12 @@ de	ppmi_tagged_wiki_abs_freq_random__20000_words	tms pIFG	0.19817856686738464
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms vertex	0.2370538020125259
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms pIFG	0.23111716958876413
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms aIFG	0.29211275963321254
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms pIPL	0.10394591512246135
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms sham	0.1170011089920704
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms pIPL sound sham	0.15351959015684694
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms pIPL action sham	0.08177068810518552
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms sound pIPL	0.10954705959195675
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms action pIPL	0.0968914494854316
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	simlex999-sim	0.24033873918989204
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	ws353	0.3315356095816574
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	tms aIFG	0.24389652343600812
@@ -6410,6 +6734,12 @@ de	ppmi_tagged_wiki_abs_freq_top__25000_words	tms pIFG	0.20366443927764166
 de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms vertex	0.24133477545382775
 de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms pIFG	0.23791977241451046
 de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms aIFG	0.27422470749383954
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms pIPL	0.10290690899523547
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms sham	0.096997940718178
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms pIPL sound sham	0.1371001529133313
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms pIPL action sham	0.05756331867682132
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms sound pIPL	0.11232743326740655
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms action pIPL	0.09208242227976894
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	simlex999-sim	0.2267333552135953
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	ws353	0.3774768031918923
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	tms aIFG	0.24981837111889987
@@ -6418,6 +6748,12 @@ de	ppmi_tagged_wiki_abs_freq_random__25000_words	tms pIFG	0.18665645969318762
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms vertex	0.22930406679544674
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms pIFG	0.2212417533317311
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms aIFG	0.29205553064917633
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms pIPL	0.09956997352734233
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms sham	0.10720871168716548
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms pIPL sound sham	0.14340563782318402
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms pIPL action sham	0.07301666429794099
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms sound pIPL	0.0970355890199883
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms action pIPL	0.10061576516368984
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	simlex999-sim	0.23777547383264683
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	ws353	0.3206932055631541
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	tms aIFG	0.24840603167461078
@@ -6436,6 +6772,12 @@ de	ppmi_opensubs_abs_freq_top__100_words	tms pIFG	0.12470068218475319
 de	ppmi_opensubs_abs_freq_top__100_words	de tms vertex	0.12669369064831318
 de	ppmi_opensubs_abs_freq_top__100_words	de tms pIFG	0.17355744774167195
 de	ppmi_opensubs_abs_freq_top__100_words	de tms aIFG	0.18251994918838502
+de	ppmi_opensubs_abs_freq_top__100_words	de tms pIPL	0.06578289370061671
+de	ppmi_opensubs_abs_freq_top__100_words	de tms sham	0.07551808356640641
+de	ppmi_opensubs_abs_freq_top__100_words	de tms pIPL sound sham	0.06636704919230131
+de	ppmi_opensubs_abs_freq_top__100_words	de tms pIPL action sham	0.0834751069200507
+de	ppmi_opensubs_abs_freq_top__100_words	de tms sound pIPL	0.0504426347943884
+de	ppmi_opensubs_abs_freq_top__100_words	de tms action pIPL	0.08204504980022467
 de	ppmi_opensubs_abs_freq_random__100_words	simlex999-sim	0.021883825567813226
 de	ppmi_opensubs_abs_freq_random__100_words	ws353	-0.03681768259114861
 de	ppmi_opensubs_abs_freq_random__100_words	tms aIFG	-0.1269624347214239
@@ -6444,6 +6786,12 @@ de	ppmi_opensubs_abs_freq_random__100_words	tms pIFG	-0.17262887967229928
 de	ppmi_opensubs_abs_freq_random__100_words	de tms vertex	-0.19817318660468794
 de	ppmi_opensubs_abs_freq_random__100_words	de tms pIFG	-0.20459642654028912
 de	ppmi_opensubs_abs_freq_random__100_words	de tms aIFG	-0.1558100872512115
+de	ppmi_opensubs_abs_freq_random__100_words	de tms pIPL	0.0008198872125044625
+de	ppmi_opensubs_abs_freq_random__100_words	de tms sham	0.02797071566212998
+de	ppmi_opensubs_abs_freq_random__100_words	de tms pIPL sound sham	0.023294009645645465
+de	ppmi_opensubs_abs_freq_random__100_words	de tms pIPL action sham	0.03714372489028322
+de	ppmi_opensubs_abs_freq_random__100_words	de tms sound pIPL	-0.028258956658944862
+de	ppmi_opensubs_abs_freq_random__100_words	de tms action pIPL	0.03116267927063699
 de	ppmi_opensubs_abs_freq_top_rowincol_100_words	simlex999-sim	0.22761538231862022
 de	ppmi_opensubs_abs_freq_top_rowincol_100_words	ws353	0.4711151127998365
 de	ppmi_opensubs_abs_freq_top_rowincol_100_words	tms aIFG	0.1748247860296181
@@ -6462,6 +6810,12 @@ de	ppmi_opensubs_abs_freq_top__200_words	tms pIFG	0.16040233144656726
 de	ppmi_opensubs_abs_freq_top__200_words	de tms vertex	0.16200679038890775
 de	ppmi_opensubs_abs_freq_top__200_words	de tms pIFG	0.20683093137343284
 de	ppmi_opensubs_abs_freq_top__200_words	de tms aIFG	0.2448572346050529
+de	ppmi_opensubs_abs_freq_top__200_words	de tms pIPL	0.06567182492326702
+de	ppmi_opensubs_abs_freq_top__200_words	de tms sham	0.07385489650411813
+de	ppmi_opensubs_abs_freq_top__200_words	de tms pIPL sound sham	0.08919810881705333
+de	ppmi_opensubs_abs_freq_top__200_words	de tms pIPL action sham	0.057150772776750854
+de	ppmi_opensubs_abs_freq_top__200_words	de tms sound pIPL	0.06340136915436527
+de	ppmi_opensubs_abs_freq_top__200_words	de tms action pIPL	0.0669038971189248
 de	ppmi_opensubs_abs_freq_random__200_words	simlex999-sim	0.06778993807201991
 de	ppmi_opensubs_abs_freq_random__200_words	ws353	-0.06363668540955777
 de	ppmi_opensubs_abs_freq_random__200_words	tms aIFG	-0.13867189416433767
@@ -6470,6 +6824,12 @@ de	ppmi_opensubs_abs_freq_random__200_words	tms pIFG	-0.14606480316985862
 de	ppmi_opensubs_abs_freq_random__200_words	de tms vertex	-0.18673584983042046
 de	ppmi_opensubs_abs_freq_random__200_words	de tms pIFG	-0.17292690149635015
 de	ppmi_opensubs_abs_freq_random__200_words	de tms aIFG	-0.1508506763226964
+de	ppmi_opensubs_abs_freq_random__200_words	de tms pIPL	0.002693354399913673
+de	ppmi_opensubs_abs_freq_random__200_words	de tms sham	0.009598101825739995
+de	ppmi_opensubs_abs_freq_random__200_words	de tms pIPL sound sham	0.016078367171709955
+de	ppmi_opensubs_abs_freq_random__200_words	de tms pIPL action sham	0.007943197798600662
+de	ppmi_opensubs_abs_freq_random__200_words	de tms sound pIPL	-0.012021703087691234
+de	ppmi_opensubs_abs_freq_random__200_words	de tms action pIPL	0.019822164463486204
 de	ppmi_opensubs_abs_freq_top_rowincol_200_words	simlex999-sim	0.23253516281727443
 de	ppmi_opensubs_abs_freq_top_rowincol_200_words	ws353	0.48080204194604803
 de	ppmi_opensubs_abs_freq_top_rowincol_200_words	tms aIFG	0.17853631869115047
@@ -6488,6 +6848,12 @@ de	ppmi_opensubs_abs_freq_top__500_words	tms pIFG	0.17360222994691032
 de	ppmi_opensubs_abs_freq_top__500_words	de tms vertex	0.1625186473787776
 de	ppmi_opensubs_abs_freq_top__500_words	de tms pIFG	0.20671314543662128
 de	ppmi_opensubs_abs_freq_top__500_words	de tms aIFG	0.2640111575753121
+de	ppmi_opensubs_abs_freq_top__500_words	de tms pIPL	0.09162431499489423
+de	ppmi_opensubs_abs_freq_top__500_words	de tms sham	0.09604718444611346
+de	ppmi_opensubs_abs_freq_top__500_words	de tms pIPL sound sham	0.11532469818488357
+de	ppmi_opensubs_abs_freq_top__500_words	de tms pIPL action sham	0.07407683004270502
+de	ppmi_opensubs_abs_freq_top__500_words	de tms sound pIPL	0.08646968778691465
+de	ppmi_opensubs_abs_freq_top__500_words	de tms action pIPL	0.09838290959681621
 de	ppmi_opensubs_abs_freq_random__500_words	simlex999-sim	0.06869278028039721
 de	ppmi_opensubs_abs_freq_random__500_words	ws353	0.026756794814214172
 de	ppmi_opensubs_abs_freq_random__500_words	tms aIFG	-0.05242428750756216
@@ -6496,6 +6862,12 @@ de	ppmi_opensubs_abs_freq_random__500_words	tms pIFG	-0.012991081152464905
 de	ppmi_opensubs_abs_freq_random__500_words	de tms vertex	-0.047794769644289054
 de	ppmi_opensubs_abs_freq_random__500_words	de tms pIFG	-0.01891107406411649
 de	ppmi_opensubs_abs_freq_random__500_words	de tms aIFG	-0.06441509352025876
+de	ppmi_opensubs_abs_freq_random__500_words	de tms pIPL	0.041004958001433285
+de	ppmi_opensubs_abs_freq_random__500_words	de tms sham	0.04614606810811451
+de	ppmi_opensubs_abs_freq_random__500_words	de tms pIPL sound sham	0.04463296544331545
+de	ppmi_opensubs_abs_freq_random__500_words	de tms pIPL action sham	0.05311275449782086
+de	ppmi_opensubs_abs_freq_random__500_words	de tms sound pIPL	0.0148321320820035
+de	ppmi_opensubs_abs_freq_random__500_words	de tms action pIPL	0.06633230841583801
 de	ppmi_opensubs_abs_freq_top_rowincol_500_words	simlex999-sim	0.24302340766450373
 de	ppmi_opensubs_abs_freq_top_rowincol_500_words	ws353	0.46815993123899824
 de	ppmi_opensubs_abs_freq_top_rowincol_500_words	tms aIFG	0.18974884756124633
@@ -6514,6 +6886,12 @@ de	ppmi_opensubs_abs_freq_top__750_words	tms pIFG	0.16604000640883296
 de	ppmi_opensubs_abs_freq_top__750_words	de tms vertex	0.1723673061741932
 de	ppmi_opensubs_abs_freq_top__750_words	de tms pIFG	0.20415465175417752
 de	ppmi_opensubs_abs_freq_top__750_words	de tms aIFG	0.2461990142106015
+de	ppmi_opensubs_abs_freq_top__750_words	de tms pIPL	0.1095020257232387
+de	ppmi_opensubs_abs_freq_top__750_words	de tms sham	0.1089117163516883
+de	ppmi_opensubs_abs_freq_top__750_words	de tms pIPL sound sham	0.12113521721055981
+de	ppmi_opensubs_abs_freq_top__750_words	de tms pIPL action sham	0.09482971604040999
+de	ppmi_opensubs_abs_freq_top__750_words	de tms sound pIPL	0.10104273244579855
+de	ppmi_opensubs_abs_freq_top__750_words	de tms action pIPL	0.12092183139714645
 de	ppmi_opensubs_abs_freq_random__750_words	simlex999-sim	0.07269996555844534
 de	ppmi_opensubs_abs_freq_random__750_words	ws353	0.08179277963852924
 de	ppmi_opensubs_abs_freq_random__750_words	tms aIFG	-0.041171490120110905
@@ -6522,6 +6900,12 @@ de	ppmi_opensubs_abs_freq_random__750_words	tms pIFG	-0.020779096449703494
 de	ppmi_opensubs_abs_freq_random__750_words	de tms vertex	-0.04048858664186053
 de	ppmi_opensubs_abs_freq_random__750_words	de tms pIFG	-0.038104552661554006
 de	ppmi_opensubs_abs_freq_random__750_words	de tms aIFG	-0.05117895533298169
+de	ppmi_opensubs_abs_freq_random__750_words	de tms pIPL	0.051143393022214254
+de	ppmi_opensubs_abs_freq_random__750_words	de tms sham	0.053959719033139564
+de	ppmi_opensubs_abs_freq_random__750_words	de tms pIPL sound sham	0.06611875976011153
+de	ppmi_opensubs_abs_freq_random__750_words	de tms pIPL action sham	0.04573398940663575
+de	ppmi_opensubs_abs_freq_random__750_words	de tms sound pIPL	0.04342245035184237
+de	ppmi_opensubs_abs_freq_random__750_words	de tms action pIPL	0.05416760222924798
 de	ppmi_opensubs_abs_freq_top_rowincol_750_words	simlex999-sim	0.24116853008665273
 de	ppmi_opensubs_abs_freq_top_rowincol_750_words	ws353	0.45817108192385664
 de	ppmi_opensubs_abs_freq_top_rowincol_750_words	tms aIFG	0.19945882642678822
@@ -6540,6 +6924,12 @@ de	ppmi_opensubs_abs_freq_top__1000_words	tms pIFG	0.18106522685794194
 de	ppmi_opensubs_abs_freq_top__1000_words	de tms vertex	0.18921480668677926
 de	ppmi_opensubs_abs_freq_top__1000_words	de tms pIFG	0.21679303531614658
 de	ppmi_opensubs_abs_freq_top__1000_words	de tms aIFG	0.24415590549943
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms pIPL	0.10081885699259321
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms sham	0.09973757283093662
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms pIPL sound sham	0.11170435664448158
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms pIPL action sham	0.0852449348864676
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms sound pIPL	0.09328593610225691
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms action pIPL	0.11103689627076621
 de	ppmi_opensubs_abs_freq_random__1000_words	simlex999-sim	0.08148353747135668
 de	ppmi_opensubs_abs_freq_random__1000_words	ws353	0.15787583103434238
 de	ppmi_opensubs_abs_freq_random__1000_words	tms aIFG	0.01801963456056641
@@ -6548,6 +6938,12 @@ de	ppmi_opensubs_abs_freq_random__1000_words	tms pIFG	0.048690739555490234
 de	ppmi_opensubs_abs_freq_random__1000_words	de tms vertex	0.021163072790811067
 de	ppmi_opensubs_abs_freq_random__1000_words	de tms pIFG	0.016496462127901266
 de	ppmi_opensubs_abs_freq_random__1000_words	de tms aIFG	0.022269448101507373
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms pIPL	0.05498603490482021
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms sham	0.05496991770118836
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms pIPL sound sham	0.07211797351207319
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms pIPL action sham	0.0406341458005625
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms sound pIPL	0.04201835956568264
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms action pIPL	0.061834923752162894
 de	ppmi_opensubs_abs_freq_top_rowincol_1000_words	simlex999-sim	0.2254574708160436
 de	ppmi_opensubs_abs_freq_top_rowincol_1000_words	ws353	0.45827037527843534
 de	ppmi_opensubs_abs_freq_top_rowincol_1000_words	tms aIFG	0.21195030822461083
@@ -6566,6 +6962,12 @@ de	ppmi_opensubs_abs_freq_top__2500_words	tms pIFG	0.1856690624406239
 de	ppmi_opensubs_abs_freq_top__2500_words	de tms vertex	0.2068216541002271
 de	ppmi_opensubs_abs_freq_top__2500_words	de tms pIFG	0.2193760525408937
 de	ppmi_opensubs_abs_freq_top__2500_words	de tms aIFG	0.24430174757570933
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms pIPL	0.1145149146622305
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms sham	0.11431175971131116
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms pIPL sound sham	0.12442238917880921
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms pIPL action sham	0.10387917349609672
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms sound pIPL	0.10514143171764462
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms action pIPL	0.12787233252920885
 de	ppmi_opensubs_abs_freq_random__2500_words	simlex999-sim	0.08239418603405785
 de	ppmi_opensubs_abs_freq_random__2500_words	ws353	0.29187006795128123
 de	ppmi_opensubs_abs_freq_random__2500_words	tms aIFG	0.007294453603228624
@@ -6574,6 +6976,12 @@ de	ppmi_opensubs_abs_freq_random__2500_words	tms pIFG	0.03373194265410186
 de	ppmi_opensubs_abs_freq_random__2500_words	de tms vertex	0.024183345659338835
 de	ppmi_opensubs_abs_freq_random__2500_words	de tms pIFG	0.027959029294215815
 de	ppmi_opensubs_abs_freq_random__2500_words	de tms aIFG	0.01553429061011792
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms pIPL	0.05890007732049563
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms sham	0.05962212454065732
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms pIPL sound sham	0.047663122007090254
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms pIPL action sham	0.07080333587949837
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms sound pIPL	0.037998226867454
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms action pIPL	0.07845184798058315
 de	ppmi_opensubs_abs_freq_top_rowincol_2500_words	simlex999-sim	0.20523514319984232
 de	ppmi_opensubs_abs_freq_top_rowincol_2500_words	ws353	0.44374837254682864
 de	ppmi_opensubs_abs_freq_top_rowincol_2500_words	tms aIFG	0.2260819500180327
@@ -6592,6 +7000,12 @@ de	ppmi_opensubs_abs_freq_top__5000_words	tms pIFG	0.19849555607144476
 de	ppmi_opensubs_abs_freq_top__5000_words	de tms vertex	0.22347292610144692
 de	ppmi_opensubs_abs_freq_top__5000_words	de tms pIFG	0.22543575071449515
 de	ppmi_opensubs_abs_freq_top__5000_words	de tms aIFG	0.2634627230456416
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms pIPL	0.11445337517610564
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms sham	0.11630653861428007
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms pIPL sound sham	0.12815551449346546
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms pIPL action sham	0.10525038673307677
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms sound pIPL	0.10871447420429223
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms action pIPL	0.12400739794825863
 de	ppmi_opensubs_abs_freq_random__5000_words	simlex999-sim	0.16056636140226657
 de	ppmi_opensubs_abs_freq_random__5000_words	ws353	0.34962728272184845
 de	ppmi_opensubs_abs_freq_random__5000_words	tms aIFG	0.1556711230649715
@@ -6600,6 +7014,12 @@ de	ppmi_opensubs_abs_freq_random__5000_words	tms pIFG	0.11387970602893412
 de	ppmi_opensubs_abs_freq_random__5000_words	de tms vertex	0.1864286841774688
 de	ppmi_opensubs_abs_freq_random__5000_words	de tms pIFG	0.1527322233394751
 de	ppmi_opensubs_abs_freq_random__5000_words	de tms aIFG	0.22024196671013843
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms pIPL	0.09746542756134868
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms sham	0.10638442603312377
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms pIPL sound sham	0.08708067731309735
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms pIPL action sham	0.12760843248627488
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms sound pIPL	0.09187885693769983
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms action pIPL	0.10443154742957414
 de	ppmi_opensubs_abs_freq_top_rowincol_5000_words	simlex999-sim	0.18826558634804946
 de	ppmi_opensubs_abs_freq_top_rowincol_5000_words	ws353	0.42721579592650166
 de	ppmi_opensubs_abs_freq_top_rowincol_5000_words	tms aIFG	0.24026345212355252
@@ -6618,6 +7038,12 @@ de	ppmi_opensubs_abs_freq_top__7500_words	tms pIFG	0.20976781920393642
 de	ppmi_opensubs_abs_freq_top__7500_words	de tms vertex	0.23072657873361582
 de	ppmi_opensubs_abs_freq_top__7500_words	de tms pIFG	0.23298759352883613
 de	ppmi_opensubs_abs_freq_top__7500_words	de tms aIFG	0.2704577810321323
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms pIPL	0.11497326751414105
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms sham	0.11681003257282999
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms pIPL sound sham	0.12694572115267536
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms pIPL action sham	0.1077596365847793
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms sound pIPL	0.10738906341918951
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms action pIPL	0.12629693015909493
 de	ppmi_opensubs_abs_freq_random__7500_words	simlex999-sim	0.163130350611023
 de	ppmi_opensubs_abs_freq_random__7500_words	ws353	0.3585605300946232
 de	ppmi_opensubs_abs_freq_random__7500_words	tms aIFG	0.1934731386223867
@@ -6626,6 +7052,12 @@ de	ppmi_opensubs_abs_freq_random__7500_words	tms pIFG	0.13369554335253847
 de	ppmi_opensubs_abs_freq_random__7500_words	de tms vertex	0.20226126884887763
 de	ppmi_opensubs_abs_freq_random__7500_words	de tms pIFG	0.18071855968265613
 de	ppmi_opensubs_abs_freq_random__7500_words	de tms aIFG	0.25293779017494566
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms pIPL	0.09756604904671659
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms sham	0.11003740310293918
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms pIPL sound sham	0.1079492737468026
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms pIPL action sham	0.11395660594951892
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms sound pIPL	0.09044746836923435
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms action pIPL	0.1051437874461403
 de	ppmi_opensubs_abs_freq_top_rowincol_7500_words	simlex999-sim	0.1774418542584977
 de	ppmi_opensubs_abs_freq_top_rowincol_7500_words	ws353	0.4223393889571976
 de	ppmi_opensubs_abs_freq_top_rowincol_7500_words	tms aIFG	0.24053764073319303
@@ -6644,6 +7076,12 @@ de	ppmi_opensubs_abs_freq_top__10000_words	tms pIFG	0.21563413010518084
 de	ppmi_opensubs_abs_freq_top__10000_words	de tms vertex	0.23316623720953888
 de	ppmi_opensubs_abs_freq_top__10000_words	de tms pIFG	0.24041543596054488
 de	ppmi_opensubs_abs_freq_top__10000_words	de tms aIFG	0.2804163585981962
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms pIPL	0.11543879302607149
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms sham	0.11737290068285353
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms pIPL sound sham	0.12752233014357042
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms pIPL action sham	0.10841470259958427
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms sound pIPL	0.10656117104169135
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms action pIPL	0.12804428154148856
 de	ppmi_opensubs_abs_freq_random__10000_words	simlex999-sim	0.16421308343484672
 de	ppmi_opensubs_abs_freq_random__10000_words	ws353	0.41920787472064913
 de	ppmi_opensubs_abs_freq_random__10000_words	tms aIFG	0.19393631568497383
@@ -6652,6 +7090,12 @@ de	ppmi_opensubs_abs_freq_random__10000_words	tms pIFG	0.14460790548267088
 de	ppmi_opensubs_abs_freq_random__10000_words	de tms vertex	0.2085618185073251
 de	ppmi_opensubs_abs_freq_random__10000_words	de tms pIFG	0.18448423571017403
 de	ppmi_opensubs_abs_freq_random__10000_words	de tms aIFG	0.24849166609651824
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms pIPL	0.09843382063241465
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms sham	0.10174462929323967
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms pIPL sound sham	0.12227572973197945
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms pIPL action sham	0.08202000653274831
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms sound pIPL	0.10611500155706631
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms action pIPL	0.09107199752357818
 de	ppmi_opensubs_abs_freq_top_rowincol_10000_words	simlex999-sim	0.17017192201992734
 de	ppmi_opensubs_abs_freq_top_rowincol_10000_words	ws353	0.4270868233376124
 de	ppmi_opensubs_abs_freq_top_rowincol_10000_words	tms aIFG	0.24155046763776963
@@ -6670,6 +7114,12 @@ de	ppmi_opensubs_abs_freq_top__12500_words	tms pIFG	0.22608443708173548
 de	ppmi_opensubs_abs_freq_top__12500_words	de tms vertex	0.2413266963285223
 de	ppmi_opensubs_abs_freq_top__12500_words	de tms pIFG	0.2546140499473343
 de	ppmi_opensubs_abs_freq_top__12500_words	de tms aIFG	0.29379114983617355
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms pIPL	0.11652670255630287
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms sham	0.11789704808271638
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms pIPL sound sham	0.12916057085431992
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms pIPL action sham	0.10781296811976146
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms sound pIPL	0.10760690840146954
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms action pIPL	0.12904521281892362
 de	ppmi_opensubs_abs_freq_random__12500_words	simlex999-sim	0.1872777005735897
 de	ppmi_opensubs_abs_freq_random__12500_words	ws353	0.46723603229857774
 de	ppmi_opensubs_abs_freq_random__12500_words	tms aIFG	0.1868102209429185
@@ -6678,6 +7128,12 @@ de	ppmi_opensubs_abs_freq_random__12500_words	tms pIFG	0.153693357814241
 de	ppmi_opensubs_abs_freq_random__12500_words	de tms vertex	0.2171538854417326
 de	ppmi_opensubs_abs_freq_random__12500_words	de tms pIFG	0.18839280543368264
 de	ppmi_opensubs_abs_freq_random__12500_words	de tms aIFG	0.2407295976580117
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms pIPL	0.11691579791382924
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms sham	0.12775128118454113
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms pIPL sound sham	0.14734204372454424
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms pIPL action sham	0.11012097279158779
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms sound pIPL	0.12203105290478779
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms action pIPL	0.11342194051650245
 de	ppmi_opensubs_abs_freq_top_rowincol_12500_words	simlex999-sim	0.1632425352830976
 de	ppmi_opensubs_abs_freq_top_rowincol_12500_words	ws353	0.426235448862282
 de	ppmi_opensubs_abs_freq_top_rowincol_12500_words	tms aIFG	0.24788240477074608
@@ -6696,6 +7152,12 @@ de	ppmi_opensubs_abs_freq_top__15000_words	tms pIFG	0.22362797767322048
 de	ppmi_opensubs_abs_freq_top__15000_words	de tms vertex	0.24206464311819642
 de	ppmi_opensubs_abs_freq_top__15000_words	de tms pIFG	0.2516296412905507
 de	ppmi_opensubs_abs_freq_top__15000_words	de tms aIFG	0.29756727288816387
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms pIPL	0.11692743690325494
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms sham	0.11809821017129386
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms pIPL sound sham	0.13147639179012852
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms pIPL action sham	0.10587433926040221
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms sound pIPL	0.10676322426516655
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms action pIPL	0.13082499091379673
 de	ppmi_opensubs_abs_freq_random__15000_words	simlex999-sim	0.18289002901092483
 de	ppmi_opensubs_abs_freq_random__15000_words	ws353	0.47064892856301344
 de	ppmi_opensubs_abs_freq_random__15000_words	tms aIFG	0.20202268269446144
@@ -6704,6 +7166,12 @@ de	ppmi_opensubs_abs_freq_random__15000_words	tms pIFG	0.1641178740803359
 de	ppmi_opensubs_abs_freq_random__15000_words	de tms vertex	0.22384347534051177
 de	ppmi_opensubs_abs_freq_random__15000_words	de tms pIFG	0.1970973468257805
 de	ppmi_opensubs_abs_freq_random__15000_words	de tms aIFG	0.2514249622854826
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms pIPL	0.11381322191861275
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms sham	0.11971418104751229
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms pIPL sound sham	0.15060018570878267
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms pIPL action sham	0.09038881146179642
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms sound pIPL	0.12641967176564436
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms action pIPL	0.10129221623282916
 de	ppmi_opensubs_abs_freq_top_rowincol_15000_words	simlex999-sim	0.16718894047916638
 de	ppmi_opensubs_abs_freq_top_rowincol_15000_words	ws353	0.42926288615063046
 de	ppmi_opensubs_abs_freq_top_rowincol_15000_words	tms aIFG	0.250574025030901
@@ -6722,6 +7190,12 @@ de	ppmi_opensubs_abs_freq_top__17500_words	tms pIFG	0.2297943538509167
 de	ppmi_opensubs_abs_freq_top__17500_words	de tms vertex	0.2525262792813508
 de	ppmi_opensubs_abs_freq_top__17500_words	de tms pIFG	0.2618666888948656
 de	ppmi_opensubs_abs_freq_top__17500_words	de tms aIFG	0.31305268657981133
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms pIPL	0.11765836818948677
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms sham	0.11939259320422765
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms pIPL sound sham	0.13230832581470606
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms pIPL action sham	0.1075547128654559
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms sound pIPL	0.10657920567970867
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms action pIPL	0.13273388910686765
 de	ppmi_opensubs_abs_freq_random__17500_words	simlex999-sim	0.1915387950396117
 de	ppmi_opensubs_abs_freq_random__17500_words	ws353	0.45857751427297294
 de	ppmi_opensubs_abs_freq_random__17500_words	tms aIFG	0.2060329112992325
@@ -6730,6 +7204,12 @@ de	ppmi_opensubs_abs_freq_random__17500_words	tms pIFG	0.17684808402762014
 de	ppmi_opensubs_abs_freq_random__17500_words	de tms vertex	0.21861135476370847
 de	ppmi_opensubs_abs_freq_random__17500_words	de tms pIFG	0.20584232498677626
 de	ppmi_opensubs_abs_freq_random__17500_words	de tms aIFG	0.25448612558228373
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms pIPL	0.12194005706007115
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms sham	0.12847465138077604
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms pIPL sound sham	0.15519723012473274
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms pIPL action sham	0.10393156287564259
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms sound pIPL	0.12896381713917307
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms action pIPL	0.11714621595283212
 de	ppmi_opensubs_abs_freq_top_rowincol_17500_words	simlex999-sim	0.1701404051727834
 de	ppmi_opensubs_abs_freq_top_rowincol_17500_words	ws353	0.4379206761929704
 de	ppmi_opensubs_abs_freq_top_rowincol_17500_words	tms aIFG	0.25624187325776937
@@ -6748,6 +7228,12 @@ de	ppmi_opensubs_abs_freq_top__20000_words	tms pIFG	0.23407246014793665
 de	ppmi_opensubs_abs_freq_top__20000_words	de tms vertex	0.2513801009838586
 de	ppmi_opensubs_abs_freq_top__20000_words	de tms pIFG	0.264253623280146
 de	ppmi_opensubs_abs_freq_top__20000_words	de tms aIFG	0.3078905069290763
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms pIPL	0.11882193324381103
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms sham	0.12062954386982792
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms pIPL sound sham	0.13569799673510402
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms pIPL action sham	0.10661360839578062
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms sound pIPL	0.10896500547770284
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms action pIPL	0.13246722448962675
 de	ppmi_opensubs_abs_freq_random__20000_words	simlex999-sim	0.19374939172602207
 de	ppmi_opensubs_abs_freq_random__20000_words	ws353	0.4556313406766192
 de	ppmi_opensubs_abs_freq_random__20000_words	tms aIFG	0.2341751218829526
@@ -6756,6 +7242,12 @@ de	ppmi_opensubs_abs_freq_random__20000_words	tms pIFG	0.20171994164507628
 de	ppmi_opensubs_abs_freq_random__20000_words	de tms vertex	0.24217184880020984
 de	ppmi_opensubs_abs_freq_random__20000_words	de tms pIFG	0.23838801684414584
 de	ppmi_opensubs_abs_freq_random__20000_words	de tms aIFG	0.2865647149352713
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms pIPL	0.11976314627870926
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms sham	0.12621794637848274
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms pIPL sound sham	0.1568246237106201
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms pIPL action sham	0.09802500547037447
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms sound pIPL	0.1292625733559771
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms action pIPL	0.11154028802175336
 de	ppmi_opensubs_abs_freq_top_rowincol_20000_words	simlex999-sim	0.17425380547313732
 de	ppmi_opensubs_abs_freq_top_rowincol_20000_words	ws353	0.4481060921646721
 de	ppmi_opensubs_abs_freq_top_rowincol_20000_words	tms aIFG	0.2541481616393267
@@ -6774,6 +7266,12 @@ de	ppmi_opensubs_abs_freq_top__25000_words	tms pIFG	0.23132107472929786
 de	ppmi_opensubs_abs_freq_top__25000_words	de tms vertex	0.24436673964066846
 de	ppmi_opensubs_abs_freq_top__25000_words	de tms pIFG	0.2641142070168283
 de	ppmi_opensubs_abs_freq_top__25000_words	de tms aIFG	0.3111855224652622
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms pIPL	0.12031845070144062
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms sham	0.12240268219701544
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms pIPL sound sham	0.13851667645691482
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms pIPL action sham	0.10767264813892632
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms sound pIPL	0.1125861345585905
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms action pIPL	0.131616963962507
 de	ppmi_opensubs_abs_freq_random__25000_words	simlex999-sim	0.18407008555510584
 de	ppmi_opensubs_abs_freq_random__25000_words	ws353	0.4584023002518895
 de	ppmi_opensubs_abs_freq_random__25000_words	tms aIFG	0.24084835392557213
@@ -6782,6 +7280,12 @@ de	ppmi_opensubs_abs_freq_random__25000_words	tms pIFG	0.2192398481755792
 de	ppmi_opensubs_abs_freq_random__25000_words	de tms vertex	0.24217293434044734
 de	ppmi_opensubs_abs_freq_random__25000_words	de tms pIFG	0.2587636599109853
 de	ppmi_opensubs_abs_freq_random__25000_words	de tms aIFG	0.28192535695393045
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms pIPL	0.11041241884742165
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms sham	0.1268426284021406
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms pIPL sound sham	0.1532662754312014
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms pIPL action sham	0.10302372851016807
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms sound pIPL	0.11368957625151457
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms action pIPL	0.10910783453779835
 de	ppmi_opensubs_abs_freq_top_rowincol_25000_words	simlex999-sim	0.1774426654265661
 de	ppmi_opensubs_abs_freq_top_rowincol_25000_words	ws353	0.4537182644452901
 de	ppmi_opensubs_abs_freq_top_rowincol_25000_words	tms aIFG	0.25534722630907214
@@ -6800,6 +7304,12 @@ de	ppmi_joint_abs_freq_top__100_words	tms pIFG	0.1321384978614539
 de	ppmi_joint_abs_freq_top__100_words	de tms vertex	0.1741598581368025
 de	ppmi_joint_abs_freq_top__100_words	de tms pIFG	0.16691496163540787
 de	ppmi_joint_abs_freq_top__100_words	de tms aIFG	0.20928070626945788
+de	ppmi_joint_abs_freq_top__100_words	de tms pIPL	0.05019820983242877
+de	ppmi_joint_abs_freq_top__100_words	de tms sham	0.06758901717758882
+de	ppmi_joint_abs_freq_top__100_words	de tms pIPL sound sham	0.04442074944564464
+de	ppmi_joint_abs_freq_top__100_words	de tms pIPL action sham	0.0948580140337135
+de	ppmi_joint_abs_freq_top__100_words	de tms sound pIPL	-0.0013820772952486534
+de	ppmi_joint_abs_freq_top__100_words	de tms action pIPL	0.10067762643432844
 de	ppmi_joint_abs_freq_random__100_words	simlex999-sim	-0.012713230577611588
 de	ppmi_joint_abs_freq_random__100_words	ws353	0.06292844282024618
 de	ppmi_joint_abs_freq_random__100_words	tms aIFG	-0.08079399166742086
@@ -6808,6 +7318,12 @@ de	ppmi_joint_abs_freq_random__100_words	tms pIFG	-0.08738771686644992
 de	ppmi_joint_abs_freq_random__100_words	de tms vertex	-0.11186090186686591
 de	ppmi_joint_abs_freq_random__100_words	de tms pIFG	-0.10974000898484397
 de	ppmi_joint_abs_freq_random__100_words	de tms aIFG	-0.09065653434921743
+de	ppmi_joint_abs_freq_random__100_words	de tms pIPL	0.013565939268040986
+de	ppmi_joint_abs_freq_random__100_words	de tms sham	0.019812026888704107
+de	ppmi_joint_abs_freq_random__100_words	de tms pIPL sound sham	-0.0476906149465315
+de	ppmi_joint_abs_freq_random__100_words	de tms pIPL action sham	0.09424391995701244
+de	ppmi_joint_abs_freq_random__100_words	de tms sound pIPL	-0.03652239116026361
+de	ppmi_joint_abs_freq_random__100_words	de tms action pIPL	0.0664421487430904
 de	ppmi_joint_abs_freq_top_rowincol_100_words	simlex999-sim	0.269061266523286
 de	ppmi_joint_abs_freq_top_rowincol_100_words	ws353	0.5101872448625702
 de	ppmi_joint_abs_freq_top_rowincol_100_words	tms aIFG	0.15696748173131395
@@ -6826,6 +7342,12 @@ de	ppmi_joint_abs_freq_top__200_words	tms pIFG	0.12637938807695434
 de	ppmi_joint_abs_freq_top__200_words	de tms vertex	0.1628620326897534
 de	ppmi_joint_abs_freq_top__200_words	de tms pIFG	0.16169818890494217
 de	ppmi_joint_abs_freq_top__200_words	de tms aIFG	0.21838075735925613
+de	ppmi_joint_abs_freq_top__200_words	de tms pIPL	0.09793869087865409
+de	ppmi_joint_abs_freq_top__200_words	de tms sham	0.11906021299619367
+de	ppmi_joint_abs_freq_top__200_words	de tms pIPL sound sham	0.10053884316851319
+de	ppmi_joint_abs_freq_top__200_words	de tms pIPL action sham	0.14382709183065812
+de	ppmi_joint_abs_freq_top__200_words	de tms sound pIPL	0.05256135070524654
+de	ppmi_joint_abs_freq_top__200_words	de tms action pIPL	0.14893497977579304
 de	ppmi_joint_abs_freq_random__200_words	simlex999-sim	0.07702600410363723
 de	ppmi_joint_abs_freq_random__200_words	ws353	0.0723237634285922
 de	ppmi_joint_abs_freq_random__200_words	tms aIFG	-0.028326017112743924
@@ -6834,6 +7356,12 @@ de	ppmi_joint_abs_freq_random__200_words	tms pIFG	-0.020203931132531876
 de	ppmi_joint_abs_freq_random__200_words	de tms vertex	-0.07127585572057545
 de	ppmi_joint_abs_freq_random__200_words	de tms pIFG	-0.0287751597469426
 de	ppmi_joint_abs_freq_random__200_words	de tms aIFG	-0.04168165581724009
+de	ppmi_joint_abs_freq_random__200_words	de tms pIPL	0.03239161119646221
+de	ppmi_joint_abs_freq_random__200_words	de tms sham	0.06636360670646337
+de	ppmi_joint_abs_freq_random__200_words	de tms pIPL sound sham	0.029665701198075854
+de	ppmi_joint_abs_freq_random__200_words	de tms pIPL action sham	0.1056066370004677
+de	ppmi_joint_abs_freq_random__200_words	de tms sound pIPL	0.001441971014553138
+de	ppmi_joint_abs_freq_random__200_words	de tms action pIPL	0.06780259125720525
 de	ppmi_joint_abs_freq_top_rowincol_200_words	simlex999-sim	0.26696108171877836
 de	ppmi_joint_abs_freq_top_rowincol_200_words	ws353	0.5059332406153307
 de	ppmi_joint_abs_freq_top_rowincol_200_words	tms aIFG	0.15840517466677823
@@ -6852,6 +7380,12 @@ de	ppmi_joint_abs_freq_top__500_words	tms pIFG	0.12909784842662128
 de	ppmi_joint_abs_freq_top__500_words	de tms vertex	0.16789371915659043
 de	ppmi_joint_abs_freq_top__500_words	de tms pIFG	0.18160927811260916
 de	ppmi_joint_abs_freq_top__500_words	de tms aIFG	0.2142424651362264
+de	ppmi_joint_abs_freq_top__500_words	de tms pIPL	0.13481208100689768
+de	ppmi_joint_abs_freq_top__500_words	de tms sham	0.1640629407803505
+de	ppmi_joint_abs_freq_top__500_words	de tms pIPL sound sham	0.15142078820804708
+de	ppmi_joint_abs_freq_top__500_words	de tms pIPL action sham	0.18481736525283562
+de	ppmi_joint_abs_freq_top__500_words	de tms sound pIPL	0.0989678847050114
+de	ppmi_joint_abs_freq_top__500_words	de tms action pIPL	0.17791278877546443
 de	ppmi_joint_abs_freq_random__500_words	simlex999-sim	0.11369025546991599
 de	ppmi_joint_abs_freq_random__500_words	ws353	0.16455888203732658
 de	ppmi_joint_abs_freq_random__500_words	tms aIFG	0.029381535836441326
@@ -6860,6 +7394,12 @@ de	ppmi_joint_abs_freq_random__500_words	tms pIFG	0.05550316806005479
 de	ppmi_joint_abs_freq_random__500_words	de tms vertex	0.020055637865204413
 de	ppmi_joint_abs_freq_random__500_words	de tms pIFG	0.05806134085645574
 de	ppmi_joint_abs_freq_random__500_words	de tms aIFG	0.027694915012668915
+de	ppmi_joint_abs_freq_random__500_words	de tms pIPL	0.07187469560550423
+de	ppmi_joint_abs_freq_random__500_words	de tms sham	0.08644564469510621
+de	ppmi_joint_abs_freq_random__500_words	de tms pIPL sound sham	0.07616879161899973
+de	ppmi_joint_abs_freq_random__500_words	de tms pIPL action sham	0.09603699060134883
+de	ppmi_joint_abs_freq_random__500_words	de tms sound pIPL	0.06898969489800724
+de	ppmi_joint_abs_freq_random__500_words	de tms action pIPL	0.0812309144842843
 de	ppmi_joint_abs_freq_top_rowincol_500_words	simlex999-sim	0.26363893099495617
 de	ppmi_joint_abs_freq_top_rowincol_500_words	ws353	0.5006647640974062
 de	ppmi_joint_abs_freq_top_rowincol_500_words	tms aIFG	0.16206569653769765
@@ -6878,6 +7418,12 @@ de	ppmi_joint_abs_freq_top__750_words	tms pIFG	0.12635228525534775
 de	ppmi_joint_abs_freq_top__750_words	de tms vertex	0.16167187409898556
 de	ppmi_joint_abs_freq_top__750_words	de tms pIFG	0.17808847123951504
 de	ppmi_joint_abs_freq_top__750_words	de tms aIFG	0.2115198571974242
+de	ppmi_joint_abs_freq_top__750_words	de tms pIPL	0.12920573940718308
+de	ppmi_joint_abs_freq_top__750_words	de tms sham	0.1561475465084946
+de	ppmi_joint_abs_freq_top__750_words	de tms pIPL sound sham	0.14525874973654934
+de	ppmi_joint_abs_freq_top__750_words	de tms pIPL action sham	0.17444616395176762
+de	ppmi_joint_abs_freq_top__750_words	de tms sound pIPL	0.09448570494544299
+de	ppmi_joint_abs_freq_top__750_words	de tms action pIPL	0.17047214937837354
 de	ppmi_joint_abs_freq_random__750_words	simlex999-sim	0.10099951651756915
 de	ppmi_joint_abs_freq_random__750_words	ws353	0.22186084297653919
 de	ppmi_joint_abs_freq_random__750_words	tms aIFG	0.029940861494772365
@@ -6886,6 +7432,12 @@ de	ppmi_joint_abs_freq_random__750_words	tms pIFG	0.07035764871333983
 de	ppmi_joint_abs_freq_random__750_words	de tms vertex	0.05432960300296248
 de	ppmi_joint_abs_freq_random__750_words	de tms pIFG	0.09893024166581421
 de	ppmi_joint_abs_freq_random__750_words	de tms aIFG	0.03507322012059732
+de	ppmi_joint_abs_freq_random__750_words	de tms pIPL	0.07319888212315889
+de	ppmi_joint_abs_freq_random__750_words	de tms sham	0.09850611135577272
+de	ppmi_joint_abs_freq_random__750_words	de tms pIPL sound sham	0.09941931269953355
+de	ppmi_joint_abs_freq_random__750_words	de tms pIPL action sham	0.09946213921256196
+de	ppmi_joint_abs_freq_random__750_words	de tms sound pIPL	0.07082481721048012
+de	ppmi_joint_abs_freq_random__750_words	de tms action pIPL	0.08057728392218297
 de	ppmi_joint_abs_freq_top_rowincol_750_words	simlex999-sim	0.26445382069872797
 de	ppmi_joint_abs_freq_top_rowincol_750_words	ws353	0.49308421690170817
 de	ppmi_joint_abs_freq_top_rowincol_750_words	tms aIFG	0.1650292827200201
@@ -6904,6 +7456,12 @@ de	ppmi_joint_abs_freq_top__1000_words	tms pIFG	0.13844987521078359
 de	ppmi_joint_abs_freq_top__1000_words	de tms vertex	0.17435104741697885
 de	ppmi_joint_abs_freq_top__1000_words	de tms pIFG	0.18595577492570098
 de	ppmi_joint_abs_freq_top__1000_words	de tms aIFG	0.2133080079725486
+de	ppmi_joint_abs_freq_top__1000_words	de tms pIPL	0.12124684225921165
+de	ppmi_joint_abs_freq_top__1000_words	de tms sham	0.1456333447149937
+de	ppmi_joint_abs_freq_top__1000_words	de tms pIPL sound sham	0.13355936259645504
+de	ppmi_joint_abs_freq_top__1000_words	de tms pIPL action sham	0.1652198010316986
+de	ppmi_joint_abs_freq_top__1000_words	de tms sound pIPL	0.08531363466380543
+de	ppmi_joint_abs_freq_top__1000_words	de tms action pIPL	0.16294261999600332
 de	ppmi_joint_abs_freq_random__1000_words	simlex999-sim	0.13417616417961126
 de	ppmi_joint_abs_freq_random__1000_words	ws353	0.2552208178483956
 de	ppmi_joint_abs_freq_random__1000_words	tms aIFG	0.08577154958774783
@@ -6912,6 +7470,12 @@ de	ppmi_joint_abs_freq_random__1000_words	tms pIFG	0.12304611710371931
 de	ppmi_joint_abs_freq_random__1000_words	de tms vertex	0.08969263327655418
 de	ppmi_joint_abs_freq_random__1000_words	de tms pIFG	0.15149323437254986
 de	ppmi_joint_abs_freq_random__1000_words	de tms aIFG	0.10490898595743571
+de	ppmi_joint_abs_freq_random__1000_words	de tms pIPL	0.09496929331222571
+de	ppmi_joint_abs_freq_random__1000_words	de tms sham	0.11173966346769444
+de	ppmi_joint_abs_freq_random__1000_words	de tms pIPL sound sham	0.09807924122907427
+de	ppmi_joint_abs_freq_random__1000_words	de tms pIPL action sham	0.12647730409076843
+de	ppmi_joint_abs_freq_random__1000_words	de tms sound pIPL	0.07592148932159054
+de	ppmi_joint_abs_freq_random__1000_words	de tms action pIPL	0.12121877389642144
 de	ppmi_joint_abs_freq_top_rowincol_1000_words	simlex999-sim	0.262842371415554
 de	ppmi_joint_abs_freq_top_rowincol_1000_words	ws353	0.49089986319834655
 de	ppmi_joint_abs_freq_top_rowincol_1000_words	tms aIFG	0.17019581143235504
@@ -6930,6 +7494,12 @@ de	ppmi_joint_abs_freq_top__2500_words	tms pIFG	0.1529460664255454
 de	ppmi_joint_abs_freq_top__2500_words	de tms vertex	0.18774721626869625
 de	ppmi_joint_abs_freq_top__2500_words	de tms pIFG	0.1996329505829263
 de	ppmi_joint_abs_freq_top__2500_words	de tms aIFG	0.21992640974882227
+de	ppmi_joint_abs_freq_top__2500_words	de tms pIPL	0.12639985004795148
+de	ppmi_joint_abs_freq_top__2500_words	de tms sham	0.1422981259883332
+de	ppmi_joint_abs_freq_top__2500_words	de tms pIPL sound sham	0.13089294174453878
+de	ppmi_joint_abs_freq_top__2500_words	de tms pIPL action sham	0.16016385245814307
+de	ppmi_joint_abs_freq_top__2500_words	de tms sound pIPL	0.08875012198445252
+de	ppmi_joint_abs_freq_top__2500_words	de tms action pIPL	0.16796887572791444
 de	ppmi_joint_abs_freq_random__2500_words	simlex999-sim	0.1386102383118892
 de	ppmi_joint_abs_freq_random__2500_words	ws353	0.31129310182992315
 de	ppmi_joint_abs_freq_random__2500_words	tms aIFG	0.17854578529864196
@@ -6938,6 +7508,12 @@ de	ppmi_joint_abs_freq_random__2500_words	tms pIFG	0.1839194196543958
 de	ppmi_joint_abs_freq_random__2500_words	de tms vertex	0.1716408220428068
 de	ppmi_joint_abs_freq_random__2500_words	de tms pIFG	0.21511465521349676
 de	ppmi_joint_abs_freq_random__2500_words	de tms aIFG	0.22980418033336117
+de	ppmi_joint_abs_freq_random__2500_words	de tms pIPL	0.08950654471985664
+de	ppmi_joint_abs_freq_random__2500_words	de tms sham	0.10826561330262754
+de	ppmi_joint_abs_freq_random__2500_words	de tms pIPL sound sham	0.10117677380937427
+de	ppmi_joint_abs_freq_random__2500_words	de tms pIPL action sham	0.11485100197460502
+de	ppmi_joint_abs_freq_random__2500_words	de tms sound pIPL	0.07516741996798233
+de	ppmi_joint_abs_freq_random__2500_words	de tms action pIPL	0.10944831509120642
 de	ppmi_joint_abs_freq_top_rowincol_2500_words	simlex999-sim	0.26549207860320917
 de	ppmi_joint_abs_freq_top_rowincol_2500_words	ws353	0.4677352726260846
 de	ppmi_joint_abs_freq_top_rowincol_2500_words	tms aIFG	0.1806590374481555
@@ -6956,6 +7532,12 @@ de	ppmi_joint_abs_freq_top__5000_words	tms pIFG	0.17018844895095583
 de	ppmi_joint_abs_freq_top__5000_words	de tms vertex	0.2032999373584577
 de	ppmi_joint_abs_freq_top__5000_words	de tms pIFG	0.22008375961470564
 de	ppmi_joint_abs_freq_top__5000_words	de tms aIFG	0.2376563894785126
+de	ppmi_joint_abs_freq_top__5000_words	de tms pIPL	0.12068090358240569
+de	ppmi_joint_abs_freq_top__5000_words	de tms sham	0.1322811099854995
+de	ppmi_joint_abs_freq_top__5000_words	de tms pIPL sound sham	0.13283280283712873
+de	ppmi_joint_abs_freq_top__5000_words	de tms pIPL action sham	0.13698506276895175
+de	ppmi_joint_abs_freq_top__5000_words	de tms sound pIPL	0.08654982517384299
+de	ppmi_joint_abs_freq_top__5000_words	de tms action pIPL	0.15756922921762803
 de	ppmi_joint_abs_freq_random__5000_words	simlex999-sim	0.2209877726939711
 de	ppmi_joint_abs_freq_random__5000_words	ws353	0.3773244801027764
 de	ppmi_joint_abs_freq_random__5000_words	tms aIFG	0.19947201719115876
@@ -6964,6 +7546,12 @@ de	ppmi_joint_abs_freq_random__5000_words	tms pIFG	0.20277903393115393
 de	ppmi_joint_abs_freq_random__5000_words	de tms vertex	0.19284662217471657
 de	ppmi_joint_abs_freq_random__5000_words	de tms pIFG	0.25389619200005703
 de	ppmi_joint_abs_freq_random__5000_words	de tms aIFG	0.2521262068286348
+de	ppmi_joint_abs_freq_random__5000_words	de tms pIPL	0.11135597127000986
+de	ppmi_joint_abs_freq_random__5000_words	de tms sham	0.12006382544386322
+de	ppmi_joint_abs_freq_random__5000_words	de tms pIPL sound sham	0.11354550962235004
+de	ppmi_joint_abs_freq_random__5000_words	de tms pIPL action sham	0.126735056001669
+de	ppmi_joint_abs_freq_random__5000_words	de tms sound pIPL	0.0946747861522006
+de	ppmi_joint_abs_freq_random__5000_words	de tms action pIPL	0.13112570888307695
 de	ppmi_joint_abs_freq_top_rowincol_5000_words	simlex999-sim	0.26140852858015556
 de	ppmi_joint_abs_freq_top_rowincol_5000_words	ws353	0.4523458311797267
 de	ppmi_joint_abs_freq_top_rowincol_5000_words	tms aIFG	0.19568325764126135
@@ -6982,6 +7570,12 @@ de	ppmi_joint_abs_freq_top__7500_words	tms pIFG	0.1800320706060263
 de	ppmi_joint_abs_freq_top__7500_words	de tms vertex	0.21576861211052972
 de	ppmi_joint_abs_freq_top__7500_words	de tms pIFG	0.22790484314262527
 de	ppmi_joint_abs_freq_top__7500_words	de tms aIFG	0.2502476730824447
+de	ppmi_joint_abs_freq_top__7500_words	de tms pIPL	0.12050057027377098
+de	ppmi_joint_abs_freq_top__7500_words	de tms sham	0.12711510879527643
+de	ppmi_joint_abs_freq_top__7500_words	de tms pIPL sound sham	0.13668473917139626
+de	ppmi_joint_abs_freq_top__7500_words	de tms pIPL action sham	0.12147543685571606
+de	ppmi_joint_abs_freq_top__7500_words	de tms sound pIPL	0.09449187499135021
+de	ppmi_joint_abs_freq_top__7500_words	de tms action pIPL	0.14881497779579533
 de	ppmi_joint_abs_freq_random__7500_words	simlex999-sim	0.22784909348410914
 de	ppmi_joint_abs_freq_random__7500_words	ws353	0.43595057588184083
 de	ppmi_joint_abs_freq_random__7500_words	tms aIFG	0.23037597624491937
@@ -6990,6 +7584,12 @@ de	ppmi_joint_abs_freq_random__7500_words	tms pIFG	0.20585800094406595
 de	ppmi_joint_abs_freq_random__7500_words	de tms vertex	0.2084834869424991
 de	ppmi_joint_abs_freq_random__7500_words	de tms pIFG	0.25031293457010106
 de	ppmi_joint_abs_freq_random__7500_words	de tms aIFG	0.2739393414624338
+de	ppmi_joint_abs_freq_random__7500_words	de tms pIPL	0.11144295930776361
+de	ppmi_joint_abs_freq_random__7500_words	de tms sham	0.11940306647433735
+de	ppmi_joint_abs_freq_random__7500_words	de tms pIPL sound sham	0.14563924243941026
+de	ppmi_joint_abs_freq_random__7500_words	de tms pIPL action sham	0.09404533387720121
+de	ppmi_joint_abs_freq_random__7500_words	de tms sound pIPL	0.11149509977632983
+de	ppmi_joint_abs_freq_random__7500_words	de tms action pIPL	0.11215999781945023
 de	ppmi_joint_abs_freq_top_rowincol_7500_words	simlex999-sim	0.2590836217897476
 de	ppmi_joint_abs_freq_top_rowincol_7500_words	ws353	0.4440080615433205
 de	ppmi_joint_abs_freq_top_rowincol_7500_words	tms aIFG	0.20343755974854924
@@ -7008,6 +7608,12 @@ de	ppmi_joint_abs_freq_top__10000_words	tms pIFG	0.1887691179991796
 de	ppmi_joint_abs_freq_top__10000_words	de tms vertex	0.22064143515074616
 de	ppmi_joint_abs_freq_top__10000_words	de tms pIFG	0.23224404861272613
 de	ppmi_joint_abs_freq_top__10000_words	de tms aIFG	0.25706280476835563
+de	ppmi_joint_abs_freq_top__10000_words	de tms pIPL	0.11757938990250835
+de	ppmi_joint_abs_freq_top__10000_words	de tms sham	0.12067032221369661
+de	ppmi_joint_abs_freq_top__10000_words	de tms pIPL sound sham	0.13741523957851925
+de	ppmi_joint_abs_freq_top__10000_words	de tms pIPL action sham	0.10690576155372196
+de	ppmi_joint_abs_freq_top__10000_words	de tms sound pIPL	0.09796673605968945
+de	ppmi_joint_abs_freq_top__10000_words	de tms action pIPL	0.1381927299066039
 de	ppmi_joint_abs_freq_random__10000_words	simlex999-sim	0.23491017918800156
 de	ppmi_joint_abs_freq_random__10000_words	ws353	0.4497736355268177
 de	ppmi_joint_abs_freq_random__10000_words	tms aIFG	0.24121796602831508
@@ -7016,6 +7622,12 @@ de	ppmi_joint_abs_freq_random__10000_words	tms pIFG	0.20333875515826574
 de	ppmi_joint_abs_freq_random__10000_words	de tms vertex	0.21259013284315856
 de	ppmi_joint_abs_freq_random__10000_words	de tms pIFG	0.2642487292744191
 de	ppmi_joint_abs_freq_random__10000_words	de tms aIFG	0.28739103821611894
+de	ppmi_joint_abs_freq_random__10000_words	de tms pIPL	0.11077305950830837
+de	ppmi_joint_abs_freq_random__10000_words	de tms sham	0.11963783144146588
+de	ppmi_joint_abs_freq_random__10000_words	de tms pIPL sound sham	0.14860707987488062
+de	ppmi_joint_abs_freq_random__10000_words	de tms pIPL action sham	0.09276970694101874
+de	ppmi_joint_abs_freq_random__10000_words	de tms sound pIPL	0.11485809062050922
+de	ppmi_joint_abs_freq_random__10000_words	de tms action pIPL	0.1079540305712195
 de	ppmi_joint_abs_freq_top_rowincol_10000_words	simlex999-sim	0.25697586087280977
 de	ppmi_joint_abs_freq_top_rowincol_10000_words	ws353	0.43586973618686103
 de	ppmi_joint_abs_freq_top_rowincol_10000_words	tms aIFG	0.2098840437729123
@@ -7034,6 +7646,12 @@ de	ppmi_joint_abs_freq_top__12500_words	tms pIFG	0.19302267362442463
 de	ppmi_joint_abs_freq_top__12500_words	de tms vertex	0.22423512832323336
 de	ppmi_joint_abs_freq_top__12500_words	de tms pIFG	0.2357434605493433
 de	ppmi_joint_abs_freq_top__12500_words	de tms aIFG	0.26525022034716916
+de	ppmi_joint_abs_freq_top__12500_words	de tms pIPL	0.11543159977266346
+de	ppmi_joint_abs_freq_top__12500_words	de tms sham	0.11572845238391773
+de	ppmi_joint_abs_freq_top__12500_words	de tms pIPL sound sham	0.1361619437629567
+de	ppmi_joint_abs_freq_top__12500_words	de tms pIPL action sham	0.097435532328848
+de	ppmi_joint_abs_freq_top__12500_words	de tms sound pIPL	0.10060616663020959
+de	ppmi_joint_abs_freq_top__12500_words	de tms action pIPL	0.13047231789939337
 de	ppmi_joint_abs_freq_random__12500_words	simlex999-sim	0.21998808509854226
 de	ppmi_joint_abs_freq_random__12500_words	ws353	0.4581421238193918
 de	ppmi_joint_abs_freq_random__12500_words	tms aIFG	0.2429905759857281
@@ -7042,6 +7660,12 @@ de	ppmi_joint_abs_freq_random__12500_words	tms pIFG	0.20869884799696528
 de	ppmi_joint_abs_freq_random__12500_words	de tms vertex	0.2211067747675351
 de	ppmi_joint_abs_freq_random__12500_words	de tms pIFG	0.26383044946928985
 de	ppmi_joint_abs_freq_random__12500_words	de tms aIFG	0.28762125097589625
+de	ppmi_joint_abs_freq_random__12500_words	de tms pIPL	0.1123924749866431
+de	ppmi_joint_abs_freq_random__12500_words	de tms sham	0.11906296693554
+de	ppmi_joint_abs_freq_random__12500_words	de tms pIPL sound sham	0.15553612037058365
+de	ppmi_joint_abs_freq_random__12500_words	de tms pIPL action sham	0.08506622667584679
+de	ppmi_joint_abs_freq_random__12500_words	de tms sound pIPL	0.12135975499725435
+de	ppmi_joint_abs_freq_random__12500_words	de tms action pIPL	0.10467510993627142
 de	ppmi_joint_abs_freq_top_rowincol_12500_words	simlex999-sim	0.2533450661928457
 de	ppmi_joint_abs_freq_top_rowincol_12500_words	ws353	0.428667800211517
 de	ppmi_joint_abs_freq_top_rowincol_12500_words	tms aIFG	0.21628307235952718
@@ -7060,6 +7684,12 @@ de	ppmi_joint_abs_freq_top__15000_words	tms pIFG	0.197451659603704
 de	ppmi_joint_abs_freq_top__15000_words	de tms vertex	0.22960091318025683
 de	ppmi_joint_abs_freq_top__15000_words	de tms pIFG	0.2393449457505906
 de	ppmi_joint_abs_freq_top__15000_words	de tms aIFG	0.2697806837978591
+de	ppmi_joint_abs_freq_top__15000_words	de tms pIPL	0.1115131933004431
+de	ppmi_joint_abs_freq_top__15000_words	de tms sham	0.11107207005384077
+de	ppmi_joint_abs_freq_top__15000_words	de tms pIPL sound sham	0.1349852665382803
+de	ppmi_joint_abs_freq_top__15000_words	de tms pIPL action sham	0.08887260173549992
+de	ppmi_joint_abs_freq_top__15000_words	de tms sound pIPL	0.10107768774511279
+de	ppmi_joint_abs_freq_top__15000_words	de tms action pIPL	0.12167541293630693
 de	ppmi_joint_abs_freq_random__15000_words	simlex999-sim	0.21122786188802017
 de	ppmi_joint_abs_freq_random__15000_words	ws353	0.44586585928604106
 de	ppmi_joint_abs_freq_random__15000_words	tms aIFG	0.24748191374698894
@@ -7068,6 +7698,12 @@ de	ppmi_joint_abs_freq_random__15000_words	tms pIFG	0.2108059400160591
 de	ppmi_joint_abs_freq_random__15000_words	de tms vertex	0.22018788099307052
 de	ppmi_joint_abs_freq_random__15000_words	de tms pIFG	0.26703828186483053
 de	ppmi_joint_abs_freq_random__15000_words	de tms aIFG	0.2868924015187851
+de	ppmi_joint_abs_freq_random__15000_words	de tms pIPL	0.1092871381128765
+de	ppmi_joint_abs_freq_random__15000_words	de tms sham	0.11618474575413258
+de	ppmi_joint_abs_freq_random__15000_words	de tms pIPL sound sham	0.14986760620291154
+de	ppmi_joint_abs_freq_random__15000_words	de tms pIPL action sham	0.0852214037122705
+de	ppmi_joint_abs_freq_random__15000_words	de tms sound pIPL	0.11864979092062604
+de	ppmi_joint_abs_freq_random__15000_words	de tms action pIPL	0.1005224047496858
 de	ppmi_joint_abs_freq_top_rowincol_15000_words	simlex999-sim	0.2492505714838822
 de	ppmi_joint_abs_freq_top_rowincol_15000_words	ws353	0.4217482337554299
 de	ppmi_joint_abs_freq_top_rowincol_15000_words	tms aIFG	0.2186274000553253
@@ -7086,6 +7722,12 @@ de	ppmi_joint_abs_freq_top__17500_words	tms pIFG	0.20123722354598642
 de	ppmi_joint_abs_freq_top__17500_words	de tms vertex	0.2317899839518696
 de	ppmi_joint_abs_freq_top__17500_words	de tms pIFG	0.24639097564164242
 de	ppmi_joint_abs_freq_top__17500_words	de tms aIFG	0.2723515364820281
+de	ppmi_joint_abs_freq_top__17500_words	de tms pIPL	0.11102974738724294
+de	ppmi_joint_abs_freq_top__17500_words	de tms sham	0.1094257835810329
+de	ppmi_joint_abs_freq_top__17500_words	de tms pIPL sound sham	0.13789405157512233
+de	ppmi_joint_abs_freq_top__17500_words	de tms pIPL action sham	0.08249790760291613
+de	ppmi_joint_abs_freq_top__17500_words	de tms sound pIPL	0.10490185188618145
+de	ppmi_joint_abs_freq_top__17500_words	de tms action pIPL	0.1168327185385669
 de	ppmi_joint_abs_freq_random__17500_words	simlex999-sim	0.23480326193691078
 de	ppmi_joint_abs_freq_random__17500_words	ws353	0.4262844561984968
 de	ppmi_joint_abs_freq_random__17500_words	tms aIFG	0.24045423500263707
@@ -7094,6 +7736,12 @@ de	ppmi_joint_abs_freq_random__17500_words	tms pIFG	0.21038693066000969
 de	ppmi_joint_abs_freq_random__17500_words	de tms vertex	0.2145755695539349
 de	ppmi_joint_abs_freq_random__17500_words	de tms pIFG	0.2632567407910974
 de	ppmi_joint_abs_freq_random__17500_words	de tms aIFG	0.2816736025066853
+de	ppmi_joint_abs_freq_random__17500_words	de tms pIPL	0.10654144188009479
+de	ppmi_joint_abs_freq_random__17500_words	de tms sham	0.11433432533325055
+de	ppmi_joint_abs_freq_random__17500_words	de tms pIPL sound sham	0.1514029525628115
+de	ppmi_joint_abs_freq_random__17500_words	de tms pIPL action sham	0.07904082490938878
+de	ppmi_joint_abs_freq_random__17500_words	de tms sound pIPL	0.11956503183391412
+de	ppmi_joint_abs_freq_random__17500_words	de tms action pIPL	0.09395249272960232
 de	ppmi_joint_abs_freq_top_rowincol_17500_words	simlex999-sim	0.247019952971915
 de	ppmi_joint_abs_freq_top_rowincol_17500_words	ws353	0.4187017904747872
 de	ppmi_joint_abs_freq_top_rowincol_17500_words	tms aIFG	0.22234481636593675
@@ -7112,6 +7760,12 @@ de	ppmi_joint_abs_freq_top__20000_words	tms pIFG	0.20522821691245682
 de	ppmi_joint_abs_freq_top__20000_words	de tms vertex	0.23475333382112343
 de	ppmi_joint_abs_freq_top__20000_words	de tms pIFG	0.24998266313337025
 de	ppmi_joint_abs_freq_top__20000_words	de tms aIFG	0.2747608473168917
+de	ppmi_joint_abs_freq_top__20000_words	de tms pIPL	0.11071930150799009
+de	ppmi_joint_abs_freq_top__20000_words	de tms sham	0.10745119528839482
+de	ppmi_joint_abs_freq_top__20000_words	de tms pIPL sound sham	0.1385993855406493
+de	ppmi_joint_abs_freq_top__20000_words	de tms pIPL action sham	0.07757383936300268
+de	ppmi_joint_abs_freq_top__20000_words	de tms sound pIPL	0.1073716051923066
+de	ppmi_joint_abs_freq_top__20000_words	de tms action pIPL	0.11358871993296066
 de	ppmi_joint_abs_freq_random__20000_words	simlex999-sim	0.23596740915255326
 de	ppmi_joint_abs_freq_random__20000_words	ws353	0.43913242064811353
 de	ppmi_joint_abs_freq_random__20000_words	tms aIFG	0.25219977842326324
@@ -7120,6 +7774,12 @@ de	ppmi_joint_abs_freq_random__20000_words	tms pIFG	0.22752874899975797
 de	ppmi_joint_abs_freq_random__20000_words	de tms vertex	0.22529496127841384
 de	ppmi_joint_abs_freq_random__20000_words	de tms pIFG	0.2777490879678912
 de	ppmi_joint_abs_freq_random__20000_words	de tms aIFG	0.2953445881099163
+de	ppmi_joint_abs_freq_random__20000_words	de tms pIPL	0.11305308487649815
+de	ppmi_joint_abs_freq_random__20000_words	de tms sham	0.1201395832839538
+de	ppmi_joint_abs_freq_random__20000_words	de tms pIPL sound sham	0.16066510839535456
+de	ppmi_joint_abs_freq_random__20000_words	de tms pIPL action sham	0.08100653428464495
+de	ppmi_joint_abs_freq_random__20000_words	de tms sound pIPL	0.13206243028298703
+de	ppmi_joint_abs_freq_random__20000_words	de tms action pIPL	0.09461803883415074
 de	ppmi_joint_abs_freq_top_rowincol_20000_words	simlex999-sim	0.2462413167457453
 de	ppmi_joint_abs_freq_top_rowincol_20000_words	ws353	0.41183473324870123
 de	ppmi_joint_abs_freq_top_rowincol_20000_words	tms aIFG	0.22850954451674946
@@ -7138,6 +7798,12 @@ de	ppmi_joint_abs_freq_top__25000_words	tms pIFG	0.20831891946320547
 de	ppmi_joint_abs_freq_top__25000_words	de tms vertex	0.23552097840970984
 de	ppmi_joint_abs_freq_top__25000_words	de tms pIFG	0.2562827326662363
 de	ppmi_joint_abs_freq_top__25000_words	de tms aIFG	0.2791405712806114
+de	ppmi_joint_abs_freq_top__25000_words	de tms pIPL	0.11261461673792975
+de	ppmi_joint_abs_freq_top__25000_words	de tms sham	0.10774450529030931
+de	ppmi_joint_abs_freq_top__25000_words	de tms pIPL sound sham	0.14200111427101478
+de	ppmi_joint_abs_freq_top__25000_words	de tms pIPL action sham	0.07458645511501284
+de	ppmi_joint_abs_freq_top__25000_words	de tms sound pIPL	0.11332038710231117
+de	ppmi_joint_abs_freq_top__25000_words	de tms action pIPL	0.11142911635667654
 de	ppmi_joint_abs_freq_random__25000_words	simlex999-sim	0.24376302545762157
 de	ppmi_joint_abs_freq_random__25000_words	ws353	0.4448212736529059
 de	ppmi_joint_abs_freq_random__25000_words	tms aIFG	0.2552294467222402
@@ -7146,6 +7812,12 @@ de	ppmi_joint_abs_freq_random__25000_words	tms pIFG	0.22724486713362294
 de	ppmi_joint_abs_freq_random__25000_words	de tms vertex	0.2203780848320515
 de	ppmi_joint_abs_freq_random__25000_words	de tms pIFG	0.27351389602408704
 de	ppmi_joint_abs_freq_random__25000_words	de tms aIFG	0.2943558071199466
+de	ppmi_joint_abs_freq_random__25000_words	de tms pIPL	0.10909222800041093
+de	ppmi_joint_abs_freq_random__25000_words	de tms sham	0.11302895929544869
+de	ppmi_joint_abs_freq_random__25000_words	de tms pIPL sound sham	0.15138898160900177
+de	ppmi_joint_abs_freq_random__25000_words	de tms pIPL action sham	0.07555803518283652
+de	ppmi_joint_abs_freq_random__25000_words	de tms sound pIPL	0.12272527312673764
+de	ppmi_joint_abs_freq_random__25000_words	de tms action pIPL	0.09550402776708986
 de	ppmi_joint_abs_freq_top_rowincol_25000_words	simlex999-sim	0.24382681861237124
 de	ppmi_joint_abs_freq_top_rowincol_25000_words	ws353	0.40518437117351325
 de	ppmi_joint_abs_freq_top_rowincol_25000_words	tms aIFG	0.23785435024801224
@@ -7164,6 +7836,12 @@ de	ppmi_cc100_abs_freq_top__100_words	tms pIFG	0.15544841556041447
 de	ppmi_cc100_abs_freq_top__100_words	de tms vertex	0.13513712449185733
 de	ppmi_cc100_abs_freq_top__100_words	de tms pIFG	0.16980069553649035
 de	ppmi_cc100_abs_freq_top__100_words	de tms aIFG	0.2203128430664333
+de	ppmi_cc100_abs_freq_top__100_words	de tms pIPL	0.11380363180716777
+de	ppmi_cc100_abs_freq_top__100_words	de tms sham	0.13786123895229213
+de	ppmi_cc100_abs_freq_top__100_words	de tms pIPL sound sham	0.137660699647262
+de	ppmi_cc100_abs_freq_top__100_words	de tms pIPL action sham	0.1395649492948621
+de	ppmi_cc100_abs_freq_top__100_words	de tms sound pIPL	0.11385108230590782
+de	ppmi_cc100_abs_freq_top__100_words	de tms action pIPL	0.12280602624100402
 de	ppmi_cc100_abs_freq_random__100_words	simlex999-sim	0.06967205195029554
 de	ppmi_cc100_abs_freq_random__100_words	ws353	0.2931470012884354
 de	ppmi_cc100_abs_freq_random__100_words	tms aIFG	0.09285579189175612
@@ -7172,6 +7850,12 @@ de	ppmi_cc100_abs_freq_random__100_words	tms pIFG	0.029271180941752652
 de	ppmi_cc100_abs_freq_random__100_words	de tms vertex	0.07977576356973816
 de	ppmi_cc100_abs_freq_random__100_words	de tms pIFG	0.03882238676684287
 de	ppmi_cc100_abs_freq_random__100_words	de tms aIFG	0.10865705488435058
+de	ppmi_cc100_abs_freq_random__100_words	de tms pIPL	0.08954165330873985
+de	ppmi_cc100_abs_freq_random__100_words	de tms sham	0.1076377089856614
+de	ppmi_cc100_abs_freq_random__100_words	de tms pIPL sound sham	0.13068457979608575
+de	ppmi_cc100_abs_freq_random__100_words	de tms pIPL action sham	0.08636027445464495
+de	ppmi_cc100_abs_freq_random__100_words	de tms sound pIPL	0.11373613845590094
+de	ppmi_cc100_abs_freq_random__100_words	de tms action pIPL	0.07168887190883587
 de	ppmi_cc100_abs_freq_top_rowincol_100_words	simlex999-sim	0.32185288904943865
 de	ppmi_cc100_abs_freq_top_rowincol_100_words	ws353	0.5548543916675224
 de	ppmi_cc100_abs_freq_top_rowincol_100_words	tms aIFG	0.1959105851076081
@@ -7190,6 +7874,12 @@ de	ppmi_cc100_abs_freq_top__200_words	tms pIFG	0.1555613041498362
 de	ppmi_cc100_abs_freq_top__200_words	de tms vertex	0.13243561362997644
 de	ppmi_cc100_abs_freq_top__200_words	de tms pIFG	0.16808251902633084
 de	ppmi_cc100_abs_freq_top__200_words	de tms aIFG	0.21081398493822745
+de	ppmi_cc100_abs_freq_top__200_words	de tms pIPL	0.11612342641115274
+de	ppmi_cc100_abs_freq_top__200_words	de tms sham	0.15494916939124853
+de	ppmi_cc100_abs_freq_top__200_words	de tms pIPL sound sham	0.15529387160543354
+de	ppmi_cc100_abs_freq_top__200_words	de tms pIPL action sham	0.1592698773989712
+de	ppmi_cc100_abs_freq_top__200_words	de tms sound pIPL	0.11454410791776633
+de	ppmi_cc100_abs_freq_top__200_words	de tms action pIPL	0.1273308784172929
 de	ppmi_cc100_abs_freq_random__200_words	simlex999-sim	0.12436845197341226
 de	ppmi_cc100_abs_freq_random__200_words	ws353	0.34595775224386593
 de	ppmi_cc100_abs_freq_random__200_words	tms aIFG	0.13822271196931052
@@ -7198,6 +7888,12 @@ de	ppmi_cc100_abs_freq_random__200_words	tms pIFG	0.11303261898714524
 de	ppmi_cc100_abs_freq_random__200_words	de tms vertex	0.10085455041887409
 de	ppmi_cc100_abs_freq_random__200_words	de tms pIFG	0.11220967227207795
 de	ppmi_cc100_abs_freq_random__200_words	de tms aIFG	0.15274742863941804
+de	ppmi_cc100_abs_freq_random__200_words	de tms pIPL	0.08582625884162703
+de	ppmi_cc100_abs_freq_random__200_words	de tms sham	0.09420974875602527
+de	ppmi_cc100_abs_freq_random__200_words	de tms pIPL sound sham	0.07671670145564934
+de	ppmi_cc100_abs_freq_random__200_words	de tms pIPL action sham	0.1156490255991683
+de	ppmi_cc100_abs_freq_random__200_words	de tms sound pIPL	0.06067985210720491
+de	ppmi_cc100_abs_freq_random__200_words	de tms action pIPL	0.1154098837107841
 de	ppmi_cc100_abs_freq_top_rowincol_200_words	simlex999-sim	0.32109834627793177
 de	ppmi_cc100_abs_freq_top_rowincol_200_words	ws353	0.5539441489515412
 de	ppmi_cc100_abs_freq_top_rowincol_200_words	tms aIFG	0.19731132808607765
@@ -7216,6 +7912,12 @@ de	ppmi_cc100_abs_freq_top__500_words	tms pIFG	0.15556556562925863
 de	ppmi_cc100_abs_freq_top__500_words	de tms vertex	0.13827945603880323
 de	ppmi_cc100_abs_freq_top__500_words	de tms pIFG	0.17364510047909262
 de	ppmi_cc100_abs_freq_top__500_words	de tms aIFG	0.20752474465133738
+de	ppmi_cc100_abs_freq_top__500_words	de tms pIPL	0.11282715414055457
+de	ppmi_cc100_abs_freq_top__500_words	de tms sham	0.1498887661308306
+de	ppmi_cc100_abs_freq_top__500_words	de tms pIPL sound sham	0.1281019256226649
+de	ppmi_cc100_abs_freq_top__500_words	de tms pIPL action sham	0.17763504677689435
+de	ppmi_cc100_abs_freq_top__500_words	de tms sound pIPL	0.09609145525963353
+de	ppmi_cc100_abs_freq_top__500_words	de tms action pIPL	0.14024786559518512
 de	ppmi_cc100_abs_freq_random__500_words	simlex999-sim	0.14235530647751868
 de	ppmi_cc100_abs_freq_random__500_words	ws353	0.3372885638637831
 de	ppmi_cc100_abs_freq_random__500_words	tms aIFG	0.1714525868659635
@@ -7224,6 +7926,12 @@ de	ppmi_cc100_abs_freq_random__500_words	tms pIFG	0.14059258039335532
 de	ppmi_cc100_abs_freq_random__500_words	de tms vertex	0.1508792264877744
 de	ppmi_cc100_abs_freq_random__500_words	de tms pIFG	0.1497119999972268
 de	ppmi_cc100_abs_freq_random__500_words	de tms aIFG	0.20267325041197964
+de	ppmi_cc100_abs_freq_random__500_words	de tms pIPL	0.11691360169952249
+de	ppmi_cc100_abs_freq_random__500_words	de tms sham	0.10920409455857534
+de	ppmi_cc100_abs_freq_random__500_words	de tms pIPL sound sham	0.08861844582007766
+de	ppmi_cc100_abs_freq_random__500_words	de tms pIPL action sham	0.1327215023911234
+de	ppmi_cc100_abs_freq_random__500_words	de tms sound pIPL	0.0809220108141339
+de	ppmi_cc100_abs_freq_random__500_words	de tms action pIPL	0.15635902727307355
 de	ppmi_cc100_abs_freq_top_rowincol_500_words	simlex999-sim	0.31925171719614
 de	ppmi_cc100_abs_freq_top_rowincol_500_words	ws353	0.5476146227420505
 de	ppmi_cc100_abs_freq_top_rowincol_500_words	tms aIFG	0.19977855630897062
@@ -7242,6 +7950,12 @@ de	ppmi_cc100_abs_freq_top__750_words	tms pIFG	0.14249286514755996
 de	ppmi_cc100_abs_freq_top__750_words	de tms vertex	0.1317523397677043
 de	ppmi_cc100_abs_freq_top__750_words	de tms pIFG	0.15442832601808554
 de	ppmi_cc100_abs_freq_top__750_words	de tms aIFG	0.20468706972932657
+de	ppmi_cc100_abs_freq_top__750_words	de tms pIPL	0.12457698019303676
+de	ppmi_cc100_abs_freq_top__750_words	de tms sham	0.1683941971551506
+de	ppmi_cc100_abs_freq_top__750_words	de tms pIPL sound sham	0.1423157300118699
+de	ppmi_cc100_abs_freq_top__750_words	de tms pIPL action sham	0.2016034056156995
+de	ppmi_cc100_abs_freq_top__750_words	de tms sound pIPL	0.10052373064959909
+de	ppmi_cc100_abs_freq_top__750_words	de tms action pIPL	0.16187547505362349
 de	ppmi_cc100_abs_freq_random__750_words	simlex999-sim	0.18405029260325476
 de	ppmi_cc100_abs_freq_random__750_words	ws353	0.3582710809487186
 de	ppmi_cc100_abs_freq_random__750_words	tms aIFG	0.17633156896597138
@@ -7250,6 +7964,12 @@ de	ppmi_cc100_abs_freq_random__750_words	tms pIFG	0.161549680000563
 de	ppmi_cc100_abs_freq_random__750_words	de tms vertex	0.14664476701874646
 de	ppmi_cc100_abs_freq_random__750_words	de tms pIFG	0.16968579052571323
 de	ppmi_cc100_abs_freq_random__750_words	de tms aIFG	0.20830245755373689
+de	ppmi_cc100_abs_freq_random__750_words	de tms pIPL	0.13361536148406394
+de	ppmi_cc100_abs_freq_random__750_words	de tms sham	0.1311712560059797
+de	ppmi_cc100_abs_freq_random__750_words	de tms pIPL sound sham	0.10910222698584147
+de	ppmi_cc100_abs_freq_random__750_words	de tms pIPL action sham	0.15643541755220344
+de	ppmi_cc100_abs_freq_random__750_words	de tms sound pIPL	0.0974473895660293
+de	ppmi_cc100_abs_freq_random__750_words	de tms action pIPL	0.17550238746904961
 de	ppmi_cc100_abs_freq_top_rowincol_750_words	simlex999-sim	0.3192733682132382
 de	ppmi_cc100_abs_freq_top_rowincol_750_words	ws353	0.5425294293669969
 de	ppmi_cc100_abs_freq_top_rowincol_750_words	tms aIFG	0.20146497959395476
@@ -7268,6 +7988,12 @@ de	ppmi_cc100_abs_freq_top__1000_words	tms pIFG	0.15289222149084164
 de	ppmi_cc100_abs_freq_top__1000_words	de tms vertex	0.1424576347456964
 de	ppmi_cc100_abs_freq_top__1000_words	de tms pIFG	0.16453407491233135
 de	ppmi_cc100_abs_freq_top__1000_words	de tms aIFG	0.20689753244674605
+de	ppmi_cc100_abs_freq_top__1000_words	de tms pIPL	0.1157191213477836
+de	ppmi_cc100_abs_freq_top__1000_words	de tms sham	0.1548115484361599
+de	ppmi_cc100_abs_freq_top__1000_words	de tms pIPL sound sham	0.1227489190753733
+de	ppmi_cc100_abs_freq_top__1000_words	de tms pIPL action sham	0.19458846815590247
+de	ppmi_cc100_abs_freq_top__1000_words	de tms sound pIPL	0.0888437015538369
+de	ppmi_cc100_abs_freq_top__1000_words	de tms action pIPL	0.1532908410525005
 de	ppmi_cc100_abs_freq_random__1000_words	simlex999-sim	0.1982313774909137
 de	ppmi_cc100_abs_freq_random__1000_words	ws353	0.3970192608166167
 de	ppmi_cc100_abs_freq_random__1000_words	tms aIFG	0.23706117684159805
@@ -7276,6 +8002,12 @@ de	ppmi_cc100_abs_freq_random__1000_words	tms pIFG	0.20588330258346121
 de	ppmi_cc100_abs_freq_random__1000_words	de tms vertex	0.18939161927853518
 de	ppmi_cc100_abs_freq_random__1000_words	de tms pIFG	0.23241830960817444
 de	ppmi_cc100_abs_freq_random__1000_words	de tms aIFG	0.2633710919732188
+de	ppmi_cc100_abs_freq_random__1000_words	de tms pIPL	0.13185090192029997
+de	ppmi_cc100_abs_freq_random__1000_words	de tms sham	0.12721524118981636
+de	ppmi_cc100_abs_freq_random__1000_words	de tms pIPL sound sham	0.11663251275621069
+de	ppmi_cc100_abs_freq_random__1000_words	de tms pIPL action sham	0.14068775191979677
+de	ppmi_cc100_abs_freq_random__1000_words	de tms sound pIPL	0.09992593013021643
+de	ppmi_cc100_abs_freq_random__1000_words	de tms action pIPL	0.1684630221656674
 de	ppmi_cc100_abs_freq_top_rowincol_1000_words	simlex999-sim	0.31992969322070236
 de	ppmi_cc100_abs_freq_top_rowincol_1000_words	ws353	0.540688876579257
 de	ppmi_cc100_abs_freq_top_rowincol_1000_words	tms aIFG	0.20001830637630028
@@ -7294,6 +8026,12 @@ de	ppmi_cc100_abs_freq_top__2500_words	tms pIFG	0.18189474133062306
 de	ppmi_cc100_abs_freq_top__2500_words	de tms vertex	0.15781884044929803
 de	ppmi_cc100_abs_freq_top__2500_words	de tms pIFG	0.1949562545549605
 de	ppmi_cc100_abs_freq_top__2500_words	de tms aIFG	0.22073718594962727
+de	ppmi_cc100_abs_freq_top__2500_words	de tms pIPL	0.11669253025909085
+de	ppmi_cc100_abs_freq_top__2500_words	de tms sham	0.15427119563385788
+de	ppmi_cc100_abs_freq_top__2500_words	de tms pIPL sound sham	0.12198738183914416
+de	ppmi_cc100_abs_freq_top__2500_words	de tms pIPL action sham	0.19326300392913576
+de	ppmi_cc100_abs_freq_top__2500_words	de tms sound pIPL	0.08459492457587939
+de	ppmi_cc100_abs_freq_top__2500_words	de tms action pIPL	0.16013864579587234
 de	ppmi_cc100_abs_freq_random__2500_words	simlex999-sim	0.22031294533024498
 de	ppmi_cc100_abs_freq_random__2500_words	ws353	0.4613952286429784
 de	ppmi_cc100_abs_freq_random__2500_words	tms aIFG	0.26711922441325464
@@ -7302,6 +8040,12 @@ de	ppmi_cc100_abs_freq_random__2500_words	tms pIFG	0.23481046234615408
 de	ppmi_cc100_abs_freq_random__2500_words	de tms vertex	0.21912766805867487
 de	ppmi_cc100_abs_freq_random__2500_words	de tms pIFG	0.2578319144919067
 de	ppmi_cc100_abs_freq_random__2500_words	de tms aIFG	0.291517095270681
+de	ppmi_cc100_abs_freq_random__2500_words	de tms pIPL	0.13119777456935017
+de	ppmi_cc100_abs_freq_random__2500_words	de tms sham	0.13268175570324664
+de	ppmi_cc100_abs_freq_random__2500_words	de tms pIPL sound sham	0.10400009416514513
+de	ppmi_cc100_abs_freq_random__2500_words	de tms pIPL action sham	0.16494305360900752
+de	ppmi_cc100_abs_freq_random__2500_words	de tms sound pIPL	0.10018745050722298
+de	ppmi_cc100_abs_freq_random__2500_words	de tms action pIPL	0.170608040974364
 de	ppmi_cc100_abs_freq_top_rowincol_2500_words	simlex999-sim	0.32104075392903253
 de	ppmi_cc100_abs_freq_top_rowincol_2500_words	ws353	0.5211108193748136
 de	ppmi_cc100_abs_freq_top_rowincol_2500_words	tms aIFG	0.20100699166804262
@@ -7320,6 +8064,12 @@ de	ppmi_cc100_abs_freq_top__5000_words	tms pIFG	0.1852359973864657
 de	ppmi_cc100_abs_freq_top__5000_words	de tms vertex	0.16286574015164823
 de	ppmi_cc100_abs_freq_top__5000_words	de tms pIFG	0.19808350802936864
 de	ppmi_cc100_abs_freq_top__5000_words	de tms aIFG	0.22266707747505202
+de	ppmi_cc100_abs_freq_top__5000_words	de tms pIPL	0.1202247743383024
+de	ppmi_cc100_abs_freq_top__5000_words	de tms sham	0.15168023010562967
+de	ppmi_cc100_abs_freq_top__5000_words	de tms pIPL sound sham	0.11573680529675948
+de	ppmi_cc100_abs_freq_top__5000_words	de tms pIPL action sham	0.19468763028942815
+de	ppmi_cc100_abs_freq_top__5000_words	de tms sound pIPL	0.08797439197973381
+de	ppmi_cc100_abs_freq_top__5000_words	de tms action pIPL	0.16326154718898395
 de	ppmi_cc100_abs_freq_random__5000_words	simlex999-sim	0.22101593744826287
 de	ppmi_cc100_abs_freq_random__5000_words	ws353	0.4611180482912982
 de	ppmi_cc100_abs_freq_random__5000_words	tms aIFG	0.29348648004125355
@@ -7328,6 +8078,12 @@ de	ppmi_cc100_abs_freq_random__5000_words	tms pIFG	0.2484080839899951
 de	ppmi_cc100_abs_freq_random__5000_words	de tms vertex	0.24044476363642425
 de	ppmi_cc100_abs_freq_random__5000_words	de tms pIFG	0.28301229424685176
 de	ppmi_cc100_abs_freq_random__5000_words	de tms aIFG	0.3196933615208702
+de	ppmi_cc100_abs_freq_random__5000_words	de tms pIPL	0.12968723246083408
+de	ppmi_cc100_abs_freq_random__5000_words	de tms sham	0.133716174068926
+de	ppmi_cc100_abs_freq_random__5000_words	de tms pIPL sound sham	0.12847539340395453
+de	ppmi_cc100_abs_freq_random__5000_words	de tms pIPL action sham	0.14149135556040762
+de	ppmi_cc100_abs_freq_random__5000_words	de tms sound pIPL	0.11553967937122134
+de	ppmi_cc100_abs_freq_random__5000_words	de tms action pIPL	0.1496187456154319
 de	ppmi_cc100_abs_freq_top_rowincol_5000_words	simlex999-sim	0.31939691734557674
 de	ppmi_cc100_abs_freq_top_rowincol_5000_words	ws353	0.4987405777453578
 de	ppmi_cc100_abs_freq_top_rowincol_5000_words	tms aIFG	0.20374547758507944
@@ -7346,6 +8102,12 @@ de	ppmi_cc100_abs_freq_top__7500_words	tms pIFG	0.1875347749794597
 de	ppmi_cc100_abs_freq_top__7500_words	de tms vertex	0.16476758128979288
 de	ppmi_cc100_abs_freq_top__7500_words	de tms pIFG	0.2014916333307654
 de	ppmi_cc100_abs_freq_top__7500_words	de tms aIFG	0.22919331205482205
+de	ppmi_cc100_abs_freq_top__7500_words	de tms pIPL	0.11544914936756562
+de	ppmi_cc100_abs_freq_top__7500_words	de tms sham	0.14445676054756046
+de	ppmi_cc100_abs_freq_top__7500_words	de tms pIPL sound sham	0.10969217904912777
+de	ppmi_cc100_abs_freq_top__7500_words	de tms pIPL action sham	0.18605628959337767
+de	ppmi_cc100_abs_freq_top__7500_words	de tms sound pIPL	0.0828670639117613
+de	ppmi_cc100_abs_freq_top__7500_words	de tms action pIPL	0.15725457631638265
 de	ppmi_cc100_abs_freq_random__7500_words	simlex999-sim	0.22089843644551488
 de	ppmi_cc100_abs_freq_random__7500_words	ws353	0.46297020251909715
 de	ppmi_cc100_abs_freq_random__7500_words	tms aIFG	0.2846048649496009
@@ -7354,6 +8116,12 @@ de	ppmi_cc100_abs_freq_random__7500_words	tms pIFG	0.2529080937870332
 de	ppmi_cc100_abs_freq_random__7500_words	de tms vertex	0.24410746347993256
 de	ppmi_cc100_abs_freq_random__7500_words	de tms pIFG	0.27828398764680407
 de	ppmi_cc100_abs_freq_random__7500_words	de tms aIFG	0.3075672471687794
+de	ppmi_cc100_abs_freq_random__7500_words	de tms pIPL	0.12961739834931285
+de	ppmi_cc100_abs_freq_random__7500_words	de tms sham	0.12880468983852225
+de	ppmi_cc100_abs_freq_random__7500_words	de tms pIPL sound sham	0.13973672823484112
+de	ppmi_cc100_abs_freq_random__7500_words	de tms pIPL action sham	0.11997028401301585
+de	ppmi_cc100_abs_freq_random__7500_words	de tms sound pIPL	0.12735235565959013
+de	ppmi_cc100_abs_freq_random__7500_words	de tms action pIPL	0.1351380591065282
 de	ppmi_cc100_abs_freq_top_rowincol_7500_words	simlex999-sim	0.31471821941209543
 de	ppmi_cc100_abs_freq_top_rowincol_7500_words	ws353	0.48380466432668756
 de	ppmi_cc100_abs_freq_top_rowincol_7500_words	tms aIFG	0.20512501262932448
@@ -7372,6 +8140,12 @@ de	ppmi_cc100_abs_freq_top__10000_words	tms pIFG	0.19611587302564937
 de	ppmi_cc100_abs_freq_top__10000_words	de tms vertex	0.17769869043355752
 de	ppmi_cc100_abs_freq_top__10000_words	de tms pIFG	0.2130004321349315
 de	ppmi_cc100_abs_freq_top__10000_words	de tms aIFG	0.24158971970657542
+de	ppmi_cc100_abs_freq_top__10000_words	de tms pIPL	0.11420461486788867
+de	ppmi_cc100_abs_freq_top__10000_words	de tms sham	0.14029740875017904
+de	ppmi_cc100_abs_freq_top__10000_words	de tms pIPL sound sham	0.11053239369098049
+de	ppmi_cc100_abs_freq_top__10000_words	de tms pIPL action sham	0.17659428805302052
+de	ppmi_cc100_abs_freq_top__10000_words	de tms sound pIPL	0.08348110861646409
+de	ppmi_cc100_abs_freq_top__10000_words	de tms action pIPL	0.1525361484865396
 de	ppmi_cc100_abs_freq_random__10000_words	simlex999-sim	0.22336140853766887
 de	ppmi_cc100_abs_freq_random__10000_words	ws353	0.4636802420059518
 de	ppmi_cc100_abs_freq_random__10000_words	tms aIFG	0.2834714058400102
@@ -7380,6 +8154,12 @@ de	ppmi_cc100_abs_freq_random__10000_words	tms pIFG	0.25531164316333493
 de	ppmi_cc100_abs_freq_random__10000_words	de tms vertex	0.24556951332895946
 de	ppmi_cc100_abs_freq_random__10000_words	de tms pIFG	0.28737166340768644
 de	ppmi_cc100_abs_freq_random__10000_words	de tms aIFG	0.30903409642497204
+de	ppmi_cc100_abs_freq_random__10000_words	de tms pIPL	0.12813373085948984
+de	ppmi_cc100_abs_freq_random__10000_words	de tms sham	0.12594937151330854
+de	ppmi_cc100_abs_freq_random__10000_words	de tms pIPL sound sham	0.13273873763693414
+de	ppmi_cc100_abs_freq_random__10000_words	de tms pIPL action sham	0.12181672169700074
+de	ppmi_cc100_abs_freq_random__10000_words	de tms sound pIPL	0.12353300006678317
+de	ppmi_cc100_abs_freq_random__10000_words	de tms action pIPL	0.13535496773298705
 de	ppmi_cc100_abs_freq_top_rowincol_10000_words	simlex999-sim	0.31281966006017015
 de	ppmi_cc100_abs_freq_top_rowincol_10000_words	ws353	0.47958707053658733
 de	ppmi_cc100_abs_freq_top_rowincol_10000_words	tms aIFG	0.21103732827933908
@@ -7398,6 +8178,12 @@ de	ppmi_cc100_abs_freq_top__12500_words	tms pIFG	0.20007454996596596
 de	ppmi_cc100_abs_freq_top__12500_words	de tms vertex	0.1815184092131539
 de	ppmi_cc100_abs_freq_top__12500_words	de tms pIFG	0.21778106824171686
 de	ppmi_cc100_abs_freq_top__12500_words	de tms aIFG	0.24358586819466232
+de	ppmi_cc100_abs_freq_top__12500_words	de tms pIPL	0.1131561030449401
+de	ppmi_cc100_abs_freq_top__12500_words	de tms sham	0.13797668118103504
+de	ppmi_cc100_abs_freq_top__12500_words	de tms pIPL sound sham	0.10990938751620491
+de	ppmi_cc100_abs_freq_top__12500_words	de tms pIPL action sham	0.17284111141488046
+de	ppmi_cc100_abs_freq_top__12500_words	de tms sound pIPL	0.08593360838892067
+de	ppmi_cc100_abs_freq_top__12500_words	de tms action pIPL	0.14752151538533137
 de	ppmi_cc100_abs_freq_random__12500_words	simlex999-sim	0.21953005355982733
 de	ppmi_cc100_abs_freq_random__12500_words	ws353	0.4552340800905602
 de	ppmi_cc100_abs_freq_random__12500_words	tms aIFG	0.2878267730998932
@@ -7406,6 +8192,12 @@ de	ppmi_cc100_abs_freq_random__12500_words	tms pIFG	0.2559017455902797
 de	ppmi_cc100_abs_freq_random__12500_words	de tms vertex	0.24838550853176147
 de	ppmi_cc100_abs_freq_random__12500_words	de tms pIFG	0.283774072527147
 de	ppmi_cc100_abs_freq_random__12500_words	de tms aIFG	0.3166693005651382
+de	ppmi_cc100_abs_freq_random__12500_words	de tms pIPL	0.1311804635705045
+de	ppmi_cc100_abs_freq_random__12500_words	de tms sham	0.1267337372831435
+de	ppmi_cc100_abs_freq_random__12500_words	de tms pIPL sound sham	0.13269421636512246
+de	ppmi_cc100_abs_freq_random__12500_words	de tms pIPL action sham	0.12355194711787061
+de	ppmi_cc100_abs_freq_random__12500_words	de tms sound pIPL	0.12571565521760097
+de	ppmi_cc100_abs_freq_random__12500_words	de tms action pIPL	0.13975069426027822
 de	ppmi_cc100_abs_freq_top_rowincol_12500_words	simlex999-sim	0.312078043557118
 de	ppmi_cc100_abs_freq_top_rowincol_12500_words	ws353	0.47823879507027023
 de	ppmi_cc100_abs_freq_top_rowincol_12500_words	tms aIFG	0.21163119912154948
@@ -7424,6 +8216,12 @@ de	ppmi_cc100_abs_freq_top__15000_words	tms pIFG	0.20469376246526513
 de	ppmi_cc100_abs_freq_top__15000_words	de tms vertex	0.1845842340130125
 de	ppmi_cc100_abs_freq_top__15000_words	de tms pIFG	0.22442813224020333
 de	ppmi_cc100_abs_freq_top__15000_words	de tms aIFG	0.2472439110902619
+de	ppmi_cc100_abs_freq_top__15000_words	de tms pIPL	0.11168776920836564
+de	ppmi_cc100_abs_freq_top__15000_words	de tms sham	0.1348562877500833
+de	ppmi_cc100_abs_freq_top__15000_words	de tms pIPL sound sham	0.11241579154939345
+de	ppmi_cc100_abs_freq_top__15000_words	de tms pIPL action sham	0.163686471912257
+de	ppmi_cc100_abs_freq_top__15000_words	de tms sound pIPL	0.08764047265688744
+de	ppmi_cc100_abs_freq_top__15000_words	de tms action pIPL	0.14234279408806072
 de	ppmi_cc100_abs_freq_random__15000_words	simlex999-sim	0.22181664546425103
 de	ppmi_cc100_abs_freq_random__15000_words	ws353	0.4549741451227517
 de	ppmi_cc100_abs_freq_random__15000_words	tms aIFG	0.28557236969182576
@@ -7432,6 +8230,12 @@ de	ppmi_cc100_abs_freq_random__15000_words	tms pIFG	0.25377736373142123
 de	ppmi_cc100_abs_freq_random__15000_words	de tms vertex	0.24765232526732908
 de	ppmi_cc100_abs_freq_random__15000_words	de tms pIFG	0.2803849427828381
 de	ppmi_cc100_abs_freq_random__15000_words	de tms aIFG	0.31819636210175456
+de	ppmi_cc100_abs_freq_random__15000_words	de tms pIPL	0.12919411538614997
+de	ppmi_cc100_abs_freq_random__15000_words	de tms sham	0.125395687525191
+de	ppmi_cc100_abs_freq_random__15000_words	de tms pIPL sound sham	0.12898537038595664
+de	ppmi_cc100_abs_freq_random__15000_words	de tms pIPL action sham	0.12509771312352733
+de	ppmi_cc100_abs_freq_random__15000_words	de tms sound pIPL	0.1240963832799479
+de	ppmi_cc100_abs_freq_random__15000_words	de tms action pIPL	0.1372971118484916
 de	ppmi_cc100_abs_freq_top_rowincol_15000_words	simlex999-sim	0.31207130697022295
 de	ppmi_cc100_abs_freq_top_rowincol_15000_words	ws353	0.47495778240060926
 de	ppmi_cc100_abs_freq_top_rowincol_15000_words	tms aIFG	0.21381439620584033
@@ -7450,6 +8254,12 @@ de	ppmi_cc100_abs_freq_top__17500_words	tms pIFG	0.20893451560142842
 de	ppmi_cc100_abs_freq_top__17500_words	de tms vertex	0.188879693882851
 de	ppmi_cc100_abs_freq_top__17500_words	de tms pIFG	0.22955775310636878
 de	ppmi_cc100_abs_freq_top__17500_words	de tms aIFG	0.24980367006917178
+de	ppmi_cc100_abs_freq_top__17500_words	de tms pIPL	0.11017313576319734
+de	ppmi_cc100_abs_freq_top__17500_words	de tms sham	0.13285628433945448
+de	ppmi_cc100_abs_freq_top__17500_words	de tms pIPL sound sham	0.11490522029826758
+de	ppmi_cc100_abs_freq_top__17500_words	de tms pIPL action sham	0.1570703221065902
+de	ppmi_cc100_abs_freq_top__17500_words	de tms sound pIPL	0.091183915438169
+de	ppmi_cc100_abs_freq_top__17500_words	de tms action pIPL	0.13547649263211267
 de	ppmi_cc100_abs_freq_random__17500_words	simlex999-sim	0.224718094083361
 de	ppmi_cc100_abs_freq_random__17500_words	ws353	0.45479432280183707
 de	ppmi_cc100_abs_freq_random__17500_words	tms aIFG	0.2889262934292342
@@ -7458,6 +8268,12 @@ de	ppmi_cc100_abs_freq_random__17500_words	tms pIFG	0.25384770001165397
 de	ppmi_cc100_abs_freq_random__17500_words	de tms vertex	0.24979547498004112
 de	ppmi_cc100_abs_freq_random__17500_words	de tms pIFG	0.28090448435707294
 de	ppmi_cc100_abs_freq_random__17500_words	de tms aIFG	0.3218318543803838
+de	ppmi_cc100_abs_freq_random__17500_words	de tms pIPL	0.12720979780358047
+de	ppmi_cc100_abs_freq_random__17500_words	de tms sham	0.12558362903766632
+de	ppmi_cc100_abs_freq_random__17500_words	de tms pIPL sound sham	0.13374618396280916
+de	ppmi_cc100_abs_freq_random__17500_words	de tms pIPL action sham	0.12068968063499733
+de	ppmi_cc100_abs_freq_random__17500_words	de tms sound pIPL	0.1262556966734268
+de	ppmi_cc100_abs_freq_random__17500_words	de tms action pIPL	0.13099671184512146
 de	ppmi_cc100_abs_freq_top_rowincol_17500_words	simlex999-sim	0.3116252509787375
 de	ppmi_cc100_abs_freq_top_rowincol_17500_words	ws353	0.47513227433014543
 de	ppmi_cc100_abs_freq_top_rowincol_17500_words	tms aIFG	0.21646596610549929
@@ -7476,6 +8292,12 @@ de	ppmi_cc100_abs_freq_top__20000_words	tms pIFG	0.2107735001848023
 de	ppmi_cc100_abs_freq_top__20000_words	de tms vertex	0.1896969179392294
 de	ppmi_cc100_abs_freq_top__20000_words	de tms pIFG	0.23223282256214303
 de	ppmi_cc100_abs_freq_top__20000_words	de tms aIFG	0.2520124181892174
+de	ppmi_cc100_abs_freq_top__20000_words	de tms pIPL	0.10688426724649987
+de	ppmi_cc100_abs_freq_top__20000_words	de tms sham	0.1283370662311893
+de	ppmi_cc100_abs_freq_top__20000_words	de tms pIPL sound sham	0.11464351757593112
+de	ppmi_cc100_abs_freq_top__20000_words	de tms pIPL action sham	0.14791280159323764
+de	ppmi_cc100_abs_freq_top__20000_words	de tms sound pIPL	0.09278737094341187
+de	ppmi_cc100_abs_freq_top__20000_words	de tms action pIPL	0.1266298174716508
 de	ppmi_cc100_abs_freq_random__20000_words	simlex999-sim	0.22426039222532346
 de	ppmi_cc100_abs_freq_random__20000_words	ws353	0.45214088532888164
 de	ppmi_cc100_abs_freq_random__20000_words	tms aIFG	0.29014835727980315
@@ -7484,6 +8306,12 @@ de	ppmi_cc100_abs_freq_random__20000_words	tms pIFG	0.2545114660469729
 de	ppmi_cc100_abs_freq_random__20000_words	de tms vertex	0.25083918854115705
 de	ppmi_cc100_abs_freq_random__20000_words	de tms pIFG	0.2812275857740123
 de	ppmi_cc100_abs_freq_random__20000_words	de tms aIFG	0.32152844515228146
+de	ppmi_cc100_abs_freq_random__20000_words	de tms pIPL	0.1264738743492557
+de	ppmi_cc100_abs_freq_random__20000_words	de tms sham	0.12519328333730095
+de	ppmi_cc100_abs_freq_random__20000_words	de tms pIPL sound sham	0.13416040479460872
+de	ppmi_cc100_abs_freq_random__20000_words	de tms pIPL action sham	0.11960743113191212
+de	ppmi_cc100_abs_freq_random__20000_words	de tms sound pIPL	0.12489619234638176
+de	ppmi_cc100_abs_freq_random__20000_words	de tms action pIPL	0.13080160413874556
 de	ppmi_cc100_abs_freq_top_rowincol_20000_words	simlex999-sim	0.3107263959746912
 de	ppmi_cc100_abs_freq_top_rowincol_20000_words	ws353	0.47419882873404634
 de	ppmi_cc100_abs_freq_top_rowincol_20000_words	tms aIFG	0.21850363477112572
@@ -7502,6 +8330,12 @@ de	ppmi_cc100_abs_freq_top__25000_words	tms pIFG	0.2133922667689446
 de	ppmi_cc100_abs_freq_top__25000_words	de tms vertex	0.19526826207104978
 de	ppmi_cc100_abs_freq_top__25000_words	de tms pIFG	0.23550509308624396
 de	ppmi_cc100_abs_freq_top__25000_words	de tms aIFG	0.2576125127572937
+de	ppmi_cc100_abs_freq_top__25000_words	de tms pIPL	0.10775840517072191
+de	ppmi_cc100_abs_freq_top__25000_words	de tms sham	0.12296589793307403
+de	ppmi_cc100_abs_freq_top__25000_words	de tms pIPL sound sham	0.11685687473722298
+de	ppmi_cc100_abs_freq_top__25000_words	de tms pIPL action sham	0.13426942797881253
+de	ppmi_cc100_abs_freq_top__25000_words	de tms sound pIPL	0.10090974879885226
+de	ppmi_cc100_abs_freq_top__25000_words	de tms action pIPL	0.11898482910810593
 de	ppmi_cc100_abs_freq_random__25000_words	simlex999-sim	0.22499673913461535
 de	ppmi_cc100_abs_freq_random__25000_words	ws353	0.44092135213451916
 de	ppmi_cc100_abs_freq_random__25000_words	tms aIFG	0.291184272062942
@@ -7510,6 +8344,12 @@ de	ppmi_cc100_abs_freq_random__25000_words	tms pIFG	0.2557352323433749
 de	ppmi_cc100_abs_freq_random__25000_words	de tms vertex	0.24594439704273227
 de	ppmi_cc100_abs_freq_random__25000_words	de tms pIFG	0.28362277629579025
 de	ppmi_cc100_abs_freq_random__25000_words	de tms aIFG	0.322551382580131
+de	ppmi_cc100_abs_freq_random__25000_words	de tms pIPL	0.13050158340247253
+de	ppmi_cc100_abs_freq_random__25000_words	de tms sham	0.12904298314145884
+de	ppmi_cc100_abs_freq_random__25000_words	de tms pIPL sound sham	0.139041242428667
+de	ppmi_cc100_abs_freq_random__25000_words	de tms pIPL action sham	0.12278860242929203
+de	ppmi_cc100_abs_freq_random__25000_words	de tms sound pIPL	0.13170274687019157
+de	ppmi_cc100_abs_freq_random__25000_words	de tms action pIPL	0.13243584739256703
 de	ppmi_cc100_abs_freq_top_rowincol_25000_words	simlex999-sim	0.3081072663238528
 de	ppmi_cc100_abs_freq_top_rowincol_25000_words	ws353	0.4748616785795799
 de	ppmi_cc100_abs_freq_top_rowincol_25000_words	tms aIFG	0.22241334635149715

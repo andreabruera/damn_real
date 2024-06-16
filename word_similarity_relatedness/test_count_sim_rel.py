@@ -74,7 +74,7 @@ def check_dataset_words(dataset, present_words, prototyping=False):
         print('missing words: {}'.format(missing_words))
     return test_sims
 
-def compute_corr(dataset, dataset_name, present_words, prototypes):
+def compute_corr(dataset, dataset_name, present_words, prototypes, printing=0):
     test_sims = check_dataset_words(dataset, present_words)
     if len(prototypes.keys()) > 0:
         proto_sims = dict()
@@ -82,7 +82,9 @@ def compute_corr(dataset, dataset_name, present_words, prototypes):
             proto_sims[k] = set([w for _ in check_dataset_words(v, present_words, prototyping=True) for __ in _[:2] for w in __])
         proto_vecs = dict()
         for k, v in proto_sims.items():
-            print([k, v])
+            if printing == 0:
+                #print([k, v])
+                pass
             assert len(v) > 0
             current_vecs = list()
             for w in v:
@@ -106,15 +108,26 @@ def compute_corr(dataset, dataset_name, present_words, prototypes):
         ### all possible transformations...
         if len(prototypes.keys()) > 0:
             current_pred = list()
-            for w_two in w_twos:
-                if 'er' in w_ones[0]:
-                    vec_one = proto_vecs['sound']
-                elif 'andlung' in w_ones[0]:
-                    vec_one = proto_vecs['action']
-                else:
-                    raise RuntimeError()
-                partial_pred = 1 - scipy.spatial.distance.cosine(vec_one, model[w_two])
-                current_pred.append(partial_pred)
+            for proto_mode in [
+                               'both', 
+                               #'none',
+                               ]: 
+                for w_two in w_twos:
+                    vec_one = proto_vecs[proto_mode]
+                    '''
+                    if 'er' in w_ones[0]:
+                        #vec_one = proto_vecs['sound']
+                        #print([w_ones, 'sound'])
+                    elif 'andlung' in w_ones[0]:
+                        vec_one = proto_vecs['none']
+                        #vec_one = proto_vecs['action']
+                        #print([w_ones, 'action'])
+                    else:
+                        raise RuntimeError()
+                    '''
+                    ### this is similarity!
+                    partial_pred = 1 - scipy.spatial.distance.cosine(vec_one, model[w_two])
+                    current_pred.append(partial_pred)
             current_pred = numpy.average(current_pred)
         else:
             current_pred = list()
@@ -161,12 +174,14 @@ def test_model(lang, case, model, vocab, results, datasets):
                 continue
         else:
             corrs = list()
+            printing = 0
             for s, s_data in dataset.items():
-                corr = compute_corr(s_data, dataset_name, present_words, prototypes)
+                corr = compute_corr(s_data, dataset_name, present_words, prototypes, printing=printing)
                 if corr == None:
                     print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
                 else:
                     corrs.append(corr)
+                printing += 1
             corr = numpy.nanmean(corrs)
         print('\n')
         print('{} model'.format(case))
@@ -210,19 +225,46 @@ def read_german_pipl_tms(lang):
     sims = dict()
     test_vocab = set()
     lines = list()
-    prototypes = {'action' : list(), 'sound' : list()}
+    prototypes = {
+                  'pos_action' : list(), 
+                  'pos_sound' : list(),
+                  'neg_action' : list(),
+                  'neg_sound' : list(), 
+                  'all' : list(),
+                  'both' : list(),
+                  'none' : list(),
+                  'only_action' : list(), 
+                  'only_sound' : list(),
+                  }
     with open(os.path.join('..', 'tms', 'data', 'de_tms_pipl.tsv')) as i:
         for l_i, l in enumerate(i):
             line = l.strip().split('\t')
             if l_i == 0:
                 header = [w for w in line]
                 continue
+            if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '-1':
+                prototypes['only_action'].append(line[header.index('stimulus')])
+            if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
+                prototypes['only_sound'].append(line[header.index('stimulus')])
+            if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '1':
+                prototypes['both'].append(line[header.index('stimulus')])
+            if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '-1':
+                prototypes['none'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '1':
-                prototypes['action'].append(line[header.index('stimulus')])
+                prototypes['pos_action'].append(line[header.index('stimulus')])
+            if line[header.index('action_word')] == '-1':
+                prototypes['neg_action'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '1':
-                prototypes['sound'].append(line[header.index('stimulus')])
+                prototypes['pos_sound'].append(line[header.index('stimulus')])
+            if line[header.index('sound_word')] == '-1':
+                prototypes['neg_sound'].append(line[header.index('stimulus')])
+            #if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
+            #    prototypes['action'].append(line[header.index('stimulus')])
+            #if line[header.index('sound_word')] == '-1' and line[header.index('action_word')] == '1':
+            #    prototypes['sound'].append(line[header.index('stimulus')])
             if 'lexical_decision' in line:
                 continue
+            prototypes['all'].append(line[header.index('stimulus')])
             lines.append(line)
     full_sims = dict()
     conditions = set([l[header.index('condition')] for l in lines])
@@ -246,6 +288,7 @@ def read_german_pipl_tms(lang):
                 current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t]
                 subjects = [int(l[header.index('subject')]) for l in current_cond]
                 log_rts = [float(l[header.index('log_rt')]) for l in current_cond]
+                exps = [l[header.index('expected_response')] for l in current_cond]
                 #log_rts = [float(l[header.index('rt')]) for l in current_cond]
                 vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
                 test_vocab = test_vocab.union(set(vocab_w_ones))
@@ -476,7 +519,8 @@ if os.path.exists(results_file):
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 lancaster_ratings = read_lancaster_ratings()
 
-fasttext_only = True
+#fasttext_only = True
+fasttext_only = False
 
 models = dict()
 vocabs = dict()
