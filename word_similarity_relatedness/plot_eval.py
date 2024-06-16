@@ -50,7 +50,8 @@ for lang, l_res in results.items():
         bottom = -.08 if task != 'men' else 0.1
         ax.set_ylim(bottom=bottom, top=top)
         all_vals = list()
-        fts = [k for k in t_res.keys() if 'fast' in k or 'mitch' in k]
+        fts = [k for k in t_res.keys() if 'fast' in k]
+        mitchs = [k for k in t_res.keys() if 'mitch' in k]
         #others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k}
         others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k and 'top' in k}
         all_vals = [val[0] for v in others.values() for val in v] + [0.]
@@ -60,7 +61,7 @@ for lang, l_res in results.items():
                   xmax=max(all_vals)+.1,
                   color='black',
                   )
-        for ft, style in zip(fts, ['solid', 'dotted', 'dashdot', 'dashed',]):
+        for ft, style in zip(fts, ['solid', 'dashdot',]):
             ax.hlines(
                       y=t_res[ft],
                       xmin=-.1,
@@ -68,6 +69,13 @@ for lang, l_res in results.items():
                       label=ft,
                       linestyles=style,
                       color='red',
+                      )
+        for mitch in mitchs:
+            ax.hlines(
+                      y=t_res[mitch],
+                      xmin=-.1,
+                      xmax=max(all_vals)+.1,
+                      label=mitch,
                       )
         colors = {k : v for k, v in zip(others.keys(), matplotlib.cm.rainbow(numpy.linspace(0, 1, len(others.keys()))))}
         for case, sort_freqs in others.items():
