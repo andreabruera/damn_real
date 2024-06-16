@@ -6222,7 +6222,7 @@ subj	trial	item	utterance	ERR	stim	session	task	RT	difficulty
 021	30	Meer.bmp	See	0	vertex	1	sem	1994,96104103323	0
 022	30	Meer.bmp	See	0	aIFG	1	sem	1763,33333333333	0
 023	30	Meer.bmp	Ozean	0	vertex	2	sem	2070	0
-024	30	Meer.bmp	dieSee	2	pIFG	3	sem	1555,72727836824	0
+024	30	Meer.bmp	See	2	pIFG	3	sem	1555,72727836824	0
 103	30	Meer.bmp	See	0	pIFG	2	sem	1725,75325101275	0
 001	2	Meise.bmp	Rotkehlchen	0	aIFG	2	sem	2108,3116894629	0
 002	48	Meise.bmp	Vogel	4	pIFG	1	sem	1352,64069993174	0
@@ -6495,7 +6495,7 @@ subj	trial	item	utterance	ERR	stim	session	task	RT	difficulty
 019	8	Nichte.bmp	Onkel	0	vertex	3	sem	2123,33333333333	1
 020	8	Nichte.bmp	Neffe	0	pIFG	1	sem	1643,33333333333	1
 021	8	Nichte.bmp	Neffe	0	aIFG	2	sem	1536,83550362996	1
-022	8	Nichte.bmp	Verwandschaft	4	pIFG	2	sem	1352,64069993174	1
+022	8	Nichte.bmp	Verwandtschaft	4	pIFG	2	sem	1352,64069993174	1
 023	8	Nichte.bmp	Neffe	0	aIFG	3	sem	1603,33333333333	1
 024	8	Nichte.bmp	Neffe	0	vertex	1	sem	1111,77057201868	1
 103	8	Nichte.bmp	Neffe	0	vertex	3	sem	1483,33333333333	1

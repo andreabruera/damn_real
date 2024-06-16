@@ -4262,10 +4262,14 @@ it	ppmi_wac_abs_freq_top__100_words	simlex999-sim	0.02172427997402887
 it	ppmi_wac_abs_freq_top__100_words	ws353	0.25670542905153454
 it	ppmi_wac_abs_freq_top__100_words	tms vertex	0.1201453633321515
 it	ppmi_wac_abs_freq_top__100_words	tms cereb	0.05700780115404079
+it	ppmi_wac_abs_freq_top__100_words	it tms cereb	0.06846145929284145
+it	ppmi_wac_abs_freq_top__100_words	it tms vertex	0.1288470336082994
 it	ppmi_wac_abs_freq_random__100_words	simlex999-sim	0.025699616035598654
 it	ppmi_wac_abs_freq_random__100_words	ws353	0.1772868113977289
 it	ppmi_wac_abs_freq_random__100_words	tms vertex	0.02242372458249253
 it	ppmi_wac_abs_freq_random__100_words	tms cereb	0.023122546979152985
+it	ppmi_wac_abs_freq_random__100_words	it tms cereb	0.028552647421264742
+it	ppmi_wac_abs_freq_random__100_words	it tms vertex	0.02528754541263578
 it	ppmi_wac_abs_freq_top_rowincol_100_words	simlex999-sim	0.1322670431458859
 it	ppmi_wac_abs_freq_top_rowincol_100_words	ws353	0.4216730457327047
 it	ppmi_wac_abs_freq_top_rowincol_100_words	tms vertex	0.1696052761254098
@@ -4278,10 +4282,14 @@ it	ppmi_wac_abs_freq_top__200_words	simlex999-sim	0.03145860686053877
 it	ppmi_wac_abs_freq_top__200_words	ws353	0.2644145812416091
 it	ppmi_wac_abs_freq_top__200_words	tms vertex	0.13430179638878503
 it	ppmi_wac_abs_freq_top__200_words	tms cereb	0.07015711939902261
+it	ppmi_wac_abs_freq_top__200_words	it tms cereb	0.08781287469059883
+it	ppmi_wac_abs_freq_top__200_words	it tms vertex	0.14408096919110572
 it	ppmi_wac_abs_freq_random__200_words	simlex999-sim	0.053493417997022744
 it	ppmi_wac_abs_freq_random__200_words	ws353	0.2521185001442103
 it	ppmi_wac_abs_freq_random__200_words	tms vertex	0.016716588009648457
 it	ppmi_wac_abs_freq_random__200_words	tms cereb	-0.0009791398129892154
+it	ppmi_wac_abs_freq_random__200_words	it tms cereb	0.00808656759712483
+it	ppmi_wac_abs_freq_random__200_words	it tms vertex	0.005526647284969788
 it	ppmi_wac_abs_freq_top_rowincol_200_words	simlex999-sim	0.124450175907933
 it	ppmi_wac_abs_freq_top_rowincol_200_words	ws353	0.4176155779363229
 it	ppmi_wac_abs_freq_top_rowincol_200_words	tms vertex	0.17035115168121157
@@ -4294,10 +4302,14 @@ it	ppmi_wac_abs_freq_top__500_words	simlex999-sim	0.05372036142007957
 it	ppmi_wac_abs_freq_top__500_words	ws353	0.3071077195780391
 it	ppmi_wac_abs_freq_top__500_words	tms vertex	0.1417807355631634
 it	ppmi_wac_abs_freq_top__500_words	tms cereb	0.07581483403019534
+it	ppmi_wac_abs_freq_top__500_words	it tms cereb	0.09345102584818372
+it	ppmi_wac_abs_freq_top__500_words	it tms vertex	0.15307964153205678
 it	ppmi_wac_abs_freq_random__500_words	simlex999-sim	0.0493226399818437
 it	ppmi_wac_abs_freq_random__500_words	ws353	0.2974558896234014
 it	ppmi_wac_abs_freq_random__500_words	tms vertex	0.042694496368872334
 it	ppmi_wac_abs_freq_random__500_words	tms cereb	0.019934260432284853
+it	ppmi_wac_abs_freq_random__500_words	it tms cereb	0.03998636206601004
+it	ppmi_wac_abs_freq_random__500_words	it tms vertex	0.028866409119902087
 it	ppmi_wac_abs_freq_top_rowincol_500_words	simlex999-sim	0.10925485997885925
 it	ppmi_wac_abs_freq_top_rowincol_500_words	ws353	0.403153867642657
 it	ppmi_wac_abs_freq_top_rowincol_500_words	tms vertex	0.16865474654169732
@@ -4310,10 +4322,14 @@ it	ppmi_wac_abs_freq_top__750_words	simlex999-sim	0.052451465860089065
 it	ppmi_wac_abs_freq_top__750_words	ws353	0.3339198212876616
 it	ppmi_wac_abs_freq_top__750_words	tms vertex	0.1409085185896645
 it	ppmi_wac_abs_freq_top__750_words	tms cereb	0.07854158384081153
+it	ppmi_wac_abs_freq_top__750_words	it tms cereb	0.09887121964523715
+it	ppmi_wac_abs_freq_top__750_words	it tms vertex	0.15347649837644795
 it	ppmi_wac_abs_freq_random__750_words	simlex999-sim	0.0785220029182413
 it	ppmi_wac_abs_freq_random__750_words	ws353	0.2863912594095038
 it	ppmi_wac_abs_freq_random__750_words	tms vertex	0.02517712804853639
 it	ppmi_wac_abs_freq_random__750_words	tms cereb	0.0032601231084633427
+it	ppmi_wac_abs_freq_random__750_words	it tms cereb	0.01695726004041741
+it	ppmi_wac_abs_freq_random__750_words	it tms vertex	0.017148763416249137
 it	ppmi_wac_abs_freq_top_rowincol_750_words	simlex999-sim	0.10416759365483946
 it	ppmi_wac_abs_freq_top_rowincol_750_words	ws353	0.4018240846686827
 it	ppmi_wac_abs_freq_top_rowincol_750_words	tms vertex	0.16768464774216668
@@ -4326,10 +4342,14 @@ it	ppmi_wac_abs_freq_top__1000_words	simlex999-sim	0.06033150374686976
 it	ppmi_wac_abs_freq_top__1000_words	ws353	0.3506860370519234
 it	ppmi_wac_abs_freq_top__1000_words	tms vertex	0.15249890387155718
 it	ppmi_wac_abs_freq_top__1000_words	tms cereb	0.08975866489167099
+it	ppmi_wac_abs_freq_top__1000_words	it tms cereb	0.11307279739819993
+it	ppmi_wac_abs_freq_top__1000_words	it tms vertex	0.16518813649158376
 it	ppmi_wac_abs_freq_random__1000_words	simlex999-sim	0.053125146358850586
 it	ppmi_wac_abs_freq_random__1000_words	ws353	0.2834935443047711
 it	ppmi_wac_abs_freq_random__1000_words	tms vertex	0.05540485896245606
 it	ppmi_wac_abs_freq_random__1000_words	tms cereb	0.007917864491848444
+it	ppmi_wac_abs_freq_random__1000_words	it tms cereb	0.01999066887289357
+it	ppmi_wac_abs_freq_random__1000_words	it tms vertex	0.05260102106765453
 it	ppmi_wac_abs_freq_top_rowincol_1000_words	simlex999-sim	0.10145642255262038
 it	ppmi_wac_abs_freq_top_rowincol_1000_words	ws353	0.3986944618639186
 it	ppmi_wac_abs_freq_top_rowincol_1000_words	tms vertex	0.16769837568446547
@@ -4342,10 +4362,14 @@ it	ppmi_wac_abs_freq_top__2500_words	simlex999-sim	0.07601798793176796
 it	ppmi_wac_abs_freq_top__2500_words	ws353	0.36168046001259485
 it	ppmi_wac_abs_freq_top__2500_words	tms vertex	0.1621990506966668
 it	ppmi_wac_abs_freq_top__2500_words	tms cereb	0.10281829629713916
+it	ppmi_wac_abs_freq_top__2500_words	it tms cereb	0.1286275967827425
+it	ppmi_wac_abs_freq_top__2500_words	it tms vertex	0.17764099944938172
 it	ppmi_wac_abs_freq_random__2500_words	simlex999-sim	0.0962905203992214
 it	ppmi_wac_abs_freq_random__2500_words	ws353	0.3231196836114003
 it	ppmi_wac_abs_freq_random__2500_words	tms vertex	0.11814642066305701
 it	ppmi_wac_abs_freq_random__2500_words	tms cereb	0.08796173433568298
+it	ppmi_wac_abs_freq_random__2500_words	it tms cereb	0.10785655107113268
+it	ppmi_wac_abs_freq_random__2500_words	it tms vertex	0.12307852228460277
 it	ppmi_wac_abs_freq_top_rowincol_2500_words	simlex999-sim	0.09586613591741211
 it	ppmi_wac_abs_freq_top_rowincol_2500_words	ws353	0.38969526270997046
 it	ppmi_wac_abs_freq_top_rowincol_2500_words	tms vertex	0.16955989315007974
@@ -4358,10 +4382,14 @@ it	ppmi_wac_abs_freq_top__5000_words	simlex999-sim	0.09348949646857936
 it	ppmi_wac_abs_freq_top__5000_words	ws353	0.3639939381306329
 it	ppmi_wac_abs_freq_top__5000_words	tms vertex	0.16942118217382826
 it	ppmi_wac_abs_freq_top__5000_words	tms cereb	0.11120602823270752
+it	ppmi_wac_abs_freq_top__5000_words	it tms cereb	0.13821137824388788
+it	ppmi_wac_abs_freq_top__5000_words	it tms vertex	0.18582057562767912
 it	ppmi_wac_abs_freq_random__5000_words	simlex999-sim	0.1206156210495544
 it	ppmi_wac_abs_freq_random__5000_words	ws353	0.35941477497583013
 it	ppmi_wac_abs_freq_random__5000_words	tms vertex	0.1636453233215833
 it	ppmi_wac_abs_freq_random__5000_words	tms cereb	0.11791173871104922
+it	ppmi_wac_abs_freq_random__5000_words	it tms cereb	0.14314511107566114
+it	ppmi_wac_abs_freq_random__5000_words	it tms vertex	0.17545157132050618
 it	ppmi_wac_abs_freq_top_rowincol_5000_words	simlex999-sim	0.09683346923199312
 it	ppmi_wac_abs_freq_top_rowincol_5000_words	ws353	0.3783778244413823
 it	ppmi_wac_abs_freq_top_rowincol_5000_words	tms vertex	0.17051793964515424
@@ -4374,10 +4402,14 @@ it	ppmi_wac_abs_freq_top__7500_words	simlex999-sim	0.09285738013031387
 it	ppmi_wac_abs_freq_top__7500_words	ws353	0.36946066092119084
 it	ppmi_wac_abs_freq_top__7500_words	tms vertex	0.1663198072065808
 it	ppmi_wac_abs_freq_top__7500_words	tms cereb	0.11112993584295422
+it	ppmi_wac_abs_freq_top__7500_words	it tms cereb	0.1373673241495006
+it	ppmi_wac_abs_freq_top__7500_words	it tms vertex	0.1818050245205247
 it	ppmi_wac_abs_freq_random__7500_words	simlex999-sim	0.12292658922875088
 it	ppmi_wac_abs_freq_random__7500_words	ws353	0.3669104147798329
 it	ppmi_wac_abs_freq_random__7500_words	tms vertex	0.19504396700651266
 it	ppmi_wac_abs_freq_random__7500_words	tms cereb	0.14623548573926629
+it	ppmi_wac_abs_freq_random__7500_words	it tms cereb	0.18019884009942005
+it	ppmi_wac_abs_freq_random__7500_words	it tms vertex	0.21297610471010206
 it	ppmi_wac_abs_freq_top_rowincol_7500_words	simlex999-sim	0.09431901940471878
 it	ppmi_wac_abs_freq_top_rowincol_7500_words	ws353	0.37762412205624346
 it	ppmi_wac_abs_freq_top_rowincol_7500_words	tms vertex	0.16781033566110512
@@ -4390,10 +4422,14 @@ it	ppmi_wac_abs_freq_top__10000_words	simlex999-sim	0.09358175302878517
 it	ppmi_wac_abs_freq_top__10000_words	ws353	0.37242090211607787
 it	ppmi_wac_abs_freq_top__10000_words	tms vertex	0.16286892937375355
 it	ppmi_wac_abs_freq_top__10000_words	tms cereb	0.10970445956527432
+it	ppmi_wac_abs_freq_top__10000_words	it tms cereb	0.13624094953351826
+it	ppmi_wac_abs_freq_top__10000_words	it tms vertex	0.17916195382010736
 it	ppmi_wac_abs_freq_random__10000_words	simlex999-sim	0.13182109276568482
 it	ppmi_wac_abs_freq_random__10000_words	ws353	0.4031871946188707
 it	ppmi_wac_abs_freq_random__10000_words	tms vertex	0.20281717220353404
 it	ppmi_wac_abs_freq_random__10000_words	tms cereb	0.15536833863193983
+it	ppmi_wac_abs_freq_random__10000_words	it tms cereb	0.1962236590900904
+it	ppmi_wac_abs_freq_random__10000_words	it tms vertex	0.22433043272422254
 it	ppmi_wac_abs_freq_top_rowincol_10000_words	simlex999-sim	0.09357040488733971
 it	ppmi_wac_abs_freq_top_rowincol_10000_words	ws353	0.3782851681228983
 it	ppmi_wac_abs_freq_top_rowincol_10000_words	tms vertex	0.1678770411279827
@@ -4406,10 +4442,14 @@ it	ppmi_wac_abs_freq_top__12500_words	simlex999-sim	0.09315735000774078
 it	ppmi_wac_abs_freq_top__12500_words	ws353	0.37108232960991533
 it	ppmi_wac_abs_freq_top__12500_words	tms vertex	0.16694081423034912
 it	ppmi_wac_abs_freq_top__12500_words	tms cereb	0.11290405091417247
+it	ppmi_wac_abs_freq_top__12500_words	it tms cereb	0.13908570347918717
+it	ppmi_wac_abs_freq_top__12500_words	it tms vertex	0.18343850828757713
 it	ppmi_wac_abs_freq_random__12500_words	simlex999-sim	0.12333481955949474
 it	ppmi_wac_abs_freq_random__12500_words	ws353	0.4042228944950479
 it	ppmi_wac_abs_freq_random__12500_words	tms vertex	0.1997578730610611
 it	ppmi_wac_abs_freq_random__12500_words	tms cereb	0.151869734738189
+it	ppmi_wac_abs_freq_random__12500_words	it tms cereb	0.188634132158681
+it	ppmi_wac_abs_freq_random__12500_words	it tms vertex	0.2208697967858301
 it	ppmi_wac_abs_freq_top_rowincol_12500_words	simlex999-sim	0.09304605893911876
 it	ppmi_wac_abs_freq_top_rowincol_12500_words	ws353	0.37630294549920335
 it	ppmi_wac_abs_freq_top_rowincol_12500_words	tms vertex	0.17372786187330194
@@ -4422,10 +4462,14 @@ it	ppmi_wac_abs_freq_top__15000_words	simlex999-sim	0.09099783026927516
 it	ppmi_wac_abs_freq_top__15000_words	ws353	0.3715573305785864
 it	ppmi_wac_abs_freq_top__15000_words	tms vertex	0.16878614335876568
 it	ppmi_wac_abs_freq_top__15000_words	tms cereb	0.1140322299415974
+it	ppmi_wac_abs_freq_top__15000_words	it tms cereb	0.1407376098020347
+it	ppmi_wac_abs_freq_top__15000_words	it tms vertex	0.18474169827147024
 it	ppmi_wac_abs_freq_random__15000_words	simlex999-sim	0.12588188269557682
 it	ppmi_wac_abs_freq_random__15000_words	ws353	0.40900366754441764
 it	ppmi_wac_abs_freq_random__15000_words	tms vertex	0.21272897107873112
 it	ppmi_wac_abs_freq_random__15000_words	tms cereb	0.16494072361690698
+it	ppmi_wac_abs_freq_random__15000_words	it tms cereb	0.2056593525346452
+it	ppmi_wac_abs_freq_random__15000_words	it tms vertex	0.2330429250695992
 it	ppmi_wac_abs_freq_top_rowincol_15000_words	simlex999-sim	0.09103858682700644
 it	ppmi_wac_abs_freq_top_rowincol_15000_words	ws353	0.37514144544358236
 it	ppmi_wac_abs_freq_top_rowincol_15000_words	tms vertex	0.17205690967261744
@@ -4438,10 +4482,14 @@ it	ppmi_wac_abs_freq_top__17500_words	simlex999-sim	0.08861977314261824
 it	ppmi_wac_abs_freq_top__17500_words	ws353	0.3713081107179999
 it	ppmi_wac_abs_freq_top__17500_words	tms vertex	0.1701597782002957
 it	ppmi_wac_abs_freq_top__17500_words	tms cereb	0.11531470728638558
+it	ppmi_wac_abs_freq_top__17500_words	it tms cereb	0.14393751254329046
+it	ppmi_wac_abs_freq_top__17500_words	it tms vertex	0.18715909266339728
 it	ppmi_wac_abs_freq_random__17500_words	simlex999-sim	0.13798240121567512
 it	ppmi_wac_abs_freq_random__17500_words	ws353	0.4098046136650682
 it	ppmi_wac_abs_freq_random__17500_words	tms vertex	0.21829840028549824
 it	ppmi_wac_abs_freq_random__17500_words	tms cereb	0.16614667681592624
+it	ppmi_wac_abs_freq_random__17500_words	it tms cereb	0.2097452618524446
+it	ppmi_wac_abs_freq_random__17500_words	it tms vertex	0.23942231393475946
 it	ppmi_wac_abs_freq_top_rowincol_17500_words	simlex999-sim	0.08858197959872793
 it	ppmi_wac_abs_freq_top_rowincol_17500_words	ws353	0.37387373854068723
 it	ppmi_wac_abs_freq_top_rowincol_17500_words	tms vertex	0.17327987842043469
@@ -4454,10 +4502,14 @@ it	ppmi_wac_abs_freq_top__20000_words	simlex999-sim	0.08729265200905381
 it	ppmi_wac_abs_freq_top__20000_words	ws353	0.37211400095050634
 it	ppmi_wac_abs_freq_top__20000_words	tms vertex	0.17697431524060298
 it	ppmi_wac_abs_freq_top__20000_words	tms cereb	0.12214894030381114
+it	ppmi_wac_abs_freq_top__20000_words	it tms cereb	0.15277209291554955
+it	ppmi_wac_abs_freq_top__20000_words	it tms vertex	0.19471567255193567
 it	ppmi_wac_abs_freq_random__20000_words	simlex999-sim	0.15186150070838159
 it	ppmi_wac_abs_freq_random__20000_words	ws353	0.4184555276060586
 it	ppmi_wac_abs_freq_random__20000_words	tms vertex	0.22538568089745178
 it	ppmi_wac_abs_freq_random__20000_words	tms cereb	0.17494156528662028
+it	ppmi_wac_abs_freq_random__20000_words	it tms cereb	0.22094194321941885
+it	ppmi_wac_abs_freq_random__20000_words	it tms vertex	0.2493604594317825
 it	ppmi_wac_abs_freq_top_rowincol_20000_words	simlex999-sim	0.08764897290027769
 it	ppmi_wac_abs_freq_top_rowincol_20000_words	ws353	0.37430222823486237
 it	ppmi_wac_abs_freq_top_rowincol_20000_words	tms vertex	0.178607620327331
@@ -4470,10 +4522,14 @@ it	ppmi_wac_abs_freq_top__25000_words	simlex999-sim	0.08482294973774558
 it	ppmi_wac_abs_freq_top__25000_words	ws353	0.36954013294139254
 it	ppmi_wac_abs_freq_top__25000_words	tms vertex	0.18086922257953475
 it	ppmi_wac_abs_freq_top__25000_words	tms cereb	0.12673848161554432
+it	ppmi_wac_abs_freq_top__25000_words	it tms cereb	0.15873104355030437
+it	ppmi_wac_abs_freq_top__25000_words	it tms vertex	0.1984130100294864
 it	ppmi_wac_abs_freq_random__25000_words	simlex999-sim	0.15882226523070522
 it	ppmi_wac_abs_freq_random__25000_words	ws353	0.4198461048443347
 it	ppmi_wac_abs_freq_random__25000_words	tms vertex	0.23317645068888565
 it	ppmi_wac_abs_freq_random__25000_words	tms cereb	0.18246268581944977
+it	ppmi_wac_abs_freq_random__25000_words	it tms cereb	0.22663322646878714
+it	ppmi_wac_abs_freq_random__25000_words	it tms vertex	0.258059533672624
 it	ppmi_wac_abs_freq_top_rowincol_25000_words	simlex999-sim	0.08474340524599139
 it	ppmi_wac_abs_freq_top_rowincol_25000_words	ws353	0.37044746902457115
 it	ppmi_wac_abs_freq_top_rowincol_25000_words	tms vertex	0.1816971032928093
@@ -4486,10 +4542,14 @@ it	ppmi_tagged_wiki_abs_freq_top__100_words	simlex999-sim	0.10795879934962099
 it	ppmi_tagged_wiki_abs_freq_top__100_words	ws353	0.3075285103670282
 it	ppmi_tagged_wiki_abs_freq_top__100_words	tms vertex	0.02870133967176956
 it	ppmi_tagged_wiki_abs_freq_top__100_words	tms cereb	0.010556636168159925
+it	ppmi_tagged_wiki_abs_freq_top__100_words	it tms cereb	0.010126751269920553
+it	ppmi_tagged_wiki_abs_freq_top__100_words	it tms vertex	0.035365093949581365
 it	ppmi_tagged_wiki_abs_freq_random__100_words	simlex999-sim	0.030769784236202084
 it	ppmi_tagged_wiki_abs_freq_random__100_words	ws353	0.13021100092632623
 it	ppmi_tagged_wiki_abs_freq_random__100_words	tms vertex	-0.04964297984901901
 it	ppmi_tagged_wiki_abs_freq_random__100_words	tms cereb	-0.05673253039112489
+it	ppmi_tagged_wiki_abs_freq_random__100_words	it tms cereb	-0.06807304896376785
+it	ppmi_tagged_wiki_abs_freq_random__100_words	it tms vertex	-0.05971104001430141
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	simlex999-sim	0.18559917190543523
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	ws353	0.5649955141597165
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	tms vertex	0.11439484099979849
@@ -4502,10 +4562,14 @@ it	ppmi_tagged_wiki_abs_freq_top__200_words	simlex999-sim	0.15255283065400335
 it	ppmi_tagged_wiki_abs_freq_top__200_words	ws353	0.38560936209954116
 it	ppmi_tagged_wiki_abs_freq_top__200_words	tms vertex	0.0393269947505579
 it	ppmi_tagged_wiki_abs_freq_top__200_words	tms cereb	0.024266453393828314
+it	ppmi_tagged_wiki_abs_freq_top__200_words	it tms cereb	0.026205903205621484
+it	ppmi_tagged_wiki_abs_freq_top__200_words	it tms vertex	0.047758626807606716
 it	ppmi_tagged_wiki_abs_freq_random__200_words	simlex999-sim	0.06434232888275594
 it	ppmi_tagged_wiki_abs_freq_random__200_words	ws353	0.2230810016401968
 it	ppmi_tagged_wiki_abs_freq_random__200_words	tms vertex	-0.06752363647948656
 it	ppmi_tagged_wiki_abs_freq_random__200_words	tms cereb	-0.07569389683109458
+it	ppmi_tagged_wiki_abs_freq_random__200_words	it tms cereb	-0.07419261670909202
+it	ppmi_tagged_wiki_abs_freq_random__200_words	it tms vertex	-0.08988313426202672
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	simlex999-sim	0.18343707514226018
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	ws353	0.5644088711669013
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	tms vertex	0.11365817513656132
@@ -4518,10 +4582,14 @@ it	ppmi_tagged_wiki_abs_freq_top__500_words	simlex999-sim	0.1721792002835511
 it	ppmi_tagged_wiki_abs_freq_top__500_words	ws353	0.4434390942148321
 it	ppmi_tagged_wiki_abs_freq_top__500_words	tms vertex	0.048360638840553916
 it	ppmi_tagged_wiki_abs_freq_top__500_words	tms cereb	0.03243958899398672
+it	ppmi_tagged_wiki_abs_freq_top__500_words	it tms cereb	0.03054722924714758
+it	ppmi_tagged_wiki_abs_freq_top__500_words	it tms vertex	0.05937562390028994
 it	ppmi_tagged_wiki_abs_freq_random__500_words	simlex999-sim	0.07590080700820959
 it	ppmi_tagged_wiki_abs_freq_random__500_words	ws353	0.29098080366994833
 it	ppmi_tagged_wiki_abs_freq_random__500_words	tms vertex	-0.05091088835088207
 it	ppmi_tagged_wiki_abs_freq_random__500_words	tms cereb	-0.03408507044337545
+it	ppmi_tagged_wiki_abs_freq_random__500_words	it tms cereb	-0.04290684327103943
+it	ppmi_tagged_wiki_abs_freq_random__500_words	it tms vertex	-0.06578110178659832
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	simlex999-sim	0.1805604228433357
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	ws353	0.5601959213219008
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	tms vertex	0.11093162239720471
@@ -4534,10 +4602,14 @@ it	ppmi_tagged_wiki_abs_freq_top__750_words	simlex999-sim	0.17130241836094068
 it	ppmi_tagged_wiki_abs_freq_top__750_words	ws353	0.4585434880158347
 it	ppmi_tagged_wiki_abs_freq_top__750_words	tms vertex	0.044920444876926785
 it	ppmi_tagged_wiki_abs_freq_top__750_words	tms cereb	0.02520165118091046
+it	ppmi_tagged_wiki_abs_freq_top__750_words	it tms cereb	0.02246481503826179
+it	ppmi_tagged_wiki_abs_freq_top__750_words	it tms vertex	0.05681754188911766
 it	ppmi_tagged_wiki_abs_freq_random__750_words	simlex999-sim	0.10163104210147583
 it	ppmi_tagged_wiki_abs_freq_random__750_words	ws353	0.36261119959538773
 it	ppmi_tagged_wiki_abs_freq_random__750_words	tms vertex	-0.04563797906376779
 it	ppmi_tagged_wiki_abs_freq_random__750_words	tms cereb	-0.034651628320939584
+it	ppmi_tagged_wiki_abs_freq_random__750_words	it tms cereb	-0.044200730746862246
+it	ppmi_tagged_wiki_abs_freq_random__750_words	it tms vertex	-0.0590758998504322
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	simlex999-sim	0.18174481504972215
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	ws353	0.5574826485606015
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	tms vertex	0.10382325445326003
@@ -4550,10 +4622,14 @@ it	ppmi_tagged_wiki_abs_freq_top__1000_words	simlex999-sim	0.17826936129559692
 it	ppmi_tagged_wiki_abs_freq_top__1000_words	ws353	0.4669124453739779
 it	ppmi_tagged_wiki_abs_freq_top__1000_words	tms vertex	0.05621355506443871
 it	ppmi_tagged_wiki_abs_freq_top__1000_words	tms cereb	0.03630255179370308
+it	ppmi_tagged_wiki_abs_freq_top__1000_words	it tms cereb	0.03762717696414007
+it	ppmi_tagged_wiki_abs_freq_top__1000_words	it tms vertex	0.07008158889589781
 it	ppmi_tagged_wiki_abs_freq_random__1000_words	simlex999-sim	0.13617903212945276
 it	ppmi_tagged_wiki_abs_freq_random__1000_words	ws353	0.3980787050104733
 it	ppmi_tagged_wiki_abs_freq_random__1000_words	tms vertex	-0.0018228949979604593
 it	ppmi_tagged_wiki_abs_freq_random__1000_words	tms cereb	-0.015064462852529223
+it	ppmi_tagged_wiki_abs_freq_random__1000_words	it tms cereb	-0.010520369650886516
+it	ppmi_tagged_wiki_abs_freq_random__1000_words	it tms vertex	-0.014487946219389933
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	simlex999-sim	0.18211843254664903
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	ws353	0.557317691908519
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	tms vertex	0.1029891117457831
@@ -4566,10 +4642,14 @@ it	ppmi_tagged_wiki_abs_freq_top__2500_words	simlex999-sim	0.18941182606805318
 it	ppmi_tagged_wiki_abs_freq_top__2500_words	ws353	0.4924300458146251
 it	ppmi_tagged_wiki_abs_freq_top__2500_words	tms vertex	0.07360799844419955
 it	ppmi_tagged_wiki_abs_freq_top__2500_words	tms cereb	0.04847793462997026
+it	ppmi_tagged_wiki_abs_freq_top__2500_words	it tms cereb	0.05056584439261441
+it	ppmi_tagged_wiki_abs_freq_top__2500_words	it tms vertex	0.08588389673076824
 it	ppmi_tagged_wiki_abs_freq_random__2500_words	simlex999-sim	0.15587433770353548
 it	ppmi_tagged_wiki_abs_freq_random__2500_words	ws353	0.4139290731663102
 it	ppmi_tagged_wiki_abs_freq_random__2500_words	tms vertex	0.07954775720859442
 it	ppmi_tagged_wiki_abs_freq_random__2500_words	tms cereb	0.025323066625187338
+it	ppmi_tagged_wiki_abs_freq_random__2500_words	it tms cereb	0.03931806258047647
+it	ppmi_tagged_wiki_abs_freq_random__2500_words	it tms vertex	0.07606994343043202
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	simlex999-sim	0.1885274895014842
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	ws353	0.5383198906265143
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	tms vertex	0.09505854701803307
@@ -4582,10 +4662,14 @@ it	ppmi_tagged_wiki_abs_freq_top__5000_words	simlex999-sim	0.19314629429639268
 it	ppmi_tagged_wiki_abs_freq_top__5000_words	ws353	0.5046785175075096
 it	ppmi_tagged_wiki_abs_freq_top__5000_words	tms vertex	0.0722414302746779
 it	ppmi_tagged_wiki_abs_freq_top__5000_words	tms cereb	0.04361192801315084
+it	ppmi_tagged_wiki_abs_freq_top__5000_words	it tms cereb	0.0469377514466499
+it	ppmi_tagged_wiki_abs_freq_top__5000_words	it tms vertex	0.08312516105143283
 it	ppmi_tagged_wiki_abs_freq_random__5000_words	simlex999-sim	0.16586354431477449
 it	ppmi_tagged_wiki_abs_freq_random__5000_words	ws353	0.4315344289723732
 it	ppmi_tagged_wiki_abs_freq_random__5000_words	tms vertex	0.10503959881793949
 it	ppmi_tagged_wiki_abs_freq_random__5000_words	tms cereb	0.07557801358286789
+it	ppmi_tagged_wiki_abs_freq_random__5000_words	it tms cereb	0.09496524668651485
+it	ppmi_tagged_wiki_abs_freq_random__5000_words	it tms vertex	0.11300717774889146
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	simlex999-sim	0.1939553953412975
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	ws353	0.5293030430251384
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	tms vertex	0.08673421780308939
@@ -4598,10 +4682,14 @@ it	ppmi_tagged_wiki_abs_freq_top__7500_words	simlex999-sim	0.19057600199428434
 it	ppmi_tagged_wiki_abs_freq_top__7500_words	ws353	0.5059572739978523
 it	ppmi_tagged_wiki_abs_freq_top__7500_words	tms vertex	0.06960869283308246
 it	ppmi_tagged_wiki_abs_freq_top__7500_words	tms cereb	0.03682011283127662
+it	ppmi_tagged_wiki_abs_freq_top__7500_words	it tms cereb	0.040702608981368446
+it	ppmi_tagged_wiki_abs_freq_top__7500_words	it tms vertex	0.07933598556641218
 it	ppmi_tagged_wiki_abs_freq_random__7500_words	simlex999-sim	0.16520207586515853
 it	ppmi_tagged_wiki_abs_freq_random__7500_words	ws353	0.4409596568025701
 it	ppmi_tagged_wiki_abs_freq_random__7500_words	tms vertex	0.109208536368768
 it	ppmi_tagged_wiki_abs_freq_random__7500_words	tms cereb	0.06587105241161166
+it	ppmi_tagged_wiki_abs_freq_random__7500_words	it tms cereb	0.09042254423590826
+it	ppmi_tagged_wiki_abs_freq_random__7500_words	it tms vertex	0.11492691423572932
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	simlex999-sim	0.19040160350157068
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	ws353	0.5219310656697949
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	tms vertex	0.08294406962474854
@@ -4614,10 +4702,14 @@ it	ppmi_tagged_wiki_abs_freq_top__10000_words	simlex999-sim	0.190132871188499
 it	ppmi_tagged_wiki_abs_freq_top__10000_words	ws353	0.5077622089430581
 it	ppmi_tagged_wiki_abs_freq_top__10000_words	tms vertex	0.07304680686498213
 it	ppmi_tagged_wiki_abs_freq_top__10000_words	tms cereb	0.03758316968046923
+it	ppmi_tagged_wiki_abs_freq_top__10000_words	it tms cereb	0.040815568104201026
+it	ppmi_tagged_wiki_abs_freq_top__10000_words	it tms vertex	0.08199527373808833
 it	ppmi_tagged_wiki_abs_freq_random__10000_words	simlex999-sim	0.1628439866971308
 it	ppmi_tagged_wiki_abs_freq_random__10000_words	ws353	0.4656704763695089
 it	ppmi_tagged_wiki_abs_freq_random__10000_words	tms vertex	0.12537750883353796
 it	ppmi_tagged_wiki_abs_freq_random__10000_words	tms cereb	0.08042606602602281
+it	ppmi_tagged_wiki_abs_freq_random__10000_words	it tms cereb	0.1050505449001218
+it	ppmi_tagged_wiki_abs_freq_random__10000_words	it tms vertex	0.1356957779044385
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	simlex999-sim	0.18976551835692132
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	ws353	0.516211002972672
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	tms vertex	0.08458613296183012
@@ -4630,10 +4722,14 @@ it	ppmi_tagged_wiki_abs_freq_top__12500_words	simlex999-sim	0.18854492075089818
 it	ppmi_tagged_wiki_abs_freq_top__12500_words	ws353	0.5085294628372639
 it	ppmi_tagged_wiki_abs_freq_top__12500_words	tms vertex	0.0774597691612204
 it	ppmi_tagged_wiki_abs_freq_top__12500_words	tms cereb	0.03867872733090667
+it	ppmi_tagged_wiki_abs_freq_top__12500_words	it tms cereb	0.04323080157472682
+it	ppmi_tagged_wiki_abs_freq_top__12500_words	it tms vertex	0.08588973432917235
 it	ppmi_tagged_wiki_abs_freq_random__12500_words	simlex999-sim	0.16424168790933144
 it	ppmi_tagged_wiki_abs_freq_random__12500_words	ws353	0.48305745539772615
 it	ppmi_tagged_wiki_abs_freq_random__12500_words	tms vertex	0.13054434204230286
 it	ppmi_tagged_wiki_abs_freq_random__12500_words	tms cereb	0.08458874740716742
+it	ppmi_tagged_wiki_abs_freq_random__12500_words	it tms cereb	0.10871684049404644
+it	ppmi_tagged_wiki_abs_freq_random__12500_words	it tms vertex	0.14196636819811875
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	simlex999-sim	0.18778759084751662
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	ws353	0.5148109260501929
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	tms vertex	0.08325400910029089
@@ -4646,10 +4742,14 @@ it	ppmi_tagged_wiki_abs_freq_top__15000_words	simlex999-sim	0.18355519749123014
 it	ppmi_tagged_wiki_abs_freq_top__15000_words	ws353	0.5100338361957573
 it	ppmi_tagged_wiki_abs_freq_top__15000_words	tms vertex	0.08178522095274637
 it	ppmi_tagged_wiki_abs_freq_top__15000_words	tms cereb	0.041676106277558744
+it	ppmi_tagged_wiki_abs_freq_top__15000_words	it tms cereb	0.04795293135305324
+it	ppmi_tagged_wiki_abs_freq_top__15000_words	it tms vertex	0.09084289625219347
 it	ppmi_tagged_wiki_abs_freq_random__15000_words	simlex999-sim	0.16486607339706086
 it	ppmi_tagged_wiki_abs_freq_random__15000_words	ws353	0.4870081965668186
 it	ppmi_tagged_wiki_abs_freq_random__15000_words	tms vertex	0.1339281115860985
 it	ppmi_tagged_wiki_abs_freq_random__15000_words	tms cereb	0.08080039541297934
+it	ppmi_tagged_wiki_abs_freq_random__15000_words	it tms cereb	0.10436804627436339
+it	ppmi_tagged_wiki_abs_freq_random__15000_words	it tms vertex	0.14465486932358745
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	simlex999-sim	0.18319880617019474
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	ws353	0.5143279924590427
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	tms vertex	0.08674493332855156
@@ -4662,10 +4762,14 @@ it	ppmi_tagged_wiki_abs_freq_top__17500_words	simlex999-sim	0.18194954457794363
 it	ppmi_tagged_wiki_abs_freq_top__17500_words	ws353	0.5083238051369807
 it	ppmi_tagged_wiki_abs_freq_top__17500_words	tms vertex	0.08484568255630286
 it	ppmi_tagged_wiki_abs_freq_top__17500_words	tms cereb	0.043933185424949076
+it	ppmi_tagged_wiki_abs_freq_top__17500_words	it tms cereb	0.050942182468402805
+it	ppmi_tagged_wiki_abs_freq_top__17500_words	it tms vertex	0.09525420108543001
 it	ppmi_tagged_wiki_abs_freq_random__17500_words	simlex999-sim	0.16233995128559278
 it	ppmi_tagged_wiki_abs_freq_random__17500_words	ws353	0.49150820620850344
 it	ppmi_tagged_wiki_abs_freq_random__17500_words	tms vertex	0.13168148256721304
 it	ppmi_tagged_wiki_abs_freq_random__17500_words	tms cereb	0.07987399029128339
+it	ppmi_tagged_wiki_abs_freq_random__17500_words	it tms cereb	0.10440221010761289
+it	ppmi_tagged_wiki_abs_freq_random__17500_words	it tms vertex	0.14025607475443952
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	simlex999-sim	0.18212064204847225
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	ws353	0.5115329262451093
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	tms vertex	0.08988491012908614
@@ -4678,10 +4782,14 @@ it	ppmi_tagged_wiki_abs_freq_top__20000_words	simlex999-sim	0.17783796598751953
 it	ppmi_tagged_wiki_abs_freq_top__20000_words	ws353	0.5071305599834827
 it	ppmi_tagged_wiki_abs_freq_top__20000_words	tms vertex	0.08757543957644574
 it	ppmi_tagged_wiki_abs_freq_top__20000_words	tms cereb	0.04858175070669815
+it	ppmi_tagged_wiki_abs_freq_top__20000_words	it tms cereb	0.056104708757949075
+it	ppmi_tagged_wiki_abs_freq_top__20000_words	it tms vertex	0.09872362759985498
 it	ppmi_tagged_wiki_abs_freq_random__20000_words	simlex999-sim	0.16561035797830032
 it	ppmi_tagged_wiki_abs_freq_random__20000_words	ws353	0.49790707629124203
 it	ppmi_tagged_wiki_abs_freq_random__20000_words	tms vertex	0.13176831344511086
 it	ppmi_tagged_wiki_abs_freq_random__20000_words	tms cereb	0.08153722797195231
+it	ppmi_tagged_wiki_abs_freq_random__20000_words	it tms cereb	0.10513982739817922
+it	ppmi_tagged_wiki_abs_freq_random__20000_words	it tms vertex	0.14121708819163023
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	simlex999-sim	0.1778099569135086
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	ws353	0.5097606695453336
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	tms vertex	0.0908661760775049
@@ -4694,10 +4802,14 @@ it	ppmi_tagged_wiki_abs_freq_top__25000_words	simlex999-sim	0.17250000804079232
 it	ppmi_tagged_wiki_abs_freq_top__25000_words	ws353	0.5030698477130019
 it	ppmi_tagged_wiki_abs_freq_top__25000_words	tms vertex	0.08891391270325832
 it	ppmi_tagged_wiki_abs_freq_top__25000_words	tms cereb	0.05140453399161748
+it	ppmi_tagged_wiki_abs_freq_top__25000_words	it tms cereb	0.05975784162546758
+it	ppmi_tagged_wiki_abs_freq_top__25000_words	it tms vertex	0.09986220372200759
 it	ppmi_tagged_wiki_abs_freq_random__25000_words	simlex999-sim	0.16496364208685466
 it	ppmi_tagged_wiki_abs_freq_random__25000_words	ws353	0.4991416095272897
 it	ppmi_tagged_wiki_abs_freq_random__25000_words	tms vertex	0.13051001062535172
 it	ppmi_tagged_wiki_abs_freq_random__25000_words	tms cereb	0.09056727303908013
+it	ppmi_tagged_wiki_abs_freq_random__25000_words	it tms cereb	0.110451982805717
+it	ppmi_tagged_wiki_abs_freq_random__25000_words	it tms vertex	0.1424892850633595
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	simlex999-sim	0.17275175232786963
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	ws353	0.5043570183623477
 it	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	tms vertex	0.09209787139344665
@@ -4710,10 +4822,14 @@ it	ppmi_opensubs_abs_freq_top__100_words	simlex999-sim	0.19432275575217267
 it	ppmi_opensubs_abs_freq_top__100_words	ws353	0.23354268687298596
 it	ppmi_opensubs_abs_freq_top__100_words	tms vertex	0.1228510961805664
 it	ppmi_opensubs_abs_freq_top__100_words	tms cereb	0.08357135600609505
+it	ppmi_opensubs_abs_freq_top__100_words	it tms cereb	0.09787682617443794
+it	ppmi_opensubs_abs_freq_top__100_words	it tms vertex	0.13572215904120374
 it	ppmi_opensubs_abs_freq_random__100_words	simlex999-sim	0.04779100438279945
 it	ppmi_opensubs_abs_freq_random__100_words	ws353	0.10119110513900767
 it	ppmi_opensubs_abs_freq_random__100_words	tms vertex	-0.0827608679326628
 it	ppmi_opensubs_abs_freq_random__100_words	tms cereb	-0.026936763425398136
+it	ppmi_opensubs_abs_freq_random__100_words	it tms cereb	-0.03899673828206936
+it	ppmi_opensubs_abs_freq_random__100_words	it tms vertex	-0.09341740503278526
 it	ppmi_opensubs_abs_freq_top_rowincol_100_words	simlex999-sim	0.24598989679429023
 it	ppmi_opensubs_abs_freq_top_rowincol_100_words	ws353	0.4571372118418227
 it	ppmi_opensubs_abs_freq_top_rowincol_100_words	tms vertex	0.21702233015511582
@@ -4726,10 +4842,14 @@ it	ppmi_opensubs_abs_freq_top__200_words	simlex999-sim	0.25203499888414804
 it	ppmi_opensubs_abs_freq_top__200_words	ws353	0.30732309948706593
 it	ppmi_opensubs_abs_freq_top__200_words	tms vertex	0.13429596455763537
 it	ppmi_opensubs_abs_freq_top__200_words	tms cereb	0.069402399021851
+it	ppmi_opensubs_abs_freq_top__200_words	it tms cereb	0.08420435657422796
+it	ppmi_opensubs_abs_freq_top__200_words	it tms vertex	0.15504680255445719
 it	ppmi_opensubs_abs_freq_random__200_words	simlex999-sim	0.030716132223457718
 it	ppmi_opensubs_abs_freq_random__200_words	ws353	0.11180716205063058
 it	ppmi_opensubs_abs_freq_random__200_words	tms vertex	-0.09293996462072192
 it	ppmi_opensubs_abs_freq_random__200_words	tms cereb	-0.08228055453008351
+it	ppmi_opensubs_abs_freq_random__200_words	it tms cereb	-0.09368512407180264
+it	ppmi_opensubs_abs_freq_random__200_words	it tms vertex	-0.10611149667299494
 it	ppmi_opensubs_abs_freq_top_rowincol_200_words	simlex999-sim	0.252452224779819
 it	ppmi_opensubs_abs_freq_top_rowincol_200_words	ws353	0.4597308430988361
 it	ppmi_opensubs_abs_freq_top_rowincol_200_words	tms vertex	0.21534912790127195
@@ -4742,10 +4862,14 @@ it	ppmi_opensubs_abs_freq_top__500_words	simlex999-sim	0.24156742330778844
 it	ppmi_opensubs_abs_freq_top__500_words	ws353	0.39864354990127426
 it	ppmi_opensubs_abs_freq_top__500_words	tms vertex	0.1843274283665626
 it	ppmi_opensubs_abs_freq_top__500_words	tms cereb	0.09832297504979311
+it	ppmi_opensubs_abs_freq_top__500_words	it tms cereb	0.12554369696439507
+it	ppmi_opensubs_abs_freq_top__500_words	it tms vertex	0.20525850756714198
 it	ppmi_opensubs_abs_freq_random__500_words	simlex999-sim	0.03650822737033601
 it	ppmi_opensubs_abs_freq_random__500_words	ws353	0.18541962296600767
 it	ppmi_opensubs_abs_freq_random__500_words	tms vertex	-0.01959582655089549
 it	ppmi_opensubs_abs_freq_random__500_words	tms cereb	-0.05191468565912014
+it	ppmi_opensubs_abs_freq_random__500_words	it tms cereb	-0.05507440817023037
+it	ppmi_opensubs_abs_freq_random__500_words	it tms vertex	-0.02685412752314763
 it	ppmi_opensubs_abs_freq_top_rowincol_500_words	simlex999-sim	0.2570296575523717
 it	ppmi_opensubs_abs_freq_top_rowincol_500_words	ws353	0.4620298453087399
 it	ppmi_opensubs_abs_freq_top_rowincol_500_words	tms vertex	0.2152869740523908
@@ -4758,10 +4882,14 @@ it	ppmi_opensubs_abs_freq_top__750_words	simlex999-sim	0.24733080020790008
 it	ppmi_opensubs_abs_freq_top__750_words	ws353	0.42597631832230787
 it	ppmi_opensubs_abs_freq_top__750_words	tms vertex	0.18635558711477404
 it	ppmi_opensubs_abs_freq_top__750_words	tms cereb	0.09892319425812819
+it	ppmi_opensubs_abs_freq_top__750_words	it tms cereb	0.12625929489983378
+it	ppmi_opensubs_abs_freq_top__750_words	it tms vertex	0.20523751202869386
 it	ppmi_opensubs_abs_freq_random__750_words	simlex999-sim	0.045768510671403716
 it	ppmi_opensubs_abs_freq_random__750_words	ws353	0.1736509266686703
 it	ppmi_opensubs_abs_freq_random__750_words	tms vertex	0.0020385558019359548
 it	ppmi_opensubs_abs_freq_random__750_words	tms cereb	-0.01261967956488521
+it	ppmi_opensubs_abs_freq_random__750_words	it tms cereb	-8.520283111016908e-05
+it	ppmi_opensubs_abs_freq_random__750_words	it tms vertex	-0.0035573176181545735
 it	ppmi_opensubs_abs_freq_top_rowincol_750_words	simlex999-sim	0.26115079427087295
 it	ppmi_opensubs_abs_freq_top_rowincol_750_words	ws353	0.46532823521738953
 it	ppmi_opensubs_abs_freq_top_rowincol_750_words	tms vertex	0.21320106208577655
@@ -4774,10 +4902,14 @@ it	ppmi_opensubs_abs_freq_top__1000_words	simlex999-sim	0.24981461354827525
 it	ppmi_opensubs_abs_freq_top__1000_words	ws353	0.42502581777387427
 it	ppmi_opensubs_abs_freq_top__1000_words	tms vertex	0.18486189778471523
 it	ppmi_opensubs_abs_freq_top__1000_words	tms cereb	0.12099535445839832
+it	ppmi_opensubs_abs_freq_top__1000_words	it tms cereb	0.14695127285451842
+it	ppmi_opensubs_abs_freq_top__1000_words	it tms vertex	0.20743504505292623
 it	ppmi_opensubs_abs_freq_random__1000_words	simlex999-sim	0.07008710122054736
 it	ppmi_opensubs_abs_freq_random__1000_words	ws353	0.17959175141742728
 it	ppmi_opensubs_abs_freq_random__1000_words	tms vertex	-0.01273898580782556
 it	ppmi_opensubs_abs_freq_random__1000_words	tms cereb	-0.053204429134796456
+it	ppmi_opensubs_abs_freq_random__1000_words	it tms cereb	-0.04731227043786893
+it	ppmi_opensubs_abs_freq_random__1000_words	it tms vertex	-0.024655781422592043
 it	ppmi_opensubs_abs_freq_top_rowincol_1000_words	simlex999-sim	0.2603184844533261
 it	ppmi_opensubs_abs_freq_top_rowincol_1000_words	ws353	0.4623918341316613
 it	ppmi_opensubs_abs_freq_top_rowincol_1000_words	tms vertex	0.21480054585250713
@@ -4790,10 +4922,14 @@ it	ppmi_opensubs_abs_freq_top__2500_words	simlex999-sim	0.22659095116586087
 it	ppmi_opensubs_abs_freq_top__2500_words	ws353	0.41609607597050047
 it	ppmi_opensubs_abs_freq_top__2500_words	tms vertex	0.21233264112052333
 it	ppmi_opensubs_abs_freq_top__2500_words	tms cereb	0.146329558246719
+it	ppmi_opensubs_abs_freq_top__2500_words	it tms cereb	0.17994663633977778
+it	ppmi_opensubs_abs_freq_top__2500_words	it tms vertex	0.23964832473099468
 it	ppmi_opensubs_abs_freq_random__2500_words	simlex999-sim	0.12644275508075226
 it	ppmi_opensubs_abs_freq_random__2500_words	ws353	0.25870462994956517
 it	ppmi_opensubs_abs_freq_random__2500_words	tms vertex	0.13961502397756895
 it	ppmi_opensubs_abs_freq_random__2500_words	tms cereb	0.06477467367633279
+it	ppmi_opensubs_abs_freq_random__2500_words	it tms cereb	0.09168044963360497
+it	ppmi_opensubs_abs_freq_random__2500_words	it tms vertex	0.147652910939187
 it	ppmi_opensubs_abs_freq_top_rowincol_2500_words	simlex999-sim	0.2415546966453042
 it	ppmi_opensubs_abs_freq_top_rowincol_2500_words	ws353	0.44141943323996724
 it	ppmi_opensubs_abs_freq_top_rowincol_2500_words	tms vertex	0.21794767177228508
@@ -4806,10 +4942,14 @@ it	ppmi_opensubs_abs_freq_top__5000_words	simlex999-sim	0.21136087767193906
 it	ppmi_opensubs_abs_freq_top__5000_words	ws353	0.41133834864738317
 it	ppmi_opensubs_abs_freq_top__5000_words	tms vertex	0.2222938579783214
 it	ppmi_opensubs_abs_freq_top__5000_words	tms cereb	0.15726783365154676
+it	ppmi_opensubs_abs_freq_top__5000_words	it tms cereb	0.19364972443355785
+it	ppmi_opensubs_abs_freq_top__5000_words	it tms vertex	0.2494164989939638
 it	ppmi_opensubs_abs_freq_random__5000_words	simlex999-sim	0.15757206740700036
 it	ppmi_opensubs_abs_freq_random__5000_words	ws353	0.3242136337785952
 it	ppmi_opensubs_abs_freq_random__5000_words	tms vertex	0.153566128143641
 it	ppmi_opensubs_abs_freq_random__5000_words	tms cereb	0.11169484147440592
+it	ppmi_opensubs_abs_freq_random__5000_words	it tms cereb	0.13063614314897828
+it	ppmi_opensubs_abs_freq_random__5000_words	it tms vertex	0.16700387903558583
 it	ppmi_opensubs_abs_freq_top_rowincol_5000_words	simlex999-sim	0.22167985033902943
 it	ppmi_opensubs_abs_freq_top_rowincol_5000_words	ws353	0.42572759095068197
 it	ppmi_opensubs_abs_freq_top_rowincol_5000_words	tms vertex	0.22688674352897217
@@ -4822,10 +4962,14 @@ it	ppmi_opensubs_abs_freq_top__7500_words	simlex999-sim	0.19493442140543715
 it	ppmi_opensubs_abs_freq_top__7500_words	ws353	0.40143608841871775
 it	ppmi_opensubs_abs_freq_top__7500_words	tms vertex	0.22985554278187664
 it	ppmi_opensubs_abs_freq_top__7500_words	tms cereb	0.1677401927163897
+it	ppmi_opensubs_abs_freq_top__7500_words	it tms cereb	0.20846645087918816
+it	ppmi_opensubs_abs_freq_top__7500_words	it tms vertex	0.2553223689965882
 it	ppmi_opensubs_abs_freq_random__7500_words	simlex999-sim	0.1880250691832217
 it	ppmi_opensubs_abs_freq_random__7500_words	ws353	0.37925396182490917
 it	ppmi_opensubs_abs_freq_random__7500_words	tms vertex	0.17057373556332683
 it	ppmi_opensubs_abs_freq_random__7500_words	tms cereb	0.14374813092250174
+it	ppmi_opensubs_abs_freq_random__7500_words	it tms cereb	0.1706920852093155
+it	ppmi_opensubs_abs_freq_random__7500_words	it tms vertex	0.18785224939931083
 it	ppmi_opensubs_abs_freq_top_rowincol_7500_words	simlex999-sim	0.20013123928226936
 it	ppmi_opensubs_abs_freq_top_rowincol_7500_words	ws353	0.40722529729498397
 it	ppmi_opensubs_abs_freq_top_rowincol_7500_words	tms vertex	0.23149137575635814
@@ -4838,10 +4982,14 @@ it	ppmi_opensubs_abs_freq_top__10000_words	simlex999-sim	0.1858882818938171
 it	ppmi_opensubs_abs_freq_top__10000_words	ws353	0.4016644772430763
 it	ppmi_opensubs_abs_freq_top__10000_words	tms vertex	0.22776264775268723
 it	ppmi_opensubs_abs_freq_top__10000_words	tms cereb	0.17130927840490368
+it	ppmi_opensubs_abs_freq_top__10000_words	it tms cereb	0.21186247922316506
+it	ppmi_opensubs_abs_freq_top__10000_words	it tms vertex	0.2528728895109789
 it	ppmi_opensubs_abs_freq_random__10000_words	simlex999-sim	0.1933462413754975
 it	ppmi_opensubs_abs_freq_random__10000_words	ws353	0.4109804968075608
 it	ppmi_opensubs_abs_freq_random__10000_words	tms vertex	0.1644365029685277
 it	ppmi_opensubs_abs_freq_random__10000_words	tms cereb	0.13459081887823562
+it	ppmi_opensubs_abs_freq_random__10000_words	it tms cereb	0.15762613456552235
+it	ppmi_opensubs_abs_freq_random__10000_words	it tms vertex	0.1824381549651823
 it	ppmi_opensubs_abs_freq_top_rowincol_10000_words	simlex999-sim	0.1908722793742876
 it	ppmi_opensubs_abs_freq_top_rowincol_10000_words	ws353	0.40456486603868913
 it	ppmi_opensubs_abs_freq_top_rowincol_10000_words	tms vertex	0.22903665050266028
@@ -4854,10 +5002,14 @@ it	ppmi_opensubs_abs_freq_top__12500_words	simlex999-sim	0.17885799008401337
 it	ppmi_opensubs_abs_freq_top__12500_words	ws353	0.39695433092503374
 it	ppmi_opensubs_abs_freq_top__12500_words	tms vertex	0.22824694506342746
 it	ppmi_opensubs_abs_freq_top__12500_words	tms cereb	0.17218421667297484
+it	ppmi_opensubs_abs_freq_top__12500_words	it tms cereb	0.21257370308809379
+it	ppmi_opensubs_abs_freq_top__12500_words	it tms vertex	0.25343364535036306
 it	ppmi_opensubs_abs_freq_random__12500_words	simlex999-sim	0.19956561908021134
 it	ppmi_opensubs_abs_freq_random__12500_words	ws353	0.41609840021501393
 it	ppmi_opensubs_abs_freq_random__12500_words	tms vertex	0.18403365102242492
 it	ppmi_opensubs_abs_freq_random__12500_words	tms cereb	0.158012432898655
+it	ppmi_opensubs_abs_freq_random__12500_words	it tms cereb	0.18235324993438895
+it	ppmi_opensubs_abs_freq_random__12500_words	it tms vertex	0.20368996588225002
 it	ppmi_opensubs_abs_freq_top_rowincol_12500_words	simlex999-sim	0.18183374804231656
 it	ppmi_opensubs_abs_freq_top_rowincol_12500_words	ws353	0.3986625823033041
 it	ppmi_opensubs_abs_freq_top_rowincol_12500_words	tms vertex	0.22847899112854236
@@ -4870,10 +5022,14 @@ it	ppmi_opensubs_abs_freq_top__15000_words	simlex999-sim	0.17678899639601978
 it	ppmi_opensubs_abs_freq_top__15000_words	ws353	0.38923482598014836
 it	ppmi_opensubs_abs_freq_top__15000_words	tms vertex	0.22693610493638464
 it	ppmi_opensubs_abs_freq_top__15000_words	tms cereb	0.17203529277825316
+it	ppmi_opensubs_abs_freq_top__15000_words	it tms cereb	0.21254308459452367
+it	ppmi_opensubs_abs_freq_top__15000_words	it tms vertex	0.25160878313358415
 it	ppmi_opensubs_abs_freq_random__15000_words	simlex999-sim	0.21025317889034126
 it	ppmi_opensubs_abs_freq_random__15000_words	ws353	0.3894953449957006
 it	ppmi_opensubs_abs_freq_random__15000_words	tms vertex	0.19856807249938555
 it	ppmi_opensubs_abs_freq_random__15000_words	tms cereb	0.17335262287319153
+it	ppmi_opensubs_abs_freq_random__15000_words	it tms cereb	0.20323943661971833
+it	ppmi_opensubs_abs_freq_random__15000_words	it tms vertex	0.22262794156241794
 it	ppmi_opensubs_abs_freq_top_rowincol_15000_words	simlex999-sim	0.1791167099188427
 it	ppmi_opensubs_abs_freq_top_rowincol_15000_words	ws353	0.38950165279292026
 it	ppmi_opensubs_abs_freq_top_rowincol_15000_words	tms vertex	0.22798443679548355
@@ -4886,10 +5042,14 @@ it	ppmi_opensubs_abs_freq_top__17500_words	simlex999-sim	0.17136684704861327
 it	ppmi_opensubs_abs_freq_top__17500_words	ws353	0.3896311477635942
 it	ppmi_opensubs_abs_freq_top__17500_words	tms vertex	0.22386893218578272
 it	ppmi_opensubs_abs_freq_top__17500_words	tms cereb	0.1709945628075743
+it	ppmi_opensubs_abs_freq_top__17500_words	it tms cereb	0.21065611057650244
+it	ppmi_opensubs_abs_freq_top__17500_words	it tms vertex	0.24862654185985483
 it	ppmi_opensubs_abs_freq_random__17500_words	simlex999-sim	0.21566967463813227
 it	ppmi_opensubs_abs_freq_random__17500_words	ws353	0.4064464994673699
 it	ppmi_opensubs_abs_freq_random__17500_words	tms vertex	0.201453710222831
 it	ppmi_opensubs_abs_freq_random__17500_words	tms cereb	0.17648850667256097
+it	ppmi_opensubs_abs_freq_random__17500_words	it tms cereb	0.20450616743941913
+it	ppmi_opensubs_abs_freq_random__17500_words	it tms vertex	0.22662496719447117
 it	ppmi_opensubs_abs_freq_top_rowincol_17500_words	simlex999-sim	0.17274276617020567
 it	ppmi_opensubs_abs_freq_top_rowincol_17500_words	ws353	0.390539665072256
 it	ppmi_opensubs_abs_freq_top_rowincol_17500_words	tms vertex	0.22532913135124616
@@ -4902,10 +5062,14 @@ it	ppmi_opensubs_abs_freq_top__20000_words	simlex999-sim	0.16605691487379978
 it	ppmi_opensubs_abs_freq_top__20000_words	ws353	0.38863511872403034
 it	ppmi_opensubs_abs_freq_top__20000_words	tms vertex	0.22764554396901723
 it	ppmi_opensubs_abs_freq_top__20000_words	tms cereb	0.17639563806330846
+it	ppmi_opensubs_abs_freq_top__20000_words	it tms cereb	0.21595748403464263
+it	ppmi_opensubs_abs_freq_top__20000_words	it tms vertex	0.25331991951710264
 it	ppmi_opensubs_abs_freq_random__20000_words	simlex999-sim	0.2232706430403357
 it	ppmi_opensubs_abs_freq_random__20000_words	ws353	0.403689002360961
 it	ppmi_opensubs_abs_freq_random__20000_words	tms vertex	0.20141768135911248
 it	ppmi_opensubs_abs_freq_random__20000_words	tms cereb	0.18134133389236487
+it	ppmi_opensubs_abs_freq_random__20000_words	it tms cereb	0.21027644125623307
+it	ppmi_opensubs_abs_freq_random__20000_words	it tms vertex	0.22723646225177146
 it	ppmi_opensubs_abs_freq_top_rowincol_20000_words	simlex999-sim	0.1670397957129016
 it	ppmi_opensubs_abs_freq_top_rowincol_20000_words	ws353	0.3894333600562248
 it	ppmi_opensubs_abs_freq_top_rowincol_20000_words	tms vertex	0.2292208745610369
@@ -4918,10 +5082,14 @@ it	ppmi_opensubs_abs_freq_top__25000_words	simlex999-sim	0.16794166404310798
 it	ppmi_opensubs_abs_freq_top__25000_words	ws353	0.38871031537126605
 it	ppmi_opensubs_abs_freq_top__25000_words	tms vertex	0.22738291543539565
 it	ppmi_opensubs_abs_freq_top__25000_words	tms cereb	0.1788376227984316
+it	ppmi_opensubs_abs_freq_top__25000_words	it tms cereb	0.220009622955122
+it	ppmi_opensubs_abs_freq_top__25000_words	it tms vertex	0.2526935526200682
 it	ppmi_opensubs_abs_freq_random__25000_words	simlex999-sim	0.23803328261645043
 it	ppmi_opensubs_abs_freq_random__25000_words	ws353	0.3913727991415053
 it	ppmi_opensubs_abs_freq_random__25000_words	tms vertex	0.210626105047465
 it	ppmi_opensubs_abs_freq_random__25000_words	tms cereb	0.18858814070892302
+it	ppmi_opensubs_abs_freq_random__25000_words	it tms cereb	0.21949698189134806
+it	ppmi_opensubs_abs_freq_random__25000_words	it tms vertex	0.23770361298224127
 it	ppmi_opensubs_abs_freq_top_rowincol_25000_words	simlex999-sim	0.1681632192416993
 it	ppmi_opensubs_abs_freq_top_rowincol_25000_words	ws353	0.3896540986013361
 it	ppmi_opensubs_abs_freq_top_rowincol_25000_words	tms vertex	0.22904694524466865
@@ -4934,10 +5102,14 @@ it	ppmi_joint_abs_freq_top__100_words	simlex999-sim	0.08245922660842066
 it	ppmi_joint_abs_freq_top__100_words	ws353	0.239894533165316
 it	ppmi_joint_abs_freq_top__100_words	tms vertex	0.0762565084656434
 it	ppmi_joint_abs_freq_top__100_words	tms cereb	0.006666133867575185
+it	ppmi_joint_abs_freq_top__100_words	it tms cereb	0.00630163332938809
+it	ppmi_joint_abs_freq_top__100_words	it tms vertex	0.07910660896324237
 it	ppmi_joint_abs_freq_random__100_words	simlex999-sim	0.05412604874496504
 it	ppmi_joint_abs_freq_random__100_words	ws353	0.15096364091023942
 it	ppmi_joint_abs_freq_random__100_words	tms vertex	0.013945406351481037
 it	ppmi_joint_abs_freq_random__100_words	tms cereb	0.01851946866042702
+it	ppmi_joint_abs_freq_random__100_words	it tms cereb	0.034447925579572755
+it	ppmi_joint_abs_freq_random__100_words	it tms vertex	0.006508000923363115
 it	ppmi_joint_abs_freq_top_rowincol_100_words	simlex999-sim	0.17201172202609152
 it	ppmi_joint_abs_freq_top_rowincol_100_words	ws353	0.48273941930180725
 it	ppmi_joint_abs_freq_top_rowincol_100_words	tms vertex	0.14463715573674696
@@ -4950,10 +5122,14 @@ it	ppmi_joint_abs_freq_top__200_words	simlex999-sim	0.06866052881296807
 it	ppmi_joint_abs_freq_top__200_words	ws353	0.28947683358476234
 it	ppmi_joint_abs_freq_top__200_words	tms vertex	0.07398789869598171
 it	ppmi_joint_abs_freq_top__200_words	tms cereb	0.01740522302799196
+it	ppmi_joint_abs_freq_top__200_words	it tms cereb	0.017153444966474037
+it	ppmi_joint_abs_freq_top__200_words	it tms vertex	0.08376284561589485
 it	ppmi_joint_abs_freq_random__200_words	simlex999-sim	0.07815668137437881
 it	ppmi_joint_abs_freq_random__200_words	ws353	0.27041457905810073
 it	ppmi_joint_abs_freq_random__200_words	tms vertex	0.04728723330323736
 it	ppmi_joint_abs_freq_random__200_words	tms cereb	0.05466943381895257
+it	ppmi_joint_abs_freq_random__200_words	it tms cereb	0.07180663265392333
+it	ppmi_joint_abs_freq_random__200_words	it tms vertex	0.05218327733992413
 it	ppmi_joint_abs_freq_top_rowincol_200_words	simlex999-sim	0.1608755665745609
 it	ppmi_joint_abs_freq_top_rowincol_200_words	ws353	0.47733825177215317
 it	ppmi_joint_abs_freq_top_rowincol_200_words	tms vertex	0.14478630258548236
@@ -4966,10 +5142,14 @@ it	ppmi_joint_abs_freq_top__500_words	simlex999-sim	0.07568613539037156
 it	ppmi_joint_abs_freq_top__500_words	ws353	0.34432681051375447
 it	ppmi_joint_abs_freq_top__500_words	tms vertex	0.10168076596091573
 it	ppmi_joint_abs_freq_top__500_words	tms cereb	0.040565267530279406
+it	ppmi_joint_abs_freq_top__500_words	it tms cereb	0.04675977862057255
+it	ppmi_joint_abs_freq_top__500_words	it tms vertex	0.11365807376226669
 it	ppmi_joint_abs_freq_random__500_words	simlex999-sim	0.10562649819699807
 it	ppmi_joint_abs_freq_random__500_words	ws353	0.3034127575747422
 it	ppmi_joint_abs_freq_random__500_words	tms vertex	0.08228326674425489
 it	ppmi_joint_abs_freq_random__500_words	tms cereb	0.06766108380299025
+it	ppmi_joint_abs_freq_random__500_words	it tms cereb	0.09771301356340048
+it	ppmi_joint_abs_freq_random__500_words	it tms vertex	0.08442062487965879
 it	ppmi_joint_abs_freq_top_rowincol_500_words	simlex999-sim	0.14479620733121568
 it	ppmi_joint_abs_freq_top_rowincol_500_words	ws353	0.4641728143609941
 it	ppmi_joint_abs_freq_top_rowincol_500_words	tms vertex	0.1438361533715602
@@ -4982,10 +5162,14 @@ it	ppmi_joint_abs_freq_top__750_words	simlex999-sim	0.07217509273182193
 it	ppmi_joint_abs_freq_top__750_words	ws353	0.35182867623639047
 it	ppmi_joint_abs_freq_top__750_words	tms vertex	0.11301293154143617
 it	ppmi_joint_abs_freq_top__750_words	tms cereb	0.05139049955618752
+it	ppmi_joint_abs_freq_top__750_words	it tms cereb	0.06104150478317474
+it	ppmi_joint_abs_freq_top__750_words	it tms vertex	0.1265775471241773
 it	ppmi_joint_abs_freq_random__750_words	simlex999-sim	0.11460073877461183
 it	ppmi_joint_abs_freq_random__750_words	ws353	0.2918622842655901
 it	ppmi_joint_abs_freq_random__750_words	tms vertex	0.0892853235423558
 it	ppmi_joint_abs_freq_random__750_words	tms cereb	0.06487327219893657
+it	ppmi_joint_abs_freq_random__750_words	it tms cereb	0.09707752851697757
+it	ppmi_joint_abs_freq_random__750_words	it tms vertex	0.09064604707727189
 it	ppmi_joint_abs_freq_top_rowincol_750_words	simlex999-sim	0.13364572720638693
 it	ppmi_joint_abs_freq_top_rowincol_750_words	ws353	0.455382366596516
 it	ppmi_joint_abs_freq_top_rowincol_750_words	tms vertex	0.14256545296270345
@@ -4998,10 +5182,14 @@ it	ppmi_joint_abs_freq_top__1000_words	simlex999-sim	0.0850256293437988
 it	ppmi_joint_abs_freq_top__1000_words	ws353	0.3757578113882805
 it	ppmi_joint_abs_freq_top__1000_words	tms vertex	0.10771830079685638
 it	ppmi_joint_abs_freq_top__1000_words	tms cereb	0.04813689681438794
+it	ppmi_joint_abs_freq_top__1000_words	it tms cereb	0.05846205107885163
+it	ppmi_joint_abs_freq_top__1000_words	it tms vertex	0.12131775306570883
 it	ppmi_joint_abs_freq_random__1000_words	simlex999-sim	0.1006726245857541
 it	ppmi_joint_abs_freq_random__1000_words	ws353	0.2928086024384823
 it	ppmi_joint_abs_freq_random__1000_words	tms vertex	0.10803475634230118
 it	ppmi_joint_abs_freq_random__1000_words	tms cereb	0.0806015810238405
+it	ppmi_joint_abs_freq_random__1000_words	it tms cereb	0.10827353854713814
+it	ppmi_joint_abs_freq_random__1000_words	it tms vertex	0.11098585242216227
 it	ppmi_joint_abs_freq_top_rowincol_1000_words	simlex999-sim	0.13151676923257904
 it	ppmi_joint_abs_freq_top_rowincol_1000_words	ws353	0.45485737516352437
 it	ppmi_joint_abs_freq_top_rowincol_1000_words	tms vertex	0.14009714123350206
@@ -5014,10 +5202,14 @@ it	ppmi_joint_abs_freq_top__2500_words	simlex999-sim	0.11436886391339633
 it	ppmi_joint_abs_freq_top__2500_words	ws353	0.41388075921734996
 it	ppmi_joint_abs_freq_top__2500_words	tms vertex	0.13498377987364701
 it	ppmi_joint_abs_freq_top__2500_words	tms cereb	0.0773974443630023
+it	ppmi_joint_abs_freq_top__2500_words	it tms cereb	0.09474494022961298
+it	ppmi_joint_abs_freq_top__2500_words	it tms vertex	0.15131128201433666
 it	ppmi_joint_abs_freq_random__2500_words	simlex999-sim	0.1312790031409775
 it	ppmi_joint_abs_freq_random__2500_words	ws353	0.3119031527336783
 it	ppmi_joint_abs_freq_random__2500_words	tms vertex	0.17192121428593676
 it	ppmi_joint_abs_freq_random__2500_words	tms cereb	0.10233384929120772
+it	ppmi_joint_abs_freq_random__2500_words	it tms cereb	0.13781502313111407
+it	ppmi_joint_abs_freq_random__2500_words	it tms vertex	0.18868963139450515
 it	ppmi_joint_abs_freq_top_rowincol_2500_words	simlex999-sim	0.1272475772642538
 it	ppmi_joint_abs_freq_top_rowincol_2500_words	ws353	0.4421200612160327
 it	ppmi_joint_abs_freq_top_rowincol_2500_words	tms vertex	0.1389070512928871
@@ -5030,10 +5222,14 @@ it	ppmi_joint_abs_freq_top__5000_words	simlex999-sim	0.12542797765082261
 it	ppmi_joint_abs_freq_top__5000_words	ws353	0.41994224035264327
 it	ppmi_joint_abs_freq_top__5000_words	tms vertex	0.12942146765934354
 it	ppmi_joint_abs_freq_top__5000_words	tms cereb	0.07493106074474404
+it	ppmi_joint_abs_freq_top__5000_words	it tms cereb	0.09127021721119558
+it	ppmi_joint_abs_freq_top__5000_words	it tms vertex	0.14659881282580395
 it	ppmi_joint_abs_freq_random__5000_words	simlex999-sim	0.15054530712498412
 it	ppmi_joint_abs_freq_random__5000_words	ws353	0.3789561024132649
 it	ppmi_joint_abs_freq_random__5000_words	tms vertex	0.16175657729957205
 it	ppmi_joint_abs_freq_random__5000_words	tms cereb	0.1029562951267294
+it	ppmi_joint_abs_freq_random__5000_words	it tms cereb	0.13860539194244753
+it	ppmi_joint_abs_freq_random__5000_words	it tms vertex	0.17933723826333964
 it	ppmi_joint_abs_freq_top_rowincol_5000_words	simlex999-sim	0.12822427103207976
 it	ppmi_joint_abs_freq_top_rowincol_5000_words	ws353	0.4322362322703922
 it	ppmi_joint_abs_freq_top_rowincol_5000_words	tms vertex	0.13420656989018787
@@ -5046,10 +5242,14 @@ it	ppmi_joint_abs_freq_top__7500_words	simlex999-sim	0.12732487192333272
 it	ppmi_joint_abs_freq_top__7500_words	ws353	0.42618372378254094
 it	ppmi_joint_abs_freq_top__7500_words	tms vertex	0.12320570807263824
 it	ppmi_joint_abs_freq_top__7500_words	tms cereb	0.06805377556440792
+it	ppmi_joint_abs_freq_top__7500_words	it tms cereb	0.08321064494383179
+it	ppmi_joint_abs_freq_top__7500_words	it tms vertex	0.13921867522269166
 it	ppmi_joint_abs_freq_random__7500_words	simlex999-sim	0.14346823955814392
 it	ppmi_joint_abs_freq_random__7500_words	ws353	0.38663632239322
 it	ppmi_joint_abs_freq_random__7500_words	tms vertex	0.17998054023004817
 it	ppmi_joint_abs_freq_random__7500_words	tms cereb	0.13362914285417624
+it	ppmi_joint_abs_freq_random__7500_words	it tms cereb	0.1665191404179553
+it	ppmi_joint_abs_freq_random__7500_words	it tms vertex	0.1984504597920001
 it	ppmi_joint_abs_freq_top_rowincol_7500_words	simlex999-sim	0.12770352389385511
 it	ppmi_joint_abs_freq_top_rowincol_7500_words	ws353	0.4325806720630176
 it	ppmi_joint_abs_freq_top_rowincol_7500_words	tms vertex	0.13027034970024584
@@ -5062,10 +5262,14 @@ it	ppmi_joint_abs_freq_top__10000_words	simlex999-sim	0.12612944731694886
 it	ppmi_joint_abs_freq_top__10000_words	ws353	0.42711101942839697
 it	ppmi_joint_abs_freq_top__10000_words	tms vertex	0.12602053332950805
 it	ppmi_joint_abs_freq_top__10000_words	tms cereb	0.07145144406185458
+it	ppmi_joint_abs_freq_top__10000_words	it tms cereb	0.0877413457728468
+it	ppmi_joint_abs_freq_top__10000_words	it tms vertex	0.14103006787528236
 it	ppmi_joint_abs_freq_random__10000_words	simlex999-sim	0.14202357761797663
 it	ppmi_joint_abs_freq_random__10000_words	ws353	0.3975058607507173
 it	ppmi_joint_abs_freq_random__10000_words	tms vertex	0.2023537829363416
 it	ppmi_joint_abs_freq_random__10000_words	tms cereb	0.15442745849195874
+it	ppmi_joint_abs_freq_random__10000_words	it tms cereb	0.19126256258780305
+it	ppmi_joint_abs_freq_random__10000_words	it tms vertex	0.22728114209553998
 it	ppmi_joint_abs_freq_top_rowincol_10000_words	simlex999-sim	0.12586474040103493
 it	ppmi_joint_abs_freq_top_rowincol_10000_words	ws353	0.43007162685379197
 it	ppmi_joint_abs_freq_top_rowincol_10000_words	tms vertex	0.13237126275170816
@@ -5078,10 +5282,14 @@ it	ppmi_joint_abs_freq_top__12500_words	simlex999-sim	0.12426642770169441
 it	ppmi_joint_abs_freq_top__12500_words	ws353	0.42462431428014963
 it	ppmi_joint_abs_freq_top__12500_words	tms vertex	0.13360398427031556
 it	ppmi_joint_abs_freq_top__12500_words	tms cereb	0.07951467979382021
+it	ppmi_joint_abs_freq_top__12500_words	it tms cereb	0.09712848703474043
+it	ppmi_joint_abs_freq_top__12500_words	it tms vertex	0.149656892763229
 it	ppmi_joint_abs_freq_random__12500_words	simlex999-sim	0.14312083294843073
 it	ppmi_joint_abs_freq_random__12500_words	ws353	0.40868376519581767
 it	ppmi_joint_abs_freq_random__12500_words	tms vertex	0.20465255139444105
 it	ppmi_joint_abs_freq_random__12500_words	tms cereb	0.1579759159625949
+it	ppmi_joint_abs_freq_random__12500_words	it tms cereb	0.1945055113288426
+it	ppmi_joint_abs_freq_random__12500_words	it tms vertex	0.23054484194167563
 it	ppmi_joint_abs_freq_top_rowincol_12500_words	simlex999-sim	0.12366253488774166
 it	ppmi_joint_abs_freq_top_rowincol_12500_words	ws353	0.4267464369578402
 it	ppmi_joint_abs_freq_top_rowincol_12500_words	tms vertex	0.13726785689768814
@@ -5094,10 +5302,14 @@ it	ppmi_joint_abs_freq_top__15000_words	simlex999-sim	0.12303131070363918
 it	ppmi_joint_abs_freq_top__15000_words	ws353	0.4246949967681631
 it	ppmi_joint_abs_freq_top__15000_words	tms vertex	0.13540759671900177
 it	ppmi_joint_abs_freq_top__15000_words	tms cereb	0.08158467229150068
+it	ppmi_joint_abs_freq_top__15000_words	it tms cereb	0.09956674831598286
+it	ppmi_joint_abs_freq_top__15000_words	it tms vertex	0.15276681830111102
 it	ppmi_joint_abs_freq_random__15000_words	simlex999-sim	0.14530419406111666
 it	ppmi_joint_abs_freq_random__15000_words	ws353	0.41180258420060034
 it	ppmi_joint_abs_freq_random__15000_words	tms vertex	0.21066699091399654
 it	ppmi_joint_abs_freq_random__15000_words	tms cereb	0.16406546759857413
+it	ppmi_joint_abs_freq_random__15000_words	it tms cereb	0.19975614556906657
+it	ppmi_joint_abs_freq_random__15000_words	it tms vertex	0.23735288971681756
 it	ppmi_joint_abs_freq_top_rowincol_15000_words	simlex999-sim	0.12235986161212938
 it	ppmi_joint_abs_freq_top_rowincol_15000_words	ws353	0.42541665398386586
 it	ppmi_joint_abs_freq_top_rowincol_15000_words	tms vertex	0.13865702490201942
@@ -5110,10 +5322,14 @@ it	ppmi_joint_abs_freq_top__17500_words	simlex999-sim	0.12145411225323069
 it	ppmi_joint_abs_freq_top__17500_words	ws353	0.4219894688914802
 it	ppmi_joint_abs_freq_top__17500_words	tms vertex	0.13710339974598454
 it	ppmi_joint_abs_freq_top__17500_words	tms cereb	0.08446524677251854
+it	ppmi_joint_abs_freq_top__17500_words	it tms cereb	0.10288409485043253
+it	ppmi_joint_abs_freq_top__17500_words	it tms vertex	0.15366198469589917
 it	ppmi_joint_abs_freq_random__17500_words	simlex999-sim	0.1404726787884793
 it	ppmi_joint_abs_freq_random__17500_words	ws353	0.421310660645195
 it	ppmi_joint_abs_freq_random__17500_words	tms vertex	0.20867206307317304
 it	ppmi_joint_abs_freq_random__17500_words	tms cereb	0.1581086856850461
+it	ppmi_joint_abs_freq_random__17500_words	it tms cereb	0.1924300663314928
+it	ppmi_joint_abs_freq_random__17500_words	it tms vertex	0.23323110015592277
 it	ppmi_joint_abs_freq_top_rowincol_17500_words	simlex999-sim	0.12141920584673653
 it	ppmi_joint_abs_freq_top_rowincol_17500_words	ws353	0.42275690492066315
 it	ppmi_joint_abs_freq_top_rowincol_17500_words	tms vertex	0.14081586028533416
@@ -5126,10 +5342,14 @@ it	ppmi_joint_abs_freq_top__20000_words	simlex999-sim	0.12194003286232155
 it	ppmi_joint_abs_freq_top__20000_words	ws353	0.42230442712822436
 it	ppmi_joint_abs_freq_top__20000_words	tms vertex	0.14236537063337348
 it	ppmi_joint_abs_freq_top__20000_words	tms cereb	0.0893128307254776
+it	ppmi_joint_abs_freq_top__20000_words	it tms cereb	0.10979912724428412
+it	ppmi_joint_abs_freq_top__20000_words	it tms vertex	0.15953769934183104
 it	ppmi_joint_abs_freq_random__20000_words	simlex999-sim	0.1585453509347823
 it	ppmi_joint_abs_freq_random__20000_words	ws353	0.42433499217895443
 it	ppmi_joint_abs_freq_random__20000_words	tms vertex	0.21413582655758337
 it	ppmi_joint_abs_freq_random__20000_words	tms cereb	0.16395887469039097
+it	ppmi_joint_abs_freq_random__20000_words	it tms cereb	0.20061658956295317
+it	ppmi_joint_abs_freq_random__20000_words	it tms vertex	0.23990369325930003
 it	ppmi_joint_abs_freq_top_rowincol_20000_words	simlex999-sim	0.12184851337664496
 it	ppmi_joint_abs_freq_top_rowincol_20000_words	ws353	0.42217990875555805
 it	ppmi_joint_abs_freq_top_rowincol_20000_words	tms vertex	0.14524816590514614
@@ -5142,10 +5362,14 @@ it	ppmi_joint_abs_freq_top__25000_words	simlex999-sim	0.11903547237549097
 it	ppmi_joint_abs_freq_top__25000_words	ws353	0.42139983777385454
 it	ppmi_joint_abs_freq_top__25000_words	tms vertex	0.14808469458189974
 it	ppmi_joint_abs_freq_top__25000_words	tms cereb	0.09604490401388709
+it	ppmi_joint_abs_freq_top__25000_words	it tms cereb	0.11760087378490894
+it	ppmi_joint_abs_freq_top__25000_words	it tms vertex	0.1665508652940662
 it	ppmi_joint_abs_freq_random__25000_words	simlex999-sim	0.16407838246867276
 it	ppmi_joint_abs_freq_random__25000_words	ws353	0.42943694938370164
 it	ppmi_joint_abs_freq_random__25000_words	tms vertex	0.2101616436752244
 it	ppmi_joint_abs_freq_random__25000_words	tms cereb	0.1634158747544776
+it	ppmi_joint_abs_freq_random__25000_words	it tms cereb	0.19997785948427135
+it	ppmi_joint_abs_freq_random__25000_words	it tms vertex	0.23648179357474772
 it	ppmi_joint_abs_freq_top_rowincol_25000_words	simlex999-sim	0.11915037595842422
 it	ppmi_joint_abs_freq_top_rowincol_25000_words	ws353	0.4222630430808381
 it	ppmi_joint_abs_freq_top_rowincol_25000_words	tms vertex	0.1500952527725194
@@ -5158,10 +5382,14 @@ it	ppmi_cc100_abs_freq_top__100_words	simlex999-sim	0.1957374951357192
 it	ppmi_cc100_abs_freq_top__100_words	ws353	0.26325501620079556
 it	ppmi_cc100_abs_freq_top__100_words	tms vertex	0.08119764249964069
 it	ppmi_cc100_abs_freq_top__100_words	tms cereb	0.036565672695515423
+it	ppmi_cc100_abs_freq_top__100_words	it tms cereb	0.035119183384321795
+it	ppmi_cc100_abs_freq_top__100_words	it tms vertex	0.09703661886367464
 it	ppmi_cc100_abs_freq_random__100_words	simlex999-sim	0.10466661978239242
 it	ppmi_cc100_abs_freq_random__100_words	ws353	0.29463330540658617
 it	ppmi_cc100_abs_freq_random__100_words	tms vertex	0.07970024678997863
 it	ppmi_cc100_abs_freq_random__100_words	tms cereb	0.05105538623706653
+it	ppmi_cc100_abs_freq_random__100_words	it tms cereb	0.058098001359493834
+it	ppmi_cc100_abs_freq_random__100_words	it tms vertex	0.0902922841076571
 it	ppmi_cc100_abs_freq_top_rowincol_100_words	simlex999-sim	0.2944939110914323
 it	ppmi_cc100_abs_freq_top_rowincol_100_words	ws353	0.5391680701268828
 it	ppmi_cc100_abs_freq_top_rowincol_100_words	tms vertex	0.1498262132276367
@@ -5174,10 +5402,14 @@ it	ppmi_cc100_abs_freq_top__200_words	simlex999-sim	0.23010482916437386
 it	ppmi_cc100_abs_freq_top__200_words	ws353	0.4000180998239565
 it	ppmi_cc100_abs_freq_top__200_words	tms vertex	0.10886490165863334
 it	ppmi_cc100_abs_freq_top__200_words	tms cereb	0.04209764657777049
+it	ppmi_cc100_abs_freq_top__200_words	it tms cereb	0.04893414713783889
+it	ppmi_cc100_abs_freq_top__200_words	it tms vertex	0.11914708175344808
 it	ppmi_cc100_abs_freq_random__200_words	simlex999-sim	0.11159090945176389
 it	ppmi_cc100_abs_freq_random__200_words	ws353	0.31030042215152004
 it	ppmi_cc100_abs_freq_random__200_words	tms vertex	0.07474983781447718
 it	ppmi_cc100_abs_freq_random__200_words	tms cereb	0.08081687751800273
+it	ppmi_cc100_abs_freq_random__200_words	it tms cereb	0.08733924083012533
+it	ppmi_cc100_abs_freq_random__200_words	it tms vertex	0.08463396807299997
 it	ppmi_cc100_abs_freq_top_rowincol_200_words	simlex999-sim	0.29185513377654987
 it	ppmi_cc100_abs_freq_top_rowincol_200_words	ws353	0.5357886998441098
 it	ppmi_cc100_abs_freq_top_rowincol_200_words	tms vertex	0.1498581046947311
@@ -5190,10 +5422,14 @@ it	ppmi_cc100_abs_freq_top__500_words	simlex999-sim	0.2484412922407215
 it	ppmi_cc100_abs_freq_top__500_words	ws353	0.4516390024852918
 it	ppmi_cc100_abs_freq_top__500_words	tms vertex	0.10043930949677496
 it	ppmi_cc100_abs_freq_top__500_words	tms cereb	0.05125536175030595
+it	ppmi_cc100_abs_freq_top__500_words	it tms cereb	0.06411680396188219
+it	ppmi_cc100_abs_freq_top__500_words	it tms vertex	0.11036302097042308
 it	ppmi_cc100_abs_freq_random__500_words	simlex999-sim	0.13133764488340952
 it	ppmi_cc100_abs_freq_random__500_words	ws353	0.33682829776986467
 it	ppmi_cc100_abs_freq_random__500_words	tms vertex	0.1013348142505906
 it	ppmi_cc100_abs_freq_random__500_words	tms cereb	0.11218009001095176
+it	ppmi_cc100_abs_freq_random__500_words	it tms cereb	0.1272878762928653
+it	ppmi_cc100_abs_freq_random__500_words	it tms vertex	0.11510809690130568
 it	ppmi_cc100_abs_freq_top_rowincol_500_words	simlex999-sim	0.288273463214853
 it	ppmi_cc100_abs_freq_top_rowincol_500_words	ws353	0.5317260291375326
 it	ppmi_cc100_abs_freq_top_rowincol_500_words	tms vertex	0.14987527847020934
@@ -5206,10 +5442,14 @@ it	ppmi_cc100_abs_freq_top__750_words	simlex999-sim	0.26022031949670016
 it	ppmi_cc100_abs_freq_top__750_words	ws353	0.46581720639101265
 it	ppmi_cc100_abs_freq_top__750_words	tms vertex	0.11033399311273293
 it	ppmi_cc100_abs_freq_top__750_words	tms cereb	0.05928075515175487
+it	ppmi_cc100_abs_freq_top__750_words	it tms cereb	0.07389104337686371
+it	ppmi_cc100_abs_freq_top__750_words	it tms vertex	0.12276063862169573
 it	ppmi_cc100_abs_freq_random__750_words	simlex999-sim	0.1317038873890706
 it	ppmi_cc100_abs_freq_random__750_words	ws353	0.3484173491139512
 it	ppmi_cc100_abs_freq_random__750_words	tms vertex	0.10441631770584256
 it	ppmi_cc100_abs_freq_random__750_words	tms cereb	0.11868320598414353
+it	ppmi_cc100_abs_freq_random__750_words	it tms cereb	0.1337471621869107
+it	ppmi_cc100_abs_freq_random__750_words	it tms vertex	0.11292062493747775
 it	ppmi_cc100_abs_freq_top_rowincol_750_words	simlex999-sim	0.2871278283508238
 it	ppmi_cc100_abs_freq_top_rowincol_750_words	ws353	0.5282720219979816
 it	ppmi_cc100_abs_freq_top_rowincol_750_words	tms vertex	0.1484321487278386
@@ -5222,10 +5462,14 @@ it	ppmi_cc100_abs_freq_top__1000_words	simlex999-sim	0.26334140610986234
 it	ppmi_cc100_abs_freq_top__1000_words	ws353	0.4765307674050913
 it	ppmi_cc100_abs_freq_top__1000_words	tms vertex	0.11980714325276266
 it	ppmi_cc100_abs_freq_top__1000_words	tms cereb	0.06695020148145565
+it	ppmi_cc100_abs_freq_top__1000_words	it tms cereb	0.0826493338533947
+it	ppmi_cc100_abs_freq_top__1000_words	it tms vertex	0.13482460469507956
 it	ppmi_cc100_abs_freq_random__1000_words	simlex999-sim	0.13117794443411449
 it	ppmi_cc100_abs_freq_random__1000_words	ws353	0.3518679975949474
 it	ppmi_cc100_abs_freq_random__1000_words	tms vertex	0.12600494213724844
 it	ppmi_cc100_abs_freq_random__1000_words	tms cereb	0.13340837755164375
+it	ppmi_cc100_abs_freq_random__1000_words	it tms cereb	0.15287395759552821
+it	ppmi_cc100_abs_freq_random__1000_words	it tms vertex	0.14032750871272323
 it	ppmi_cc100_abs_freq_top_rowincol_1000_words	simlex999-sim	0.2849342475563108
 it	ppmi_cc100_abs_freq_top_rowincol_1000_words	ws353	0.5230940900589968
 it	ppmi_cc100_abs_freq_top_rowincol_1000_words	tms vertex	0.14874922985987252
@@ -5238,10 +5482,14 @@ it	ppmi_cc100_abs_freq_top__2500_words	simlex999-sim	0.28350464766974937
 it	ppmi_cc100_abs_freq_top__2500_words	ws353	0.49438073148001366
 it	ppmi_cc100_abs_freq_top__2500_words	tms vertex	0.1179226350179444
 it	ppmi_cc100_abs_freq_top__2500_words	tms cereb	0.06529844017783001
+it	ppmi_cc100_abs_freq_top__2500_words	it tms cereb	0.08103590240146841
+it	ppmi_cc100_abs_freq_top__2500_words	it tms vertex	0.13276150704698053
 it	ppmi_cc100_abs_freq_random__2500_words	simlex999-sim	0.14261738805808372
 it	ppmi_cc100_abs_freq_random__2500_words	ws353	0.39198680085034276
 it	ppmi_cc100_abs_freq_random__2500_words	tms vertex	0.16522534290108543
 it	ppmi_cc100_abs_freq_random__2500_words	tms cereb	0.13915333392689697
+it	ppmi_cc100_abs_freq_random__2500_words	it tms cereb	0.1711592511898509
+it	ppmi_cc100_abs_freq_random__2500_words	it tms vertex	0.18072885398046942
 it	ppmi_cc100_abs_freq_top_rowincol_2500_words	simlex999-sim	0.2856679697891739
 it	ppmi_cc100_abs_freq_top_rowincol_2500_words	ws353	0.5111212186789286
 it	ppmi_cc100_abs_freq_top_rowincol_2500_words	tms vertex	0.14287253895626117
@@ -5254,10 +5502,14 @@ it	ppmi_cc100_abs_freq_top__5000_words	simlex999-sim	0.28328108238647826
 it	ppmi_cc100_abs_freq_top__5000_words	ws353	0.48862660300670163
 it	ppmi_cc100_abs_freq_top__5000_words	tms vertex	0.13208493541194039
 it	ppmi_cc100_abs_freq_top__5000_words	tms cereb	0.0727532494645771
+it	ppmi_cc100_abs_freq_top__5000_words	it tms cereb	0.08864783905171689
+it	ppmi_cc100_abs_freq_top__5000_words	it tms vertex	0.1474568344106357
 it	ppmi_cc100_abs_freq_random__5000_words	simlex999-sim	0.14355589049737072
 it	ppmi_cc100_abs_freq_random__5000_words	ws353	0.3793985485861387
 it	ppmi_cc100_abs_freq_random__5000_words	tms vertex	0.17711101462884365
 it	ppmi_cc100_abs_freq_random__5000_words	tms cereb	0.14159177931600792
+it	ppmi_cc100_abs_freq_random__5000_words	it tms cereb	0.1736518465332941
+it	ppmi_cc100_abs_freq_random__5000_words	it tms vertex	0.1923190647701706
 it	ppmi_cc100_abs_freq_top_rowincol_5000_words	simlex999-sim	0.2851892476238295
 it	ppmi_cc100_abs_freq_top_rowincol_5000_words	ws353	0.4966718963909611
 it	ppmi_cc100_abs_freq_top_rowincol_5000_words	tms vertex	0.14261403172081374
@@ -5270,10 +5522,14 @@ it	ppmi_cc100_abs_freq_top__7500_words	simlex999-sim	0.28538770951049297
 it	ppmi_cc100_abs_freq_top__7500_words	ws353	0.4838414475265119
 it	ppmi_cc100_abs_freq_top__7500_words	tms vertex	0.13137653275178252
 it	ppmi_cc100_abs_freq_top__7500_words	tms cereb	0.07891190643086239
+it	ppmi_cc100_abs_freq_top__7500_words	it tms cereb	0.09366915486890115
+it	ppmi_cc100_abs_freq_top__7500_words	it tms vertex	0.14901777083709403
 it	ppmi_cc100_abs_freq_random__7500_words	simlex999-sim	0.15285376520154942
 it	ppmi_cc100_abs_freq_random__7500_words	ws353	0.3901070716123849
 it	ppmi_cc100_abs_freq_random__7500_words	tms vertex	0.18304062244124705
 it	ppmi_cc100_abs_freq_random__7500_words	tms cereb	0.14396547842554358
+it	ppmi_cc100_abs_freq_random__7500_words	it tms cereb	0.17970060897786336
+it	ppmi_cc100_abs_freq_random__7500_words	it tms vertex	0.1976389338365645
 it	ppmi_cc100_abs_freq_top_rowincol_7500_words	simlex999-sim	0.28454416481792616
 it	ppmi_cc100_abs_freq_top_rowincol_7500_words	ws353	0.49199141910240285
 it	ppmi_cc100_abs_freq_top_rowincol_7500_words	tms vertex	0.1386305006044857
@@ -5286,10 +5542,14 @@ it	ppmi_cc100_abs_freq_top__10000_words	simlex999-sim	0.28516010625244215
 it	ppmi_cc100_abs_freq_top__10000_words	ws353	0.4879720377727571
 it	ppmi_cc100_abs_freq_top__10000_words	tms vertex	0.13286762843638553
 it	ppmi_cc100_abs_freq_top__10000_words	tms cereb	0.0780707055611531
+it	ppmi_cc100_abs_freq_top__10000_words	it tms cereb	0.09242810524391391
+it	ppmi_cc100_abs_freq_top__10000_words	it tms vertex	0.14915246925444575
 it	ppmi_cc100_abs_freq_random__10000_words	simlex999-sim	0.15488898943172538
 it	ppmi_cc100_abs_freq_random__10000_words	ws353	0.3971539104450946
 it	ppmi_cc100_abs_freq_random__10000_words	tms vertex	0.17838808947011664
 it	ppmi_cc100_abs_freq_random__10000_words	tms cereb	0.14303029008722695
+it	ppmi_cc100_abs_freq_random__10000_words	it tms cereb	0.17592572894256858
+it	ppmi_cc100_abs_freq_random__10000_words	it tms vertex	0.1930953266193405
 it	ppmi_cc100_abs_freq_top_rowincol_10000_words	simlex999-sim	0.2854880969611645
 it	ppmi_cc100_abs_freq_top_rowincol_10000_words	ws353	0.4928508625082033
 it	ppmi_cc100_abs_freq_top_rowincol_10000_words	tms vertex	0.13852759198395714
@@ -5302,10 +5562,14 @@ it	ppmi_cc100_abs_freq_top__12500_words	simlex999-sim	0.2833450692586747
 it	ppmi_cc100_abs_freq_top__12500_words	ws353	0.48909644202012004
 it	ppmi_cc100_abs_freq_top__12500_words	tms vertex	0.13666483343576666
 it	ppmi_cc100_abs_freq_top__12500_words	tms cereb	0.08249552732537149
+it	ppmi_cc100_abs_freq_top__12500_words	it tms cereb	0.0977061785112742
+it	ppmi_cc100_abs_freq_top__12500_words	it tms vertex	0.15281250797947554
 it	ppmi_cc100_abs_freq_random__12500_words	simlex999-sim	0.15612726249385536
 it	ppmi_cc100_abs_freq_random__12500_words	ws353	0.4007338672804589
 it	ppmi_cc100_abs_freq_random__12500_words	tms vertex	0.17812794445352037
 it	ppmi_cc100_abs_freq_random__12500_words	tms cereb	0.14134024372493828
+it	ppmi_cc100_abs_freq_random__12500_words	it tms cereb	0.17206888404868687
+it	ppmi_cc100_abs_freq_random__12500_words	it tms vertex	0.19288113359876227
 it	ppmi_cc100_abs_freq_top_rowincol_12500_words	simlex999-sim	0.2841207132491211
 it	ppmi_cc100_abs_freq_top_rowincol_12500_words	ws353	0.4910965231896327
 it	ppmi_cc100_abs_freq_top_rowincol_12500_words	tms vertex	0.13971369942813172
@@ -5318,10 +5582,14 @@ it	ppmi_cc100_abs_freq_top__15000_words	simlex999-sim	0.28186800029966286
 it	ppmi_cc100_abs_freq_top__15000_words	ws353	0.4864636268972706
 it	ppmi_cc100_abs_freq_top__15000_words	tms vertex	0.1372932987374822
 it	ppmi_cc100_abs_freq_top__15000_words	tms cereb	0.08253604006361076
+it	ppmi_cc100_abs_freq_top__15000_words	it tms cereb	0.09669435184364053
+it	ppmi_cc100_abs_freq_top__15000_words	it tms vertex	0.1535786964095455
 it	ppmi_cc100_abs_freq_random__15000_words	simlex999-sim	0.15863442665989136
 it	ppmi_cc100_abs_freq_random__15000_words	ws353	0.39612298886084635
 it	ppmi_cc100_abs_freq_random__15000_words	tms vertex	0.18123203412180888
 it	ppmi_cc100_abs_freq_random__15000_words	tms cereb	0.1431710408804521
+it	ppmi_cc100_abs_freq_random__15000_words	it tms cereb	0.17421975941893014
+it	ppmi_cc100_abs_freq_random__15000_words	it tms vertex	0.1973583589108872
 it	ppmi_cc100_abs_freq_top_rowincol_15000_words	simlex999-sim	0.281890444382783
 it	ppmi_cc100_abs_freq_top_rowincol_15000_words	ws353	0.4887527392946566
 it	ppmi_cc100_abs_freq_top_rowincol_15000_words	tms vertex	0.13932475521047655
@@ -5334,10 +5602,14 @@ it	ppmi_cc100_abs_freq_top__17500_words	simlex999-sim	0.2804251103796033
 it	ppmi_cc100_abs_freq_top__17500_words	ws353	0.48396888995946064
 it	ppmi_cc100_abs_freq_top__17500_words	tms vertex	0.13652136357198316
 it	ppmi_cc100_abs_freq_top__17500_words	tms cereb	0.08274099063705574
+it	ppmi_cc100_abs_freq_top__17500_words	it tms cereb	0.0976871115053667
+it	ppmi_cc100_abs_freq_top__17500_words	it tms vertex	0.153434165183629
 it	ppmi_cc100_abs_freq_random__17500_words	simlex999-sim	0.1587345984905504
 it	ppmi_cc100_abs_freq_random__17500_words	ws353	0.3978573628202288
 it	ppmi_cc100_abs_freq_random__17500_words	tms vertex	0.18226092221788903
 it	ppmi_cc100_abs_freq_random__17500_words	tms cereb	0.14427087372798922
+it	ppmi_cc100_abs_freq_random__17500_words	it tms cereb	0.17488928335199438
+it	ppmi_cc100_abs_freq_random__17500_words	it tms vertex	0.1988355033468709
 it	ppmi_cc100_abs_freq_top_rowincol_17500_words	simlex999-sim	0.28036382202453314
 it	ppmi_cc100_abs_freq_top_rowincol_17500_words	ws353	0.48558627064584325
 it	ppmi_cc100_abs_freq_top_rowincol_17500_words	tms vertex	0.13799836352206102
@@ -5350,10 +5622,14 @@ it	ppmi_cc100_abs_freq_top__20000_words	simlex999-sim	0.2785484517998372
 it	ppmi_cc100_abs_freq_top__20000_words	ws353	0.4812250525121536
 it	ppmi_cc100_abs_freq_top__20000_words	tms vertex	0.14124140945626484
 it	ppmi_cc100_abs_freq_top__20000_words	tms cereb	0.08556139565675032
+it	ppmi_cc100_abs_freq_top__20000_words	it tms cereb	0.10118809760707796
+it	ppmi_cc100_abs_freq_top__20000_words	it tms vertex	0.15864909127733812
 it	ppmi_cc100_abs_freq_random__20000_words	simlex999-sim	0.16186498943394925
 it	ppmi_cc100_abs_freq_random__20000_words	ws353	0.39704102219921766
 it	ppmi_cc100_abs_freq_random__20000_words	tms vertex	0.18339207992943354
 it	ppmi_cc100_abs_freq_random__20000_words	tms cereb	0.14141152020867676
+it	ppmi_cc100_abs_freq_random__20000_words	it tms cereb	0.17201971618304637
+it	ppmi_cc100_abs_freq_random__20000_words	it tms vertex	0.19892800996325916
 it	ppmi_cc100_abs_freq_top_rowincol_20000_words	simlex999-sim	0.27830819883438607
 it	ppmi_cc100_abs_freq_top_rowincol_20000_words	ws353	0.4828370220264198
 it	ppmi_cc100_abs_freq_top_rowincol_20000_words	tms vertex	0.1411766583147709
@@ -5366,10 +5642,14 @@ it	ppmi_cc100_abs_freq_top__25000_words	simlex999-sim	0.2729593327859392
 it	ppmi_cc100_abs_freq_top__25000_words	ws353	0.4780666073254439
 it	ppmi_cc100_abs_freq_top__25000_words	tms vertex	0.14049202640785596
 it	ppmi_cc100_abs_freq_top__25000_words	tms cereb	0.0859022387367771
+it	ppmi_cc100_abs_freq_top__25000_words	it tms cereb	0.10186233992600383
+it	ppmi_cc100_abs_freq_top__25000_words	it tms vertex	0.15609191790957846
 it	ppmi_cc100_abs_freq_random__25000_words	simlex999-sim	0.16396263239077613
 it	ppmi_cc100_abs_freq_random__25000_words	ws353	0.4009814750528205
 it	ppmi_cc100_abs_freq_random__25000_words	tms vertex	0.18226389620741956
 it	ppmi_cc100_abs_freq_random__25000_words	tms cereb	0.14203091412598545
+it	ppmi_cc100_abs_freq_random__25000_words	it tms cereb	0.17181712108251784
+it	ppmi_cc100_abs_freq_random__25000_words	it tms vertex	0.19872313129698665
 it	ppmi_cc100_abs_freq_top_rowincol_25000_words	simlex999-sim	0.2729136213432877
 it	ppmi_cc100_abs_freq_top_rowincol_25000_words	ws353	0.47833660615483886
 it	ppmi_cc100_abs_freq_top_rowincol_25000_words	tms vertex	0.14069480264321213
@@ -5382,30 +5662,46 @@ it	fasttext	simlex999-sim	0.31252400890145393
 it	fasttext	ws353	0.5822343894974957
 it	fasttext	tms vertex	0.24514925942814722
 it	fasttext	tms cereb	0.18591721549741835
+it	fasttext	it tms cereb	0.22387455165777276
+it	fasttext	it tms vertex	0.26980404164115124
 it	fasttext_aligned	simlex999-sim	0.30314512320449766
 it	fasttext_aligned	ws353	0.6287368450225225
 it	fasttext_aligned	tms vertex	0.12553176292291315
 it	fasttext_aligned	tms cereb	0.10439983353215587
+it	fasttext_aligned	it tms cereb	0.11835447467413174
+it	fasttext_aligned	it tms vertex	0.13414661884349574
 de	fasttext	simlex999-sim	0.40653577164298127
 de	fasttext	ws353	0.6415467226361302
 de	fasttext	tms aIFG	0.1883567025155477
 de	fasttext	tms vertex	0.17904861693970395
 de	fasttext	tms pIFG	0.16681769216169262
+de	fasttext	de tms vertex	0.18484142555870572
+de	fasttext	de tms pIFG	0.19347759581368615
+de	fasttext	de tms aIFG	0.225970845815161
 de	fasttext_aligned	simlex999-sim	0.4158272216946795
 de	fasttext_aligned	ws353	0.678054582913429
 de	fasttext_aligned	tms aIFG	0.1740316922139454
 de	fasttext_aligned	tms vertex	0.17742150214060262
 de	fasttext_aligned	tms pIFG	0.14743163085190317
+de	fasttext_aligned	de tms vertex	0.19337726274057931
+de	fasttext_aligned	de tms pIFG	0.18908927321442065
+de	fasttext_aligned	de tms aIFG	0.19860471633955457
 de	ppmi_wac_abs_freq_top__100_words	simlex999-sim	0.23488617333510836
 de	ppmi_wac_abs_freq_top__100_words	ws353	0.3010073344532608
 de	ppmi_wac_abs_freq_top__100_words	tms aIFG	0.1935718616199954
 de	ppmi_wac_abs_freq_top__100_words	tms vertex	0.15897791621896187
 de	ppmi_wac_abs_freq_top__100_words	tms pIFG	0.15593049893345157
+de	ppmi_wac_abs_freq_top__100_words	de tms vertex	0.15042855164821078
+de	ppmi_wac_abs_freq_top__100_words	de tms pIFG	0.20378844733341936
+de	ppmi_wac_abs_freq_top__100_words	de tms aIFG	0.23375596991759154
 de	ppmi_wac_abs_freq_random__100_words	simlex999-sim	0.02265779248842926
 de	ppmi_wac_abs_freq_random__100_words	ws353	0.18234399760610961
 de	ppmi_wac_abs_freq_random__100_words	tms aIFG	-0.08487860026451531
 de	ppmi_wac_abs_freq_random__100_words	tms vertex	-0.11294208964863826
 de	ppmi_wac_abs_freq_random__100_words	tms pIFG	-0.0535735030096911
+de	ppmi_wac_abs_freq_random__100_words	de tms vertex	-0.09683760897090876
+de	ppmi_wac_abs_freq_random__100_words	de tms pIFG	-0.06479874862650364
+de	ppmi_wac_abs_freq_random__100_words	de tms aIFG	-0.07895376149982175
 de	ppmi_wac_abs_freq_top_rowincol_100_words	simlex999-sim	0.27702711019346926
 de	ppmi_wac_abs_freq_top_rowincol_100_words	ws353	0.4853110064411591
 de	ppmi_wac_abs_freq_top_rowincol_100_words	tms aIFG	0.16354735335837844
@@ -5421,11 +5717,17 @@ de	ppmi_wac_abs_freq_top__200_words	ws353	0.32869313609735545
 de	ppmi_wac_abs_freq_top__200_words	tms aIFG	0.21907592677104723
 de	ppmi_wac_abs_freq_top__200_words	tms vertex	0.15068358336504617
 de	ppmi_wac_abs_freq_top__200_words	tms pIFG	0.1406724860509182
+de	ppmi_wac_abs_freq_top__200_words	de tms vertex	0.1530059995855223
+de	ppmi_wac_abs_freq_top__200_words	de tms pIFG	0.18320927205630802
+de	ppmi_wac_abs_freq_top__200_words	de tms aIFG	0.25914919275727555
 de	ppmi_wac_abs_freq_random__200_words	simlex999-sim	0.017240316674512007
 de	ppmi_wac_abs_freq_random__200_words	ws353	0.05266397346321927
 de	ppmi_wac_abs_freq_random__200_words	tms aIFG	-0.0263381986667655
 de	ppmi_wac_abs_freq_random__200_words	tms vertex	-0.067863983424066
 de	ppmi_wac_abs_freq_random__200_words	tms pIFG	-0.07189320316014425
+de	ppmi_wac_abs_freq_random__200_words	de tms vertex	-0.05890643723386469
+de	ppmi_wac_abs_freq_random__200_words	de tms pIFG	-0.06869342742081973
+de	ppmi_wac_abs_freq_random__200_words	de tms aIFG	-0.007430604701303955
 de	ppmi_wac_abs_freq_top_rowincol_200_words	simlex999-sim	0.2785892893226511
 de	ppmi_wac_abs_freq_top_rowincol_200_words	ws353	0.48331273854982415
 de	ppmi_wac_abs_freq_top_rowincol_200_words	tms aIFG	0.16579497746480434
@@ -5441,11 +5743,17 @@ de	ppmi_wac_abs_freq_top__500_words	ws353	0.3850852105916043
 de	ppmi_wac_abs_freq_top__500_words	tms aIFG	0.2223516934828486
 de	ppmi_wac_abs_freq_top__500_words	tms vertex	0.18598462531185003
 de	ppmi_wac_abs_freq_top__500_words	tms pIFG	0.17289014447730222
+de	ppmi_wac_abs_freq_top__500_words	de tms vertex	0.19557683412800592
+de	ppmi_wac_abs_freq_top__500_words	de tms pIFG	0.2237070839081813
+de	ppmi_wac_abs_freq_top__500_words	de tms aIFG	0.27051489263922623
 de	ppmi_wac_abs_freq_random__500_words	simlex999-sim	0.06224881905792798
 de	ppmi_wac_abs_freq_random__500_words	ws353	0.09038405409207681
 de	ppmi_wac_abs_freq_random__500_words	tms aIFG	0.03013756266214825
 de	ppmi_wac_abs_freq_random__500_words	tms vertex	0.059107291497124265
 de	ppmi_wac_abs_freq_random__500_words	tms pIFG	0.021915500050275406
+de	ppmi_wac_abs_freq_random__500_words	de tms vertex	0.06808109270761767
+de	ppmi_wac_abs_freq_random__500_words	de tms pIFG	0.03350543250408324
+de	ppmi_wac_abs_freq_random__500_words	de tms aIFG	0.06423680086470276
 de	ppmi_wac_abs_freq_top_rowincol_500_words	simlex999-sim	0.2825784303070824
 de	ppmi_wac_abs_freq_top_rowincol_500_words	ws353	0.473055538315584
 de	ppmi_wac_abs_freq_top_rowincol_500_words	tms aIFG	0.1686409864483871
@@ -5461,11 +5769,17 @@ de	ppmi_wac_abs_freq_top__750_words	ws353	0.3797549101698041
 de	ppmi_wac_abs_freq_top__750_words	tms aIFG	0.22848037354924078
 de	ppmi_wac_abs_freq_top__750_words	tms vertex	0.18712761856906962
 de	ppmi_wac_abs_freq_top__750_words	tms pIFG	0.18431103029171095
+de	ppmi_wac_abs_freq_top__750_words	de tms vertex	0.20205271433624275
+de	ppmi_wac_abs_freq_top__750_words	de tms pIFG	0.2300487704701459
+de	ppmi_wac_abs_freq_top__750_words	de tms aIFG	0.27824345317292953
 de	ppmi_wac_abs_freq_random__750_words	simlex999-sim	0.07399412280279465
 de	ppmi_wac_abs_freq_random__750_words	ws353	0.13758329227979316
 de	ppmi_wac_abs_freq_random__750_words	tms aIFG	0.04702712275184253
 de	ppmi_wac_abs_freq_random__750_words	tms vertex	0.07775309672704366
 de	ppmi_wac_abs_freq_random__750_words	tms pIFG	0.034619458700434355
+de	ppmi_wac_abs_freq_random__750_words	de tms vertex	0.08533340123009904
+de	ppmi_wac_abs_freq_random__750_words	de tms pIFG	0.05768747939097749
+de	ppmi_wac_abs_freq_random__750_words	de tms aIFG	0.07850669593727241
 de	ppmi_wac_abs_freq_top_rowincol_750_words	simlex999-sim	0.285823447054015
 de	ppmi_wac_abs_freq_top_rowincol_750_words	ws353	0.46221844041215665
 de	ppmi_wac_abs_freq_top_rowincol_750_words	tms aIFG	0.1718136539429352
@@ -5481,11 +5795,17 @@ de	ppmi_wac_abs_freq_top__1000_words	ws353	0.38523910651150395
 de	ppmi_wac_abs_freq_top__1000_words	tms aIFG	0.22454404325418312
 de	ppmi_wac_abs_freq_top__1000_words	tms vertex	0.1902376339915648
 de	ppmi_wac_abs_freq_top__1000_words	tms pIFG	0.19388824040040792
+de	ppmi_wac_abs_freq_top__1000_words	de tms vertex	0.20799030745871505
+de	ppmi_wac_abs_freq_top__1000_words	de tms pIFG	0.23750063308229816
+de	ppmi_wac_abs_freq_top__1000_words	de tms aIFG	0.27517335308478624
 de	ppmi_wac_abs_freq_random__1000_words	simlex999-sim	0.06734287305640377
 de	ppmi_wac_abs_freq_random__1000_words	ws353	0.14586461585483573
 de	ppmi_wac_abs_freq_random__1000_words	tms aIFG	0.05785936284140555
 de	ppmi_wac_abs_freq_random__1000_words	tms vertex	0.09019278969713117
 de	ppmi_wac_abs_freq_random__1000_words	tms pIFG	0.07397097242343423
+de	ppmi_wac_abs_freq_random__1000_words	de tms vertex	0.11379322768913419
+de	ppmi_wac_abs_freq_random__1000_words	de tms pIFG	0.08857937547974469
+de	ppmi_wac_abs_freq_random__1000_words	de tms aIFG	0.09607204354625555
 de	ppmi_wac_abs_freq_top_rowincol_1000_words	simlex999-sim	0.285868566871248
 de	ppmi_wac_abs_freq_top_rowincol_1000_words	ws353	0.457652415380003
 de	ppmi_wac_abs_freq_top_rowincol_1000_words	tms aIFG	0.17436738394364623
@@ -5501,11 +5821,17 @@ de	ppmi_wac_abs_freq_top__2500_words	ws353	0.41531988552934157
 de	ppmi_wac_abs_freq_top__2500_words	tms aIFG	0.22360562113311644
 de	ppmi_wac_abs_freq_top__2500_words	tms vertex	0.19212858740603364
 de	ppmi_wac_abs_freq_top__2500_words	tms pIFG	0.2027422826200192
+de	ppmi_wac_abs_freq_top__2500_words	de tms vertex	0.21129906695152037
+de	ppmi_wac_abs_freq_top__2500_words	de tms pIFG	0.24314405486151303
+de	ppmi_wac_abs_freq_top__2500_words	de tms aIFG	0.26600756205026665
 de	ppmi_wac_abs_freq_random__2500_words	simlex999-sim	0.13256758725780057
 de	ppmi_wac_abs_freq_random__2500_words	ws353	0.24743516187038678
 de	ppmi_wac_abs_freq_random__2500_words	tms aIFG	0.16349999623030587
 de	ppmi_wac_abs_freq_random__2500_words	tms vertex	0.17733459022222905
 de	ppmi_wac_abs_freq_random__2500_words	tms pIFG	0.20404241483962018
+de	ppmi_wac_abs_freq_random__2500_words	de tms vertex	0.20363281324299937
+de	ppmi_wac_abs_freq_random__2500_words	de tms pIFG	0.22839709335889274
+de	ppmi_wac_abs_freq_random__2500_words	de tms aIFG	0.2183844388657128
 de	ppmi_wac_abs_freq_top_rowincol_2500_words	simlex999-sim	0.2926094065501858
 de	ppmi_wac_abs_freq_top_rowincol_2500_words	ws353	0.4473746956897763
 de	ppmi_wac_abs_freq_top_rowincol_2500_words	tms aIFG	0.1934645440743149
@@ -5521,11 +5847,17 @@ de	ppmi_wac_abs_freq_top__5000_words	ws353	0.41887272524922814
 de	ppmi_wac_abs_freq_top__5000_words	tms aIFG	0.23476836289194317
 de	ppmi_wac_abs_freq_top__5000_words	tms vertex	0.20342997765292545
 de	ppmi_wac_abs_freq_top__5000_words	tms pIFG	0.2143707607621783
+de	ppmi_wac_abs_freq_top__5000_words	de tms vertex	0.2221690898761915
+de	ppmi_wac_abs_freq_top__5000_words	de tms pIFG	0.2558188914275919
+de	ppmi_wac_abs_freq_top__5000_words	de tms aIFG	0.2774477159537731
 de	ppmi_wac_abs_freq_random__5000_words	simlex999-sim	0.17154723331509336
 de	ppmi_wac_abs_freq_random__5000_words	ws353	0.3101392767641101
 de	ppmi_wac_abs_freq_random__5000_words	tms aIFG	0.20506667792383104
 de	ppmi_wac_abs_freq_random__5000_words	tms vertex	0.19215675305171206
 de	ppmi_wac_abs_freq_random__5000_words	tms pIFG	0.23211162826116133
+de	ppmi_wac_abs_freq_random__5000_words	de tms vertex	0.19963098637955817
+de	ppmi_wac_abs_freq_random__5000_words	de tms pIFG	0.27748425024336526
+de	ppmi_wac_abs_freq_random__5000_words	de tms aIFG	0.25296160150788516
 de	ppmi_wac_abs_freq_top_rowincol_5000_words	simlex999-sim	0.28733027352954393
 de	ppmi_wac_abs_freq_top_rowincol_5000_words	ws353	0.4311320593592644
 de	ppmi_wac_abs_freq_top_rowincol_5000_words	tms aIFG	0.2166819330274852
@@ -5541,11 +5873,17 @@ de	ppmi_wac_abs_freq_top__7500_words	ws353	0.40340640833687685
 de	ppmi_wac_abs_freq_top__7500_words	tms aIFG	0.24406210353184307
 de	ppmi_wac_abs_freq_top__7500_words	tms vertex	0.20771761810821546
 de	ppmi_wac_abs_freq_top__7500_words	tms pIFG	0.22024074797636498
+de	ppmi_wac_abs_freq_top__7500_words	de tms vertex	0.2240289360069256
+de	ppmi_wac_abs_freq_top__7500_words	de tms pIFG	0.2650487952659975
+de	ppmi_wac_abs_freq_top__7500_words	de tms aIFG	0.28954839162431134
 de	ppmi_wac_abs_freq_random__7500_words	simlex999-sim	0.1709156616304164
 de	ppmi_wac_abs_freq_random__7500_words	ws353	0.3728744520456649
 de	ppmi_wac_abs_freq_random__7500_words	tms aIFG	0.16883359783172958
 de	ppmi_wac_abs_freq_random__7500_words	tms vertex	0.15894331448263818
 de	ppmi_wac_abs_freq_random__7500_words	tms pIFG	0.18389105868960037
+de	ppmi_wac_abs_freq_random__7500_words	de tms vertex	0.1653135000368049
+de	ppmi_wac_abs_freq_random__7500_words	de tms pIFG	0.23430616548406064
+de	ppmi_wac_abs_freq_random__7500_words	de tms aIFG	0.20833202648130458
 de	ppmi_wac_abs_freq_top_rowincol_7500_words	simlex999-sim	0.28365567468274366
 de	ppmi_wac_abs_freq_top_rowincol_7500_words	ws353	0.4142046977039817
 de	ppmi_wac_abs_freq_top_rowincol_7500_words	tms aIFG	0.2273034811156711
@@ -5561,11 +5899,17 @@ de	ppmi_wac_abs_freq_top__10000_words	ws353	0.3862940741942944
 de	ppmi_wac_abs_freq_top__10000_words	tms aIFG	0.24901991734813306
 de	ppmi_wac_abs_freq_top__10000_words	tms vertex	0.20523449177096448
 de	ppmi_wac_abs_freq_top__10000_words	tms pIFG	0.2201675496263335
+de	ppmi_wac_abs_freq_top__10000_words	de tms vertex	0.2260485632204319
+de	ppmi_wac_abs_freq_top__10000_words	de tms pIFG	0.2605664056718917
+de	ppmi_wac_abs_freq_top__10000_words	de tms aIFG	0.2908401042575853
 de	ppmi_wac_abs_freq_random__10000_words	simlex999-sim	0.18938789561670932
 de	ppmi_wac_abs_freq_random__10000_words	ws353	0.39886204760130856
 de	ppmi_wac_abs_freq_random__10000_words	tms aIFG	0.17781124567997428
 de	ppmi_wac_abs_freq_random__10000_words	tms vertex	0.1438546538832378
 de	ppmi_wac_abs_freq_random__10000_words	tms pIFG	0.15622119112040467
+de	ppmi_wac_abs_freq_random__10000_words	de tms vertex	0.1430041614392623
+de	ppmi_wac_abs_freq_random__10000_words	de tms pIFG	0.1948065766819556
+de	ppmi_wac_abs_freq_random__10000_words	de tms aIFG	0.22076726344215186
 de	ppmi_wac_abs_freq_top_rowincol_10000_words	simlex999-sim	0.2795451824276503
 de	ppmi_wac_abs_freq_top_rowincol_10000_words	ws353	0.3954887234685317
 de	ppmi_wac_abs_freq_top_rowincol_10000_words	tms aIFG	0.23528396799459386
@@ -5581,11 +5925,17 @@ de	ppmi_wac_abs_freq_top__12500_words	ws353	0.37858693678737715
 de	ppmi_wac_abs_freq_top__12500_words	tms aIFG	0.2543569931090636
 de	ppmi_wac_abs_freq_top__12500_words	tms vertex	0.20641956394651856
 de	ppmi_wac_abs_freq_top__12500_words	tms pIFG	0.2209100072733705
+de	ppmi_wac_abs_freq_top__12500_words	de tms vertex	0.22395818665989795
+de	ppmi_wac_abs_freq_top__12500_words	de tms pIFG	0.26233242783189487
+de	ppmi_wac_abs_freq_top__12500_words	de tms aIFG	0.29331035965492314
 de	ppmi_wac_abs_freq_random__12500_words	simlex999-sim	0.22168071305680617
 de	ppmi_wac_abs_freq_random__12500_words	ws353	0.4442662541736459
 de	ppmi_wac_abs_freq_random__12500_words	tms aIFG	0.17334352850886708
 de	ppmi_wac_abs_freq_random__12500_words	tms vertex	0.1410884095941066
 de	ppmi_wac_abs_freq_random__12500_words	tms pIFG	0.16490686224415957
+de	ppmi_wac_abs_freq_random__12500_words	de tms vertex	0.14280669477572255
+de	ppmi_wac_abs_freq_random__12500_words	de tms pIFG	0.19939512468575418
+de	ppmi_wac_abs_freq_random__12500_words	de tms aIFG	0.21587206118239813
 de	ppmi_wac_abs_freq_top_rowincol_12500_words	simlex999-sim	0.2732863474788855
 de	ppmi_wac_abs_freq_top_rowincol_12500_words	ws353	0.38488477416645955
 de	ppmi_wac_abs_freq_top_rowincol_12500_words	tms aIFG	0.2412758173574793
@@ -5601,11 +5951,17 @@ de	ppmi_wac_abs_freq_top__15000_words	ws353	0.37512123040957873
 de	ppmi_wac_abs_freq_top__15000_words	tms aIFG	0.256118912884476
 de	ppmi_wac_abs_freq_top__15000_words	tms vertex	0.20867458650114032
 de	ppmi_wac_abs_freq_top__15000_words	tms pIFG	0.22036405513939997
+de	ppmi_wac_abs_freq_top__15000_words	de tms vertex	0.22475822827436748
+de	ppmi_wac_abs_freq_top__15000_words	de tms pIFG	0.26194039075667014
+de	ppmi_wac_abs_freq_top__15000_words	de tms aIFG	0.29712732929781815
 de	ppmi_wac_abs_freq_random__15000_words	simlex999-sim	0.23980363849734196
 de	ppmi_wac_abs_freq_random__15000_words	ws353	0.43570641112718067
 de	ppmi_wac_abs_freq_random__15000_words	tms aIFG	0.1997996448463023
 de	ppmi_wac_abs_freq_random__15000_words	tms vertex	0.16331410349079684
 de	ppmi_wac_abs_freq_random__15000_words	tms pIFG	0.17874222474901147
+de	ppmi_wac_abs_freq_random__15000_words	de tms vertex	0.16607299484331328
+de	ppmi_wac_abs_freq_random__15000_words	de tms pIFG	0.21774467974911668
+de	ppmi_wac_abs_freq_random__15000_words	de tms aIFG	0.23627150551847492
 de	ppmi_wac_abs_freq_top_rowincol_15000_words	simlex999-sim	0.26776872581166894
 de	ppmi_wac_abs_freq_top_rowincol_15000_words	ws353	0.38059576179012544
 de	ppmi_wac_abs_freq_top_rowincol_15000_words	tms aIFG	0.2449808088285093
@@ -5621,11 +5977,17 @@ de	ppmi_wac_abs_freq_top__17500_words	ws353	0.3671687516810823
 de	ppmi_wac_abs_freq_top__17500_words	tms aIFG	0.2585018535779595
 de	ppmi_wac_abs_freq_top__17500_words	tms vertex	0.21060161229589475
 de	ppmi_wac_abs_freq_top__17500_words	tms pIFG	0.22107772048651123
+de	ppmi_wac_abs_freq_top__17500_words	de tms vertex	0.22998212277443814
+de	ppmi_wac_abs_freq_top__17500_words	de tms pIFG	0.2648554815719903
+de	ppmi_wac_abs_freq_top__17500_words	de tms aIFG	0.3003370543315611
 de	ppmi_wac_abs_freq_random__17500_words	simlex999-sim	0.2279997622142077
 de	ppmi_wac_abs_freq_random__17500_words	ws353	0.43328169541142825
 de	ppmi_wac_abs_freq_random__17500_words	tms aIFG	0.20848403126787846
 de	ppmi_wac_abs_freq_random__17500_words	tms vertex	0.1694065865794018
 de	ppmi_wac_abs_freq_random__17500_words	tms pIFG	0.17914697858400921
+de	ppmi_wac_abs_freq_random__17500_words	de tms vertex	0.16586451655325316
+de	ppmi_wac_abs_freq_random__17500_words	de tms pIFG	0.2253042938624832
+de	ppmi_wac_abs_freq_random__17500_words	de tms aIFG	0.24390530797644133
 de	ppmi_wac_abs_freq_top_rowincol_17500_words	simlex999-sim	0.2614315047936078
 de	ppmi_wac_abs_freq_top_rowincol_17500_words	ws353	0.3727965842146885
 de	ppmi_wac_abs_freq_top_rowincol_17500_words	tms aIFG	0.24808322737628422
@@ -5641,11 +6003,17 @@ de	ppmi_wac_abs_freq_top__20000_words	ws353	0.3594803494296311
 de	ppmi_wac_abs_freq_top__20000_words	tms aIFG	0.2594886850301373
 de	ppmi_wac_abs_freq_top__20000_words	tms vertex	0.2104446074792038
 de	ppmi_wac_abs_freq_top__20000_words	tms pIFG	0.2206264905325865
+de	ppmi_wac_abs_freq_top__20000_words	de tms vertex	0.2281911169470215
+de	ppmi_wac_abs_freq_top__20000_words	de tms pIFG	0.2615872549597445
+de	ppmi_wac_abs_freq_top__20000_words	de tms aIFG	0.3002060489950708
 de	ppmi_wac_abs_freq_random__20000_words	simlex999-sim	0.21933736629753406
 de	ppmi_wac_abs_freq_random__20000_words	ws353	0.4375628271271298
 de	ppmi_wac_abs_freq_random__20000_words	tms aIFG	0.21445638603774317
 de	ppmi_wac_abs_freq_random__20000_words	tms vertex	0.1841739147852667
 de	ppmi_wac_abs_freq_random__20000_words	tms pIFG	0.19409565626272504
+de	ppmi_wac_abs_freq_random__20000_words	de tms vertex	0.1810991613101876
+de	ppmi_wac_abs_freq_random__20000_words	de tms pIFG	0.23851992464332109
+de	ppmi_wac_abs_freq_random__20000_words	de tms aIFG	0.2507134919804588
 de	ppmi_wac_abs_freq_top_rowincol_20000_words	simlex999-sim	0.2573244065351904
 de	ppmi_wac_abs_freq_top_rowincol_20000_words	ws353	0.3666304876907086
 de	ppmi_wac_abs_freq_top_rowincol_20000_words	tms aIFG	0.2521181569345084
@@ -5661,11 +6029,17 @@ de	ppmi_wac_abs_freq_top__25000_words	ws353	0.3580349173162546
 de	ppmi_wac_abs_freq_top__25000_words	tms aIFG	0.26378046930278964
 de	ppmi_wac_abs_freq_top__25000_words	tms vertex	0.21562777061856567
 de	ppmi_wac_abs_freq_top__25000_words	tms pIFG	0.22155416265535213
+de	ppmi_wac_abs_freq_top__25000_words	de tms vertex	0.23175647688931852
+de	ppmi_wac_abs_freq_top__25000_words	de tms pIFG	0.26483915140968955
+de	ppmi_wac_abs_freq_top__25000_words	de tms aIFG	0.30431253175478185
 de	ppmi_wac_abs_freq_random__25000_words	simlex999-sim	0.23682007136989253
 de	ppmi_wac_abs_freq_random__25000_words	ws353	0.42816372675157655
 de	ppmi_wac_abs_freq_random__25000_words	tms aIFG	0.2177712704930013
 de	ppmi_wac_abs_freq_random__25000_words	tms vertex	0.18242916767979697
 de	ppmi_wac_abs_freq_random__25000_words	tms pIFG	0.2013958364738954
+de	ppmi_wac_abs_freq_random__25000_words	de tms vertex	0.18000030521843294
+de	ppmi_wac_abs_freq_random__25000_words	de tms pIFG	0.2437173719676697
+de	ppmi_wac_abs_freq_random__25000_words	de tms aIFG	0.2522837578387732
 de	ppmi_wac_abs_freq_top_rowincol_25000_words	simlex999-sim	0.24979721469007427
 de	ppmi_wac_abs_freq_top_rowincol_25000_words	ws353	0.36236407645430174
 de	ppmi_wac_abs_freq_top_rowincol_25000_words	tms aIFG	0.2576653284656856
@@ -5681,11 +6055,17 @@ de	ppmi_tagged_wiki_abs_freq_top__100_words	ws353	0.2703955005010122
 de	ppmi_tagged_wiki_abs_freq_top__100_words	tms aIFG	0.17721830170389133
 de	ppmi_tagged_wiki_abs_freq_top__100_words	tms vertex	0.18042010928946411
 de	ppmi_tagged_wiki_abs_freq_top__100_words	tms pIFG	0.12890914350585142
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms vertex	0.19310877267585588
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms pIFG	0.16984196555955944
+de	ppmi_tagged_wiki_abs_freq_top__100_words	de tms aIFG	0.1964727678435559
 de	ppmi_tagged_wiki_abs_freq_random__100_words	simlex999-sim	0.01570535179718351
 de	ppmi_tagged_wiki_abs_freq_random__100_words	ws353	0.1405246460593963
 de	ppmi_tagged_wiki_abs_freq_random__100_words	tms aIFG	-0.07790668373044607
 de	ppmi_tagged_wiki_abs_freq_random__100_words	tms vertex	-0.017589658686419617
 de	ppmi_tagged_wiki_abs_freq_random__100_words	tms pIFG	0.0005157965046967122
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms vertex	-0.014755925815482124
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms pIFG	-0.014788302735484675
+de	ppmi_tagged_wiki_abs_freq_random__100_words	de tms aIFG	-0.08968314258701426
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	simlex999-sim	0.24693015160033377
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	ws353	0.46928621990459046
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_100_words	tms aIFG	0.23210649953119697
@@ -5701,11 +6081,17 @@ de	ppmi_tagged_wiki_abs_freq_top__200_words	ws353	0.3246084955567972
 de	ppmi_tagged_wiki_abs_freq_top__200_words	tms aIFG	0.17649781877097168
 de	ppmi_tagged_wiki_abs_freq_top__200_words	tms vertex	0.17570739923340217
 de	ppmi_tagged_wiki_abs_freq_top__200_words	tms pIFG	0.13543801531156768
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms vertex	0.18854118760775568
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms pIFG	0.17694097657837954
+de	ppmi_tagged_wiki_abs_freq_top__200_words	de tms aIFG	0.19866377539228786
 de	ppmi_tagged_wiki_abs_freq_random__200_words	simlex999-sim	0.04924112099241906
 de	ppmi_tagged_wiki_abs_freq_random__200_words	ws353	0.10908913216684471
 de	ppmi_tagged_wiki_abs_freq_random__200_words	tms aIFG	-0.036873993155342615
 de	ppmi_tagged_wiki_abs_freq_random__200_words	tms vertex	-0.036987343375691005
 de	ppmi_tagged_wiki_abs_freq_random__200_words	tms pIFG	0.0371514042225725
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms vertex	-0.019874058053994403
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms pIFG	0.038628158892990455
+de	ppmi_tagged_wiki_abs_freq_random__200_words	de tms aIFG	-0.03437637697069265
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	simlex999-sim	0.24459859861547342
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	ws353	0.47038126614933673
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_200_words	tms aIFG	0.23353090111976454
@@ -5721,11 +6107,17 @@ de	ppmi_tagged_wiki_abs_freq_top__500_words	ws353	0.3389802666083748
 de	ppmi_tagged_wiki_abs_freq_top__500_words	tms aIFG	0.1733026777733857
 de	ppmi_tagged_wiki_abs_freq_top__500_words	tms vertex	0.1775477228047496
 de	ppmi_tagged_wiki_abs_freq_top__500_words	tms pIFG	0.14328377970975953
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms vertex	0.19856485061766097
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms pIFG	0.18697485184872864
+de	ppmi_tagged_wiki_abs_freq_top__500_words	de tms aIFG	0.19175689068376653
 de	ppmi_tagged_wiki_abs_freq_random__500_words	simlex999-sim	0.07524312338984858
 de	ppmi_tagged_wiki_abs_freq_random__500_words	ws353	0.14185540757854406
 de	ppmi_tagged_wiki_abs_freq_random__500_words	tms aIFG	-0.029188347503415233
 de	ppmi_tagged_wiki_abs_freq_random__500_words	tms vertex	-0.022154747632263463
 de	ppmi_tagged_wiki_abs_freq_random__500_words	tms pIFG	0.006610462869897554
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms vertex	-0.018642971087299728
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms pIFG	-0.0032485150488443205
+de	ppmi_tagged_wiki_abs_freq_random__500_words	de tms aIFG	-0.028181066507316988
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	simlex999-sim	0.24675250674693544
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	ws353	0.46716404985615806
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_500_words	tms aIFG	0.23524839402974843
@@ -5741,11 +6133,17 @@ de	ppmi_tagged_wiki_abs_freq_top__750_words	ws353	0.33781551048990904
 de	ppmi_tagged_wiki_abs_freq_top__750_words	tms aIFG	0.1806872413668037
 de	ppmi_tagged_wiki_abs_freq_top__750_words	tms vertex	0.18342012428579887
 de	ppmi_tagged_wiki_abs_freq_top__750_words	tms pIFG	0.14842333540950034
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms vertex	0.20663157779847618
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms pIFG	0.19044143407090489
+de	ppmi_tagged_wiki_abs_freq_top__750_words	de tms aIFG	0.20465856123543744
 de	ppmi_tagged_wiki_abs_freq_random__750_words	simlex999-sim	0.06173749312769481
 de	ppmi_tagged_wiki_abs_freq_random__750_words	ws353	0.17990997255094032
 de	ppmi_tagged_wiki_abs_freq_random__750_words	tms aIFG	-0.022333166888712872
 de	ppmi_tagged_wiki_abs_freq_random__750_words	tms vertex	-0.01676860157261343
 de	ppmi_tagged_wiki_abs_freq_random__750_words	tms pIFG	-0.03244699584979798
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms vertex	-0.013086723613435748
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms pIFG	-0.0363847854937535
+de	ppmi_tagged_wiki_abs_freq_random__750_words	de tms aIFG	-0.02927688874257024
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	simlex999-sim	0.25027699336623915
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	ws353	0.4612866462840447
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_750_words	tms aIFG	0.235518679060502
@@ -5761,11 +6159,17 @@ de	ppmi_tagged_wiki_abs_freq_top__1000_words	ws353	0.3498446073004262
 de	ppmi_tagged_wiki_abs_freq_top__1000_words	tms aIFG	0.18817840573849234
 de	ppmi_tagged_wiki_abs_freq_top__1000_words	tms vertex	0.18947387529863208
 de	ppmi_tagged_wiki_abs_freq_top__1000_words	tms pIFG	0.1632755952860819
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms vertex	0.21737030946327543
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms pIFG	0.20517003241203632
+de	ppmi_tagged_wiki_abs_freq_top__1000_words	de tms aIFG	0.21396982497720704
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	simlex999-sim	0.056416176057186754
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	ws353	0.24745763585267988
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	tms aIFG	-0.0076328221060926555
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	tms vertex	0.008260034231396153
 de	ppmi_tagged_wiki_abs_freq_random__1000_words	tms pIFG	-0.01570098982354376
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms vertex	-0.004807923746106224
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms pIFG	-0.02193473864210733
+de	ppmi_tagged_wiki_abs_freq_random__1000_words	de tms aIFG	-0.006699434298588782
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	simlex999-sim	0.25466961238324015
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	ws353	0.4594490030162253
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_1000_words	tms aIFG	0.23549195572936896
@@ -5781,11 +6185,17 @@ de	ppmi_tagged_wiki_abs_freq_top__2500_words	ws353	0.36605158421165135
 de	ppmi_tagged_wiki_abs_freq_top__2500_words	tms aIFG	0.1942824358358993
 de	ppmi_tagged_wiki_abs_freq_top__2500_words	tms vertex	0.19177960593761528
 de	ppmi_tagged_wiki_abs_freq_top__2500_words	tms pIFG	0.16943903377189704
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms vertex	0.22125742000049065
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms pIFG	0.20982698673090752
+de	ppmi_tagged_wiki_abs_freq_top__2500_words	de tms aIFG	0.2263203867954738
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	simlex999-sim	0.13463579997387465
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	ws353	0.31382388752072016
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	tms aIFG	0.08433884431736449
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	tms vertex	0.11708463051643318
 de	ppmi_tagged_wiki_abs_freq_random__2500_words	tms pIFG	0.07182152614944577
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms vertex	0.11389325526086187
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms pIFG	0.08427067604576521
+de	ppmi_tagged_wiki_abs_freq_random__2500_words	de tms aIFG	0.10402988050101865
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	simlex999-sim	0.2643877651317074
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	ws353	0.42399251381959074
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_2500_words	tms aIFG	0.23833888661043018
@@ -5801,11 +6211,17 @@ de	ppmi_tagged_wiki_abs_freq_top__5000_words	ws353	0.36672690876917696
 de	ppmi_tagged_wiki_abs_freq_top__5000_words	tms aIFG	0.20940835244330894
 de	ppmi_tagged_wiki_abs_freq_top__5000_words	tms vertex	0.2043284823471672
 de	ppmi_tagged_wiki_abs_freq_top__5000_words	tms pIFG	0.18042262843905946
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms vertex	0.22381941218100024
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms pIFG	0.21572306466951863
+de	ppmi_tagged_wiki_abs_freq_top__5000_words	de tms aIFG	0.24024341483349673
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	simlex999-sim	0.19202759467373692
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	ws353	0.33520399694126457
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	tms aIFG	0.20917504843927312
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	tms vertex	0.2141194617617404
 de	ppmi_tagged_wiki_abs_freq_random__5000_words	tms pIFG	0.15760281188174768
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms vertex	0.2163221556529799
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms pIFG	0.20132280715879616
+de	ppmi_tagged_wiki_abs_freq_random__5000_words	de tms aIFG	0.23679677284902315
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	simlex999-sim	0.26632798123250784
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	ws353	0.3969112840897481
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_5000_words	tms aIFG	0.23690336518448982
@@ -5821,11 +6237,17 @@ de	ppmi_tagged_wiki_abs_freq_top__7500_words	ws353	0.3515087071063984
 de	ppmi_tagged_wiki_abs_freq_top__7500_words	tms aIFG	0.22125690099759965
 de	ppmi_tagged_wiki_abs_freq_top__7500_words	tms vertex	0.21406130761069983
 de	ppmi_tagged_wiki_abs_freq_top__7500_words	tms pIFG	0.18942328588241597
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms vertex	0.23063473991200148
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms pIFG	0.22525726387559863
+de	ppmi_tagged_wiki_abs_freq_top__7500_words	de tms aIFG	0.25455426646272755
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	simlex999-sim	0.2081911060229708
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	ws353	0.3385885725190713
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	tms aIFG	0.24802362626062424
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	tms vertex	0.24791940310473679
 de	ppmi_tagged_wiki_abs_freq_random__7500_words	tms pIFG	0.1786304637643319
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms vertex	0.24364670150572823
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms pIFG	0.20931487811510066
+de	ppmi_tagged_wiki_abs_freq_random__7500_words	de tms aIFG	0.2808236141776009
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	simlex999-sim	0.26037718385305547
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	ws353	0.37629747320352397
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_7500_words	tms aIFG	0.23945972372141824
@@ -5841,11 +6263,17 @@ de	ppmi_tagged_wiki_abs_freq_top__10000_words	ws353	0.3458144341349423
 de	ppmi_tagged_wiki_abs_freq_top__10000_words	tms aIFG	0.23152357185045325
 de	ppmi_tagged_wiki_abs_freq_top__10000_words	tms vertex	0.21804966403821663
 de	ppmi_tagged_wiki_abs_freq_top__10000_words	tms pIFG	0.19809047880412262
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms vertex	0.23504980297949196
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms pIFG	0.23454639175980532
+de	ppmi_tagged_wiki_abs_freq_top__10000_words	de tms aIFG	0.2647142646075091
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	simlex999-sim	0.21181898767322752
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	ws353	0.3659269300341492
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	tms aIFG	0.2463649379996819
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	tms vertex	0.23413109090060988
 de	ppmi_tagged_wiki_abs_freq_random__10000_words	tms pIFG	0.18957973703252226
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms vertex	0.2288634642385371
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms pIFG	0.21354585171934495
+de	ppmi_tagged_wiki_abs_freq_random__10000_words	de tms aIFG	0.27699014522987814
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	simlex999-sim	0.2550486499782104
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	ws353	0.36337254764285304
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_10000_words	tms aIFG	0.2427199731990856
@@ -5861,11 +6289,17 @@ de	ppmi_tagged_wiki_abs_freq_top__12500_words	ws353	0.3386206676560639
 de	ppmi_tagged_wiki_abs_freq_top__12500_words	tms aIFG	0.23503589766366909
 de	ppmi_tagged_wiki_abs_freq_top__12500_words	tms vertex	0.21855643325004437
 de	ppmi_tagged_wiki_abs_freq_top__12500_words	tms pIFG	0.20088392729401372
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms vertex	0.2362127398462199
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms pIFG	0.23470110488343943
+de	ppmi_tagged_wiki_abs_freq_top__12500_words	de tms aIFG	0.26731496616256306
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	simlex999-sim	0.21661826249548147
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	ws353	0.3695874546082659
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	tms aIFG	0.25460252733921074
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	tms vertex	0.23412028035785107
 de	ppmi_tagged_wiki_abs_freq_random__12500_words	tms pIFG	0.1970856865757945
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms vertex	0.2327230326217408
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms pIFG	0.21911877165542248
+de	ppmi_tagged_wiki_abs_freq_random__12500_words	de tms aIFG	0.28509749727153283
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	simlex999-sim	0.25170078218924474
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	ws353	0.35400542554393005
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_12500_words	tms aIFG	0.24288985635287877
@@ -5881,11 +6315,17 @@ de	ppmi_tagged_wiki_abs_freq_top__15000_words	ws353	0.33436901533468305
 de	ppmi_tagged_wiki_abs_freq_top__15000_words	tms aIFG	0.24167752924788713
 de	ppmi_tagged_wiki_abs_freq_top__15000_words	tms vertex	0.2193220015641569
 de	ppmi_tagged_wiki_abs_freq_top__15000_words	tms pIFG	0.20178328550877375
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms vertex	0.23665654287761648
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms pIFG	0.23390242186388616
+de	ppmi_tagged_wiki_abs_freq_top__15000_words	de tms aIFG	0.270234269513143
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	simlex999-sim	0.2257144794332482
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	ws353	0.38885628179832943
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	tms aIFG	0.2691606215454552
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	tms vertex	0.23657686630011895
 de	ppmi_tagged_wiki_abs_freq_random__15000_words	tms pIFG	0.21106400662561425
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms vertex	0.24160465480897883
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms pIFG	0.24554526599224083
+de	ppmi_tagged_wiki_abs_freq_random__15000_words	de tms aIFG	0.30909896846289653
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	simlex999-sim	0.2472979094354578
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	ws353	0.3453773256027613
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_15000_words	tms aIFG	0.24560685974060448
@@ -5901,11 +6341,17 @@ de	ppmi_tagged_wiki_abs_freq_top__17500_words	ws353	0.3273985154443611
 de	ppmi_tagged_wiki_abs_freq_top__17500_words	tms aIFG	0.24066434300227693
 de	ppmi_tagged_wiki_abs_freq_top__17500_words	tms vertex	0.21853067714361943
 de	ppmi_tagged_wiki_abs_freq_top__17500_words	tms pIFG	0.19975550320922564
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms vertex	0.23574640665390983
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms pIFG	0.23491515101159716
+de	ppmi_tagged_wiki_abs_freq_top__17500_words	de tms aIFG	0.2666087828656584
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	simlex999-sim	0.23292040067449424
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	ws353	0.38595055304937875
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	tms aIFG	0.25690129047461574
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	tms vertex	0.22195959243139526
 de	ppmi_tagged_wiki_abs_freq_random__17500_words	tms pIFG	0.19563850905267482
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms vertex	0.2236419455162619
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms pIFG	0.23209975995559332
+de	ppmi_tagged_wiki_abs_freq_random__17500_words	de tms aIFG	0.2946949897058095
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	simlex999-sim	0.24356191920176667
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	ws353	0.3382782930548352
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_17500_words	tms aIFG	0.24384355100662913
@@ -5921,11 +6367,17 @@ de	ppmi_tagged_wiki_abs_freq_top__20000_words	ws353	0.3244742756134584
 de	ppmi_tagged_wiki_abs_freq_top__20000_words	tms aIFG	0.2406454260371755
 de	ppmi_tagged_wiki_abs_freq_top__20000_words	tms vertex	0.21783670920789977
 de	ppmi_tagged_wiki_abs_freq_top__20000_words	tms pIFG	0.1977871159887884
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms vertex	0.23682345037887512
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms pIFG	0.2345937282094969
+de	ppmi_tagged_wiki_abs_freq_top__20000_words	de tms aIFG	0.26723977549722494
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	simlex999-sim	0.22921686648925804
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	ws353	0.37475581137051395
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	tms aIFG	0.25452128490972087
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	tms vertex	0.2342933788505595
 de	ppmi_tagged_wiki_abs_freq_random__20000_words	tms pIFG	0.19817856686738464
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms vertex	0.2370538020125259
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms pIFG	0.23111716958876413
+de	ppmi_tagged_wiki_abs_freq_random__20000_words	de tms aIFG	0.29211275963321254
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	simlex999-sim	0.24033873918989204
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	ws353	0.3315356095816574
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_20000_words	tms aIFG	0.24389652343600812
@@ -5941,11 +6393,17 @@ de	ppmi_tagged_wiki_abs_freq_top__25000_words	ws353	0.3130715927031485
 de	ppmi_tagged_wiki_abs_freq_top__25000_words	tms aIFG	0.24743312750949742
 de	ppmi_tagged_wiki_abs_freq_top__25000_words	tms vertex	0.2215392355240152
 de	ppmi_tagged_wiki_abs_freq_top__25000_words	tms pIFG	0.20366443927764166
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms vertex	0.24133477545382775
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms pIFG	0.23791977241451046
+de	ppmi_tagged_wiki_abs_freq_top__25000_words	de tms aIFG	0.27422470749383954
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	simlex999-sim	0.2267333552135953
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	ws353	0.3774768031918923
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	tms aIFG	0.24981837111889987
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	tms vertex	0.2298867191427179
 de	ppmi_tagged_wiki_abs_freq_random__25000_words	tms pIFG	0.18665645969318762
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms vertex	0.22930406679544674
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms pIFG	0.2212417533317311
+de	ppmi_tagged_wiki_abs_freq_random__25000_words	de tms aIFG	0.29205553064917633
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	simlex999-sim	0.23777547383264683
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	ws353	0.3206932055631541
 de	ppmi_tagged_wiki_abs_freq_top_rowincol_25000_words	tms aIFG	0.24840603167461078
@@ -5961,11 +6419,17 @@ de	ppmi_opensubs_abs_freq_top__100_words	ws353	0.2471476858698835
 de	ppmi_opensubs_abs_freq_top__100_words	tms aIFG	0.14254985636379336
 de	ppmi_opensubs_abs_freq_top__100_words	tms vertex	0.1209786813595626
 de	ppmi_opensubs_abs_freq_top__100_words	tms pIFG	0.12470068218475319
+de	ppmi_opensubs_abs_freq_top__100_words	de tms vertex	0.12669369064831318
+de	ppmi_opensubs_abs_freq_top__100_words	de tms pIFG	0.17355744774167195
+de	ppmi_opensubs_abs_freq_top__100_words	de tms aIFG	0.18251994918838502
 de	ppmi_opensubs_abs_freq_random__100_words	simlex999-sim	0.021883825567813226
 de	ppmi_opensubs_abs_freq_random__100_words	ws353	-0.03681768259114861
 de	ppmi_opensubs_abs_freq_random__100_words	tms aIFG	-0.1269624347214239
 de	ppmi_opensubs_abs_freq_random__100_words	tms vertex	-0.1742255139484089
 de	ppmi_opensubs_abs_freq_random__100_words	tms pIFG	-0.17262887967229928
+de	ppmi_opensubs_abs_freq_random__100_words	de tms vertex	-0.19817318660468794
+de	ppmi_opensubs_abs_freq_random__100_words	de tms pIFG	-0.20459642654028912
+de	ppmi_opensubs_abs_freq_random__100_words	de tms aIFG	-0.1558100872512115
 de	ppmi_opensubs_abs_freq_top_rowincol_100_words	simlex999-sim	0.22761538231862022
 de	ppmi_opensubs_abs_freq_top_rowincol_100_words	ws353	0.4711151127998365
 de	ppmi_opensubs_abs_freq_top_rowincol_100_words	tms aIFG	0.1748247860296181
@@ -5981,11 +6445,17 @@ de	ppmi_opensubs_abs_freq_top__200_words	ws353	0.3816981061455987
 de	ppmi_opensubs_abs_freq_top__200_words	tms aIFG	0.18751970684149022
 de	ppmi_opensubs_abs_freq_top__200_words	tms vertex	0.15184912257402355
 de	ppmi_opensubs_abs_freq_top__200_words	tms pIFG	0.16040233144656726
+de	ppmi_opensubs_abs_freq_top__200_words	de tms vertex	0.16200679038890775
+de	ppmi_opensubs_abs_freq_top__200_words	de tms pIFG	0.20683093137343284
+de	ppmi_opensubs_abs_freq_top__200_words	de tms aIFG	0.2448572346050529
 de	ppmi_opensubs_abs_freq_random__200_words	simlex999-sim	0.06778993807201991
 de	ppmi_opensubs_abs_freq_random__200_words	ws353	-0.06363668540955777
 de	ppmi_opensubs_abs_freq_random__200_words	tms aIFG	-0.13867189416433767
 de	ppmi_opensubs_abs_freq_random__200_words	tms vertex	-0.16630311720507948
 de	ppmi_opensubs_abs_freq_random__200_words	tms pIFG	-0.14606480316985862
+de	ppmi_opensubs_abs_freq_random__200_words	de tms vertex	-0.18673584983042046
+de	ppmi_opensubs_abs_freq_random__200_words	de tms pIFG	-0.17292690149635015
+de	ppmi_opensubs_abs_freq_random__200_words	de tms aIFG	-0.1508506763226964
 de	ppmi_opensubs_abs_freq_top_rowincol_200_words	simlex999-sim	0.23253516281727443
 de	ppmi_opensubs_abs_freq_top_rowincol_200_words	ws353	0.48080204194604803
 de	ppmi_opensubs_abs_freq_top_rowincol_200_words	tms aIFG	0.17853631869115047
@@ -6001,11 +6471,17 @@ de	ppmi_opensubs_abs_freq_top__500_words	ws353	0.3715641238207914
 de	ppmi_opensubs_abs_freq_top__500_words	tms aIFG	0.20347189024375006
 de	ppmi_opensubs_abs_freq_top__500_words	tms vertex	0.1535402935599917
 de	ppmi_opensubs_abs_freq_top__500_words	tms pIFG	0.17360222994691032
+de	ppmi_opensubs_abs_freq_top__500_words	de tms vertex	0.1625186473787776
+de	ppmi_opensubs_abs_freq_top__500_words	de tms pIFG	0.20671314543662128
+de	ppmi_opensubs_abs_freq_top__500_words	de tms aIFG	0.2640111575753121
 de	ppmi_opensubs_abs_freq_random__500_words	simlex999-sim	0.06869278028039721
 de	ppmi_opensubs_abs_freq_random__500_words	ws353	0.026756794814214172
 de	ppmi_opensubs_abs_freq_random__500_words	tms aIFG	-0.05242428750756216
 de	ppmi_opensubs_abs_freq_random__500_words	tms vertex	-0.04490461385730135
 de	ppmi_opensubs_abs_freq_random__500_words	tms pIFG	-0.012991081152464905
+de	ppmi_opensubs_abs_freq_random__500_words	de tms vertex	-0.047794769644289054
+de	ppmi_opensubs_abs_freq_random__500_words	de tms pIFG	-0.01891107406411649
+de	ppmi_opensubs_abs_freq_random__500_words	de tms aIFG	-0.06441509352025876
 de	ppmi_opensubs_abs_freq_top_rowincol_500_words	simlex999-sim	0.24302340766450373
 de	ppmi_opensubs_abs_freq_top_rowincol_500_words	ws353	0.46815993123899824
 de	ppmi_opensubs_abs_freq_top_rowincol_500_words	tms aIFG	0.18974884756124633
@@ -6021,11 +6497,17 @@ de	ppmi_opensubs_abs_freq_top__750_words	ws353	0.36774140736384636
 de	ppmi_opensubs_abs_freq_top__750_words	tms aIFG	0.19160906986803125
 de	ppmi_opensubs_abs_freq_top__750_words	tms vertex	0.15360187248185067
 de	ppmi_opensubs_abs_freq_top__750_words	tms pIFG	0.16604000640883296
+de	ppmi_opensubs_abs_freq_top__750_words	de tms vertex	0.1723673061741932
+de	ppmi_opensubs_abs_freq_top__750_words	de tms pIFG	0.20415465175417752
+de	ppmi_opensubs_abs_freq_top__750_words	de tms aIFG	0.2461990142106015
 de	ppmi_opensubs_abs_freq_random__750_words	simlex999-sim	0.07269996555844534
 de	ppmi_opensubs_abs_freq_random__750_words	ws353	0.08179277963852924
 de	ppmi_opensubs_abs_freq_random__750_words	tms aIFG	-0.041171490120110905
 de	ppmi_opensubs_abs_freq_random__750_words	tms vertex	-0.03688266291822465
 de	ppmi_opensubs_abs_freq_random__750_words	tms pIFG	-0.020779096449703494
+de	ppmi_opensubs_abs_freq_random__750_words	de tms vertex	-0.04048858664186053
+de	ppmi_opensubs_abs_freq_random__750_words	de tms pIFG	-0.038104552661554006
+de	ppmi_opensubs_abs_freq_random__750_words	de tms aIFG	-0.05117895533298169
 de	ppmi_opensubs_abs_freq_top_rowincol_750_words	simlex999-sim	0.24116853008665273
 de	ppmi_opensubs_abs_freq_top_rowincol_750_words	ws353	0.45817108192385664
 de	ppmi_opensubs_abs_freq_top_rowincol_750_words	tms aIFG	0.19945882642678822
@@ -6041,11 +6523,17 @@ de	ppmi_opensubs_abs_freq_top__1000_words	ws353	0.38218711426274865
 de	ppmi_opensubs_abs_freq_top__1000_words	tms aIFG	0.19818823623728654
 de	ppmi_opensubs_abs_freq_top__1000_words	tms vertex	0.1694662791811947
 de	ppmi_opensubs_abs_freq_top__1000_words	tms pIFG	0.18106522685794194
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms vertex	0.18921480668677926
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms pIFG	0.21679303531614658
+de	ppmi_opensubs_abs_freq_top__1000_words	de tms aIFG	0.24415590549943
 de	ppmi_opensubs_abs_freq_random__1000_words	simlex999-sim	0.08148353747135668
 de	ppmi_opensubs_abs_freq_random__1000_words	ws353	0.15787583103434238
 de	ppmi_opensubs_abs_freq_random__1000_words	tms aIFG	0.01801963456056641
 de	ppmi_opensubs_abs_freq_random__1000_words	tms vertex	0.008829617145064394
 de	ppmi_opensubs_abs_freq_random__1000_words	tms pIFG	0.048690739555490234
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms vertex	0.021163072790811067
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms pIFG	0.016496462127901266
+de	ppmi_opensubs_abs_freq_random__1000_words	de tms aIFG	0.022269448101507373
 de	ppmi_opensubs_abs_freq_top_rowincol_1000_words	simlex999-sim	0.2254574708160436
 de	ppmi_opensubs_abs_freq_top_rowincol_1000_words	ws353	0.45827037527843534
 de	ppmi_opensubs_abs_freq_top_rowincol_1000_words	tms aIFG	0.21195030822461083
@@ -6061,11 +6549,17 @@ de	ppmi_opensubs_abs_freq_top__2500_words	ws353	0.4084159433489661
 de	ppmi_opensubs_abs_freq_top__2500_words	tms aIFG	0.19901424742494986
 de	ppmi_opensubs_abs_freq_top__2500_words	tms vertex	0.18419262954798138
 de	ppmi_opensubs_abs_freq_top__2500_words	tms pIFG	0.1856690624406239
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms vertex	0.2068216541002271
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms pIFG	0.2193760525408937
+de	ppmi_opensubs_abs_freq_top__2500_words	de tms aIFG	0.24430174757570933
 de	ppmi_opensubs_abs_freq_random__2500_words	simlex999-sim	0.08239418603405785
 de	ppmi_opensubs_abs_freq_random__2500_words	ws353	0.29187006795128123
 de	ppmi_opensubs_abs_freq_random__2500_words	tms aIFG	0.007294453603228624
 de	ppmi_opensubs_abs_freq_random__2500_words	tms vertex	0.013961496967376119
 de	ppmi_opensubs_abs_freq_random__2500_words	tms pIFG	0.03373194265410186
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms vertex	0.024183345659338835
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms pIFG	0.027959029294215815
+de	ppmi_opensubs_abs_freq_random__2500_words	de tms aIFG	0.01553429061011792
 de	ppmi_opensubs_abs_freq_top_rowincol_2500_words	simlex999-sim	0.20523514319984232
 de	ppmi_opensubs_abs_freq_top_rowincol_2500_words	ws353	0.44374837254682864
 de	ppmi_opensubs_abs_freq_top_rowincol_2500_words	tms aIFG	0.2260819500180327
@@ -6081,11 +6575,17 @@ de	ppmi_opensubs_abs_freq_top__5000_words	ws353	0.4092300245455815
 de	ppmi_opensubs_abs_freq_top__5000_words	tms aIFG	0.22068427986273279
 de	ppmi_opensubs_abs_freq_top__5000_words	tms vertex	0.19792526595637513
 de	ppmi_opensubs_abs_freq_top__5000_words	tms pIFG	0.19849555607144476
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms vertex	0.22347292610144692
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms pIFG	0.22543575071449515
+de	ppmi_opensubs_abs_freq_top__5000_words	de tms aIFG	0.2634627230456416
 de	ppmi_opensubs_abs_freq_random__5000_words	simlex999-sim	0.16056636140226657
 de	ppmi_opensubs_abs_freq_random__5000_words	ws353	0.34962728272184845
 de	ppmi_opensubs_abs_freq_random__5000_words	tms aIFG	0.1556711230649715
 de	ppmi_opensubs_abs_freq_random__5000_words	tms vertex	0.1501961295630449
 de	ppmi_opensubs_abs_freq_random__5000_words	tms pIFG	0.11387970602893412
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms vertex	0.1864286841774688
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms pIFG	0.1527322233394751
+de	ppmi_opensubs_abs_freq_random__5000_words	de tms aIFG	0.22024196671013843
 de	ppmi_opensubs_abs_freq_top_rowincol_5000_words	simlex999-sim	0.18826558634804946
 de	ppmi_opensubs_abs_freq_top_rowincol_5000_words	ws353	0.42721579592650166
 de	ppmi_opensubs_abs_freq_top_rowincol_5000_words	tms aIFG	0.24026345212355252
@@ -6101,11 +6601,17 @@ de	ppmi_opensubs_abs_freq_top__7500_words	ws353	0.41226274504841454
 de	ppmi_opensubs_abs_freq_top__7500_words	tms aIFG	0.22703554485156122
 de	ppmi_opensubs_abs_freq_top__7500_words	tms vertex	0.20961873434035314
 de	ppmi_opensubs_abs_freq_top__7500_words	tms pIFG	0.20976781920393642
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms vertex	0.23072657873361582
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms pIFG	0.23298759352883613
+de	ppmi_opensubs_abs_freq_top__7500_words	de tms aIFG	0.2704577810321323
 de	ppmi_opensubs_abs_freq_random__7500_words	simlex999-sim	0.163130350611023
 de	ppmi_opensubs_abs_freq_random__7500_words	ws353	0.3585605300946232
 de	ppmi_opensubs_abs_freq_random__7500_words	tms aIFG	0.1934731386223867
 de	ppmi_opensubs_abs_freq_random__7500_words	tms vertex	0.17722485917049147
 de	ppmi_opensubs_abs_freq_random__7500_words	tms pIFG	0.13369554335253847
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms vertex	0.20226126884887763
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms pIFG	0.18071855968265613
+de	ppmi_opensubs_abs_freq_random__7500_words	de tms aIFG	0.25293779017494566
 de	ppmi_opensubs_abs_freq_top_rowincol_7500_words	simlex999-sim	0.1774418542584977
 de	ppmi_opensubs_abs_freq_top_rowincol_7500_words	ws353	0.4223393889571976
 de	ppmi_opensubs_abs_freq_top_rowincol_7500_words	tms aIFG	0.24053764073319303
@@ -6121,11 +6627,17 @@ de	ppmi_opensubs_abs_freq_top__10000_words	ws353	0.42070066013499763
 de	ppmi_opensubs_abs_freq_top__10000_words	tms aIFG	0.23359047875789551
 de	ppmi_opensubs_abs_freq_top__10000_words	tms vertex	0.21653639081164971
 de	ppmi_opensubs_abs_freq_top__10000_words	tms pIFG	0.21563413010518084
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms vertex	0.23316623720953888
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms pIFG	0.24041543596054488
+de	ppmi_opensubs_abs_freq_top__10000_words	de tms aIFG	0.2804163585981962
 de	ppmi_opensubs_abs_freq_random__10000_words	simlex999-sim	0.16421308343484672
 de	ppmi_opensubs_abs_freq_random__10000_words	ws353	0.41920787472064913
 de	ppmi_opensubs_abs_freq_random__10000_words	tms aIFG	0.19393631568497383
 de	ppmi_opensubs_abs_freq_random__10000_words	tms vertex	0.20060807575485556
 de	ppmi_opensubs_abs_freq_random__10000_words	tms pIFG	0.14460790548267088
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms vertex	0.2085618185073251
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms pIFG	0.18448423571017403
+de	ppmi_opensubs_abs_freq_random__10000_words	de tms aIFG	0.24849166609651824
 de	ppmi_opensubs_abs_freq_top_rowincol_10000_words	simlex999-sim	0.17017192201992734
 de	ppmi_opensubs_abs_freq_top_rowincol_10000_words	ws353	0.4270868233376124
 de	ppmi_opensubs_abs_freq_top_rowincol_10000_words	tms aIFG	0.24155046763776963
@@ -6141,11 +6653,17 @@ de	ppmi_opensubs_abs_freq_top__12500_words	ws353	0.42209061171043655
 de	ppmi_opensubs_abs_freq_top__12500_words	tms aIFG	0.24514396403308286
 de	ppmi_opensubs_abs_freq_top__12500_words	tms vertex	0.22620640376381482
 de	ppmi_opensubs_abs_freq_top__12500_words	tms pIFG	0.22608443708173548
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms vertex	0.2413266963285223
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms pIFG	0.2546140499473343
+de	ppmi_opensubs_abs_freq_top__12500_words	de tms aIFG	0.29379114983617355
 de	ppmi_opensubs_abs_freq_random__12500_words	simlex999-sim	0.1872777005735897
 de	ppmi_opensubs_abs_freq_random__12500_words	ws353	0.46723603229857774
 de	ppmi_opensubs_abs_freq_random__12500_words	tms aIFG	0.1868102209429185
 de	ppmi_opensubs_abs_freq_random__12500_words	tms vertex	0.2194614197586737
 de	ppmi_opensubs_abs_freq_random__12500_words	tms pIFG	0.153693357814241
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms vertex	0.2171538854417326
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms pIFG	0.18839280543368264
+de	ppmi_opensubs_abs_freq_random__12500_words	de tms aIFG	0.2407295976580117
 de	ppmi_opensubs_abs_freq_top_rowincol_12500_words	simlex999-sim	0.1632425352830976
 de	ppmi_opensubs_abs_freq_top_rowincol_12500_words	ws353	0.426235448862282
 de	ppmi_opensubs_abs_freq_top_rowincol_12500_words	tms aIFG	0.24788240477074608
@@ -6161,11 +6679,17 @@ de	ppmi_opensubs_abs_freq_top__15000_words	ws353	0.4269907931449214
 de	ppmi_opensubs_abs_freq_top__15000_words	tms aIFG	0.24540222224905986
 de	ppmi_opensubs_abs_freq_top__15000_words	tms vertex	0.22930308107015634
 de	ppmi_opensubs_abs_freq_top__15000_words	tms pIFG	0.22362797767322048
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms vertex	0.24206464311819642
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms pIFG	0.2516296412905507
+de	ppmi_opensubs_abs_freq_top__15000_words	de tms aIFG	0.29756727288816387
 de	ppmi_opensubs_abs_freq_random__15000_words	simlex999-sim	0.18289002901092483
 de	ppmi_opensubs_abs_freq_random__15000_words	ws353	0.47064892856301344
 de	ppmi_opensubs_abs_freq_random__15000_words	tms aIFG	0.20202268269446144
 de	ppmi_opensubs_abs_freq_random__15000_words	tms vertex	0.22252284153957694
 de	ppmi_opensubs_abs_freq_random__15000_words	tms pIFG	0.1641178740803359
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms vertex	0.22384347534051177
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms pIFG	0.1970973468257805
+de	ppmi_opensubs_abs_freq_random__15000_words	de tms aIFG	0.2514249622854826
 de	ppmi_opensubs_abs_freq_top_rowincol_15000_words	simlex999-sim	0.16718894047916638
 de	ppmi_opensubs_abs_freq_top_rowincol_15000_words	ws353	0.42926288615063046
 de	ppmi_opensubs_abs_freq_top_rowincol_15000_words	tms aIFG	0.250574025030901
@@ -6181,11 +6705,17 @@ de	ppmi_opensubs_abs_freq_top__17500_words	ws353	0.43697917629407895
 de	ppmi_opensubs_abs_freq_top__17500_words	tms aIFG	0.2549332787496901
 de	ppmi_opensubs_abs_freq_top__17500_words	tms vertex	0.2373148927960966
 de	ppmi_opensubs_abs_freq_top__17500_words	tms pIFG	0.2297943538509167
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms vertex	0.2525262792813508
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms pIFG	0.2618666888948656
+de	ppmi_opensubs_abs_freq_top__17500_words	de tms aIFG	0.31305268657981133
 de	ppmi_opensubs_abs_freq_random__17500_words	simlex999-sim	0.1915387950396117
 de	ppmi_opensubs_abs_freq_random__17500_words	ws353	0.45857751427297294
 de	ppmi_opensubs_abs_freq_random__17500_words	tms aIFG	0.2060329112992325
 de	ppmi_opensubs_abs_freq_random__17500_words	tms vertex	0.21788076264517772
 de	ppmi_opensubs_abs_freq_random__17500_words	tms pIFG	0.17684808402762014
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms vertex	0.21861135476370847
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms pIFG	0.20584232498677626
+de	ppmi_opensubs_abs_freq_random__17500_words	de tms aIFG	0.25448612558228373
 de	ppmi_opensubs_abs_freq_top_rowincol_17500_words	simlex999-sim	0.1701404051727834
 de	ppmi_opensubs_abs_freq_top_rowincol_17500_words	ws353	0.4379206761929704
 de	ppmi_opensubs_abs_freq_top_rowincol_17500_words	tms aIFG	0.25624187325776937
@@ -6201,11 +6731,17 @@ de	ppmi_opensubs_abs_freq_top__20000_words	ws353	0.4461478842548139
 de	ppmi_opensubs_abs_freq_top__20000_words	tms aIFG	0.25196928036961347
 de	ppmi_opensubs_abs_freq_top__20000_words	tms vertex	0.23702967706171915
 de	ppmi_opensubs_abs_freq_top__20000_words	tms pIFG	0.23407246014793665
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms vertex	0.2513801009838586
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms pIFG	0.264253623280146
+de	ppmi_opensubs_abs_freq_top__20000_words	de tms aIFG	0.3078905069290763
 de	ppmi_opensubs_abs_freq_random__20000_words	simlex999-sim	0.19374939172602207
 de	ppmi_opensubs_abs_freq_random__20000_words	ws353	0.4556313406766192
 de	ppmi_opensubs_abs_freq_random__20000_words	tms aIFG	0.2341751218829526
 de	ppmi_opensubs_abs_freq_random__20000_words	tms vertex	0.23419986453528516
 de	ppmi_opensubs_abs_freq_random__20000_words	tms pIFG	0.20171994164507628
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms vertex	0.24217184880020984
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms pIFG	0.23838801684414584
+de	ppmi_opensubs_abs_freq_random__20000_words	de tms aIFG	0.2865647149352713
 de	ppmi_opensubs_abs_freq_top_rowincol_20000_words	simlex999-sim	0.17425380547313732
 de	ppmi_opensubs_abs_freq_top_rowincol_20000_words	ws353	0.4481060921646721
 de	ppmi_opensubs_abs_freq_top_rowincol_20000_words	tms aIFG	0.2541481616393267
@@ -6221,11 +6757,17 @@ de	ppmi_opensubs_abs_freq_top__25000_words	ws353	0.4514932542039586
 de	ppmi_opensubs_abs_freq_top__25000_words	tms aIFG	0.25027353802033586
 de	ppmi_opensubs_abs_freq_top__25000_words	tms vertex	0.2322549105622918
 de	ppmi_opensubs_abs_freq_top__25000_words	tms pIFG	0.23132107472929786
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms vertex	0.24436673964066846
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms pIFG	0.2641142070168283
+de	ppmi_opensubs_abs_freq_top__25000_words	de tms aIFG	0.3111855224652622
 de	ppmi_opensubs_abs_freq_random__25000_words	simlex999-sim	0.18407008555510584
 de	ppmi_opensubs_abs_freq_random__25000_words	ws353	0.4584023002518895
 de	ppmi_opensubs_abs_freq_random__25000_words	tms aIFG	0.24084835392557213
 de	ppmi_opensubs_abs_freq_random__25000_words	tms vertex	0.23024109711326585
 de	ppmi_opensubs_abs_freq_random__25000_words	tms pIFG	0.2192398481755792
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms vertex	0.24217293434044734
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms pIFG	0.2587636599109853
+de	ppmi_opensubs_abs_freq_random__25000_words	de tms aIFG	0.28192535695393045
 de	ppmi_opensubs_abs_freq_top_rowincol_25000_words	simlex999-sim	0.1774426654265661
 de	ppmi_opensubs_abs_freq_top_rowincol_25000_words	ws353	0.4537182644452901
 de	ppmi_opensubs_abs_freq_top_rowincol_25000_words	tms aIFG	0.25534722630907214
@@ -6241,11 +6783,17 @@ de	ppmi_joint_abs_freq_top__100_words	ws353	0.29534777317919264
 de	ppmi_joint_abs_freq_top__100_words	tms aIFG	0.1646073105785828
 de	ppmi_joint_abs_freq_top__100_words	tms vertex	0.17370008564040665
 de	ppmi_joint_abs_freq_top__100_words	tms pIFG	0.1321384978614539
+de	ppmi_joint_abs_freq_top__100_words	de tms vertex	0.1741598581368025
+de	ppmi_joint_abs_freq_top__100_words	de tms pIFG	0.16691496163540787
+de	ppmi_joint_abs_freq_top__100_words	de tms aIFG	0.20928070626945788
 de	ppmi_joint_abs_freq_random__100_words	simlex999-sim	-0.012713230577611588
 de	ppmi_joint_abs_freq_random__100_words	ws353	0.06292844282024618
 de	ppmi_joint_abs_freq_random__100_words	tms aIFG	-0.08079399166742086
 de	ppmi_joint_abs_freq_random__100_words	tms vertex	-0.11891979901920803
 de	ppmi_joint_abs_freq_random__100_words	tms pIFG	-0.08738771686644992
+de	ppmi_joint_abs_freq_random__100_words	de tms vertex	-0.11186090186686591
+de	ppmi_joint_abs_freq_random__100_words	de tms pIFG	-0.10974000898484397
+de	ppmi_joint_abs_freq_random__100_words	de tms aIFG	-0.09065653434921743
 de	ppmi_joint_abs_freq_top_rowincol_100_words	simlex999-sim	0.269061266523286
 de	ppmi_joint_abs_freq_top_rowincol_100_words	ws353	0.5101872448625702
 de	ppmi_joint_abs_freq_top_rowincol_100_words	tms aIFG	0.15696748173131395
@@ -6261,11 +6809,17 @@ de	ppmi_joint_abs_freq_top__200_words	ws353	0.33519577184259564
 de	ppmi_joint_abs_freq_top__200_words	tms aIFG	0.1736398721874758
 de	ppmi_joint_abs_freq_top__200_words	tms vertex	0.17332867785492043
 de	ppmi_joint_abs_freq_top__200_words	tms pIFG	0.12637938807695434
+de	ppmi_joint_abs_freq_top__200_words	de tms vertex	0.1628620326897534
+de	ppmi_joint_abs_freq_top__200_words	de tms pIFG	0.16169818890494217
+de	ppmi_joint_abs_freq_top__200_words	de tms aIFG	0.21838075735925613
 de	ppmi_joint_abs_freq_random__200_words	simlex999-sim	0.07702600410363723
 de	ppmi_joint_abs_freq_random__200_words	ws353	0.0723237634285922
 de	ppmi_joint_abs_freq_random__200_words	tms aIFG	-0.028326017112743924
 de	ppmi_joint_abs_freq_random__200_words	tms vertex	-0.0636942584977232
 de	ppmi_joint_abs_freq_random__200_words	tms pIFG	-0.020203931132531876
+de	ppmi_joint_abs_freq_random__200_words	de tms vertex	-0.07127585572057545
+de	ppmi_joint_abs_freq_random__200_words	de tms pIFG	-0.0287751597469426
+de	ppmi_joint_abs_freq_random__200_words	de tms aIFG	-0.04168165581724009
 de	ppmi_joint_abs_freq_top_rowincol_200_words	simlex999-sim	0.26696108171877836
 de	ppmi_joint_abs_freq_top_rowincol_200_words	ws353	0.5059332406153307
 de	ppmi_joint_abs_freq_top_rowincol_200_words	tms aIFG	0.15840517466677823
@@ -6281,11 +6835,17 @@ de	ppmi_joint_abs_freq_top__500_words	ws353	0.38458531802326684
 de	ppmi_joint_abs_freq_top__500_words	tms aIFG	0.17467601841240135
 de	ppmi_joint_abs_freq_top__500_words	tms vertex	0.17452754427264736
 de	ppmi_joint_abs_freq_top__500_words	tms pIFG	0.12909784842662128
+de	ppmi_joint_abs_freq_top__500_words	de tms vertex	0.16789371915659043
+de	ppmi_joint_abs_freq_top__500_words	de tms pIFG	0.18160927811260916
+de	ppmi_joint_abs_freq_top__500_words	de tms aIFG	0.2142424651362264
 de	ppmi_joint_abs_freq_random__500_words	simlex999-sim	0.11369025546991599
 de	ppmi_joint_abs_freq_random__500_words	ws353	0.16455888203732658
 de	ppmi_joint_abs_freq_random__500_words	tms aIFG	0.029381535836441326
 de	ppmi_joint_abs_freq_random__500_words	tms vertex	0.029921200828171197
 de	ppmi_joint_abs_freq_random__500_words	tms pIFG	0.05550316806005479
+de	ppmi_joint_abs_freq_random__500_words	de tms vertex	0.020055637865204413
+de	ppmi_joint_abs_freq_random__500_words	de tms pIFG	0.05806134085645574
+de	ppmi_joint_abs_freq_random__500_words	de tms aIFG	0.027694915012668915
 de	ppmi_joint_abs_freq_top_rowincol_500_words	simlex999-sim	0.26363893099495617
 de	ppmi_joint_abs_freq_top_rowincol_500_words	ws353	0.5006647640974062
 de	ppmi_joint_abs_freq_top_rowincol_500_words	tms aIFG	0.16206569653769765
@@ -6301,11 +6861,17 @@ de	ppmi_joint_abs_freq_top__750_words	ws353	0.39167179422198006
 de	ppmi_joint_abs_freq_top__750_words	tms aIFG	0.17142882307799479
 de	ppmi_joint_abs_freq_top__750_words	tms vertex	0.1693591217141173
 de	ppmi_joint_abs_freq_top__750_words	tms pIFG	0.12635228525534775
+de	ppmi_joint_abs_freq_top__750_words	de tms vertex	0.16167187409898556
+de	ppmi_joint_abs_freq_top__750_words	de tms pIFG	0.17808847123951504
+de	ppmi_joint_abs_freq_top__750_words	de tms aIFG	0.2115198571974242
 de	ppmi_joint_abs_freq_random__750_words	simlex999-sim	0.10099951651756915
 de	ppmi_joint_abs_freq_random__750_words	ws353	0.22186084297653919
 de	ppmi_joint_abs_freq_random__750_words	tms aIFG	0.029940861494772365
 de	ppmi_joint_abs_freq_random__750_words	tms vertex	0.04434920181577402
 de	ppmi_joint_abs_freq_random__750_words	tms pIFG	0.07035764871333983
+de	ppmi_joint_abs_freq_random__750_words	de tms vertex	0.05432960300296248
+de	ppmi_joint_abs_freq_random__750_words	de tms pIFG	0.09893024166581421
+de	ppmi_joint_abs_freq_random__750_words	de tms aIFG	0.03507322012059732
 de	ppmi_joint_abs_freq_top_rowincol_750_words	simlex999-sim	0.26445382069872797
 de	ppmi_joint_abs_freq_top_rowincol_750_words	ws353	0.49308421690170817
 de	ppmi_joint_abs_freq_top_rowincol_750_words	tms aIFG	0.1650292827200201
@@ -6321,11 +6887,17 @@ de	ppmi_joint_abs_freq_top__1000_words	ws353	0.4025802462770013
 de	ppmi_joint_abs_freq_top__1000_words	tms aIFG	0.1738157701236026
 de	ppmi_joint_abs_freq_top__1000_words	tms vertex	0.17433067267958272
 de	ppmi_joint_abs_freq_top__1000_words	tms pIFG	0.13844987521078359
+de	ppmi_joint_abs_freq_top__1000_words	de tms vertex	0.17435104741697885
+de	ppmi_joint_abs_freq_top__1000_words	de tms pIFG	0.18595577492570098
+de	ppmi_joint_abs_freq_top__1000_words	de tms aIFG	0.2133080079725486
 de	ppmi_joint_abs_freq_random__1000_words	simlex999-sim	0.13417616417961126
 de	ppmi_joint_abs_freq_random__1000_words	ws353	0.2552208178483956
 de	ppmi_joint_abs_freq_random__1000_words	tms aIFG	0.08577154958774783
 de	ppmi_joint_abs_freq_random__1000_words	tms vertex	0.07999815982878326
 de	ppmi_joint_abs_freq_random__1000_words	tms pIFG	0.12304611710371931
+de	ppmi_joint_abs_freq_random__1000_words	de tms vertex	0.08969263327655418
+de	ppmi_joint_abs_freq_random__1000_words	de tms pIFG	0.15149323437254986
+de	ppmi_joint_abs_freq_random__1000_words	de tms aIFG	0.10490898595743571
 de	ppmi_joint_abs_freq_top_rowincol_1000_words	simlex999-sim	0.262842371415554
 de	ppmi_joint_abs_freq_top_rowincol_1000_words	ws353	0.49089986319834655
 de	ppmi_joint_abs_freq_top_rowincol_1000_words	tms aIFG	0.17019581143235504
@@ -6341,11 +6913,17 @@ de	ppmi_joint_abs_freq_top__2500_words	ws353	0.4303506680698534
 de	ppmi_joint_abs_freq_top__2500_words	tms aIFG	0.1809774652221035
 de	ppmi_joint_abs_freq_top__2500_words	tms vertex	0.1809331629784115
 de	ppmi_joint_abs_freq_top__2500_words	tms pIFG	0.1529460664255454
+de	ppmi_joint_abs_freq_top__2500_words	de tms vertex	0.18774721626869625
+de	ppmi_joint_abs_freq_top__2500_words	de tms pIFG	0.1996329505829263
+de	ppmi_joint_abs_freq_top__2500_words	de tms aIFG	0.21992640974882227
 de	ppmi_joint_abs_freq_random__2500_words	simlex999-sim	0.1386102383118892
 de	ppmi_joint_abs_freq_random__2500_words	ws353	0.31129310182992315
 de	ppmi_joint_abs_freq_random__2500_words	tms aIFG	0.17854578529864196
 de	ppmi_joint_abs_freq_random__2500_words	tms vertex	0.15452716117558674
 de	ppmi_joint_abs_freq_random__2500_words	tms pIFG	0.1839194196543958
+de	ppmi_joint_abs_freq_random__2500_words	de tms vertex	0.1716408220428068
+de	ppmi_joint_abs_freq_random__2500_words	de tms pIFG	0.21511465521349676
+de	ppmi_joint_abs_freq_random__2500_words	de tms aIFG	0.22980418033336117
 de	ppmi_joint_abs_freq_top_rowincol_2500_words	simlex999-sim	0.26549207860320917
 de	ppmi_joint_abs_freq_top_rowincol_2500_words	ws353	0.4677352726260846
 de	ppmi_joint_abs_freq_top_rowincol_2500_words	tms aIFG	0.1806590374481555
@@ -6361,11 +6939,17 @@ de	ppmi_joint_abs_freq_top__5000_words	ws353	0.4362460775557741
 de	ppmi_joint_abs_freq_top__5000_words	tms aIFG	0.19492028830608552
 de	ppmi_joint_abs_freq_top__5000_words	tms vertex	0.1924297822878929
 de	ppmi_joint_abs_freq_top__5000_words	tms pIFG	0.17018844895095583
+de	ppmi_joint_abs_freq_top__5000_words	de tms vertex	0.2032999373584577
+de	ppmi_joint_abs_freq_top__5000_words	de tms pIFG	0.22008375961470564
+de	ppmi_joint_abs_freq_top__5000_words	de tms aIFG	0.2376563894785126
 de	ppmi_joint_abs_freq_random__5000_words	simlex999-sim	0.2209877726939711
 de	ppmi_joint_abs_freq_random__5000_words	ws353	0.3773244801027764
 de	ppmi_joint_abs_freq_random__5000_words	tms aIFG	0.19947201719115876
 de	ppmi_joint_abs_freq_random__5000_words	tms vertex	0.18856029631068175
 de	ppmi_joint_abs_freq_random__5000_words	tms pIFG	0.20277903393115393
+de	ppmi_joint_abs_freq_random__5000_words	de tms vertex	0.19284662217471657
+de	ppmi_joint_abs_freq_random__5000_words	de tms pIFG	0.25389619200005703
+de	ppmi_joint_abs_freq_random__5000_words	de tms aIFG	0.2521262068286348
 de	ppmi_joint_abs_freq_top_rowincol_5000_words	simlex999-sim	0.26140852858015556
 de	ppmi_joint_abs_freq_top_rowincol_5000_words	ws353	0.4523458311797267
 de	ppmi_joint_abs_freq_top_rowincol_5000_words	tms aIFG	0.19568325764126135
@@ -6381,11 +6965,17 @@ de	ppmi_joint_abs_freq_top__7500_words	ws353	0.4325654377825241
 de	ppmi_joint_abs_freq_top__7500_words	tms aIFG	0.20594976056329387
 de	ppmi_joint_abs_freq_top__7500_words	tms vertex	0.20401955266512137
 de	ppmi_joint_abs_freq_top__7500_words	tms pIFG	0.1800320706060263
+de	ppmi_joint_abs_freq_top__7500_words	de tms vertex	0.21576861211052972
+de	ppmi_joint_abs_freq_top__7500_words	de tms pIFG	0.22790484314262527
+de	ppmi_joint_abs_freq_top__7500_words	de tms aIFG	0.2502476730824447
 de	ppmi_joint_abs_freq_random__7500_words	simlex999-sim	0.22784909348410914
 de	ppmi_joint_abs_freq_random__7500_words	ws353	0.43595057588184083
 de	ppmi_joint_abs_freq_random__7500_words	tms aIFG	0.23037597624491937
 de	ppmi_joint_abs_freq_random__7500_words	tms vertex	0.20964371246282842
 de	ppmi_joint_abs_freq_random__7500_words	tms pIFG	0.20585800094406595
+de	ppmi_joint_abs_freq_random__7500_words	de tms vertex	0.2084834869424991
+de	ppmi_joint_abs_freq_random__7500_words	de tms pIFG	0.25031293457010106
+de	ppmi_joint_abs_freq_random__7500_words	de tms aIFG	0.2739393414624338
 de	ppmi_joint_abs_freq_top_rowincol_7500_words	simlex999-sim	0.2590836217897476
 de	ppmi_joint_abs_freq_top_rowincol_7500_words	ws353	0.4440080615433205
 de	ppmi_joint_abs_freq_top_rowincol_7500_words	tms aIFG	0.20343755974854924
@@ -6401,11 +6991,17 @@ de	ppmi_joint_abs_freq_top__10000_words	ws353	0.42756873814379864
 de	ppmi_joint_abs_freq_top__10000_words	tms aIFG	0.21352398577305537
 de	ppmi_joint_abs_freq_top__10000_words	tms vertex	0.20749151550033013
 de	ppmi_joint_abs_freq_top__10000_words	tms pIFG	0.1887691179991796
+de	ppmi_joint_abs_freq_top__10000_words	de tms vertex	0.22064143515074616
+de	ppmi_joint_abs_freq_top__10000_words	de tms pIFG	0.23224404861272613
+de	ppmi_joint_abs_freq_top__10000_words	de tms aIFG	0.25706280476835563
 de	ppmi_joint_abs_freq_random__10000_words	simlex999-sim	0.23491017918800156
 de	ppmi_joint_abs_freq_random__10000_words	ws353	0.4497736355268177
 de	ppmi_joint_abs_freq_random__10000_words	tms aIFG	0.24121796602831508
 de	ppmi_joint_abs_freq_random__10000_words	tms vertex	0.21591731851765428
 de	ppmi_joint_abs_freq_random__10000_words	tms pIFG	0.20333875515826574
+de	ppmi_joint_abs_freq_random__10000_words	de tms vertex	0.21259013284315856
+de	ppmi_joint_abs_freq_random__10000_words	de tms pIFG	0.2642487292744191
+de	ppmi_joint_abs_freq_random__10000_words	de tms aIFG	0.28739103821611894
 de	ppmi_joint_abs_freq_top_rowincol_10000_words	simlex999-sim	0.25697586087280977
 de	ppmi_joint_abs_freq_top_rowincol_10000_words	ws353	0.43586973618686103
 de	ppmi_joint_abs_freq_top_rowincol_10000_words	tms aIFG	0.2098840437729123
@@ -6421,11 +7017,17 @@ de	ppmi_joint_abs_freq_top__12500_words	ws353	0.4233123127216886
 de	ppmi_joint_abs_freq_top__12500_words	tms aIFG	0.22049763366504171
 de	ppmi_joint_abs_freq_top__12500_words	tms vertex	0.21265664094264058
 de	ppmi_joint_abs_freq_top__12500_words	tms pIFG	0.19302267362442463
+de	ppmi_joint_abs_freq_top__12500_words	de tms vertex	0.22423512832323336
+de	ppmi_joint_abs_freq_top__12500_words	de tms pIFG	0.2357434605493433
+de	ppmi_joint_abs_freq_top__12500_words	de tms aIFG	0.26525022034716916
 de	ppmi_joint_abs_freq_random__12500_words	simlex999-sim	0.21998808509854226
 de	ppmi_joint_abs_freq_random__12500_words	ws353	0.4581421238193918
 de	ppmi_joint_abs_freq_random__12500_words	tms aIFG	0.2429905759857281
 de	ppmi_joint_abs_freq_random__12500_words	tms vertex	0.22437527713798
 de	ppmi_joint_abs_freq_random__12500_words	tms pIFG	0.20869884799696528
+de	ppmi_joint_abs_freq_random__12500_words	de tms vertex	0.2211067747675351
+de	ppmi_joint_abs_freq_random__12500_words	de tms pIFG	0.26383044946928985
+de	ppmi_joint_abs_freq_random__12500_words	de tms aIFG	0.28762125097589625
 de	ppmi_joint_abs_freq_top_rowincol_12500_words	simlex999-sim	0.2533450661928457
 de	ppmi_joint_abs_freq_top_rowincol_12500_words	ws353	0.428667800211517
 de	ppmi_joint_abs_freq_top_rowincol_12500_words	tms aIFG	0.21628307235952718
@@ -6441,11 +7043,17 @@ de	ppmi_joint_abs_freq_top__15000_words	ws353	0.4164867181152577
 de	ppmi_joint_abs_freq_top__15000_words	tms aIFG	0.22554671539265153
 de	ppmi_joint_abs_freq_top__15000_words	tms vertex	0.2166408713602931
 de	ppmi_joint_abs_freq_top__15000_words	tms pIFG	0.197451659603704
+de	ppmi_joint_abs_freq_top__15000_words	de tms vertex	0.22960091318025683
+de	ppmi_joint_abs_freq_top__15000_words	de tms pIFG	0.2393449457505906
+de	ppmi_joint_abs_freq_top__15000_words	de tms aIFG	0.2697806837978591
 de	ppmi_joint_abs_freq_random__15000_words	simlex999-sim	0.21122786188802017
 de	ppmi_joint_abs_freq_random__15000_words	ws353	0.44586585928604106
 de	ppmi_joint_abs_freq_random__15000_words	tms aIFG	0.24748191374698894
 de	ppmi_joint_abs_freq_random__15000_words	tms vertex	0.22180135954035865
 de	ppmi_joint_abs_freq_random__15000_words	tms pIFG	0.2108059400160591
+de	ppmi_joint_abs_freq_random__15000_words	de tms vertex	0.22018788099307052
+de	ppmi_joint_abs_freq_random__15000_words	de tms pIFG	0.26703828186483053
+de	ppmi_joint_abs_freq_random__15000_words	de tms aIFG	0.2868924015187851
 de	ppmi_joint_abs_freq_top_rowincol_15000_words	simlex999-sim	0.2492505714838822
 de	ppmi_joint_abs_freq_top_rowincol_15000_words	ws353	0.4217482337554299
 de	ppmi_joint_abs_freq_top_rowincol_15000_words	tms aIFG	0.2186274000553253
@@ -6461,11 +7069,17 @@ de	ppmi_joint_abs_freq_top__17500_words	ws353	0.41403467326529086
 de	ppmi_joint_abs_freq_top__17500_words	tms aIFG	0.22861503300975944
 de	ppmi_joint_abs_freq_top__17500_words	tms vertex	0.2184518772409802
 de	ppmi_joint_abs_freq_top__17500_words	tms pIFG	0.20123722354598642
+de	ppmi_joint_abs_freq_top__17500_words	de tms vertex	0.2317899839518696
+de	ppmi_joint_abs_freq_top__17500_words	de tms pIFG	0.24639097564164242
+de	ppmi_joint_abs_freq_top__17500_words	de tms aIFG	0.2723515364820281
 de	ppmi_joint_abs_freq_random__17500_words	simlex999-sim	0.23480326193691078
 de	ppmi_joint_abs_freq_random__17500_words	ws353	0.4262844561984968
 de	ppmi_joint_abs_freq_random__17500_words	tms aIFG	0.24045423500263707
 de	ppmi_joint_abs_freq_random__17500_words	tms vertex	0.21123235906739216
 de	ppmi_joint_abs_freq_random__17500_words	tms pIFG	0.21038693066000969
+de	ppmi_joint_abs_freq_random__17500_words	de tms vertex	0.2145755695539349
+de	ppmi_joint_abs_freq_random__17500_words	de tms pIFG	0.2632567407910974
+de	ppmi_joint_abs_freq_random__17500_words	de tms aIFG	0.2816736025066853
 de	ppmi_joint_abs_freq_top_rowincol_17500_words	simlex999-sim	0.247019952971915
 de	ppmi_joint_abs_freq_top_rowincol_17500_words	ws353	0.4187017904747872
 de	ppmi_joint_abs_freq_top_rowincol_17500_words	tms aIFG	0.22234481636593675
@@ -6481,11 +7095,17 @@ de	ppmi_joint_abs_freq_top__20000_words	ws353	0.4096225360343303
 de	ppmi_joint_abs_freq_top__20000_words	tms aIFG	0.23451501184297824
 de	ppmi_joint_abs_freq_top__20000_words	tms vertex	0.2216095471439729
 de	ppmi_joint_abs_freq_top__20000_words	tms pIFG	0.20522821691245682
+de	ppmi_joint_abs_freq_top__20000_words	de tms vertex	0.23475333382112343
+de	ppmi_joint_abs_freq_top__20000_words	de tms pIFG	0.24998266313337025
+de	ppmi_joint_abs_freq_top__20000_words	de tms aIFG	0.2747608473168917
 de	ppmi_joint_abs_freq_random__20000_words	simlex999-sim	0.23596740915255326
 de	ppmi_joint_abs_freq_random__20000_words	ws353	0.43913242064811353
 de	ppmi_joint_abs_freq_random__20000_words	tms aIFG	0.25219977842326324
 de	ppmi_joint_abs_freq_random__20000_words	tms vertex	0.21909498066375774
 de	ppmi_joint_abs_freq_random__20000_words	tms pIFG	0.22752874899975797
+de	ppmi_joint_abs_freq_random__20000_words	de tms vertex	0.22529496127841384
+de	ppmi_joint_abs_freq_random__20000_words	de tms pIFG	0.2777490879678912
+de	ppmi_joint_abs_freq_random__20000_words	de tms aIFG	0.2953445881099163
 de	ppmi_joint_abs_freq_top_rowincol_20000_words	simlex999-sim	0.2462413167457453
 de	ppmi_joint_abs_freq_top_rowincol_20000_words	ws353	0.41183473324870123
 de	ppmi_joint_abs_freq_top_rowincol_20000_words	tms aIFG	0.22850954451674946
@@ -6501,11 +7121,17 @@ de	ppmi_joint_abs_freq_top__25000_words	ws353	0.40339451765059253
 de	ppmi_joint_abs_freq_top__25000_words	tms aIFG	0.2403882816620346
 de	ppmi_joint_abs_freq_top__25000_words	tms vertex	0.22468428884778968
 de	ppmi_joint_abs_freq_top__25000_words	tms pIFG	0.20831891946320547
+de	ppmi_joint_abs_freq_top__25000_words	de tms vertex	0.23552097840970984
+de	ppmi_joint_abs_freq_top__25000_words	de tms pIFG	0.2562827326662363
+de	ppmi_joint_abs_freq_top__25000_words	de tms aIFG	0.2791405712806114
 de	ppmi_joint_abs_freq_random__25000_words	simlex999-sim	0.24376302545762157
 de	ppmi_joint_abs_freq_random__25000_words	ws353	0.4448212736529059
 de	ppmi_joint_abs_freq_random__25000_words	tms aIFG	0.2552294467222402
 de	ppmi_joint_abs_freq_random__25000_words	tms vertex	0.21625308649113476
 de	ppmi_joint_abs_freq_random__25000_words	tms pIFG	0.22724486713362294
+de	ppmi_joint_abs_freq_random__25000_words	de tms vertex	0.2203780848320515
+de	ppmi_joint_abs_freq_random__25000_words	de tms pIFG	0.27351389602408704
+de	ppmi_joint_abs_freq_random__25000_words	de tms aIFG	0.2943558071199466
 de	ppmi_joint_abs_freq_top_rowincol_25000_words	simlex999-sim	0.24382681861237124
 de	ppmi_joint_abs_freq_top_rowincol_25000_words	ws353	0.40518437117351325
 de	ppmi_joint_abs_freq_top_rowincol_25000_words	tms aIFG	0.23785435024801224
@@ -6521,11 +7147,17 @@ de	ppmi_cc100_abs_freq_top__100_words	ws353	0.33841055744447707
 de	ppmi_cc100_abs_freq_top__100_words	tms aIFG	0.18003771212256264
 de	ppmi_cc100_abs_freq_top__100_words	tms vertex	0.13058676683636428
 de	ppmi_cc100_abs_freq_top__100_words	tms pIFG	0.15544841556041447
+de	ppmi_cc100_abs_freq_top__100_words	de tms vertex	0.13513712449185733
+de	ppmi_cc100_abs_freq_top__100_words	de tms pIFG	0.16980069553649035
+de	ppmi_cc100_abs_freq_top__100_words	de tms aIFG	0.2203128430664333
 de	ppmi_cc100_abs_freq_random__100_words	simlex999-sim	0.06967205195029554
 de	ppmi_cc100_abs_freq_random__100_words	ws353	0.2931470012884354
 de	ppmi_cc100_abs_freq_random__100_words	tms aIFG	0.09285579189175612
 de	ppmi_cc100_abs_freq_random__100_words	tms vertex	0.07629254369708316
 de	ppmi_cc100_abs_freq_random__100_words	tms pIFG	0.029271180941752652
+de	ppmi_cc100_abs_freq_random__100_words	de tms vertex	0.07977576356973816
+de	ppmi_cc100_abs_freq_random__100_words	de tms pIFG	0.03882238676684287
+de	ppmi_cc100_abs_freq_random__100_words	de tms aIFG	0.10865705488435058
 de	ppmi_cc100_abs_freq_top_rowincol_100_words	simlex999-sim	0.32185288904943865
 de	ppmi_cc100_abs_freq_top_rowincol_100_words	ws353	0.5548543916675224
 de	ppmi_cc100_abs_freq_top_rowincol_100_words	tms aIFG	0.1959105851076081
@@ -6541,11 +7173,17 @@ de	ppmi_cc100_abs_freq_top__200_words	ws353	0.3978688784041931
 de	ppmi_cc100_abs_freq_top__200_words	tms aIFG	0.1871489819731555
 de	ppmi_cc100_abs_freq_top__200_words	tms vertex	0.13783744601694745
 de	ppmi_cc100_abs_freq_top__200_words	tms pIFG	0.1555613041498362
+de	ppmi_cc100_abs_freq_top__200_words	de tms vertex	0.13243561362997644
+de	ppmi_cc100_abs_freq_top__200_words	de tms pIFG	0.16808251902633084
+de	ppmi_cc100_abs_freq_top__200_words	de tms aIFG	0.21081398493822745
 de	ppmi_cc100_abs_freq_random__200_words	simlex999-sim	0.12436845197341226
 de	ppmi_cc100_abs_freq_random__200_words	ws353	0.34595775224386593
 de	ppmi_cc100_abs_freq_random__200_words	tms aIFG	0.13822271196931052
 de	ppmi_cc100_abs_freq_random__200_words	tms vertex	0.0989382077655026
 de	ppmi_cc100_abs_freq_random__200_words	tms pIFG	0.11303261898714524
+de	ppmi_cc100_abs_freq_random__200_words	de tms vertex	0.10085455041887409
+de	ppmi_cc100_abs_freq_random__200_words	de tms pIFG	0.11220967227207795
+de	ppmi_cc100_abs_freq_random__200_words	de tms aIFG	0.15274742863941804
 de	ppmi_cc100_abs_freq_top_rowincol_200_words	simlex999-sim	0.32109834627793177
 de	ppmi_cc100_abs_freq_top_rowincol_200_words	ws353	0.5539441489515412
 de	ppmi_cc100_abs_freq_top_rowincol_200_words	tms aIFG	0.19731132808607765
@@ -6561,11 +7199,17 @@ de	ppmi_cc100_abs_freq_top__500_words	ws353	0.42862633409144335
 de	ppmi_cc100_abs_freq_top__500_words	tms aIFG	0.18239862682726263
 de	ppmi_cc100_abs_freq_top__500_words	tms vertex	0.13864176109948273
 de	ppmi_cc100_abs_freq_top__500_words	tms pIFG	0.15556556562925863
+de	ppmi_cc100_abs_freq_top__500_words	de tms vertex	0.13827945603880323
+de	ppmi_cc100_abs_freq_top__500_words	de tms pIFG	0.17364510047909262
+de	ppmi_cc100_abs_freq_top__500_words	de tms aIFG	0.20752474465133738
 de	ppmi_cc100_abs_freq_random__500_words	simlex999-sim	0.14235530647751868
 de	ppmi_cc100_abs_freq_random__500_words	ws353	0.3372885638637831
 de	ppmi_cc100_abs_freq_random__500_words	tms aIFG	0.1714525868659635
 de	ppmi_cc100_abs_freq_random__500_words	tms vertex	0.14422380098127818
 de	ppmi_cc100_abs_freq_random__500_words	tms pIFG	0.14059258039335532
+de	ppmi_cc100_abs_freq_random__500_words	de tms vertex	0.1508792264877744
+de	ppmi_cc100_abs_freq_random__500_words	de tms pIFG	0.1497119999972268
+de	ppmi_cc100_abs_freq_random__500_words	de tms aIFG	0.20267325041197964
 de	ppmi_cc100_abs_freq_top_rowincol_500_words	simlex999-sim	0.31925171719614
 de	ppmi_cc100_abs_freq_top_rowincol_500_words	ws353	0.5476146227420505
 de	ppmi_cc100_abs_freq_top_rowincol_500_words	tms aIFG	0.19977855630897062
@@ -6581,11 +7225,17 @@ de	ppmi_cc100_abs_freq_top__750_words	ws353	0.4256101164523184
 de	ppmi_cc100_abs_freq_top__750_words	tms aIFG	0.1834575234650927
 de	ppmi_cc100_abs_freq_top__750_words	tms vertex	0.13829553965146277
 de	ppmi_cc100_abs_freq_top__750_words	tms pIFG	0.14249286514755996
+de	ppmi_cc100_abs_freq_top__750_words	de tms vertex	0.1317523397677043
+de	ppmi_cc100_abs_freq_top__750_words	de tms pIFG	0.15442832601808554
+de	ppmi_cc100_abs_freq_top__750_words	de tms aIFG	0.20468706972932657
 de	ppmi_cc100_abs_freq_random__750_words	simlex999-sim	0.18405029260325476
 de	ppmi_cc100_abs_freq_random__750_words	ws353	0.3582710809487186
 de	ppmi_cc100_abs_freq_random__750_words	tms aIFG	0.17633156896597138
 de	ppmi_cc100_abs_freq_random__750_words	tms vertex	0.1419547703422711
 de	ppmi_cc100_abs_freq_random__750_words	tms pIFG	0.161549680000563
+de	ppmi_cc100_abs_freq_random__750_words	de tms vertex	0.14664476701874646
+de	ppmi_cc100_abs_freq_random__750_words	de tms pIFG	0.16968579052571323
+de	ppmi_cc100_abs_freq_random__750_words	de tms aIFG	0.20830245755373689
 de	ppmi_cc100_abs_freq_top_rowincol_750_words	simlex999-sim	0.3192733682132382
 de	ppmi_cc100_abs_freq_top_rowincol_750_words	ws353	0.5425294293669969
 de	ppmi_cc100_abs_freq_top_rowincol_750_words	tms aIFG	0.20146497959395476
@@ -6601,11 +7251,17 @@ de	ppmi_cc100_abs_freq_top__1000_words	ws353	0.4324535551011798
 de	ppmi_cc100_abs_freq_top__1000_words	tms aIFG	0.18674982552618616
 de	ppmi_cc100_abs_freq_top__1000_words	tms vertex	0.14231511945547437
 de	ppmi_cc100_abs_freq_top__1000_words	tms pIFG	0.15289222149084164
+de	ppmi_cc100_abs_freq_top__1000_words	de tms vertex	0.1424576347456964
+de	ppmi_cc100_abs_freq_top__1000_words	de tms pIFG	0.16453407491233135
+de	ppmi_cc100_abs_freq_top__1000_words	de tms aIFG	0.20689753244674605
 de	ppmi_cc100_abs_freq_random__1000_words	simlex999-sim	0.1982313774909137
 de	ppmi_cc100_abs_freq_random__1000_words	ws353	0.3970192608166167
 de	ppmi_cc100_abs_freq_random__1000_words	tms aIFG	0.23706117684159805
 de	ppmi_cc100_abs_freq_random__1000_words	tms vertex	0.18280048419746922
 de	ppmi_cc100_abs_freq_random__1000_words	tms pIFG	0.20588330258346121
+de	ppmi_cc100_abs_freq_random__1000_words	de tms vertex	0.18939161927853518
+de	ppmi_cc100_abs_freq_random__1000_words	de tms pIFG	0.23241830960817444
+de	ppmi_cc100_abs_freq_random__1000_words	de tms aIFG	0.2633710919732188
 de	ppmi_cc100_abs_freq_top_rowincol_1000_words	simlex999-sim	0.31992969322070236
 de	ppmi_cc100_abs_freq_top_rowincol_1000_words	ws353	0.540688876579257
 de	ppmi_cc100_abs_freq_top_rowincol_1000_words	tms aIFG	0.20001830637630028
@@ -6621,11 +7277,17 @@ de	ppmi_cc100_abs_freq_top__2500_words	ws353	0.46383153105537
 de	ppmi_cc100_abs_freq_top__2500_words	tms aIFG	0.19397628458279592
 de	ppmi_cc100_abs_freq_top__2500_words	tms vertex	0.15435040516628276
 de	ppmi_cc100_abs_freq_top__2500_words	tms pIFG	0.18189474133062306
+de	ppmi_cc100_abs_freq_top__2500_words	de tms vertex	0.15781884044929803
+de	ppmi_cc100_abs_freq_top__2500_words	de tms pIFG	0.1949562545549605
+de	ppmi_cc100_abs_freq_top__2500_words	de tms aIFG	0.22073718594962727
 de	ppmi_cc100_abs_freq_random__2500_words	simlex999-sim	0.22031294533024498
 de	ppmi_cc100_abs_freq_random__2500_words	ws353	0.4613952286429784
 de	ppmi_cc100_abs_freq_random__2500_words	tms aIFG	0.26711922441325464
 de	ppmi_cc100_abs_freq_random__2500_words	tms vertex	0.20865659519476573
 de	ppmi_cc100_abs_freq_random__2500_words	tms pIFG	0.23481046234615408
+de	ppmi_cc100_abs_freq_random__2500_words	de tms vertex	0.21912766805867487
+de	ppmi_cc100_abs_freq_random__2500_words	de tms pIFG	0.2578319144919067
+de	ppmi_cc100_abs_freq_random__2500_words	de tms aIFG	0.291517095270681
 de	ppmi_cc100_abs_freq_top_rowincol_2500_words	simlex999-sim	0.32104075392903253
 de	ppmi_cc100_abs_freq_top_rowincol_2500_words	ws353	0.5211108193748136
 de	ppmi_cc100_abs_freq_top_rowincol_2500_words	tms aIFG	0.20100699166804262
@@ -6641,11 +7303,17 @@ de	ppmi_cc100_abs_freq_top__5000_words	ws353	0.46117417417698914
 de	ppmi_cc100_abs_freq_top__5000_words	tms aIFG	0.19549889255030806
 de	ppmi_cc100_abs_freq_top__5000_words	tms vertex	0.1588860693573578
 de	ppmi_cc100_abs_freq_top__5000_words	tms pIFG	0.1852359973864657
+de	ppmi_cc100_abs_freq_top__5000_words	de tms vertex	0.16286574015164823
+de	ppmi_cc100_abs_freq_top__5000_words	de tms pIFG	0.19808350802936864
+de	ppmi_cc100_abs_freq_top__5000_words	de tms aIFG	0.22266707747505202
 de	ppmi_cc100_abs_freq_random__5000_words	simlex999-sim	0.22101593744826287
 de	ppmi_cc100_abs_freq_random__5000_words	ws353	0.4611180482912982
 de	ppmi_cc100_abs_freq_random__5000_words	tms aIFG	0.29348648004125355
 de	ppmi_cc100_abs_freq_random__5000_words	tms vertex	0.23348175771944177
 de	ppmi_cc100_abs_freq_random__5000_words	tms pIFG	0.2484080839899951
+de	ppmi_cc100_abs_freq_random__5000_words	de tms vertex	0.24044476363642425
+de	ppmi_cc100_abs_freq_random__5000_words	de tms pIFG	0.28301229424685176
+de	ppmi_cc100_abs_freq_random__5000_words	de tms aIFG	0.3196933615208702
 de	ppmi_cc100_abs_freq_top_rowincol_5000_words	simlex999-sim	0.31939691734557674
 de	ppmi_cc100_abs_freq_top_rowincol_5000_words	ws353	0.4987405777453578
 de	ppmi_cc100_abs_freq_top_rowincol_5000_words	tms aIFG	0.20374547758507944
@@ -6661,11 +7329,17 @@ de	ppmi_cc100_abs_freq_top__7500_words	ws353	0.45777165993914265
 de	ppmi_cc100_abs_freq_top__7500_words	tms aIFG	0.19719337911014082
 de	ppmi_cc100_abs_freq_top__7500_words	tms vertex	0.158646859774275
 de	ppmi_cc100_abs_freq_top__7500_words	tms pIFG	0.1875347749794597
+de	ppmi_cc100_abs_freq_top__7500_words	de tms vertex	0.16476758128979288
+de	ppmi_cc100_abs_freq_top__7500_words	de tms pIFG	0.2014916333307654
+de	ppmi_cc100_abs_freq_top__7500_words	de tms aIFG	0.22919331205482205
 de	ppmi_cc100_abs_freq_random__7500_words	simlex999-sim	0.22089843644551488
 de	ppmi_cc100_abs_freq_random__7500_words	ws353	0.46297020251909715
 de	ppmi_cc100_abs_freq_random__7500_words	tms aIFG	0.2846048649496009
 de	ppmi_cc100_abs_freq_random__7500_words	tms vertex	0.23336338996301348
 de	ppmi_cc100_abs_freq_random__7500_words	tms pIFG	0.2529080937870332
+de	ppmi_cc100_abs_freq_random__7500_words	de tms vertex	0.24410746347993256
+de	ppmi_cc100_abs_freq_random__7500_words	de tms pIFG	0.27828398764680407
+de	ppmi_cc100_abs_freq_random__7500_words	de tms aIFG	0.3075672471687794
 de	ppmi_cc100_abs_freq_top_rowincol_7500_words	simlex999-sim	0.31471821941209543
 de	ppmi_cc100_abs_freq_top_rowincol_7500_words	ws353	0.48380466432668756
 de	ppmi_cc100_abs_freq_top_rowincol_7500_words	tms aIFG	0.20512501262932448
@@ -6681,11 +7355,17 @@ de	ppmi_cc100_abs_freq_top__10000_words	ws353	0.4601800561849058
 de	ppmi_cc100_abs_freq_top__10000_words	tms aIFG	0.20686440706594633
 de	ppmi_cc100_abs_freq_top__10000_words	tms vertex	0.16564706129917847
 de	ppmi_cc100_abs_freq_top__10000_words	tms pIFG	0.19611587302564937
+de	ppmi_cc100_abs_freq_top__10000_words	de tms vertex	0.17769869043355752
+de	ppmi_cc100_abs_freq_top__10000_words	de tms pIFG	0.2130004321349315
+de	ppmi_cc100_abs_freq_top__10000_words	de tms aIFG	0.24158971970657542
 de	ppmi_cc100_abs_freq_random__10000_words	simlex999-sim	0.22336140853766887
 de	ppmi_cc100_abs_freq_random__10000_words	ws353	0.4636802420059518
 de	ppmi_cc100_abs_freq_random__10000_words	tms aIFG	0.2834714058400102
 de	ppmi_cc100_abs_freq_random__10000_words	tms vertex	0.23357013986585798
 de	ppmi_cc100_abs_freq_random__10000_words	tms pIFG	0.25531164316333493
+de	ppmi_cc100_abs_freq_random__10000_words	de tms vertex	0.24556951332895946
+de	ppmi_cc100_abs_freq_random__10000_words	de tms pIFG	0.28737166340768644
+de	ppmi_cc100_abs_freq_random__10000_words	de tms aIFG	0.30903409642497204
 de	ppmi_cc100_abs_freq_top_rowincol_10000_words	simlex999-sim	0.31281966006017015
 de	ppmi_cc100_abs_freq_top_rowincol_10000_words	ws353	0.47958707053658733
 de	ppmi_cc100_abs_freq_top_rowincol_10000_words	tms aIFG	0.21103732827933908
@@ -6701,11 +7381,17 @@ de	ppmi_cc100_abs_freq_top__12500_words	ws353	0.46410792752596497
 de	ppmi_cc100_abs_freq_top__12500_words	tms aIFG	0.2094889573879993
 de	ppmi_cc100_abs_freq_top__12500_words	tms vertex	0.16908802966345746
 de	ppmi_cc100_abs_freq_top__12500_words	tms pIFG	0.20007454996596596
+de	ppmi_cc100_abs_freq_top__12500_words	de tms vertex	0.1815184092131539
+de	ppmi_cc100_abs_freq_top__12500_words	de tms pIFG	0.21778106824171686
+de	ppmi_cc100_abs_freq_top__12500_words	de tms aIFG	0.24358586819466232
 de	ppmi_cc100_abs_freq_random__12500_words	simlex999-sim	0.21953005355982733
 de	ppmi_cc100_abs_freq_random__12500_words	ws353	0.4552340800905602
 de	ppmi_cc100_abs_freq_random__12500_words	tms aIFG	0.2878267730998932
 de	ppmi_cc100_abs_freq_random__12500_words	tms vertex	0.23764842811475995
 de	ppmi_cc100_abs_freq_random__12500_words	tms pIFG	0.2559017455902797
+de	ppmi_cc100_abs_freq_random__12500_words	de tms vertex	0.24838550853176147
+de	ppmi_cc100_abs_freq_random__12500_words	de tms pIFG	0.283774072527147
+de	ppmi_cc100_abs_freq_random__12500_words	de tms aIFG	0.3166693005651382
 de	ppmi_cc100_abs_freq_top_rowincol_12500_words	simlex999-sim	0.312078043557118
 de	ppmi_cc100_abs_freq_top_rowincol_12500_words	ws353	0.47823879507027023
 de	ppmi_cc100_abs_freq_top_rowincol_12500_words	tms aIFG	0.21163119912154948
@@ -6721,11 +7407,17 @@ de	ppmi_cc100_abs_freq_top__15000_words	ws353	0.4662560752514855
 de	ppmi_cc100_abs_freq_top__15000_words	tms aIFG	0.2120452041652212
 de	ppmi_cc100_abs_freq_top__15000_words	tms vertex	0.17185638100412123
 de	ppmi_cc100_abs_freq_top__15000_words	tms pIFG	0.20469376246526513
+de	ppmi_cc100_abs_freq_top__15000_words	de tms vertex	0.1845842340130125
+de	ppmi_cc100_abs_freq_top__15000_words	de tms pIFG	0.22442813224020333
+de	ppmi_cc100_abs_freq_top__15000_words	de tms aIFG	0.2472439110902619
 de	ppmi_cc100_abs_freq_random__15000_words	simlex999-sim	0.22181664546425103
 de	ppmi_cc100_abs_freq_random__15000_words	ws353	0.4549741451227517
 de	ppmi_cc100_abs_freq_random__15000_words	tms aIFG	0.28557236969182576
 de	ppmi_cc100_abs_freq_random__15000_words	tms vertex	0.23527117670528916
 de	ppmi_cc100_abs_freq_random__15000_words	tms pIFG	0.25377736373142123
+de	ppmi_cc100_abs_freq_random__15000_words	de tms vertex	0.24765232526732908
+de	ppmi_cc100_abs_freq_random__15000_words	de tms pIFG	0.2803849427828381
+de	ppmi_cc100_abs_freq_random__15000_words	de tms aIFG	0.31819636210175456
 de	ppmi_cc100_abs_freq_top_rowincol_15000_words	simlex999-sim	0.31207130697022295
 de	ppmi_cc100_abs_freq_top_rowincol_15000_words	ws353	0.47495778240060926
 de	ppmi_cc100_abs_freq_top_rowincol_15000_words	tms aIFG	0.21381439620584033
@@ -6741,11 +7433,17 @@ de	ppmi_cc100_abs_freq_top__17500_words	ws353	0.4686072481780387
 de	ppmi_cc100_abs_freq_top__17500_words	tms aIFG	0.21411562494045927
 de	ppmi_cc100_abs_freq_top__17500_words	tms vertex	0.17450655536733375
 de	ppmi_cc100_abs_freq_top__17500_words	tms pIFG	0.20893451560142842
+de	ppmi_cc100_abs_freq_top__17500_words	de tms vertex	0.188879693882851
+de	ppmi_cc100_abs_freq_top__17500_words	de tms pIFG	0.22955775310636878
+de	ppmi_cc100_abs_freq_top__17500_words	de tms aIFG	0.24980367006917178
 de	ppmi_cc100_abs_freq_random__17500_words	simlex999-sim	0.224718094083361
 de	ppmi_cc100_abs_freq_random__17500_words	ws353	0.45479432280183707
 de	ppmi_cc100_abs_freq_random__17500_words	tms aIFG	0.2889262934292342
 de	ppmi_cc100_abs_freq_random__17500_words	tms vertex	0.23716675359303357
 de	ppmi_cc100_abs_freq_random__17500_words	tms pIFG	0.25384770001165397
+de	ppmi_cc100_abs_freq_random__17500_words	de tms vertex	0.24979547498004112
+de	ppmi_cc100_abs_freq_random__17500_words	de tms pIFG	0.28090448435707294
+de	ppmi_cc100_abs_freq_random__17500_words	de tms aIFG	0.3218318543803838
 de	ppmi_cc100_abs_freq_top_rowincol_17500_words	simlex999-sim	0.3116252509787375
 de	ppmi_cc100_abs_freq_top_rowincol_17500_words	ws353	0.47513227433014543
 de	ppmi_cc100_abs_freq_top_rowincol_17500_words	tms aIFG	0.21646596610549929
@@ -6761,11 +7459,17 @@ de	ppmi_cc100_abs_freq_top__20000_words	ws353	0.46841974382249035
 de	ppmi_cc100_abs_freq_top__20000_words	tms aIFG	0.2163575257083934
 de	ppmi_cc100_abs_freq_top__20000_words	tms vertex	0.17630340262033523
 de	ppmi_cc100_abs_freq_top__20000_words	tms pIFG	0.2107735001848023
+de	ppmi_cc100_abs_freq_top__20000_words	de tms vertex	0.1896969179392294
+de	ppmi_cc100_abs_freq_top__20000_words	de tms pIFG	0.23223282256214303
+de	ppmi_cc100_abs_freq_top__20000_words	de tms aIFG	0.2520124181892174
 de	ppmi_cc100_abs_freq_random__20000_words	simlex999-sim	0.22426039222532346
 de	ppmi_cc100_abs_freq_random__20000_words	ws353	0.45214088532888164
 de	ppmi_cc100_abs_freq_random__20000_words	tms aIFG	0.29014835727980315
 de	ppmi_cc100_abs_freq_random__20000_words	tms vertex	0.23627598837975444
 de	ppmi_cc100_abs_freq_random__20000_words	tms pIFG	0.2545114660469729
+de	ppmi_cc100_abs_freq_random__20000_words	de tms vertex	0.25083918854115705
+de	ppmi_cc100_abs_freq_random__20000_words	de tms pIFG	0.2812275857740123
+de	ppmi_cc100_abs_freq_random__20000_words	de tms aIFG	0.32152844515228146
 de	ppmi_cc100_abs_freq_top_rowincol_20000_words	simlex999-sim	0.3107263959746912
 de	ppmi_cc100_abs_freq_top_rowincol_20000_words	ws353	0.47419882873404634
 de	ppmi_cc100_abs_freq_top_rowincol_20000_words	tms aIFG	0.21850363477112572
@@ -6781,11 +7485,17 @@ de	ppmi_cc100_abs_freq_top__25000_words	ws353	0.47158568274886337
 de	ppmi_cc100_abs_freq_top__25000_words	tms aIFG	0.22231361733397303
 de	ppmi_cc100_abs_freq_top__25000_words	tms vertex	0.18007576315246557
 de	ppmi_cc100_abs_freq_top__25000_words	tms pIFG	0.2133922667689446
+de	ppmi_cc100_abs_freq_top__25000_words	de tms vertex	0.19526826207104978
+de	ppmi_cc100_abs_freq_top__25000_words	de tms pIFG	0.23550509308624396
+de	ppmi_cc100_abs_freq_top__25000_words	de tms aIFG	0.2576125127572937
 de	ppmi_cc100_abs_freq_random__25000_words	simlex999-sim	0.22499673913461535
 de	ppmi_cc100_abs_freq_random__25000_words	ws353	0.44092135213451916
 de	ppmi_cc100_abs_freq_random__25000_words	tms aIFG	0.291184272062942
 de	ppmi_cc100_abs_freq_random__25000_words	tms vertex	0.23833425128311994
 de	ppmi_cc100_abs_freq_random__25000_words	tms pIFG	0.2557352323433749
+de	ppmi_cc100_abs_freq_random__25000_words	de tms vertex	0.24594439704273227
+de	ppmi_cc100_abs_freq_random__25000_words	de tms pIFG	0.28362277629579025
+de	ppmi_cc100_abs_freq_random__25000_words	de tms aIFG	0.322551382580131
 de	ppmi_cc100_abs_freq_top_rowincol_25000_words	simlex999-sim	0.3081072663238528
 de	ppmi_cc100_abs_freq_top_rowincol_25000_words	ws353	0.4748616785795799
 de	ppmi_cc100_abs_freq_top_rowincol_25000_words	tms aIFG	0.22241334635149715
