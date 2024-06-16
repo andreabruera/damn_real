@@ -5678,6 +5678,13 @@ de	fasttext	tms pIFG	0.16681769216169262
 de	fasttext	de tms vertex	0.18484142555870572
 de	fasttext	de tms pIFG	0.19347759581368615
 de	fasttext	de tms aIFG	0.225970845815161
+de	fasttext	de tms pIPL sham	-0.011215114729343131
+de	fasttext	de tms pIPL	0.052452731840863964
+de	fasttext	de tms sham	0.039792176856881
+de	fasttext	de tms pIPL sound sham	-0.029789371902229075
+de	fasttext	de tms pIPL action sham	0.10807659234286526
+de	fasttext	de tms sound pIPL	-0.02819939615461135
+de	fasttext	de tms action pIPL	0.12894270735519528
 de	fasttext_aligned	simlex999-sim	0.4158272216946795
 de	fasttext_aligned	ws353	0.678054582913429
 de	fasttext_aligned	tms aIFG	0.1740316922139454
@@ -5686,6 +5693,13 @@ de	fasttext_aligned	tms pIFG	0.14743163085190317
 de	fasttext_aligned	de tms vertex	0.19337726274057931
 de	fasttext_aligned	de tms pIFG	0.18908927321442065
 de	fasttext_aligned	de tms aIFG	0.19860471633955457
+de	fasttext_aligned	de tms pIPL sham	-0.005066826050704964
+de	fasttext_aligned	de tms pIPL	0.05161856584417391
+de	fasttext_aligned	de tms sham	0.05806341409028403
+de	fasttext_aligned	de tms pIPL sound sham	0.00040896950718706954
+de	fasttext_aligned	de tms pIPL action sham	0.11351335861962651
+de	fasttext_aligned	de tms sound pIPL	-0.034156623003551705
+de	fasttext_aligned	de tms action pIPL	0.12248757467187683
 de	ppmi_wac_abs_freq_top__100_words	simlex999-sim	0.23488617333510836
 de	ppmi_wac_abs_freq_top__100_words	ws353	0.3010073344532608
 de	ppmi_wac_abs_freq_top__100_words	tms aIFG	0.1935718616199954

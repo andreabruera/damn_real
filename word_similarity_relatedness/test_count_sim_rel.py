@@ -17,9 +17,11 @@ sys.path.append('..')
 from utf_utils import transform_german_word
 from utils import build_ppmi_vecs, read_lancaster_ratings
 
-def compute_corr(dataset, dataset_name, present_words):
+def check_dataset_words(dataset, present_words, prototyping=False):
     missing_words = set()
     test_sims = list()
+    if prototyping:
+        dataset = {(w, w) : '' for w in dataset} 
     for ws, val in dataset.items():
         marker = True
         w_ones = list()
@@ -68,12 +70,30 @@ def compute_corr(dataset, dataset_name, present_words):
         if marker:
             #test_sims[ws] = val
             test_sims.append((w_ones, w_twos, val))
+    if len(missing_words) > 0:
+        print('missing words: {}'.format(missing_words))
+    return test_sims
+
+def compute_corr(dataset, dataset_name, present_words, prototypes):
+    test_sims = check_dataset_words(dataset, present_words)
+    if len(prototypes.keys()) > 0:
+        proto_sims = dict()
+        for k, v in prototypes.items():
+            proto_sims[k] = set([w for _ in check_dataset_words(v, present_words, prototyping=True) for __ in _[:2] for w in __])
+        proto_vecs = dict()
+        for k, v in proto_sims.items():
+            print([k, v])
+            assert len(v) > 0
+            current_vecs = list()
+            for w in v:
+                current_vecs.append(model[w])
+            current_vec = numpy.average(current_vecs, axis=0)
+            proto_vecs[k] = current_vec
+
     if len(test_sims) == 0:
         #continue
         corr = None
         return corr
-    if len(missing_words) > 0:
-        print('missing words: {}'.format(missing_words))
     real = list()
     pred = list()
     #for k, v in test_sims.items():
@@ -84,12 +104,25 @@ def compute_corr(dataset, dataset_name, present_words):
         else:
             real.append(v)
         ### all possible transformations...
-        current_pred = list()
-        for w in w_ones:
+        if len(prototypes.keys()) > 0:
+            current_pred = list()
             for w_two in w_twos:
-                partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
+                if 'er' in w_ones[0]:
+                    vec_one = proto_vecs['sound']
+                elif 'andlung' in w_ones[0]:
+                    vec_one = proto_vecs['action']
+                else:
+                    raise RuntimeError()
+                partial_pred = 1 - scipy.spatial.distance.cosine(vec_one, model[w_two])
                 current_pred.append(partial_pred)
-        current_pred = numpy.average(current_pred)
+            current_pred = numpy.average(current_pred)
+        else:
+            current_pred = list()
+            for w in w_ones:
+                for w_two in w_twos:
+                    partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
+                    current_pred.append(partial_pred)
+            current_pred = numpy.average(current_pred)
         pred.append(current_pred)
     try:
         #corr = scipy.stats.pearsonr(real, pred).statistic
@@ -113,7 +146,9 @@ def test_model(lang, case, model, vocab, results, datasets):
         except ValueError:
             continue
         present_words.append(w)
-    for dataset_name, dataset in datasets[lang].items():
+    for dataset_name, dataset_proto in datasets[lang].items():
+        dataset = dataset_proto[0]
+        prototypes = dataset_proto[1]
         if len(dataset) == 0:
             continue
         if case not in results[lang].keys():
@@ -127,7 +162,7 @@ def test_model(lang, case, model, vocab, results, datasets):
         else:
             corrs = list()
             for s, s_data in dataset.items():
-                corr = compute_corr(s_data, dataset_name, present_words)
+                corr = compute_corr(s_data, dataset_name, present_words, prototypes)
                 if corr == None:
                     print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
                 else:
@@ -171,6 +206,60 @@ def read_italian_cereb_tms(lang):
         full_sims = reorganize_tms_sims(sims)
     return full_sims, test_vocab
 
+def read_german_pipl_tms(lang):
+    sims = dict()
+    test_vocab = set()
+    lines = list()
+    prototypes = {'action' : list(), 'sound' : list()}
+    with open(os.path.join('..', 'tms', 'data', 'de_tms_pipl.tsv')) as i:
+        for l_i, l in enumerate(i):
+            line = l.strip().split('\t')
+            if l_i == 0:
+                header = [w for w in line]
+                continue
+            if line[header.index('action_word')] == '1':
+                prototypes['action'].append(line[header.index('stimulus')])
+            if line[header.index('sound_word')] == '1':
+                prototypes['sound'].append(line[header.index('stimulus')])
+            if 'lexical_decision' in line:
+                continue
+            lines.append(line)
+    full_sims = dict()
+    conditions = set([l[header.index('condition')] for l in lines])
+    tasks = set([l[header.index('task')] for l in lines])
+    for c in conditions:
+        if lang == 'de':
+            ### both tasks together
+            current_cond = [l for l in lines if l[header.index('condition')]==c]
+            subjects = [int(l[header.index('subject')]) for l in current_cond]
+            log_rts = [float(l[header.index('log_rt')]) for l in current_cond]
+            #log_rts = [float(l[header.index('rt')]) for l in current_cond]
+            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
+            test_vocab = test_vocab.union(set(vocab_w_ones))
+            vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
+            test_vocab = test_vocab.union(set(vocab_w_twos))
+            w_ones = [l[header.index('task')] for l in current_cond]
+            w_twos = [l[header.index('stimulus')] for l in current_cond]
+            sims[c]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+            for t in tasks:
+                ### separate tasks
+                current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t]
+                subjects = [int(l[header.index('subject')]) for l in current_cond]
+                log_rts = [float(l[header.index('log_rt')]) for l in current_cond]
+                #log_rts = [float(l[header.index('rt')]) for l in current_cond]
+                vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
+                test_vocab = test_vocab.union(set(vocab_w_ones))
+                vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
+                test_vocab = test_vocab.union(set(vocab_w_twos))
+                w_ones = [l[header.index('task')] for l in current_cond]
+                w_twos = [l[header.index('stimulus')] for l in current_cond]
+                sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+        else:
+            full_sims[name] = list()
+    if lang == 'de':
+        full_sims = reorganize_tms_sims(sims)
+    return full_sims, test_vocab, prototypes
+
 def read_german_ifg_tms(lang):
     sims = dict()
     test_vocab = set()
@@ -195,6 +284,7 @@ def read_german_ifg_tms(lang):
             current_cond = [l for l in lines if float(l[header.index('condition')]) in c]
             subjects = [int(l[header.index('sub')]) for l in current_cond]
             log_rts = [float(l[header.index('log_rt')]) for l in current_cond]
+            #log_rts = [float(l[header.index('rt')]) for l in current_cond]
             vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('word')])]
             test_vocab = test_vocab.union(set(vocab_w_ones))
             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('category')])]
@@ -323,7 +413,7 @@ def read_mitchell(lang):
 languages = [
              #'en',
              'de',
-             'it',
+             #'it',
              ]
 
 rows = dict()
@@ -334,33 +424,41 @@ for lang in languages:
     ws353, ws353_vocab = read_ws353(lang)
     fern_one, fern_two, fern_vocab = read_fern(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
+    de_tms_pipl, de_tms_pipl_vocab, prototypes = read_german_pipl_tms(lang)
     ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
     basic_vocab = men_vocab.union(
                                   simlex_vocab,
                                   ws353_vocab,
                                   fern_vocab,
                                   germ_tms_ifg_vocab,
+                                  de_tms_pipl_vocab,
                                   ita_tms_cereb_vocab,
                                   )
     rows[lang] = sorted(basic_vocab)
     datasets[lang] = dict()
-    for dataset_name, dataset in [
+    for dataset_name, dataset, proto in [
                     ### similarity/relatedness
-                    #('simlex999-sim', simlex),
-                    #('ws353', ws353),
-                    #('men', men), 
+                    #('simlex999-sim', simlex, {}),
+                    #('ws353', ws353, {}),
+                    #('men', men, {}), 
                     ### semantic network brain RSA
-                    #('fern1', fern_one),
-                    #('fern2', fern_two),
+                    #('fern1', fern_one, {}),
+                    #('fern2', fern_two, {}),
                     ## german TMS
-                    ('de tms vertex', germ_tms_ifg['vertex']),
-                    ('de tms pIFG', germ_tms_ifg['pIFG']),
-                    ('de tms aIFG', germ_tms_ifg['aIFG']),
+                    #('de tms vertex', germ_tms_ifg['vertex'], {}),
+                    #('de tms pIFG', germ_tms_ifg['pIFG'], {}),
+                    #('de tms aIFG', germ_tms_ifg['aIFG'], {}),
+                    ('de tms pIPL', de_tms_pipl['pIPL'], prototypes),
+                    ('de tms sham', de_tms_pipl['sham'], prototypes),
+                    ('de tms pIPL sound sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+                    ('de tms pIPL action sham', de_tms_pipl['Handlung_sham'], prototypes),
+                    ('de tms sound pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+                    ('de tms action pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
                     ## italian TMS
-                    ('it tms cereb', ita_tms_cereb['cedx']),
-                    ('it tms vertex', ita_tms_cereb['cz']),
+                    #('it tms cereb', ita_tms_cereb['cedx'], {}),
+                    #('it tms vertex', ita_tms_cereb['cz'], {}),
                     ]:
-        datasets[lang][dataset_name] = dataset
+        datasets[lang][dataset_name] = (dataset, proto)
 
 results = dict()
 results_file = 'evaluation.tsv'
@@ -377,6 +475,8 @@ if os.path.exists(results_file):
 
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 lancaster_ratings = read_lancaster_ratings()
+
+fasttext_only = True
 
 models = dict()
 vocabs = dict()
@@ -402,11 +502,11 @@ for lang in languages:
                                    ), 'rb') as i:
                 model = pickle.load(i)
             vocab = model.keys()
-        #models[lang][case] = {w : model[w] for w in vocab}
-        #vocabs[lang][case] = [w for w in vocab]
         model = {w : model[w] for w in vocab}
         vocab = [w for w in vocab]
         results = test_model(lang, case, model, vocab, results, datasets)
+    if fasttext_only:
+        continue
     for corpus in [
                #'bnc',
                'wac',

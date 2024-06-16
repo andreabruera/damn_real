@@ -3,7 +3,7 @@ import numpy
 import os
 import re
 
-from matplotlib import pyplot
+from matplotlib import colormaps, pyplot
 
 results = dict()
 
@@ -70,12 +70,13 @@ for lang, l_res in results.items():
                       linestyles=style,
                       color='red',
                       )
-        for mitch in mitchs:
+        for mitch, col in zip(mitchs, numpy.linspace(0, 1, len(mitchs))):
             ax.hlines(
                       y=t_res[mitch],
                       xmin=-.1,
                       xmax=max(all_vals)+.1,
                       label=mitch,
+                      color=matplotlib.colormaps['cividis'](col)
                       )
         colors = {k : v for k, v in zip(others.keys(), matplotlib.cm.rainbow(numpy.linspace(0, 1, len(others.keys()))))}
         for case, sort_freqs in others.items():
