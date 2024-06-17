@@ -89,6 +89,7 @@ for l, l_data in results.items():
                [x-0.25 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
                color='mediumaquamarine',
+               width=10,
                )
         ### results for other model
         other_model = lang_best[l][1]
@@ -98,12 +99,13 @@ for l, l_data in results.items():
         ax.bar(
                [x+0.25 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
-               color='mediumaquamarine',
+               color='goldenrod',
+               width=10,
                )
         ax.scatter(
                [x+0.25+(random.randint(-100, 100)*0.001) for x in range(len(xs))],
                [numpy.average(y) for y in ys],
-               edgecolor='mediumaquamarine',
+               edgecolor='goldenrod',
                color='white',
                alpha=0.5,
                zorder=3.,
