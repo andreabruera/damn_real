@@ -23,7 +23,7 @@ with open('evaluation.tsv') as i:
         task = line[2]
         if task not in results[lang].keys():
             results[lang][task] = dict()
-        res = float(line[3])
+        res = numpy.array(line[3:], dtype=numpy.float32)
         if 'fasttext' not in model and 'mitchell' not in model:
             if short_model not in results[lang][task].keys():
                 results[lang][task][short_model] = dict()
@@ -63,7 +63,7 @@ for lang, l_res in results.items():
                   )
         for ft, style in zip(fts, ['solid', 'dashdot',]):
             ax.hlines(
-                      y=t_res[ft],
+                      y=numpy.average(t_res[ft]),
                       xmin=-.1,
                       xmax=max(all_vals)+.1,
                       label=ft,
@@ -72,7 +72,7 @@ for lang, l_res in results.items():
                       )
         for mitch, col in zip(mitchs, numpy.linspace(0, 1, len(mitchs))):
             ax.hlines(
-                      y=t_res[mitch],
+                      y=numpy.average(t_res[mitch]),
                       xmin=-.1,
                       xmax=max(all_vals)+.1,
                       label=mitch,
@@ -84,13 +84,13 @@ for lang, l_res in results.items():
             ys_freqs = [v[1] for v in sort_freqs]
             ax.plot(
                     xs_freqs,
-                    ys_freqs,
+                    [numpy.average(v) for v in ys_freqs],
                     label=case,
                     color=colors[case]
                     )
             ax.scatter(
                     xs_freqs,
-                    ys_freqs,
+                    [numpy.average(v) for v in ys_freqs],
                     s=50,
                     marker='d',
                     edgecolors='white',

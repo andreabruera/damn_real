@@ -172,21 +172,22 @@ def test_model(lang, case, model, vocab, results, datasets):
             if corr == None:
                 print('error with {}'.format([lang, case, dataset_name]))
                 continue
+            corr = [corr]
         else:
-            corrs = list()
+            corr = list()
             printing = 0
             for s, s_data in dataset.items():
-                corr = compute_corr(s_data, dataset_name, present_words, prototypes, printing=printing)
-                if corr == None:
+                curr_corr = compute_corr(s_data, dataset_name, present_words, prototypes, printing=printing)
+                if curr_corr == None:
                     print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
                 else:
-                    corrs.append(corr)
+                    corr.append(curr_corr)
                 printing += 1
-            corr = numpy.nanmean(corrs)
+            #corr = numpy.nanmean(corrs)
         print('\n')
         print('{} model'.format(case))
         print('correlation with {} dataset:'.format(dataset_name))
-        print(corr)
+        print(numpy.nanmean(corr))
         results[lang][case][dataset_name] = corr
     return results
 
@@ -298,7 +299,9 @@ def read_german_pipl_tms(lang):
                 w_twos = [l[header.index('stimulus')] for l in current_cond]
                 sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
         else:
-            full_sims[name] = list()
+            full_sims[c] = list()
+            for t in tasks:
+                full_sims['{}_{}'.format(t, c)] = list()
     if lang == 'de':
         full_sims = reorganize_tms_sims(sims)
     return full_sims, test_vocab, prototypes
@@ -456,7 +459,7 @@ def read_mitchell(lang):
 languages = [
              #'en',
              'de',
-             #'it',
+             'it',
              ]
 
 rows = dict()
@@ -488,18 +491,18 @@ for lang in languages:
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ## german TMS
-                    #('de tms vertex', germ_tms_ifg['vertex'], {}),
-                    #('de tms pIFG', germ_tms_ifg['pIFG'], {}),
-                    #('de tms aIFG', germ_tms_ifg['aIFG'], {}),
-                    ('de tms pIPL', de_tms_pipl['pIPL'], prototypes),
-                    ('de tms sham', de_tms_pipl['sham'], prototypes),
-                    ('de tms pIPL sound sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-                    ('de tms pIPL action sham', de_tms_pipl['Handlung_sham'], prototypes),
-                    ('de tms sound pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-                    ('de tms action pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+                    ('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
+                    ('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
+                    ('de_sem-phone_tms_aIFG', germ_tms_ifg['aIFG'], {}),
+                    ('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+                    ('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+                    ('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+                    ('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+                    ('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+                    ('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
                     ## italian TMS
-                    #('it tms cereb', ita_tms_cereb['cedx'], {}),
-                    #('it tms vertex', ita_tms_cereb['cz'], {}),
+                    ('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
+                    ('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
 
@@ -514,7 +517,7 @@ if os.path.exists(results_file):
                 results[line[0]] = dict()
             if line[1] not in results[line[0]].keys():
                 results[line[0]][line[1]] = dict()
-            results[line[0]][line[1]][line[2]] = float(line[3])
+            results[line[0]][line[1]][line[2]] = numpy.array(line[3:], dtype=numpy.float32)
 
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 lancaster_ratings = read_lancaster_ratings()
@@ -681,7 +684,10 @@ for lang in languages:
                              '', 
                              #'rowincol',
                              ]:
-                for selection_mode in ['top', 'random']: 
+                for selection_mode in [
+                                       'top', 
+                                       'random',
+                                       ]: 
                     #ctx_words = [w for w in inv_sorted_ratings
                     #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=False)
                     ### using the basic required vocab for all tests as a basis set of words
@@ -742,4 +748,7 @@ with open(results_file, 'w') as o:
     for lang, lang_data in results.items():
         for case, case_data in lang_data.items():
             for dataset, corr in case_data.items():
-                o.write('{}\t{}\t{}\t{}\n'.format(lang, case, dataset, corr))
+                o.write('{}\t{}\t{}\t'.format(lang, case, dataset))
+                for c in corr:
+                    o.write('{}\t'.format(c))
+                o.write('\n')
