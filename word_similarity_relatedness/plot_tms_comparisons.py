@@ -93,7 +93,7 @@ for l, l_data in results.items():
                width=0.4,
                )
         ax.scatter(
-               [x+0.25+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
+               [x-0.25+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
                ys,
                edgecolor='aquamarine',
                color='white',
