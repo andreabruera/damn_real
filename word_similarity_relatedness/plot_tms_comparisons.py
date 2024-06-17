@@ -4,7 +4,15 @@ import os
 import random
 import re
 
-from matplotlib import colormaps, pyplot
+from matplotlib import colormaps, font_manager, pyplot
+
+### Font setup
+# Using Helvetica as a font
+font_folder = '/import/cogsci/andrea/dataset/fonts/'
+font_dirs = [font_folder, ]
+font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+for p in font_files:
+    font_manager.fontManager.addfont(p)
 
 results = dict()
 
@@ -64,7 +72,8 @@ lang_best = dict()
 for l, l_data in model_results.items():
     #print(l_data.keys())
     sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1])
-    #print(l)
+    print(l)
+    print(sorted_ranks[:10])
     best_ft = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' in r[0]])
     best_other = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' not in r[0]])
     lang_best[l] = (sorted_ranks[best_ft][0], sorted_ranks[best_other][0])
@@ -79,21 +88,34 @@ for l, l_data in results.items():
         fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
         ax.set_ylim(bottom=0., top=0.3)
         curr_ts = sorted([w for w in l_data.keys() if t in w])
+        if len(curr_ts) == 2:
+            xs = [0.5]
+        elif len(curr_ts) == 3:
+            xs = []
+        elif len(curr_ts) == 6:
+            xs = [1.5, 3.5]
+        ax.vlines(
+                  x=xs,
+                  ymin=-.5,
+                  ymax=.5,
+                  linewidth=10,
+                  linestyles='dashed',
+                  color='black',
+                  )
         xs = [w.split('_tms_')[1] for w in curr_ts]
         ax.bar(0, 0, color='mediumaquamarine', label='fasttext')
         ax.bar(0, 0, color='goldenrod', label='CC100-PPMI')
         ### results for fasttext
-        #ft_model = lang_best[l][0]
-        ft_model = 'fasttext'
+        ft_model = lang_best[l][0]
         ys = [l_data[c_t][ft_model] for c_t in curr_ts]
         ax.bar(
-               [x-0.25 for x in range(len(xs))],
+               [x-0.15 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
                color='mediumaquamarine',
-               width=0.4,
+               width=0.25,
                )
         ax.scatter(
-               [x-0.25+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
+               [x-0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
                ys,
                edgecolor='aquamarine',
                color='white',
@@ -106,13 +128,13 @@ for l, l_data in results.items():
         second_part = float(other_model.split('_')[-1])
         ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
         ax.bar(
-               [x+0.25 for x in range(len(xs))],
+               [x+0.15 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
                color='goldenrod',
-               width=0.4,
+               width=0.25,
                )
         ax.scatter(
-               [x+0.25+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
+               [x+0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
                ys,
                edgecolor='goldenrod',
                color='white',
@@ -123,12 +145,14 @@ for l, l_data in results.items():
         pyplot.ylabel(
                       ylabel='RT-semantic dissimilarity correlation',
                       fontsize=23,
+                      fontweight='bold'
                       )
         pyplot.yticks(fontsize=20)
         pyplot.xticks(
                      ticks=range(len(xs)),
                      labels=[x.replace('_', ' ') for x in xs],
                      fontsize=25,
+                     fontweight='bold'
                      )
         pyplot.title(
                      '{}'.format(t.replace('_', ' ')), 
