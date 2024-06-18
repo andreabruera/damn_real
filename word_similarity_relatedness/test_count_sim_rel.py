@@ -461,8 +461,8 @@ def read_mitchell(lang):
 
 languages = [
              #'en',
-             #'de',
-             'it',
+             'de',
+             #'it',
              ]
 
 rows = dict()
@@ -494,15 +494,15 @@ for lang in languages:
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ## german TMS
-                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
-                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
-                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
-                    #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-                    #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-                    #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-                    #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-                    #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-                    #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+                    ('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
+                    ('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
+                    ('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
+                    ('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+                    ('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+                    ('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+                    ('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+                    ('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+                    ('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
                     ## italian TMS
                     #('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
@@ -523,7 +523,21 @@ if os.path.exists(results_file):
             results[line[0]][line[1]][line[2]] = numpy.array(line[3:], dtype=numpy.float32)
 
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
-lancaster_ratings = read_lancaster_ratings()
+lancaster_ratings = {
+                     'en' : read_lancaster_ratings(),
+                     'de' : dict(),
+                     }
+### german translation
+with tqdm() as counter:
+    with open(os.path.join('..', 'translations', 'lanc_fern_de_to_en.tsv')) as i:
+        for l in i:
+            line = l.strip().split('\t')
+            for w in transform_german_word(line[0].lower()):
+                try:
+                    lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
+                    counter.update(1)
+                except KeyError:
+                    continue
 
 #fasttext_only = True
 fasttext_only = False
@@ -536,6 +550,7 @@ for lang in languages:
     models[lang] = dict()
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
+    '''
     for case in [
                  'fasttext',
                  'fasttext_aligned',
@@ -563,6 +578,7 @@ for lang in languages:
         model = {w : model[w] for w in vocab}
         vocab = [w for w in vocab]
         results = test_model(lang, case, model, vocab, results, datasets)
+    '''
     if fasttext_only:
         continue
     for corpus in [
@@ -605,24 +621,28 @@ for lang in languages:
             coocs = pickle.load(i)
         ### selecting dimensions from ratings
         row_words = [w for w in rows[lang] if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
-        if lang == 'en':
+        if lang in ['de', 'en']:
             ### mitchell
-            for row_mode in ['', 'rowincol']:
-                key = 'ppmi_{}_mitchell_{}_words'.format(corpus, row_mode)
-                if row_mode == 'rowincol':
-                    ctx_words = set([w for ws in read_mitchell(lang) for w in ws] + row_words)
-                else:
-                    ctx_words = [w for ws in read_mitchell(lang) for w in ws]
-                trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
-                model = {k : v for k, v in trans_pmi_vecs.items()}
-                #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
-                curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                results = test_model(lang, key, model, curr_vocab, results, datasets)
+            for row_mode in [
+                             '', 
+                             #'rowincol',
+                             ]:
+                if lang == 'en':
+                    key = 'ppmi_{}_mitchell_{}_words'.format(corpus, row_mode)
+                    if row_mode == 'rowincol':
+                        ctx_words = set([w for ws in read_mitchell(lang) for w in ws] + row_words)
+                    else:
+                        ctx_words = [w for ws in read_mitchell(lang) for w in ws]
+                    trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
+                    #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
+                    model = {k : v for k, v in trans_pmi_vecs.items()}
+                    #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
+                    curr_vocab = [w for w in trans_pmi_vecs.keys()]
+                    results = test_model(lang, key, model, curr_vocab, results, datasets)
             ### lancaster
-            filt_ratings = {w : freqs[w] for w in lancaster_ratings.keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
+            filt_ratings = {w : freqs[w] for w in lancaster_ratings[lang].keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
             sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1], reverse=True)]
-            filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings.items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
+            filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings[lang].items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
             sorted_perc = [w[0] for w in sorted(filt_perc.items(), key=lambda item: item[1], reverse=True)]
             #inv_sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1])]
             #for percentage in [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]:
@@ -638,12 +658,15 @@ for lang in languages:
                               10000, 12500, 15000, 17500,
                               20000, 25000
                               ]):
-                for row_mode in ['', 'rowincol']:
+                for row_mode in [
+                                 '', 
+                                 #'rowincol',
+                                 ]:
                     for selection_mode in [
                                            'top', 
-                                           'random', 
-                                           'hi-perceptual', 
-                                           'lo-perceptual',
+                                           #'random', 
+                                           #'hi-perceptual', 
+                                           #'lo-perceptual',
                                            ]: 
                         key = 'ppmi_{}_lancaster_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
                         #if key in results[lang].keys():
@@ -681,6 +704,7 @@ for lang in languages:
                         #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                         curr_vocab = [w for w in trans_pmi_vecs.keys()]
                         results = test_model(lang, key, model, curr_vocab, results, datasets)
+        '''
         ### top-n frequencies
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
@@ -727,7 +751,6 @@ for lang in languages:
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
                     results = test_model(lang, key, model, curr_vocab, results, datasets)
-    '''
     pruned_ratings = {w : dct for w, dct in ratings.items() if w in freqs.keys() and vocab[w]!=0}
     percent = int(len(pruned_ratings.items())*0.001)
     #percent = int(len(pruned_ratings.items())*0.05)
@@ -753,7 +776,7 @@ for lang in languages:
     ### building the PPMI matrix
     ### things are better when including in the rows the words from MEN...
     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=True)
-    '''
+'''
 
 ### writing to file
 with open(results_file, 'w') as o:
