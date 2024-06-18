@@ -14,7 +14,7 @@ with open('evaluation.tsv') as i:
         if lang not in results.keys():
             results[lang] = dict()
         model = line[1]
-        if 'fasttext' not in model and 'mitchell' not in model:
+        if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
             num = float(model.split('_')[-2])
             if 'wiki' in model:
                 short_model = '_'.join(model.split('_')[2:-2])
@@ -24,7 +24,7 @@ with open('evaluation.tsv') as i:
         if task not in results[lang].keys():
             results[lang][task] = dict()
         res = numpy.array(line[3:], dtype=numpy.float32)
-        if 'fasttext' not in model and 'mitchell' not in model:
+        if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
             if short_model not in results[lang][task].keys():
                 results[lang][task][short_model] = dict()
             results[lang][task][short_model][num] = res
@@ -50,10 +50,10 @@ for lang, l_res in results.items():
         bottom = -.08 if task != 'men' else 0.1
         ax.set_ylim(bottom=bottom, top=top)
         all_vals = list()
-        fts = [k for k in t_res.keys() if 'fast' in k]
+        fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k]
         mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
         #others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k}
-        others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k and 'top' in k and 'rowincol' not in k}
+        others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k and 'rowincol' not in k}
         all_vals = [val[0] for v in others.values() for val in v] + [0.]
         ax.hlines(
                   y=0,
