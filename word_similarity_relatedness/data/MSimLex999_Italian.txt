@@ -44,7 +44,7 @@ scemo,tardo,9,9,10,9,10,7,8,10,9,8,10,9,10,9.08
 spazioso,grande,8,10,10,10,8,10,9,10,9,8,10,9,10,9.31
 gentile,crudele,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00
 impaziente,ansioso,9,10,10,9,6,8,10,9,9,6,10,3,9,8.31
-grande,estesp,7,10,10,0,9,10,10,9,8,7,7,8,10,8.08
+grande,esteso,7,10,10,0,9,10,10,9,8,7,7,8,10,8.08
 forte,orgoglioso,6,0,7,6,4,8,0,1,2,2,0,0,1,2.85
 superfluo,necessario,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00
 inquieto,giovane,2,0,0,4,0,0,7,0,0,2,0,0,0,1.15
@@ -189,7 +189,7 @@ vittoria,trionfo,10,10,10,10,10,10,10,10,10,10,10,10,10,10.00
 telefono,cabina,4,10,0,7,5,1,2,5,0,0,1,10,0,3.46
 porta,entrata,9,10,9,8,7,2,9,6,7,1,8,5,3,6.46
 motel,locanda,9,10,7,5,10,4,7,5,7,7,6,6,8,7.00
-vesititi,stoffa,2,4,5,8,6,4,2,4,0,0,1,10,2,3.69
+vestiti,stoffa,2,4,5,8,6,4,2,4,0,0,1,10,2,3.69
 bistecca,carne,8,6,9,7,10,1,8,8,9,2,8,10,6,7.08
 unghia,pollice,4,9,1,0,7,0,0,5,3,0,0,3,2,2.62
 banda,orchestra,10,9,9,8,6,7,10,6,7,7,9,10,8,8.15
@@ -316,7 +316,7 @@ erba,muschio,4,9,6,4,8,6,7,7,7,5,4,3,1,5.46
 scuola,legge,0,2,7,0,4,4,6,1,0,0,2,0,0,2.00
 piede,testa,0,4,0,2,3,1,1,3,0,0,1,0,0,1.15
 madre,custode,2,3,6,1,4,6,2,1,0,0,3,0,5,2.54
-ortodentista,dentista,7,10,8,7,8,7,6,5,9,6,7,6,2,6.77
+ortodontista,dentista,7,10,8,7,8,7,6,5,9,6,7,6,2,6.77
 alcol,whiskey,7,9,9,5,7,8,7,7,8,5,6,4,8,6.92
 bocca,dente,1,6,5,5,7,6,4,6,1,0,3,2,1,3.62
 colazione,pancetta,1,2,3,3,6,2,5,0,1,0,1,0,0,1.85
@@ -361,7 +361,7 @@ gioco,scherzo,7,7,10,7,4,5,6,6,10,6,7,7,3,6.54
 fratello,figlio,4,1,0,1,2,5,4,0,0,0,0,1,0,1.38
 zia,nipote,0,2,0,0,3,3,0,0,0,1,3,1,5,1.38
 operaio,meccanico,6,6,10,9,2,10,5,4,10,7,8,3,5,6.54
-dottore,ortodentista,6,4,0,3,1,4,6,5,7,6,5,6,6,4.54
+dottore,ortodontista,6,4,0,3,1,4,6,5,7,6,5,6,6,4.54
 quercia,acero,4,3,10,2,2,8,5,2,4,0,4,6,4,4.15
 ape,regina,6,1,1,6,2,10,4,0,10,2,2,2,5,3.92
 auto,bicicletta,1,2,0,0,1,0,1,0,2,2,1,1,0,0.85
@@ -511,7 +511,7 @@ formula,equazione,10,3,8,7,5,7,8,3,8,7,8,8,10,7.08
 libro,informazione,7,7,4,6,6,3,6,4,2,2,4,6,5,4.77
 ragazzo,partner,10,7,7,5,1,6,3,8,10,9,7,7,9,6.85
 cielo,universo,5,5,8,3,4,5,3,3,7,5,4,8,8,5.23
-popolatione,persone,9,1,8,7,7,8,7,7,7,5,9,6,7,6.77
+popolazione,persone,9,1,8,7,7,8,7,7,7,5,9,6,7,6.77
 università,classe,9,6,4,7,2,5,7,3,2,8,1,2,3,4.54
 capo,sindaco,8,6,8,7,5,6,7,3,8,5,6,6,7,6.31
 rabbino,ministro,8,2,8,6,6,3,8,2,7,6,4,8,7,5.77
@@ -719,7 +719,7 @@ vincitore,goal,6,8,3,1,7,0,0,2,0,7,5,6,4,3.77
 trucco,taglia,0,0,0,1,4,0,0,0,0,0,2,3,0,0.77
 scelta,vena,4,0,2,4,5,0,0,0,0,1,1,0,0,1.31
 inno,conquista,2,6,1,8,6,0,5,2,7,8,4,7,0,4.31
-resistenza,band,4,0,3,4,2,0,1,2,0,3,4,3,0,2.00
+resistenza,banda,4,0,3,4,2,0,1,2,0,3,4,3,0,2.00
 prigione,scelta,2,1,1,1,1,0,0,2,0,1,1,1,0,0.85
 condizione,ragazzo,1,4,5,2,4,0,3,0,0,2,2,1,0,1.85
 fiore,resistenza,3,0,0,4,2,0,0,2,0,1,0,0,0,0.92
@@ -750,7 +750,7 @@ buco,moglie,2,0,2,0,2,0,0,0,0,1,1,0,0,0.62
 alunno,presidente,5,3,1,2,5,0,0,2,0,2,4,0,0,1.85
 bagno,moglie,2,0,1,0,1,0,0,1,0,3,2,2,0,0.92
 gente,centesimo,0,0,0,0,0,0,0,0,0,1,0,0,1,0.15
-fomula,logaritmo,1,0,1,7,6,4,0,5,3,8,7,3,1,3.54
+formula,logaritmo,1,0,1,7,6,4,0,5,3,8,7,3,1,3.54
 donna,pelliccia,3,0,0,2,0,2,3,5,0,2,0,0,2,1.46
 mela,sole,3,0,0,3,0,0,0,2,0,1,0,0,1,0.77
 pistola,alba,1,0,0,0,0,0,1,1,0,0,0,0,1,0.31
@@ -809,7 +809,7 @@ pensare,decidere,2,5,2,7,0,5,9,10,7,5,2,4,7,5.00
 salutare,incontrare,0,5,2,7,0,2,1,8,5,1,3,4,1,3.00
 convenire,litigare,0,0,0,0,0,0,0,1,0,0,2,1,0,0.31
 divertirsi,intrattenere,5,8,1,6,5,1,9,9,7,7,5,5,2,5.38
-distrurre,fare,0,0,0,0,0,0,1,1,0,0,3,1,2,0.62
+distruggere,fare,0,0,0,0,0,0,1,1,0,0,3,1,2,0.62
 salvare,proteggere,5,7,4,8,5,9,9,9,9,9,7,5,8,7.23
 dare,prestare,6,9,5,8,3,6,9,9,1,2,1,6,8,5.62
 capire,sapere,5,7,5,8,6,1,1,1,7,3,3,4,1,4.00
@@ -888,7 +888,7 @@ dichiarare,annunciare,10,9,8,10,9,2,9,6,10,4,8,9,6,7.69
 leggere,comprendere,5,2,3,0,4,8,1,5,3,2,3,3,10,3.77
 prendere,abbandonare,0,1,0,0,0,0,0,0,0,0,0,0,0,0.08
 proclamare,annunciare,10,9,8,10,9,10,9,5,10,10,10,8,7,8.85
-aquisire,ottenere,10,6,6,7,9,8,10,6,10,9,9,2,6,7.54
+acquisire,ottenere,10,6,6,7,9,8,10,6,10,9,9,2,6,7.54
 concludere,decidere,7,3,6,4,6,0,6,4,0,1,3,6,8,4.15
 accontentare,supplicare,0,0,3,0,1,0,1,0,0,0,0,0,0,0.38
 argomentare,dimostrare,7,6,8,7,8,6,8,3,9,1,7,6,7,6.38
@@ -896,7 +896,7 @@ chiedere,supplicare,3,7,4,7,7,7,3,4,5,3,2,5,0,4.38
 trovare,scomparire,0,0,0,0,0,0,0,0,0,0,0,0,0,0.00
 ispezionare,esaminare,10,8,8,10,8,10,5,6,10,9,10,9,8,8.54
 verificare,giustificare,6,4,3,7,6,0,1,7,0,1,2,1,0,2.92
-supporre,predirre,6,6,8,3,8,6,8,4,6,0,9,2,5,5.46
+supporre,predire,6,6,8,3,8,6,8,4,6,0,9,2,5,5.46
 imparare,valutare,0,1,5,0,3,0,7,2,0,0,2,0,0,1.54
 argomentare,giustificare,9,5,6,9,8,2,5,2,7,0,7,7,0,5.15
 fare,diventare,1,2,2,1,5,3,4,6,1,1,4,2,1,2.54
@@ -945,7 +945,7 @@ diventare,sembrare,3,0,2,0,7,0,2,8,3,6,6,2,5,3.38
 fingere,sembrare,7,0,1,5,4,5,5,3,8,6,7,6,5,4.77
 compiere,diventare,2,1,0,0,4,0,3,8,3,2,7,2,2,2.62
 contemplare,pensare,6,6,10,8,7,5,6,1,7,5,6,7,3,5.92
-determinare,predirre,3,3,5,0,6,6,3,3,0,5,1,4,5,3.38
+determinare,predire,3,3,5,0,6,6,3,3,0,5,1,4,5,3.38
 compiacere,intrattenere,6,0,4,6,6,5,3,6,6,3,2,7,1,4.23
 rimanere,conservare,2,6,5,9,4,5,3,4,0,3,5,5,3,4.15
 fingere,ritrarre,0,2,0,0,3,0,0,2,0,0,2,2,3,1.08
