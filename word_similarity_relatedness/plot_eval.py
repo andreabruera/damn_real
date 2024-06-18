@@ -42,7 +42,7 @@ for lang, l_res in results.items():
         if 'men' in task or '353' in task:
             top = 0.85
         elif 'simlex' in task:
-            top = 0.5
+            top = 0.7
         elif 'tms' in task:
             top = 0.35
         else:
@@ -53,7 +53,7 @@ for lang, l_res in results.items():
         fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k]
         mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
         #others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k}
-        others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k and 'rowincol' not in k}
+        others = {k : sorted(vals.items(), key=lambda item : item[0]) for k, vals in t_res.items() if 'fast' not in k and 'mitch' not in k and 'rowincol' not in k and 'concept' not in k}
         all_vals = [val[0] for v in others.values() for val in v] + [0.]
         ax.hlines(
                   y=0,
@@ -61,7 +61,7 @@ for lang, l_res in results.items():
                   xmax=max(all_vals)+.1,
                   color='black',
                   )
-        for ft, style in zip(fts, ['solid', 'dashdot',]):
+        for ft, style in zip(fts, ['solid', 'dashdot', 'dotted']):
             ax.hlines(
                       y=numpy.average(t_res[ft]),
                       xmin=-.1,
