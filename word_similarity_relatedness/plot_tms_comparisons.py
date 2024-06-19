@@ -66,18 +66,18 @@ for l, l_data in results.items():
         for rank, vals in enumerate(sorted_results):
             model = vals[0]
             if model not in model_results[l].keys():
-                #model_results[l][model] = [rank+1]
-                model_results[l][model] = [vals[1]]
+                model_results[l][model] = [rank+1]
+                #model_results[l][model] = [vals[1]]
             else:
-                #model_results[l][model].append(rank+1)
-                model_results[l][model].append(vals[1])
+                model_results[l][model].append(rank+1)
+                #model_results[l][model].append(vals[1])
 
 lang_best = dict()
 overall_best = dict()
 for l, l_data in model_results.items():
     #print(l_data.keys())
-    #sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1])
-    sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1], reverse=True)
+    sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1])
+    #sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1], reverse=True)
     print(l)
     print(sorted_ranks[:10])
     best_ft = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])
