@@ -62,6 +62,8 @@ for lang, l_res in results.items():
                           'concept' not in k and \
                           ('top' in k or '_hi-' in k or '_lo-' in k)
                           }
+        print(lang)
+        print(others.keys())
         all_vals = [val[0] for v in others.values() for val in v] + [0.]
         ax.hlines(
                   y=0,

@@ -73,6 +73,7 @@ for l, l_data in results.items():
                 model_results[l][model].append(vals[1])
 
 lang_best = dict()
+overall_best = dict()
 for l, l_data in model_results.items():
     #print(l_data.keys())
     #sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1])
@@ -82,6 +83,17 @@ for l, l_data in model_results.items():
     best_ft = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])
     best_other = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])
     lang_best[l] = (sorted_ranks[best_ft][0], sorted_ranks[best_other][0])
+    if l == 'en':
+        continue
+    for rank, model in enumerate(sorted_ranks):
+        if model[0] not in overall_best.keys():
+            overall_best[model[0]] = [rank]
+        else:
+            overall_best[model[0]].append(rank)
+overall_sorted_ranks = sorted({k : numpy.average(v) for k, v in overall_best.items()}.items(), key=lambda item : item[1])
+print(overall_sorted_ranks[:10])
+best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])][0]
+best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
 
 for l, l_data in results.items():
     if l == 'en':
@@ -109,10 +121,10 @@ for l, l_data in results.items():
                   )
         xs = [w.split('_tms_')[1] for w in curr_ts]
         ax.bar(0, 0, color='mediumaquamarine', label='fasttext')
-        ax.bar(0, 0, color='goldenrod', label='CC100-PPMI')
+        ax.bar(0, 0, color='goldenrod', label=best_other)
         ### results for fasttext
         #ft_model = lang_best[l][0]
-        ft_model = 'fasttext'
+        ft_model = best_ft
         ys = [l_data[c_t][ft_model] for c_t in curr_ts]
         ax.bar(
                [x-0.15 for x in range(len(xs))],
@@ -153,7 +165,7 @@ for l, l_data in results.items():
                             color='mediumaquamarine',
                             )
         ### results for other model
-        other_model = lang_best[l][1]
+        other_model = best_other
         first_part = '_'.join(other_model.split('_')[:-1])
         second_part = float(other_model.split('_')[-1])
         ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
