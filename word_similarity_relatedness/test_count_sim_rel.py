@@ -487,22 +487,22 @@ for lang in languages:
     datasets[lang] = dict()
     for dataset_name, dataset, proto in [
                     ### similarity/relatedness
-                    ('simlex999-sim', simlex, {}),
-                    ('ws353', ws353, {}),
+                    #('simlex999-sim', simlex, {}),
+                    #('ws353', ws353, {}),
                     #('men', men, {}), 
                     ### semantic network brain RSA
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ## german TMS
-                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
-                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
-                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
-                    #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-                    #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-                    #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-                    #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-                    #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-                    #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+                    ('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
+                    ('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
+                    ('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
+                    ('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+                    ('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+                    ('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+                    ('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+                    ('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+                    ('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
                     ## italian TMS
                     ('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
                     ('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
@@ -671,10 +671,10 @@ for lang in languages:
                              #'rowincol',
                              ]:
                 for selection_mode in [
-                                       'top', 
+                                       #'top', 
                                        #'random', 
-                                       #'hi-perceptual', 
-                                       #'lo-perceptual',
+                                       'hi-perceptual', 
+                                       'lo-perceptual',
                                        ]: 
                     key = 'ppmi_{}_lancaster_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
                     #if key in results[lang].keys():

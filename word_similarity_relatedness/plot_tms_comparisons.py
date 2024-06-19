@@ -22,8 +22,8 @@ with open('evaluation.tsv') as i:
     for l in i:
         if 'rowincol' in l:
             continue
-        if 'perceptual' in l:
-            continue
+        #if 'perceptual' in l:
+        #    continue
         line = l.strip().split('\t')
         lang = line[0]
         if lang not in results.keys():

@@ -60,7 +60,7 @@ for lang, l_res in results.items():
                           'mitch' not in k and \
                           'rowincol' not in k and \
                           'concept' not in k and \
-                          'top' in k
+                          ('top' in k or '_hi-' in k or '_lo-' in k)
                           }
         all_vals = [val[0] for v in others.values() for val in v] + [0.]
         ax.hlines(
