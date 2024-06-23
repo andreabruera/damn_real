@@ -17,49 +17,71 @@ sys.path.append('..')
 from utf_utils import transform_german_word
 from utils import build_ppmi_vecs, read_lancaster_ratings
 
-def check_dataset_words(dataset, present_words, prototyping=False):
+def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, prototyping=False):
+    print('checking if words appear in the dictionary...')
     missing_words = set()
     test_sims = list()
     if prototyping:
         dataset = {(w, w) : '' for w in dataset} 
-    for ws, val in dataset.items():
-        marker = True
-        w_ones = list()
-        w_twos = list()
-        if lang == 'de':
-            for w in transform_german_word(ws[0]):
+    with tqdm() as counter:
+        for ws, val in dataset.items():
+            marker = True
+            w_ones = list()
+            w_twos = list()
+            if 'fern' in dataset_name and lang in ['de', 'it']:
+                ### word one
                 try:
-                    present_words.index(w)
-                except ValueError:
-                    continue
-                w_ones.append(w)
-            for w in transform_german_word(ws[1]):
+                    candidates = trans_from_en['de'][ws[0]]
+                    for c in candidates:
+                        try:
+                            present_words.index(c)
+                            w_ones.append(c)
+                        except ValueError:
+                            #print(c)
+                            pass
+                except KeyError:
+                    #print(ws[0])
+                    pass
+                ### word two 
                 try:
-                    present_words.index(w)
-                except ValueError:
-                    continue
-                w_twos.append(w)
-            if len(w_ones)<1:
-                missing_words.add(ws[0])
-            if len(w_twos)<1:
-                missing_words.add(ws[1])
-            if len(w_ones)<1 or len(w_twos)<1:
-                marker = False
-        else:
-            for w in [ws[0], ws[0].capitalize()]:
-                try:
-                    present_words.index(w)
-                except ValueError:
-                    continue
-                w_ones.append(w)
-            for w in [ws[1], ws[1].capitalize()]:
-                try:
-                    present_words.index(w)
-                except ValueError:
-                    continue
-                w_twos.append(w)
-            #w_ones = [w for w in [ws[0], ws[0].capitalize()] if w in vocab]
-            #w_twos = [w for w in [ws[1], ws[1].capitalize()] if w in vocab]
+                    candidates = trans_from_en['de'][ws[1]]
+                    for c in candidates:
+                        try:
+                            present_words.index(c)
+                            w_twos.append(c)
+                        except ValueError:
+                            #print(c)
+                            pass
+                except KeyError:
+                    #print(ws[1])
+                    pass
+            else:
+                if lang == 'de':
+                    for w in transform_german_word(ws[0]):
+                        try:
+                            present_words.index(w)
+                        except ValueError:
+                            continue
+                        w_ones.append(w)
+                    for w in transform_german_word(ws[1]):
+                        try:
+                            present_words.index(w)
+                        except ValueError:
+                            continue
+                        w_twos.append(w)
+                else:
+                    for w in [ws[0], ws[0].capitalize()]:
+                        try:
+                            present_words.index(w)
+                        except ValueError:
+                            continue
+                        w_ones.append(w)
+                    for w in [ws[1], ws[1].capitalize()]:
+                        try:
+                            present_words.index(w)
+                        except ValueError:
+                            continue
+                        w_twos.append(w)
             if len(w_ones)<1:
                 missing_words.add(ws[0])
             if len(w_twos)<1:
@@ -67,15 +89,16 @@ def check_dataset_words(dataset, present_words, prototyping=False):
             if len(w_ones)<1 or len(w_twos)<1:
                 #print(ws)
                 marker = False
-        if marker:
-            #test_sims[ws] = val
-            test_sims.append((w_ones, w_twos, val))
+            counter.update(1)
+            if marker:
+                #test_sims[ws] = val
+                test_sims.append((w_ones, w_twos, val))
     if len(missing_words) > 0:
         print('missing words: {}'.format(missing_words))
     return test_sims
 
-def compute_corr(dataset, dataset_name, present_words, prototypes, printing=0):
-    test_sims = check_dataset_words(dataset, present_words)
+def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en, printing=0):
+    test_sims = check_dataset_words(dataset_name, dataset, present_words, trans_from_en)
     if len(prototypes.keys()) > 0:
         proto_sims = dict()
         for k, v in prototypes.items():
@@ -146,7 +169,7 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, printing=0):
         corr = None
     return corr
 
-def test_model(lang, case, model, vocab, results, datasets):
+def test_model(lang, case, model, vocab, results, datasets, trans_from_en):
     if lang not in results.keys():
         results[lang] = dict()
     print('\n{}\n'.format(lang))
@@ -170,7 +193,7 @@ def test_model(lang, case, model, vocab, results, datasets):
             results[lang][case] = dict()
         if 'tms' not in dataset_name:
             #all_dataset = [(k, v) for k, v in dataset.items()]
-            corr = compute_corr(dataset, dataset_name, present_words, prototypes)
+            corr = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
             if corr == None:
                 print('error with {}'.format([lang, case, dataset_name]))
                 continue
@@ -179,7 +202,7 @@ def test_model(lang, case, model, vocab, results, datasets):
             corr = list()
             printing = 0
             for s, s_data in dataset.items():
-                curr_corr = compute_corr(s_data, dataset_name, present_words, prototypes, printing=printing)
+                curr_corr = compute_corr(s_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
                 if curr_corr == None:
                     print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
                 else:
@@ -357,22 +380,32 @@ def reorganize_tms_sims(sims):
             full_sims[n][s][ws] = rt
     return full_sims
 
-def read_fern(lang):
+def read_fern(lang, trans_from_en):
     sims = {1 : dict(), 2 : dict()}
     test_vocab = set()
+    for dataset in sims.keys():
+        sims[dataset] = dict()
+        file_path = os.path.join('data', 'fern{}.tsv'.format(dataset))
+        with open(file_path) as i:
+            for l_i, l in enumerate(i):
+                if l_i == 0:
+                    continue
+                line = l.strip().split('\t')
+                test_vocab = test_vocab.union(set([line[0], line[1]]))
+                sims[dataset][(line[0], line[1])] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
     if lang != 'en':
-        pass
-    else:
-        for dataset in sims.keys():
-            sims[dataset] = dict()
-            file_path = os.path.join('data', 'fern{}.tsv'.format(dataset))
-            with open(file_path) as i:
-                for l_i, l in enumerate(i):
-                    if l_i == 0:
-                        continue
-                    line = l.strip().split('\t')
-                    test_vocab = test_vocab.union(set([line[0], line[1]]))
-                    sims[dataset][(line[0], line[1])] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+        print(lang)
+        trans_vocab = set()
+        for w in test_vocab:
+            try:
+                trs_w = trans_from_en[lang][w]
+            except KeyError:
+                print(w)
+                continue
+            trans_vocab = trans_vocab.union(trs_w)
+        del test_vocab
+        test_vocab = trans_vocab.copy()
+
     return sims[1], sims[2], test_vocab
 
 def read_simlex(lang):
@@ -461,17 +494,60 @@ def read_mitchell(lang):
 
 languages = [
              #'en',
-             #'de',
+             'de',
              'it',
              ]
+senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
+print('loading original lancasted ratings...')
+lancaster_ratings = {
+                     'en' : read_lancaster_ratings(),
+                     }
+trans_from_en = dict()
+### german translation
+print('loading translations of ratings...')
+for lang in tqdm(['de', 'it']):
+    print(lang)
+    lancaster_ratings[lang] = dict()
+    trans_from_en[lang] = dict()
+    with tqdm() as counter:
+        with open(os.path.join('..', 'translations', 'lanc_fern_{}_to_en.tsv'.format(lang))) as i:
+            for l in i:
+                line = l.strip().split('\t')
+                if lang == 'de':
+                    for w in transform_german_word(line[0].lower()):
+                        ### ratings
+                        try:
+                            lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
+                        except KeyError:
+                            pass
+                        ### translations
+                        try:
+                            trans_from_en['de'][line[1]].add(w)
+                        except KeyError:
+                            trans_from_en['de'][line[1]] = {w}
+                        counter.update(1)
+                elif lang == 'it':
+                    for w in [line[0].lower(), line[0].capitalize()]:
+                        ### ratings
+                        try:
+                            lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
+                        except KeyError:
+                            pass
+                        ### translations
+                        try:
+                            trans_from_en['it'][line[1]].add(w)
+                        except KeyError:
+                            trans_from_en['it'][line[1]] = {w}
+                        counter.update(1)
 
 rows = dict()
 datasets = dict()
-for lang in languages:
+print('loading datasets...')
+for lang in tqdm(languages):
     men, men_vocab = read_men(lang)
     simlex, simlex_vocab = read_simlex(lang)
     ws353, ws353_vocab = read_ws353(lang)
-    fern_one, fern_two, fern_vocab = read_fern(lang)
+    fern_one, fern_two, fern_vocab = read_fern(lang, trans_from_en)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
     de_tms_pipl, de_tms_pipl_vocab, prototypes = read_german_pipl_tms(lang)
     ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
@@ -491,21 +567,21 @@ for lang in languages:
                     #('ws353', ws353, {}),
                     #('men', men, {}), 
                     ### semantic network brain RSA
-                    #('fern1', fern_one, {}),
-                    #('fern2', fern_two, {}),
+                    ('fern1', fern_one, {}),
+                    ('fern2', fern_two, {}),
                     ## german TMS
-                    ('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
-                    ('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
-                    ('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
-                    ('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-                    ('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-                    ('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-                    ('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-                    ('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-                    ('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
+                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
+                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
+                    #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+                    #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+                    #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+                    #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+                    #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+                    #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
                     ## italian TMS
-                    ('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
+                    #('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
 
@@ -522,31 +598,6 @@ if os.path.exists(results_file):
                 results[line[0]][line[1]] = dict()
             results[line[0]][line[1]][line[2]] = numpy.array(line[3:], dtype=numpy.float32)
 
-senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
-lancaster_ratings = {
-                     'en' : read_lancaster_ratings(),
-                     }
-### german translation
-for lang in ['de', 'it']:
-    lancaster_ratings[lang] = dict()
-    with tqdm() as counter:
-        with open(os.path.join('..', 'translations', 'lanc_fern_{}_to_en.tsv'.format(lang))) as i:
-            for l in i:
-                line = l.strip().split('\t')
-                if lang == 'de':
-                    for w in transform_german_word(line[0].lower()):
-                        try:
-                            lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
-                            counter.update(1)
-                        except KeyError:
-                            continue
-                elif lang == 'it':
-                    for w in [line[0].lower(), line[0].capitalize()]:
-                        try:
-                            lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
-                            counter.update(1)
-                        except KeyError:
-                            continue
 
 #fasttext_only = True
 fasttext_only = False
@@ -559,15 +610,14 @@ for lang in languages:
     models[lang] = dict()
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
-    '''
     for case in [
                  'fasttext',
                  'fasttext_aligned',
                  'conceptnet',
                  ]:
-        print(case)
         #if case in results[lang].keys():
         #    continue
+        print('loading {}'.format(case))
         if case == 'fasttext':
             model = fasttext.load_model('../../../dataset/word_vectors/{}/cc.{}.300.bin'.format(lang, lang))
             vocab = model.words
@@ -586,8 +636,8 @@ for lang in languages:
             vocab = model.keys()
         model = {w : model[w] for w in vocab}
         vocab = [w for w in vocab]
-        results = test_model(lang, case, model, vocab, results, datasets)
-    '''
+        print('getting results for {}...'.format(case))
+        results = test_model(lang, case, model, vocab, results, datasets, trans_from_en)
     if fasttext_only:
         continue
     for corpus in [
@@ -671,7 +721,7 @@ for lang in languages:
                              #'rowincol',
                              ]:
                 for selection_mode in [
-                                       #'top', 
+                                       'top', 
                                        #'random', 
                                        'hi-perceptual', 
                                        'lo-perceptual',
@@ -712,7 +762,6 @@ for lang in languages:
                     #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
                     results = test_model(lang, key, model, curr_vocab, results, datasets)
-        '''
         ### top-n frequencies
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
@@ -759,6 +808,7 @@ for lang in languages:
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
                     results = test_model(lang, key, model, curr_vocab, results, datasets)
+    '''
     pruned_ratings = {w : dct for w, dct in ratings.items() if w in freqs.keys() and vocab[w]!=0}
     percent = int(len(pruned_ratings.items())*0.001)
     #percent = int(len(pruned_ratings.items())*0.05)
