@@ -761,7 +761,7 @@ for lang in languages:
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                    results = test_model(lang, key, model, curr_vocab, results, datasets)
+                    results = test_model(lang, key, model, curr_vocab, results, datasets, trans_from_en)
         ### top-n frequencies
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
@@ -807,7 +807,7 @@ for lang in languages:
                     #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                    results = test_model(lang, key, model, curr_vocab, results, datasets)
+                    results = test_model(lang, key, model, curr_vocab, results, datasets, trans_from_en)
     '''
     pruned_ratings = {w : dct for w, dct in ratings.items() if w in freqs.keys() and vocab[w]!=0}
     percent = int(len(pruned_ratings.items())*0.001)
