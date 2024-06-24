@@ -493,9 +493,9 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             #'en',
-             'de',
-             'it',
+             'en',
+             #'de',
+             #'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -563,9 +563,9 @@ for lang in tqdm(languages):
     datasets[lang] = dict()
     for dataset_name, dataset, proto in [
                     ### similarity/relatedness
-                    #('simlex999-sim', simlex, {}),
-                    #('ws353', ws353, {}),
-                    #('men', men, {}), 
+                    ('simlex999-sim', simlex, {}),
+                    ('ws353', ws353, {}),
+                    ('men', men, {}), 
                     ### semantic network brain RSA
                     ('fern1', fern_one, {}),
                     ('fern2', fern_two, {}),
@@ -586,7 +586,7 @@ for lang in tqdm(languages):
         datasets[lang][dataset_name] = (dataset, proto)
 
 results = dict()
-results_file = 'evaluation.tsv'
+results_file = 'cn_evaluation.tsv'
 if os.path.exists(results_file):
     with open(results_file) as i:
         for l in i:
@@ -599,8 +599,8 @@ if os.path.exists(results_file):
             results[line[0]][line[1]][line[2]] = numpy.array(line[3:], dtype=numpy.float32)
 
 
-#fasttext_only = True
-fasttext_only = False
+fasttext_only = True
+#fasttext_only = False
 
 models = dict()
 vocabs = dict()
@@ -611,8 +611,8 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 'fasttext',
-                 'fasttext_aligned',
+                 #'fasttext',
+                 #'fasttext_aligned',
                  'conceptnet',
                  ]:
         #if case in results[lang].keys():
