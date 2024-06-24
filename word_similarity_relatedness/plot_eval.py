@@ -60,7 +60,9 @@ for lang, l_res in results.items():
                           'mitch' not in k and \
                           'rowincol' not in k and \
                           'concept' not in k and \
-                          ('top' in k or '_hi-' in k or '_lo-' in k)
+                          ('top' in k
+                          #or '_hi-' in k or '_lo-' in k)
+                          )
                           }
         #print(lang)
         #print(others.keys())
