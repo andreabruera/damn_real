@@ -93,7 +93,8 @@ for l, l_data in model_results.items():
 overall_sorted_ranks = sorted({k : numpy.average(v) for k, v in overall_best.items()}.items(), key=lambda item : item[1])
 print(overall_sorted_ranks[:10])
 best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])][0]
-best_ft = 'conceptnet'
+#best_ft = 'conceptnet'
+best_ft = 'fasttext'
 best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
 
 for l, l_data in results.items():
