@@ -563,9 +563,9 @@ for lang in tqdm(languages):
     datasets[lang] = dict()
     for dataset_name, dataset, proto in [
                     ### similarity/relatedness
-                    ('simlex999-sim', simlex, {}),
-                    ('ws353', ws353, {}),
-                    ('men', men, {}), 
+                    #('simlex999-sim', simlex, {}),
+                    #('ws353', ws353, {}),
+                    #('men', men, {}), 
                     ### semantic network brain RSA
                     ('fern1', fern_one, {}),
                     ('fern2', fern_two, {}),
