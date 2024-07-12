@@ -169,9 +169,9 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
         corr = None
     return corr
 
-def test_model(lang, case, model, vocab, results, datasets, trans_from_en):
-    if lang not in results.keys():
-        results[lang] = dict()
+def test_model(lang, case, model, vocab, datasets, trans_from_en):
+    #if lang not in results.keys():
+    #    results[lang] = dict()
     print('\n{}\n'.format(lang))
     #for case, model in lang_models.items():
     #    if case not in results[lang].keys():
@@ -189,8 +189,8 @@ def test_model(lang, case, model, vocab, results, datasets, trans_from_en):
         prototypes = dataset_proto[1]
         if len(dataset) == 0:
             continue
-        if case not in results[lang].keys():
-            results[lang][case] = dict()
+        #if case not in results[lang].keys():
+        #    results[lang][case] = dict()
         if 'tms' not in dataset_name:
             #all_dataset = [(k, v) for k, v in dataset.items()]
             corr = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
@@ -213,8 +213,22 @@ def test_model(lang, case, model, vocab, results, datasets, trans_from_en):
         print('{} model'.format(case))
         print('correlation with {} dataset:'.format(dataset_name))
         print(numpy.nanmean(corr))
-        results[lang][case][dataset_name] = corr
-    return results
+        corpus_fold = case.split('_')[1] if 'ppmi' in case else case
+        details = '_'.join(case.split('_')[2:]) if 'ppmi' in case else case
+        out_folder = os.path.join(
+                                  'results',
+                                  lang, 
+                                  corpus_fold, 
+                                  details,
+                                  )
+        os.makedirs(out_folder, exist_ok=True)
+        with open(os.path.join(out_folder, '{}.tsv'.format(dataset_name)), 'w') as o:
+            o.write('{}\t{}\t{}\t'.format(lang, case, dataset_name))
+            for c in corr:
+                o.write('{}\t'.format(c))
+            o.write('\n')
+        #results[lang][case][dataset_name] = corr
+    #return results
 
 def read_italian_cereb_tms(lang):
     sims = dict()
@@ -483,7 +497,7 @@ def read_men(lang):
 def read_mitchell(lang):
     assert lang == 'en'
     dimensions = list()
-    with open(os.path.join('..', 'data', 'dimensions.tsv')) as i:
+    with open(os.path.join('..', 'data', 'mitchell_dimensions.tsv')) as i:
         for l in i:
             line = l.strip().split()
             assert len(line) >= 2
@@ -494,8 +508,8 @@ def read_mitchell(lang):
 
 languages = [
              'en',
-             #'de',
-             #'it',
+             'de',
+             'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -563,16 +577,16 @@ for lang in tqdm(languages):
     datasets[lang] = dict()
     for dataset_name, dataset, proto in [
                     ### similarity/relatedness
-                    #('simlex999-sim', simlex, {}),
-                    #('ws353', ws353, {}),
-                    #('men', men, {}), 
+                    ('simlex999-sim', simlex, {}),
+                    ('ws353', ws353, {}),
+                    ('men', men, {}), 
                     ### semantic network brain RSA
                     ('fern1', fern_one, {}),
                     ('fern2', fern_two, {}),
                     ## german TMS
-                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
-                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
-                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
+                    ('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
+                    ('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
+                    ('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
                     #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
                     #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
                     #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
@@ -580,11 +594,12 @@ for lang in tqdm(languages):
                     #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
                     #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
                     ## italian TMS
-                    #('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
+                    ('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
+                    ('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
 
+'''
 results = dict()
 results_file = 'cn_evaluation.tsv'
 if os.path.exists(results_file):
@@ -597,23 +612,23 @@ if os.path.exists(results_file):
             if line[1] not in results[line[0]].keys():
                 results[line[0]][line[1]] = dict()
             results[line[0]][line[1]][line[2]] = numpy.array(line[3:], dtype=numpy.float32)
+'''
 
-
-fasttext_only = True
-#fasttext_only = False
+#fasttext_only = True
+fasttext_only = False
 
 models = dict()
 vocabs = dict()
 for lang in languages:
-    if lang not in results.keys():
-        results[lang] = dict()
+    #if lang not in results.keys():
+    #    results[lang] = dict()
     models[lang] = dict()
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
                  #'fasttext',
                  #'fasttext_aligned',
-                 'conceptnet',
+                 #'conceptnet',
                  ]:
         #if case in results[lang].keys():
         #    continue
@@ -637,7 +652,8 @@ for lang in languages:
         model = {w : model[w] for w in vocab}
         vocab = [w for w in vocab]
         print('getting results for {}...'.format(case))
-        results = test_model(lang, case, model, vocab, results, datasets, trans_from_en)
+        #results = test_model(lang, case, model, vocab, results, datasets, trans_from_en)
+        test_model(lang, case, model, vocab, datasets, trans_from_en)
     if fasttext_only:
         continue
     for corpus in [
@@ -696,7 +712,8 @@ for lang in languages:
                 model = {k : v for k, v in trans_pmi_vecs.items()}
                 #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                 curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                results = test_model(lang, key, model, curr_vocab, results, datasets)
+                test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+                #results = test_model(lang, key, model, curr_vocab, results, datasets)
         ### lancaster
         filt_ratings = {w : freqs[w] for w in lancaster_ratings[lang].keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1], reverse=True)]
@@ -718,11 +735,11 @@ for lang in languages:
                           ]):
             for row_mode in [
                              '', 
-                             #'rowincol',
+                             'rowincol',
                              ]:
                 for selection_mode in [
                                        'top', 
-                                       #'random', 
+                                       'random', 
                                        'hi-perceptual', 
                                        'lo-perceptual',
                                        ]: 
@@ -761,7 +778,8 @@ for lang in languages:
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                    results = test_model(lang, key, model, curr_vocab, results, datasets, trans_from_en)
+                    test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+                    #results = test_model(lang, key, model, curr_vocab, results, datasets, trans_from_en)
         ### top-n frequencies
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
@@ -775,11 +793,11 @@ for lang in languages:
                           ]):
             for row_mode in [
                              '', 
-                             #'rowincol',
+                             'rowincol',
                              ]:
                 for selection_mode in [
                                        'top', 
-                                       #'random',
+                                       'random',
                                        ]: 
                     #ctx_words = [w for w in inv_sorted_ratings
                     #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=False)
@@ -807,41 +825,4 @@ for lang in languages:
                     #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                    results = test_model(lang, key, model, curr_vocab, results, datasets, trans_from_en)
-    '''
-    pruned_ratings = {w : dct for w, dct in ratings.items() if w in freqs.keys() and vocab[w]!=0}
-    percent = int(len(pruned_ratings.items())*0.001)
-    #percent = int(len(pruned_ratings.items())*0.05)
-    #percent = int(len(pruned_ratings.items())*0.1)
-    ### context words
-    ### things improve when including the words directly
-    ctx_words = set(pruned_test_words)
-    #ctx_words = set()
-    sem_dims = set([var for k,v in pruned_ratings.items() for var in v.keys()])
-    for dim in sem_dims:
-        if dim == 'concreteness':
-            continue
-        sorted_ws = sorted([(w, v[dim]) for w, v in pruned_ratings.items()], key=lambda item: item[1])
-        ctx_words = ctx_words.union(set([w for w, val in sorted_ws[-percent:]]))
-        ### also adding super abstract words
-        #    ctx_words = ctx_words.union(set([w[0] for w in sorted_ws[:one_percent]]))
-        #    ctx_words = ctx_words.union(set([w for w, val in sorted_ws[-one_percent:]]))
-    print('considering {} context words'.format(len(ctx_words)))
-    ctx_words = sorted(ctx_words)
-    ctx_idxs = [vocab[w] for w in ctx_words]
-    vecs = {w : numpy.array([coocs[vocab[w]][idx] if idx in coocs[vocab[w]].keys() else 0 for idx in ctx_idxs]) for w in pruned_test_words}
-    ### pmi
-    ### building the PPMI matrix
-    ### things are better when including in the rows the words from MEN...
-    trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=True)
-'''
-
-### writing to file
-with open(results_file, 'w') as o:
-    for lang, lang_data in results.items():
-        for case, case_data in lang_data.items():
-            for dataset, corr in case_data.items():
-                o.write('{}\t{}\t{}\t'.format(lang, case, dataset))
-                for c in corr:
-                    o.write('{}\t'.format(c))
-                o.write('\n')
+                    test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
