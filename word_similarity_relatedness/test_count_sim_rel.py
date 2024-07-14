@@ -18,7 +18,7 @@ from utf_utils import transform_german_word
 from utils import build_ppmi_vecs, read_lancaster_ratings
 
 def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, prototyping=False):
-    print('checking if words appear in the dictionary...')
+    #print('checking if words appear in the dictionary...')
     missing_words = set()
     test_sims = list()
     if prototyping:
@@ -102,7 +102,7 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
     if len(prototypes.keys()) > 0:
         proto_sims = dict()
         for k, v in prototypes.items():
-            proto_sims[k] = set([w for _ in check_dataset_words(v, present_words, prototyping=True) for __ in _[:2] for w in __])
+            proto_sims[k] = set([w for _ in check_dataset_words(dataset_name, v, present_words, trans_from_en, prototyping=True) for __ in _[:2] for w in __])
         proto_vecs = dict()
         for k, v in proto_sims.items():
             if printing == 0:
@@ -131,27 +131,43 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
         ### all possible transformations...
         if len(prototypes.keys()) > 0:
             current_pred = list()
-            for proto_mode in [
-                               'both', 
-                               #'none',
-                               ]: 
-                for w_two in w_twos:
-                    vec_one = proto_vecs[proto_mode]
-                    '''
-                    if 'er' in w_ones[0]:
-                        #vec_one = proto_vecs['sound']
-                        #print([w_ones, 'sound'])
-                    elif 'andlung' in w_ones[0]:
-                        vec_one = proto_vecs['none']
-                        #vec_one = proto_vecs['action']
-                        #print([w_ones, 'action'])
+            proto_mode = dataset_name.split('_')[-1]
+            proto_modes = [
+                         'all', 
+                         'both-pos',
+                         'both-neg',
+                         'matched-excl',
+                         'matched-non-excl',
+                         ]
+            assert proto_mode in proto_modes
+            #print(proto_mode)
+            for w_two in w_twos:
+                if proto_mode in ['all', 'both-pos', 'both-neg']:
+                    #proto_mode = proto_mode.replace('-', '_')
+                    vec_one = proto_vecs[proto_mode.replace('-', '_')]
+                else:
+                    if 'non-excl' in proto_mode:
+                        ### sound
+                        if 'er' in w_ones[0]:
+                            vec_one = proto_vecs['sound_pos']
+                        elif 'andlung' in w_ones[0]:
+                            vec_one = proto_vecs['action_pos']
+                        else:
+                            raise RuntimeError()
+                    elif 'excl' in proto_mode:
+                        ### sound
+                        if 'er' in w_ones[0]:
+                            vec_one = proto_vecs['sound_pos_action_neg']
+                        elif 'andlung' in w_ones[0]:
+                            vec_one = proto_vecs['action_pos_sound_neg']
+                        else:
+                            raise RuntimeError()
                     else:
                         raise RuntimeError()
-                    '''
-                    ### this is similarity!
-                    partial_pred = 1 - scipy.spatial.distance.cosine(vec_one, model[w_two])
-                    #partial_pred = scipy.stats.spearmanr(vec_one, model[w_two]).statistic
-                    current_pred.append(partial_pred)
+                ### this is similarity!
+                partial_pred = 1 - scipy.spatial.distance.cosine(vec_one, model[w_two])
+                #partial_pred = scipy.stats.spearmanr(vec_one, model[w_two]).statistic
+                current_pred.append(partial_pred)
             current_pred = numpy.average(current_pred)
         else:
             current_pred = list()
@@ -216,7 +232,7 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
         corpus_fold = case.split('_')[1] if 'ppmi' in case else case
         details = '_'.join(case.split('_')[2:]) if 'ppmi' in case else case
         out_folder = os.path.join(
-                                  'results',
+                                  'sim-rel_results',
                                   lang, 
                                   corpus_fold, 
                                   details,
@@ -266,16 +282,22 @@ def read_german_pipl_tms(lang):
     sims = dict()
     test_vocab = set()
     lines = list()
+    ### possibilities in task-modelling:
+    # centroid overall (all)
+    # both positive (both_pos)
+    # both negative (both_neg)
+    # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
+    # matched non-exclusive (action_pos, sound_pos)
     prototypes = {
-                  'pos_action' : list(), 
-                  'pos_sound' : list(),
+                  'action_pos' : list(), 
+                  'sound_pos' : list(),
                   'neg_action' : list(),
                   'neg_sound' : list(), 
                   'all' : list(),
-                  'both' : list(),
-                  'none' : list(),
-                  'only_action' : list(), 
-                  'only_sound' : list(),
+                  'both_pos' : list(),
+                  'both_neg' : list(),
+                  'action_pos_sound_neg' : list(), 
+                  'sound_pos_action_neg' : list(),
                   }
     with open(os.path.join('..', 'tms', 'data', 'de_tms_pipl.tsv')) as i:
         for l_i, l in enumerate(i):
@@ -284,19 +306,19 @@ def read_german_pipl_tms(lang):
                 header = [w for w in line]
                 continue
             if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '-1':
-                prototypes['only_action'].append(line[header.index('stimulus')])
+                prototypes['action_pos_sound_neg'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
-                prototypes['only_sound'].append(line[header.index('stimulus')])
+                prototypes['sound_pos_action_neg'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '1':
-                prototypes['both'].append(line[header.index('stimulus')])
+                prototypes['both_pos'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '-1':
-                prototypes['none'].append(line[header.index('stimulus')])
+                prototypes['both_neg'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '1':
-                prototypes['pos_action'].append(line[header.index('stimulus')])
+                prototypes['action_pos'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1':
                 prototypes['neg_action'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '1':
-                prototypes['pos_sound'].append(line[header.index('stimulus')])
+                prototypes['sound_pos'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '-1':
                 prototypes['neg_sound'].append(line[header.index('stimulus')])
             #if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
@@ -507,9 +529,9 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             'en',
+             #'en',
              'de',
-             'it',
+             #'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -577,42 +599,44 @@ for lang in tqdm(languages):
     datasets[lang] = dict()
     for dataset_name, dataset, proto in [
                     ### similarity/relatedness
-                    ('simlex999-sim', simlex, {}),
-                    ('ws353', ws353, {}),
-                    ('men', men, {}), 
+                    #('simlex999-sim', simlex, {}),
+                    #('ws353', ws353, {}),
+                    #('men', men, {}), 
                     ### semantic network brain RSA
-                    ('fern1', fern_one, {}),
-                    ('fern2', fern_two, {}),
+                    #('fern1', fern_one, {}),
+                    #('fern2', fern_two, {}),
                     ## german TMS
-                    ('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
-                    ('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
-                    ('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
-                    #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-                    #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-                    #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-                    #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-                    #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-                    #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
+                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
+                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
                     ## italian TMS
-                    ('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_tms_cereb', ita_tms_cereb['cedx'], {}),
+                    #('it_distr-learn_tms_vertex', ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
-
-'''
-results = dict()
-results_file = 'cn_evaluation.tsv'
-if os.path.exists(results_file):
-    with open(results_file) as i:
-        for l in i:
-            line = l.strip().split('\t')
-            assert len(line) > 3
-            if line[0] not in results.keys():
-                results[line[0]] = dict()
-            if line[1] not in results[line[0]].keys():
-                results[line[0]][line[1]] = dict()
-            results[line[0]][line[1]][line[2]] = numpy.array(line[3:], dtype=numpy.float32)
-'''
+    for dataset_name, dataset, proto in [
+            ('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+            ('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+            ('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+            ('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+            ('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+            ('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+            ]:
+            ### possibilities in task-modelling:
+            # centroid overall (all)
+            # both positive (both_pos)
+            # both negative (both_neg)
+            # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
+            # matched non-exclusive (action_pos, sound_pos)
+            for poss in [
+                         'all', 
+                         'both-pos',
+                         'both-neg',
+                         'matched-excl',
+                         'matched-non-excl',
+                         ]:
+                curr_dataset_name = '{}_{}'.format(dataset_name, poss)
+                datasets[lang][curr_dataset_name] = (dataset, proto)
 
 #fasttext_only = True
 fasttext_only = False
@@ -626,9 +650,9 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 #'fasttext',
-                 #'fasttext_aligned',
-                 #'conceptnet',
+                 'fasttext',
+                 'fasttext_aligned',
+                 'conceptnet',
                  ]:
         #if case in results[lang].keys():
         #    continue
@@ -767,7 +791,7 @@ for lang in languages:
                             ctx_words = [w for w in sorted_perc[-freq:]]
                     else:
                         random.seed(12)
-                        idxs = random.sample(range(len(sorted_ratings)), k=freq)
+                        idxs = random.sample(range(len(sorted_ratings)), k=min(freq, len(sorted_ratings)))
                         if row_mode == 'rowincol':
                             ctx_words = set([sorted_ratings[i] for i in idxs]+row_words)
                         else:
@@ -813,7 +837,7 @@ for lang in languages:
                             ctx_words = [w for w in sorted_freqs[:freq]]
                     else:
                         random.seed(12)
-                        idxs = random.sample(range(len(sorted_freqs)), k=freq)
+                        idxs = random.sample(range(len(sorted_freqs)), k=min(freq, len(sorted_freqs)))
                         if row_mode == 'rowincol':
                             ctx_words = set([sorted_freqs[i] for i in idxs]+row_words)
                         else:
