@@ -18,40 +18,48 @@ for p in font_files:
 
 results = dict()
 
-with open('evaluation.tsv') as i:
-    for l in i:
-        if 'rowincol' in l:
-            continue
-        #if 'perceptual' in l:
-        #    continue
-        line = l.strip().split('\t')
-        lang = line[0]
-        if lang not in results.keys():
-            results[lang] = dict()
-        model = line[1]
-        if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-            num = float(model.split('_')[-2])
-            if 'wiki' in model:
-                short_model = '_'.join(model.split('_')[2:-2])
-            else:
-                short_model = '_'.join(model.split('_')[1:-2])
-        task = line[2]
-        if task not in results[lang].keys():
-            results[lang][task] = dict()
-        res = numpy.array(line[3:], dtype=numpy.float32)
-        if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-            if short_model not in results[lang][task].keys():
-                results[lang][task][short_model] = dict()
-            results[lang][task][short_model][num] = res
-        else:
-            results[lang][task][model] = res
+#with open('evaluation.tsv') as i:
+for root, direc, fz in os.walk(
+                          os.path.join(
+                              'word_similarity_relatedness', 
+                              'sim-rel_results',
+                              )):
+
+    for f in fz:
+        with open(os.path.join(root, f)) as i:
+            for l in i:
+                if 'rowincol' in l:
+                    continue
+                #if 'perceptual' in l:
+                #    continue
+                line = l.strip().split('\t')
+                lang = line[0]
+                if lang not in results.keys():
+                    results[lang] = dict()
+                model = line[1]
+                if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    num = float(model.split('_')[-2])
+                    if 'wiki' in model:
+                        short_model = '_'.join(model.split('_')[2:-2])
+                    else:
+                        short_model = '_'.join(model.split('_')[1:-2])
+                task = line[2]
+                if task not in results[lang].keys():
+                    results[lang][task] = dict()
+                res = numpy.array(line[3:], dtype=numpy.float32)
+                if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    if short_model not in results[lang][task].keys():
+                        results[lang][task][short_model] = dict()
+                    results[lang][task][short_model][num] = res
+                else:
+                    results[lang][task][model] = res
 
 ### finding the best models
 model_results = dict()
 for l, l_data in results.items():
     model_results[l] = dict()
-    rel_tasks = [d for d in l_data.keys() if '353' in d or '999' in d]
-    assert len(rel_tasks) == 2
+    rel_tasks = [d for d in l_data.keys() if '353' in d or '999' in d or 'fern' in d]
+    assert len(rel_tasks) == 4
     for t in rel_tasks:
         c_results = list()
         for model, m_data in l_data[t].items():
@@ -94,13 +102,23 @@ overall_sorted_ranks = sorted({k : numpy.average(v) for k, v in overall_best.ite
 print(overall_sorted_ranks[:10])
 best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])][0]
 #best_ft = 'conceptnet'
-best_ft = 'fasttext'
 best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
+best_ft = 'fasttext'
+best_other = 'cc100_lancaster_freq_top__5000.0'
+print('using models: {}, {}'.format(best_ft, best_other))
 
 for l, l_data in results.items():
     if l == 'en':
         continue
-    rel_tasks = set([d.split('_tms_')[0] for d in l_data.keys() if 'tms' in d])
+    out = os.path.join(
+               'tms',
+               'tms_bars_plots',
+               l, 
+               )
+    os.makedirs(out, exist_ok=True)
+    ### datasets where the comparisons are very simple
+    ### just clear-cut pairwise comparisons
+    rel_tasks = set([d.split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d])
     print(rel_tasks)
     assert len(rel_tasks) in [1, 2]
     for t in rel_tasks:
@@ -229,6 +247,9 @@ for l, l_data in results.items():
                      '{}'.format(t.replace('_', ' ')), 
                      fontsize=30,
                      )
-        pyplot.savefig(os.path.join('sim_rel', l, '{}.jpg'.format(t)))
+        pyplot.savefig(
+                os.path.join(
+                    out, 
+                   '{}.jpg'.format(t)))
         pyplot.clf()
         pyplot.close()
