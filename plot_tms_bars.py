@@ -105,6 +105,7 @@ best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_r
 best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
 best_ft = 'fasttext'
 best_other = 'cc100_lancaster_freq_top__5000.0'
+best_other = 'cc100_lancaster_freq_hi-perceptual__2500.0'
 print('using models: {}, {}'.format(best_ft, best_other))
 
 for l, l_data in results.items():
