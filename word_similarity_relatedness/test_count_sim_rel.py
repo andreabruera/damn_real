@@ -133,11 +133,13 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
             current_pred = list()
             proto_mode = dataset_name.split('_')[-1]
             proto_modes = [
-                         'all', 
-                         'both-pos',
-                         'both-neg',
-                         'matched-excl',
-                         'matched-non-excl',
+                         #'all', 
+                         #'both-pos',
+                         #'both-neg',
+                         #'matched-excl',
+                         #'matched-non-excl',
+                         'opposite-excl',
+                         'opposite-non-excl',
                          ]
             assert proto_mode in proto_modes
             #print(proto_mode)
@@ -147,19 +149,41 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
                     vec_one = proto_vecs[proto_mode.replace('-', '_')]
                 else:
                     if 'non-excl' in proto_mode:
-                        ### sound
-                        if 'er' in w_ones[0]:
-                            vec_one = proto_vecs['sound_pos']
-                        elif 'andlung' in w_ones[0]:
-                            vec_one = proto_vecs['action_pos']
+                        if 'matched' in proto_mode:
+                            ### sound
+                            if 'er' in w_ones[0]:
+                                vec_one = proto_vecs['sound_pos']
+                            elif 'andlung' in w_ones[0]:
+                                vec_one = proto_vecs['action_pos']
+                            else:
+                                raise RuntimeError()
+                        elif 'opposite' in proto_mode:
+                            ### sound
+                            if 'er' in w_ones[0]:
+                                vec_one = proto_vecs['sound_neg']
+                            elif 'andlung' in w_ones[0]:
+                                vec_one = proto_vecs['action_neg']
+                            else:
+                                raise RuntimeError()
                         else:
                             raise RuntimeError()
                     elif 'excl' in proto_mode:
-                        ### sound
-                        if 'er' in w_ones[0]:
-                            vec_one = proto_vecs['sound_pos_action_neg']
-                        elif 'andlung' in w_ones[0]:
-                            vec_one = proto_vecs['action_pos_sound_neg']
+                        if 'matched' in proto_mode:
+                            ### sound
+                            if 'er' in w_ones[0]:
+                                vec_one = proto_vecs['sound_pos_action_neg']
+                            elif 'andlung' in w_ones[0]:
+                                vec_one = proto_vecs['action_pos_sound_neg']
+                            else:
+                                raise RuntimeError()
+                        elif 'opposite' in proto_mode:
+                            ### sound
+                            if 'er' in w_ones[0]:
+                                vec_one = proto_vecs['action_pos_sound_neg']
+                            elif 'andlung' in w_ones[0]:
+                                vec_one = proto_vecs['sound_pos_action_neg']
+                            else:
+                                raise RuntimeError()
                         else:
                             raise RuntimeError()
                     else:
@@ -291,8 +315,8 @@ def read_german_pipl_tms(lang):
     prototypes = {
                   'action_pos' : list(), 
                   'sound_pos' : list(),
-                  'neg_action' : list(),
-                  'neg_sound' : list(), 
+                  'action_neg' : list(),
+                  'sound_neg' : list(), 
                   'all' : list(),
                   'both_pos' : list(),
                   'both_neg' : list(),
@@ -316,11 +340,11 @@ def read_german_pipl_tms(lang):
             if line[header.index('action_word')] == '1':
                 prototypes['action_pos'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1':
-                prototypes['neg_action'].append(line[header.index('stimulus')])
+                prototypes['action_neg'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '1':
                 prototypes['sound_pos'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '-1':
-                prototypes['neg_sound'].append(line[header.index('stimulus')])
+                prototypes['sound_neg'].append(line[header.index('stimulus')])
             #if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
             #    prototypes['action'].append(line[header.index('stimulus')])
             #if line[header.index('sound_word')] == '-1' and line[header.index('action_word')] == '1':
@@ -629,17 +653,19 @@ for lang in tqdm(languages):
             # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
             # matched non-exclusive (action_pos, sound_pos)
             for poss in [
-                         'all', 
-                         'both-pos',
-                         'both-neg',
-                         'matched-excl',
-                         'matched-non-excl',
+                         #'all', 
+                         #'both-pos',
+                         #'both-neg',
+                         #'matched-excl',
+                         #'matched-non-excl',
+                         'opposite-excl',
+                         'opposite-non-excl',
                          ]:
                 curr_dataset_name = '{}_{}'.format(dataset_name, poss)
                 datasets[lang][curr_dataset_name] = (dataset, proto)
 
-#fasttext_only = True
-fasttext_only = False
+fasttext_only = True
+#fasttext_only = False
 
 models = dict()
 vocabs = dict()
