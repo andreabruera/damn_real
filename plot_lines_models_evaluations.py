@@ -7,32 +7,44 @@ from matplotlib import colormaps, pyplot
 
 results = dict()
 
-with open('evaluation.tsv') as i:
-    for l in i:
-        line = l.strip().split('\t')
-        lang = line[0]
-        if lang not in results.keys():
-            results[lang] = dict()
-        model = line[1]
-        if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-            num = float(model.split('_')[-2])
-            if 'wiki' in model:
-                short_model = '_'.join(model.split('_')[2:-2])
-            else:
-                short_model = '_'.join(model.split('_')[1:-2])
-        task = line[2]
-        if task not in results[lang].keys():
-            results[lang][task] = dict()
-        res = numpy.array(line[3:], dtype=numpy.float32)
-        if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-            if short_model not in results[lang][task].keys():
-                results[lang][task][short_model] = dict()
-            results[lang][task][short_model][num] = res
-        else:
-            results[lang][task][model] = res
+#with open('evaluation.tsv') as i:
+for root, direc, fz in os.walk(
+                          os.path.join(
+                              'word_similarity_relatedness', 
+                              'sim-rel_results',
+                              )):
+
+    for f in fz:
+        with open(os.path.join(root, f)) as i:
+            for l in i:
+                line = l.strip().split('\t')
+                lang = line[0]
+                if lang not in results.keys():
+                    results[lang] = dict()
+                model = line[1]
+                if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    num = float(model.split('_')[-2])
+                    if 'wiki' in model:
+                        short_model = '_'.join(model.split('_')[2:-2])
+                    else:
+                        short_model = '_'.join(model.split('_')[1:-2])
+                task = line[2]
+                if task not in results[lang].keys():
+                    results[lang][task] = dict()
+                res = numpy.array(line[3:], dtype=numpy.float32)
+                if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    if short_model not in results[lang][task].keys():
+                        results[lang][task][short_model] = dict()
+                    results[lang][task][short_model][num] = res
+                else:
+                    results[lang][task][model] = res
 
 for lang, l_res in results.items():
-    folder = os.path.join('sim_rel', lang)
+    folder = os.path.join(
+                          'word_similarity_relatedness', 
+                          'sim-rel_plots',
+                          lang, 
+                          )
     os.makedirs(folder, exist_ok=True)
     for task, t_res in l_res.items():
         fig, ax = pyplot.subplots(
