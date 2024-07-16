@@ -725,8 +725,8 @@ for lang in tqdm(languages):
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
                     #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
                     ## italian TMS
-                    ('it_distr-learn_all_tms-cereb', all_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn_all_tms-vertex', all_ita_tms_cereb['cz'], {}),
+                    ('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
+                    ('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
                     ('it_distr-learn_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
                     ('it_distr-learn_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
                     ('it_distr-learn_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),

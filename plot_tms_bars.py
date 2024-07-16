@@ -10,7 +10,8 @@ from scipy import stats
 
 ### Font setup
 # Using Helvetica as a font
-font_folder = '/import/cogsci/andrea/dataset/fonts/'
+#font_folder = '/import/cogsci/andrea/dataset/fonts/'
+font_folder = '/data/u_bruera_software/fonts'
 font_dirs = [font_folder, ]
 font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
 for p in font_files:
@@ -45,6 +46,7 @@ for root, direc, fz in os.walk(
                     else:
                         short_model = '_'.join(model.split('_')[1:-2])
                 task = line[2]
+                task = task.replace('all_tms-', 'all_tms_')
                 if task not in results[lang].keys():
                     results[lang][task] = dict()
                 res = numpy.array(line[3:], dtype=numpy.float32)
@@ -121,9 +123,9 @@ for l, l_data in results.items():
                l, 
                )
     os.makedirs(out, exist_ok=True)
-    rel_tasks = set([d.split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d])
+    rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d])
     print(rel_tasks)
-    assert len(rel_tasks) in [1, 2]
+    #assert len(rel_tasks) in [1, 2]
     for t in rel_tasks:
         fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
         ax.set_ylim(bottom=-0.04, top=0.4)
@@ -188,10 +190,12 @@ for l, l_data in results.items():
                             color='mediumaquamarine',
                             )
         ### results for other model
+        '''
         other_model = best_other
         first_part = '_'.join(other_model.split('_')[:-1])
         second_part = float(other_model.split('_')[-1])
         ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+        '''
         ax.bar(
                [x+0.15 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
@@ -275,10 +279,10 @@ for model in [best_ft, best_other]:
                    l, 
                    )
         os.makedirs(out, exist_ok=True)
-        all_rel_tasks = set([d.split('_tms_')[0] for d in l_data.keys() if 'sound-act' in d])
+        all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'sound-act' in d])
 
         print(all_rel_tasks)
-        assert len(all_rel_tasks) in [1, 2]
+        #assert len(all_rel_tasks) in [1, 2]
         for t in all_rel_tasks:
             all_curr_ts = sorted([w.split('_tms_')[1] for w in l_data.keys() if t in w])
             indiv_bars = sorted(set([t.split('_')[-1] if '#' not in t else t.split('#')[-1] for t in all_curr_ts]))
@@ -318,6 +322,10 @@ for model in [best_ft, best_other]:
                     'orange', 
                     'teal',
                     'magenta',
+                    'black',
+                    'indianred',
+                    'slateblue',
+                    'hotpink',
                     ]
             colors = dict()
             for k, col in zip(corrections.keys(), colors_l):
@@ -337,12 +345,12 @@ for model in [best_ft, best_other]:
                        [x+corr for x in range(len(ys))],
                        [numpy.average(y) for y in ys],
                        #color='mediumaquamarine',
-                       width=0.1,
+                       width=0.05,
                        color=colors[k]
                        )
                 ax.scatter(
                        #[x-0.15+(random.randint(-100, 100)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
-                       [x+(random.randint(-25, 25)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
+                       [x+(random.randint(-10, 10)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
                        ys,
                        edgecolor=colors[k],
                        color='white',
@@ -431,8 +439,8 @@ for model in [best_ft, best_other]:
                                     color='goldenrod',
                                     )
                 '''
-            ax.legend(fontsize=20,
-                      ncols=4,
+            ax.legend(fontsize=15,
+                      ncols=7,
                       loc=8,
                       )
             pyplot.ylabel(
