@@ -1,6 +1,6 @@
 import argparse
 import fasttext
-import gensim
+#import gensim
 import numpy
 import os
 import pickle
@@ -8,7 +8,7 @@ import random
 import scipy
 import sys
 
-from gensim import downloader
+#from gensim import downloader
 from scipy import spatial, stats
 from tqdm import tqdm
 
@@ -487,36 +487,48 @@ def read_german_ifg_tms(lang):
     sims = dict()
     test_vocab = set()
     lines = list()
-    with open(os.path.join('..', 'tms', 'data', 'german_ifg_r.tsv')) as i:
+    with open(os.path.join('..', 'tms', 'data', 'original', 'de_tms_sem-phon_ifg.tsv')) as i:
         for l_i, l in enumerate(i):
-            line = l.strip().split('\t')
+            line = l.replace(',', '.').strip().split('\t')
             if l_i == 0:
                 header = [w for w in line]
                 continue
+            #assert len(line)==len(header)
+            if '' in line:
+                continue
+            if len(line) < len(header)-1:
+                print(line)
+                continue
             lines.append(line)
     ###
-    conditions = {
-                 (0.5,0.5) : 'aIFG',
-                 (1.5, 1.5) : 'pIFG',
-                 (1., 1.) : 'vertex',
-                 (0.5, 1., 1.5) : 'all',
-                 }
+    conditions = set([l[header.index('stim')] for l in lines])
+    tasks = set([l[header.index('task')] for l in lines])
     full_sims = dict()
-    for c, name in conditions.items():
-        if lang == 'de':
-            current_cond = [l for l in lines if float(l[header.index('condition')]) in c]
-            subjects = [int(l[header.index('sub')]) for l in current_cond]
-            log_rts = [float(l[header.index('log_rt')]) for l in current_cond]
-            #log_rts = [float(l[header.index('rt')]) for l in current_cond]
-            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('word')])]
-            test_vocab = test_vocab.union(set(vocab_w_ones))
-            vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('category')])]
-            test_vocab = test_vocab.union(set(vocab_w_twos))
-            w_ones = [l[header.index('word')] for l in current_cond]
-            w_twos = [l[header.index('category')] for l in current_cond]
-            sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-        else:
-            full_sims[name] = list()
+    #for c, name in conditions.items():
+    for t in tasks:
+        for c in conditions:
+            name = '{}-{}'.format(c, t)
+            #print(name)
+            if lang == 'de':
+                ###One participant was replaced due to an overall mean error rate of 41.8% - sub 3
+                #current_cond = [l for l in lines if l[header.index('stim')] in c and int(l[header.index('subj')])!=3]
+                current_cond = [l for l in lines if l[header.index('stim')] in name and l[header.index('task')] in name and int(l[header.index('subj')])!=3]
+                tasks = [l[header.index('task')] for l in current_cond]
+                assert len(set(tasks)) == 1
+                subjects = [int(l[header.index('subj')]) for l in current_cond]
+                assert len(set(subjects)) == 24
+                #print(subjects)
+                rts = [float(l[header.index('RT')]) for l in current_cond]
+                log_rts = [numpy.log10(float(l[header.index('RT')])) for l in current_cond]
+                vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('utterance')])]
+                test_vocab = test_vocab.union(set(vocab_w_ones))
+                vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('item')].split('.')[0])]
+                test_vocab = test_vocab.union(set(vocab_w_twos))
+                w_ones = [l[header.index('utterance')] for l in current_cond]
+                w_twos = [l[header.index('item')].split('.')[0] for l in current_cond]
+                sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+            else:
+                full_sims[name] = list()
     if lang == 'de':
         full_sims = reorganize_tms_sims(sims)
     return full_sims, test_vocab
@@ -645,7 +657,7 @@ def read_mitchell(lang):
 
 languages = [
              #'en',
-             'it',
+             #'it',
              'de',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
@@ -721,9 +733,9 @@ for lang in tqdm(languages):
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ## german TMS
-                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex'], {}),
-                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG'], {}),
-                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG'], {}),
+                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
+                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
+                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
                     ## italian TMS
                     ('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
                     ('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
@@ -765,8 +777,8 @@ for lang in tqdm(languages):
                 curr_dataset_name = '{}#{}'.format(dataset_name, poss)
                 datasets[lang][curr_dataset_name] = (dataset, proto)
 
-fasttext_only = True
-#fasttext_only = False
+#fasttext_only = True
+fasttext_only = False
 
 models = dict()
 vocabs = dict()
@@ -777,7 +789,7 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 'fasttext',
+                 #'fasttext',
                  #'fasttext_aligned',
                  #'conceptnet',
                  ]:
@@ -785,7 +797,15 @@ for lang in languages:
         #    continue
         print('loading {}'.format(case))
         if case == 'fasttext':
-            model = fasttext.load_model('../../../dataset/word_vectors/{}/cc.{}.300.bin'.format(lang, lang))
+            model = fasttext.load_model(
+                                    os.path.join(
+                                            '/',
+                                            'data',
+                                            'tu_bruera',
+                                            'word_vectors', 
+                                            lang, 
+                                            'cc.{}.300.bin'.format(lang)
+                                            ))
             vocab = model.words
         elif case == 'conceptnet':
             with open(os.path.join('..', '..', '..', 'dataset',
@@ -827,21 +847,30 @@ for lang in languages:
             else:
                 min_count = 10
         with open(os.path.join(
-                               '..', '..', 'psychorpus',
-                               'pickles', lang, corpus, 
+                                '/',
+                                'data',
+                                'u_bruera_software',
+                                'counts',
+                               lang, corpus, 
                                '{}_{}_uncased_vocab_min_{}.pkl'.format(lang, corpus, min_count),
                                ), 'rb') as i:
             vocab = pickle.load(i)
         with open(os.path.join(
-                               '..', '..', 'psychorpus',
-                               'pickles', lang, corpus, 
+                                '/',
+                                'data',
+                                'u_bruera_software',
+                                'counts',
+                               lang, corpus, 
                                '{}_{}_uncased_word_freqs.pkl'.format(lang, corpus),
                                ), 'rb') as i:
             freqs = pickle.load(i)
         print('total size of the corpus: {:,} tokens'.format(sum(freqs.values())))
         with open(os.path.join(
-                               '..', '..', 'psychorpus',
-                               'pickles', lang, corpus, 
+                                '/',
+                                'data',
+                                'u_bruera_software',
+                                'counts',
+                               lang, corpus, 
                                '{}_{}_coocs_uncased_min_{}_win_4.pkl'.format(lang, corpus, min_count),
                                ), 'rb') as i:
             coocs = pickle.load(i)

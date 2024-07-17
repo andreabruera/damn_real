@@ -11,7 +11,7 @@ from scipy import stats
 ### Font setup
 # Using Helvetica as a font
 #font_folder = '/import/cogsci/andrea/dataset/fonts/'
-font_folder = '/data/u_bruera_software/fonts'
+font_folder = '/data/tu_bruera/fonts'
 font_dirs = [font_folder, ]
 font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
 for p in font_files:
@@ -108,7 +108,7 @@ best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_r
 best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
 best_ft = 'fasttext'
 best_other = 'cc100_lancaster_freq_top__5000.0'
-best_other = 'fasttext'
+#best_other = 'fasttext'
 #best_other = 'cc100_lancaster_freq_hi-perceptual__2500.0'
 print('using models: {}, {}'.format(best_ft, best_other))
 
@@ -190,12 +190,10 @@ for l, l_data in results.items():
                             color='mediumaquamarine',
                             )
         ### results for other model
-        '''
         other_model = best_other
         first_part = '_'.join(other_model.split('_')[:-1])
         second_part = float(other_model.split('_')[-1])
         ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-        '''
         ax.bar(
                [x+0.15 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
@@ -338,7 +336,12 @@ for model in [best_ft, best_other]:
                 #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
                 curr_ts = sorted([w for w in l_data.keys() if w.split('_')[-1]==k or w.split('#')[-1]==k])
                 #ft_model = best_ft
-                ys = [l_data[c_t][model] for c_t in curr_ts]
+                if 'fasttext' in model:
+                    ys = [l_data[c_t][model] for c_t in curr_ts]
+                else:
+                    first_part = '_'.join(model.split('_')[:-1])
+                    second_part = float(model.split('_')[-1])
+                    ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
                 #print(ys)
                 ax.bar(
                        #[x-0.15+corr for x in range(len(ys))],
