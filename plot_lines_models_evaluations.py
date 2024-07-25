@@ -57,6 +57,8 @@ for lang, l_res in results.items():
             top = 0.7
         elif 'tms' in task:
             top = 0.35
+        elif 'dyriani' in task:
+            top = 0.55
         else:
             top = 0.2
         bottom = -.08 if task != 'men' else 0.1
