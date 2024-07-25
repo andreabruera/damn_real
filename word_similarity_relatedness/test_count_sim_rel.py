@@ -543,6 +543,49 @@ def reorganize_tms_sims(sims):
             full_sims[n][s][ws] = rt
     return full_sims
 
+def read_dyriani_n400(lang):
+    sims = {'words' : dict(), 'pictures' : dict()}
+    if lang != 'en':
+        trans_path = os.path.join(
+                                 '..', 
+                                 'meg_dyriani',
+                                 'MEG-dyriani_stimuli_translations_it_de.tsv'
+                                 )
+        trans = dict()
+        with open(trans_path) as i:
+            for l_i, l in enumerate(i):
+                line = l.strip().split('\t')
+                if l_i == 0:
+                    rel_trans = line.index('word_{}'.format(lang))
+                    continue
+                trans[line[0].strip()] = line[rel_trans].strip()
+
+    test_vocab = set()
+    for dataset in sims.keys():
+        sims[dataset] = dict()
+        file_path = os.path.join(
+                                 '..', 
+                                 'meg_dyriani',
+                                 'data', 
+                                 'reorganized_dataset',
+                                 dataset,
+                                 'tsv',
+                                 '300-400ms_similarities.tsv')
+        with open(file_path) as i:
+            for l_i, l in enumerate(i):
+                if l_i == 0:
+                    continue
+                line = l.strip().split('\t')
+                w_one = line[0]
+                w_two = line[1]
+                if lang != 'en':
+                    w_one = trans[w_one]
+                    w_two = trans[w_two]
+                test_vocab = test_vocab.union(set([w_one, w_two]))
+                sims[dataset][(w_one, w_two)] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+
+    return sims['words'], sims['pictures'], test_vocab
+
 def read_fern(lang, trans_from_en):
     sims = {1 : dict(), 2 : dict()}
     test_vocab = set()
@@ -711,6 +754,7 @@ for lang in tqdm(languages):
     simlex, simlex_vocab = read_simlex(lang)
     ws353, ws353_vocab = read_ws353(lang)
     fern_one, fern_two, fern_vocab = read_fern(lang, trans_from_en)
+    dyriani_n400_words, dyriani_n400_pictures, dyriani_vocab = read_dyriani_n400(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
     de_tms_pipl, de_tms_pipl_vocab, prototypes = read_german_pipl_tms(lang)
     related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
@@ -718,6 +762,7 @@ for lang in tqdm(languages):
                                   simlex_vocab,
                                   ws353_vocab,
                                   fern_vocab,
+                                  dyriani_vocab,
                                   germ_tms_ifg_vocab,
                                   de_tms_pipl_vocab,
                                   ita_tms_cereb_vocab,
@@ -732,26 +777,29 @@ for lang in tqdm(languages):
                     ### semantic network brain RSA
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
+                    ### EEG semantics RSA
+                    ('dyriani-n400-words', dyriani_n400_words, {}),
+                    ('dyriani-n400-pictures', dyriani_n400_pictures, {}),
                     ## german TMS
                     #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
                     #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
                     ## italian TMS
-                    ('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
-                    ('it_distr-learn_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
-                    ('it_distr-learn_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
+                    #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
+                    #('it_distr-learn_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
+                    #('it_distr-learn_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
     for dataset_name, dataset, proto in [
-            ('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-            ('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-            ('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-            ('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-            ('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-            ('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+            #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+            #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+            #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+            #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+            #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+            #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
             ]:
             ### possibilities in task-modelling:
             # centroid overall (all)
@@ -789,7 +837,7 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 #'fasttext',
+                 'fasttext',
                  #'fasttext_aligned',
                  #'conceptnet',
                  ]:
@@ -904,16 +952,16 @@ for lang in languages:
         #    freq = int(len(sorted_ratings)*percentage)
         #for freq in [7500, 10000, 12500, 15000, 17500]:
         for freq in tqdm([
-                          #100, 
-                          #200, 
-                          #500, 
-                          #750,
-                          #1000, 
-                          #2500, 
+                          100, 
+                          200, 
+                          500, 
+                          750,
+                          1000, 
+                          2500, 
                           5000, 
-                          #7500,
-                          #10000, 12500, 15000, 17500,
-                          #20000, 25000
+                          7500,
+                          10000, 12500, 15000, 17500,
+                          20000, 25000
                           ]):
             for row_mode in [
                              '', 
@@ -921,9 +969,9 @@ for lang in languages:
                              ]:
                 for selection_mode in [
                                        'top', 
-                                       #'random', 
-                                       #'hi-perceptual', 
-                                       #'lo-perceptual',
+                                       'random', 
+                                       'hi-perceptual', 
+                                       'lo-perceptual',
                                        ]: 
                     key = 'ppmi_{}_lancaster_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
                     #if key in results[lang].keys():
@@ -966,20 +1014,20 @@ for lang in languages:
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
         for freq in tqdm([
-                          #100, 200, 500, 750,
-                          #1000, 
-                          #2500, 
-                          #5000, 7500,
-                          #10000, 12500, 15000, 17500,
-                          #20000, 25000
+                          100, 200, 500, 750,
+                          1000, 
+                          2500, 
+                          5000, 7500,
+                          10000, 12500, 15000, 17500,
+                          20000, 25000
                           ]):
             for row_mode in [
-                             #'', 
+                             '', 
                              #'rowincol',
                              ]:
                 for selection_mode in [
-                                       #'top', 
-                                       #'random',
+                                       'top', 
+                                       'random',
                                        ]: 
                     #ctx_words = [w for w in inv_sorted_ratings
                     #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=False)
