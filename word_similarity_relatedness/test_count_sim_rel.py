@@ -543,13 +543,13 @@ def reorganize_tms_sims(sims):
             full_sims[n][s][ws] = rt
     return full_sims
 
-def read_dyriani_n400(lang):
+def read_dirani_n400(lang):
     sims = {'words' : dict(), 'pictures' : dict()}
     if lang != 'en':
         trans_path = os.path.join(
                                  '..', 
-                                 'meg_dyriani',
-                                 'MEG-dyriani_stimuli_translations_it_de.tsv'
+                                 'meg-dirani',
+                                 'meg-dirani-n400_stimuli_translations_it_de.tsv'
                                  )
         trans = dict()
         with open(trans_path) as i:
@@ -565,7 +565,7 @@ def read_dyriani_n400(lang):
         sims[dataset] = dict()
         file_path = os.path.join(
                                  '..', 
-                                 'meg_dyriani',
+                                 'meg-dirani',
                                  'data', 
                                  'reorganized_dataset',
                                  dataset,
@@ -581,7 +581,11 @@ def read_dyriani_n400(lang):
                 if lang != 'en':
                     w_one = trans[w_one]
                     w_two = trans[w_two]
-                test_vocab = test_vocab.union(set([w_one, w_two]))
+                if lang != 'de':
+                    test_vocab = test_vocab.union(set([w_one, w_two]))
+                else:
+                    test_vocab = test_vocab.union(transform_german_word(w_one))
+                    test_vocab = test_vocab.union(transform_german_word(w_two))
                 sims[dataset][(w_one, w_two)] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
 
     return sims['words'], sims['pictures'], test_vocab
@@ -699,9 +703,9 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             #'en',
+             'en',
              #'it',
-             'de',
+             #'de',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -754,7 +758,7 @@ for lang in tqdm(languages):
     simlex, simlex_vocab = read_simlex(lang)
     ws353, ws353_vocab = read_ws353(lang)
     fern_one, fern_two, fern_vocab = read_fern(lang, trans_from_en)
-    dyriani_n400_words, dyriani_n400_pictures, dyriani_vocab = read_dyriani_n400(lang)
+    dirani_n400_words, dirani_n400_pictures, dirani_vocab = read_dirani_n400(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
     de_tms_pipl, de_tms_pipl_vocab, prototypes = read_german_pipl_tms(lang)
     related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
@@ -762,7 +766,7 @@ for lang in tqdm(languages):
                                   simlex_vocab,
                                   ws353_vocab,
                                   fern_vocab,
-                                  dyriani_vocab,
+                                  dirani_vocab,
                                   germ_tms_ifg_vocab,
                                   de_tms_pipl_vocab,
                                   ita_tms_cereb_vocab,
@@ -778,8 +782,8 @@ for lang in tqdm(languages):
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ### EEG semantics RSA
-                    ('dyriani-n400-words', dyriani_n400_words, {}),
-                    ('dyriani-n400-pictures', dyriani_n400_pictures, {}),
+                    ('dirani-n400-words', dirani_n400_words, {}),
+                    ('dirani-n400-pictures', dirani_n400_pictures, {}),
                     ## german TMS
                     #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
@@ -837,7 +841,7 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 'fasttext',
+                 #'fasttext',
                  #'fasttext_aligned',
                  #'conceptnet',
                  ]:
@@ -849,7 +853,8 @@ for lang in languages:
                                     os.path.join(
                                             '/',
                                             'data',
-                                            'tu_bruera',
+                                            #'tu_bruera',
+                                            'u_bruera_software',
                                             'word_vectors', 
                                             lang, 
                                             'cc.{}.300.bin'.format(lang)
@@ -877,11 +882,11 @@ for lang in languages:
         continue
     for corpus in [
                #'bnc',
-               #'wac',
+               'wac',
                #'tagged_wiki',
-               #'opensubs',
+               'opensubs',
                #'joint',
-               'cc100',
+               #'cc100',
                ]:
         print(corpus)
         if lang == 'en':

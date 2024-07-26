@@ -57,7 +57,7 @@ for lang, l_res in results.items():
             top = 0.7
         elif 'tms' in task:
             top = 0.35
-        elif 'dyriani' in task:
+        elif 'n400' in task:
             top = 0.55
         else:
             top = 0.2
@@ -75,7 +75,7 @@ for lang, l_res in results.items():
                           'rowincol' not in k and \
                           'concept' not in k and \
                           ('top' in k
-                          #or '_hi-' in k or '_lo-' in k)
+                          #or '_hi-' in k or '_lo-' in k
                           )
                           }
         #print(lang)
