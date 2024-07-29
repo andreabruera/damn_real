@@ -31,7 +31,7 @@ def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, pro
             if 'fern' in dataset_name and lang in ['de', 'it']:
                 ### word one
                 try:
-                    candidates = trans_from_en['de'][ws[0]]
+                    candidates = trans_from_en[lang][ws[0]]
                     for c in candidates:
                         try:
                             present_words.index(c)
@@ -44,7 +44,7 @@ def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, pro
                     pass
                 ### word two 
                 try:
-                    candidates = trans_from_en['de'][ws[1]]
+                    candidates = trans_from_en[lang][ws[1]]
                     for c in candidates:
                         try:
                             present_words.index(c)
@@ -703,8 +703,8 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             'en',
-             #'it',
+             #'en',
+             'it',
              #'de',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
@@ -742,6 +742,7 @@ for lang in tqdm(['de', 'it']):
                         try:
                             lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
                         except KeyError:
+                            print(w)
                             pass
                         ### translations
                         try:
@@ -779,11 +780,11 @@ for lang in tqdm(languages):
                     #('ws353', ws353, {}),
                     #('men', men, {}), 
                     ### semantic network brain RSA
-                    #('fern1', fern_one, {}),
-                    #('fern2', fern_two, {}),
+                    ('fern1', fern_one, {}),
+                    ('fern2', fern_two, {}),
                     ### EEG semantics RSA
-                    ('dirani-n400-words', dirani_n400_words, {}),
-                    ('dirani-n400-pictures', dirani_n400_pictures, {}),
+                    #('dirani-n400-words', dirani_n400_words, {}),
+                    #('dirani-n400-pictures', dirani_n400_pictures, {}),
                     ## german TMS
                     #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
@@ -841,36 +842,42 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 #'fasttext',
-                 #'fasttext_aligned',
-                 #'conceptnet',
+                 'fasttext',
+                 'fasttext_aligned',
+                 'conceptnet',
                  ]:
         #if case in results[lang].keys():
         #    continue
         print('loading {}'.format(case))
+        base_folder = os.path.join(
+                                    '/',
+                                    'data',
+                                    'u_bruera_software',
+                                    'word_vectors', 
+                                    lang, 
+                                    )
         if case == 'fasttext':
             model = fasttext.load_model(
-                                    os.path.join(
-                                            '/',
-                                            'data',
-                                            #'tu_bruera',
-                                            'u_bruera_software',
-                                            'word_vectors', 
-                                            lang, 
+                                        os.path.join(
+                                            base_folder,
                                             'cc.{}.300.bin'.format(lang)
-                                            ))
+                                            )
+                                        )
             vocab = model.words
         elif case == 'conceptnet':
-            with open(os.path.join('..', '..', '..', 'dataset',
-                                   'word_vectors', lang,
-                                   'conceptnet_{}.pkl'.format(lang)
-                                   ), 'rb') as i:
+            with open(
+                    os.path.join(
+                        base_folder,
+                       'conceptnet_{}.pkl'.format(lang)
+                       ), 'rb') as i:
                 model = pickle.load(i)
             vocab = model.keys()
         elif case == 'fasttext_aligned':
-            with open(os.path.join('..', 'pickles', 
-                                   'ft_{}_aligned.pkl'.format(lang)
-                                   ), 'rb') as i:
+            with open(
+                      os.path.join(
+                                base_folder,
+                               'ft_{}_aligned.pkl'.format(lang)
+                               ), 'rb') as i:
                 model = pickle.load(i)
             vocab = model.keys()
         model = {w : model[w] for w in vocab}
@@ -883,10 +890,10 @@ for lang in languages:
     for corpus in [
                #'bnc',
                'wac',
-               #'tagged_wiki',
+               'tagged_wiki',
                'opensubs',
-               #'joint',
-               #'cc100',
+               'joint',
+               'cc100',
                ]:
         print(corpus)
         if lang == 'en':
