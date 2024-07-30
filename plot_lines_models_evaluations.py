@@ -125,7 +125,7 @@ for lang, l_res in results.items():
                     zorder=3
                     )
         pyplot.legend(
-                ncols=4,
+                ncols=5,
                 loc=8,
                 fontsize=10,
                 )

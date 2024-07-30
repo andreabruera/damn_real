@@ -23,76 +23,81 @@ def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, pro
     test_sims = list()
     if prototyping:
         dataset = {(w, w) : '' for w in dataset} 
-    with tqdm() as counter:
-        for ws, val in dataset.items():
-            marker = True
-            w_ones = list()
-            w_twos = list()
-            if 'fern' in dataset_name and lang in ['de', 'it']:
-                ### word one
-                try:
-                    candidates = trans_from_en[lang][ws[0]]
-                    for c in candidates:
-                        try:
-                            present_words.index(c)
-                            w_ones.append(c)
-                        except ValueError:
-                            #print(c)
-                            pass
-                except KeyError:
-                    #print(ws[0])
-                    pass
-                ### word two 
-                try:
-                    candidates = trans_from_en[lang][ws[1]]
-                    for c in candidates:
-                        try:
-                            present_words.index(c)
-                            w_twos.append(c)
-                        except ValueError:
-                            #print(c)
-                            pass
-                except KeyError:
-                    #print(ws[1])
-                    pass
+    if not prototyping:
+        #with tqdm() as counter:
+        counter = tqdm()
+    for ws, val in dataset.items():
+        marker = True
+        w_ones = list()
+        w_twos = list()
+        if 'fern' in dataset_name and lang in ['de', 'it']:
+            ### word one
+            try:
+                candidates = trans_from_en[lang][ws[0]]
+                for c in candidates:
+                    try:
+                        present_words.index(c)
+                        w_ones.append(c)
+                    except ValueError:
+                        #print(c)
+                        pass
+            except KeyError:
+                #print(ws[0])
+                pass
+            ### word two 
+            try:
+                candidates = trans_from_en[lang][ws[1]]
+                for c in candidates:
+                    try:
+                        present_words.index(c)
+                        w_twos.append(c)
+                    except ValueError:
+                        #print(c)
+                        pass
+            except KeyError:
+                #print(ws[1])
+                pass
+        else:
+            if lang == 'de':
+                for w in transform_german_word(ws[0]):
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_ones.append(w)
+                for w in transform_german_word(ws[1]):
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_twos.append(w)
             else:
-                if lang == 'de':
-                    for w in transform_german_word(ws[0]):
-                        try:
-                            present_words.index(w)
-                        except ValueError:
-                            continue
-                        w_ones.append(w)
-                    for w in transform_german_word(ws[1]):
-                        try:
-                            present_words.index(w)
-                        except ValueError:
-                            continue
-                        w_twos.append(w)
-                else:
-                    for w in [ws[0], ws[0].capitalize()]:
-                        try:
-                            present_words.index(w)
-                        except ValueError:
-                            continue
-                        w_ones.append(w)
-                    for w in [ws[1], ws[1].capitalize()]:
-                        try:
-                            present_words.index(w)
-                        except ValueError:
-                            continue
-                        w_twos.append(w)
-            if len(w_ones)<1:
-                missing_words.add(ws[0])
-            if len(w_twos)<1:
-                missing_words.add(ws[1])
-            if len(w_ones)<1 or len(w_twos)<1:
-                #print(ws)
-                marker = False
+                for w in [ws[0], ws[0].capitalize()]:
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_ones.append(w)
+                for w in [ws[1], ws[1].capitalize()]:
+                    try:
+                        present_words.index(w)
+                    except ValueError:
+                        continue
+                    w_twos.append(w)
+        if len(w_ones)<1:
+            missing_words.add(ws[0])
+        if len(w_twos)<1:
+            missing_words.add(ws[1])
+        if len(w_ones)<1 or len(w_twos)<1:
+            #print(ws)
+            marker = False
+        if not prototyping:
             counter.update(1)
-            if marker:
-                #test_sims[ws] = val
-                test_sims.append((w_ones, w_twos, val))
+        if marker:
+            #test_sims[ws] = val
+            test_sims.append((w_ones, w_twos, val))
+    if not prototyping:
+        del counter
     if len(missing_words) > 0:
         print('missing words: {}'.format(missing_words))
     return test_sims
@@ -229,6 +234,14 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
         corr = None
     return corr
 
+def write_res(out_f, lang, case, dataset_name, corr):
+    with open(out_f, 'w') as o:
+        o.write('{}\t{}\t{}\t'.format(lang, case, dataset_name))
+        for c in corr:
+            o.write('{}\t'.format(c))
+        o.write('\n')
+    #results[lang][case][dataset_name] = corr
+
 def test_model(lang, case, model, vocab, datasets, trans_from_en):
     #if lang not in results.keys():
     #    results[lang] = dict()
@@ -281,13 +294,19 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
                                   corpus_fold, 
                                   details,
                                   )
-        os.makedirs(out_folder, exist_ok=True)
-        with open(os.path.join(out_folder, '{}.tsv'.format(dataset_name)), 'w') as o:
-            o.write('{}\t{}\t{}\t'.format(lang, case, dataset_name))
-            for c in corr:
-                o.write('{}\t'.format(c))
-            o.write('\n')
-        #results[lang][case][dataset_name] = corr
+        try:
+            os.makedirs(out_folder, exist_ok=True)
+        except PermissionError:
+            if os.path.exists(out_folder):
+                pass
+            else:
+                time.sleep(10)
+                os.makedirs(out_folder, exist_ok=True)
+    out_f = os.path.join(out_folder, '{}.tsv'.format(dataset_name))
+    try:
+        write_res(out_f, lang, case, dataset_name, corr)
+    except PermissionError:
+            time.sleep(10)
     #return results
 
 def read_italian_cereb_tms(lang):
@@ -780,11 +799,11 @@ for lang in tqdm(languages):
                     #('ws353', ws353, {}),
                     #('men', men, {}), 
                     ### semantic network brain RSA
-                    ('fern1', fern_one, {}),
-                    ('fern2', fern_two, {}),
+                    #('fern1', fern_one, {}),
+                    #('fern2', fern_two, {}),
                     ### EEG semantics RSA
-                    #('dirani-n400-words', dirani_n400_words, {}),
-                    #('dirani-n400-pictures', dirani_n400_pictures, {}),
+                    ('dirani-n400-words', dirani_n400_words, {}),
+                    ('dirani-n400-pictures', dirani_n400_pictures, {}),
                     ## german TMS
                     #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
@@ -842,9 +861,9 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 'fasttext',
-                 'fasttext_aligned',
-                 'conceptnet',
+                 #'fasttext',
+                 #'fasttext_aligned',
+                 #'conceptnet',
                  ]:
         #if case in results[lang].keys():
         #    continue
@@ -889,9 +908,9 @@ for lang in languages:
         continue
     for corpus in [
                #'bnc',
-               'wac',
-               'tagged_wiki',
-               'opensubs',
+               #'wac',
+               #'tagged_wiki',
+               #'opensubs',
                'joint',
                'cc100',
                ]:
