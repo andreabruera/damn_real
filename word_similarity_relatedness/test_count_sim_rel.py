@@ -7,6 +7,7 @@ import pickle
 import random
 import scipy
 import sys
+import time
 
 #from gensim import downloader
 from scipy import spatial, stats
@@ -26,7 +27,9 @@ def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, pro
     if not prototyping:
         #with tqdm() as counter:
         counter = tqdm()
-    for ws, val in dataset.items():
+    if type(dataset) != list:
+        dataset = [(k, v) for k, v in dataset.items()]
+    for ws, val in dataset:
         marker = True
         w_ones = list()
         w_twos = list()
@@ -234,13 +237,14 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
         corr = None
     return corr
 
-def write_res(out_f, lang, case, dataset_name, corr):
+def write_res(out_f, lang, case, dataset_name, corr, sleep=False):
     with open(out_f, 'w') as o:
         o.write('{}\t{}\t{}\t'.format(lang, case, dataset_name))
         for c in corr:
             o.write('{}\t'.format(c))
-        o.write('\n')
-    #results[lang][case][dataset_name] = corr
+        #o.write('\n')
+        if sleep == True:
+            time.sleep(10)
 
 def test_model(lang, case, model, vocab, datasets, trans_from_en):
     #if lang not in results.keys():
@@ -274,13 +278,25 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
         else:
             corr = list()
             printing = 0
-            for s, s_data in dataset.items():
-                curr_corr = compute_corr(s_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
-                if curr_corr == None:
-                    print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
-                else:
-                    corr.append(curr_corr)
-                printing += 1
+            if 'bootstrap' not in dataset_name:
+                for s, s_data in dataset.items():
+                    curr_corr = compute_corr(s_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
+                    if curr_corr == None:
+                        print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
+                    else:
+                        corr.append(curr_corr)
+                    printing += 1
+            ### bootstrapping 1000 data splits
+            else:
+                all_data = [(k, v) for sub_data in dataset.values() for k, v in sub_data.items()]
+                for _ in range(1000):
+                    curr_data = random.choices(all_data, k=int(len(all_data)/10))
+                    curr_corr = compute_corr(curr_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
+                    if curr_corr == None:
+                        print('error with {} - subject {}'.format([lang, case, dataset_name, _]))
+                    else:
+                        corr.append(curr_corr)
+                    printing += 1
             #corr = numpy.nanmean(corrs)
         print('\n')
         print('{} model'.format(case))
@@ -306,7 +322,8 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
     try:
         write_res(out_f, lang, case, dataset_name, corr)
     except PermissionError:
-            time.sleep(10)
+        time.sleep(10)
+        write_res(out_f, lang, case, dataset_name, corr, sleep=True)
     #return results
 
 def read_italian_cereb_tms(lang):
@@ -531,7 +548,7 @@ def read_german_ifg_tms(lang):
             if lang == 'de':
                 ###One participant was replaced due to an overall mean error rate of 41.8% - sub 3
                 #current_cond = [l for l in lines if l[header.index('stim')] in c and int(l[header.index('subj')])!=3]
-                current_cond = [l for l in lines if l[header.index('stim')] in name and l[header.index('task')] in name and int(l[header.index('subj')])!=3]
+                current_cond = [l for l in lines if l[header.index('stim')] in name and l[header.index('task')] in name and int(l[header.index('subj')])!=3 and l[header.index('utterance')]!='NA']
                 tasks = [l[header.index('task')] for l in current_cond]
                 assert len(set(tasks)) == 1
                 subjects = [int(l[header.index('subj')]) for l in current_cond]
@@ -723,8 +740,8 @@ def read_mitchell(lang):
 
 languages = [
              #'en',
-             'it',
-             #'de',
+             #'it',
+             'de',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -802,12 +819,15 @@ for lang in tqdm(languages):
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ### EEG semantics RSA
-                    ('dirani-n400-words', dirani_n400_words, {}),
-                    ('dirani-n400-pictures', dirani_n400_pictures, {}),
+                    #('dirani-n400-words', dirani_n400_words, {}),
+                    #('dirani-n400-pictures', dirani_n400_pictures, {}),
                     ## german TMS
                     #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
                     #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
+                    ('de_sem-phon-bootstrap_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
+                    ('de_sem-phon-bootstrap_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
+                    ('de_sem-phon-bootstrap_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
                     ## italian TMS
                     #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
@@ -818,8 +838,8 @@ for lang in tqdm(languages):
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
     for dataset_name, dataset, proto in [
-            #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-            #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
+            ('de_sound-act-bootstrap_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+            ('de_sound-act-bootstrap_tms_all-sham', de_tms_pipl['sham'], prototypes),
             #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
             #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
             #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
@@ -832,25 +852,25 @@ for lang in tqdm(languages):
             # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
             # matched non-exclusive (action_pos, sound_pos)
             for poss in [
-                         'all', 
+                         #'all', 
                          'both_pos',
-                         'both_pos-topten',
-                         'both_pos-topfifty',
-                         'both_neg',
+                         #'both_pos-topten',
+                         #'both_pos-topfifty',
+                         #'both_neg',
                          'matched_excl',
-                         'matched_excl-topten',
-                         'matched_excl-topfifty',
-                         'matched_non_excl',
-                         'matched_non_excl-topten',
-                         'matched_non_excl-topfifty',
-                         'opposite_excl',
-                         'opposite_non_excl',
+                         #'matched_excl-topten',
+                         #'matched_excl-topfifty',
+                         #'matched_non_excl',
+                         #'matched_non_excl-topten',
+                         #'matched_non_excl-topfifty',
+                         #'opposite_excl',
+                         #'opposite_non_excl',
                          ]:
                 curr_dataset_name = '{}#{}'.format(dataset_name, poss)
                 datasets[lang][curr_dataset_name] = (dataset, proto)
 
-#fasttext_only = True
-fasttext_only = False
+fasttext_only = True
+#fasttext_only = False
 
 models = dict()
 vocabs = dict()
@@ -861,7 +881,7 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 #'fasttext',
+                 'fasttext',
                  #'fasttext_aligned',
                  #'conceptnet',
                  ]:
@@ -911,8 +931,8 @@ for lang in languages:
                #'wac',
                #'tagged_wiki',
                #'opensubs',
-               'joint',
-               'cc100',
+               #'joint',
+               #'cc100',
                ]:
         print(corpus)
         if lang == 'en':

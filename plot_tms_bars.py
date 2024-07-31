@@ -123,7 +123,8 @@ for l, l_data in results.items():
                l, 
                )
     os.makedirs(out, exist_ok=True)
-    rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d])
+    import pdb; pdb.set_trace()
+    rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d and 'bootstrap' in d])
     print(rel_tasks)
     #assert len(rel_tasks) in [1, 2]
     for t in rel_tasks:
@@ -191,9 +192,10 @@ for l, l_data in results.items():
                             )
         ### results for other model
         other_model = best_other
-        first_part = '_'.join(other_model.split('_')[:-1])
-        second_part = float(other_model.split('_')[-1])
-        ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+        #first_part = '_'.join(other_model.split('_')[:-1])
+        #second_part = float(other_model.split('_')[-1])
+        #ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+        ys = [l_data[c_t][fasttext] for c_t in curr_ts]
         ax.bar(
                [x+0.15 for x in range(len(xs))],
                [numpy.average(y) for y in ys],
