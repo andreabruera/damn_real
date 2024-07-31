@@ -114,164 +114,9 @@ print('using models: {}, {}'.format(best_ft, best_other))
 
 ### datasets where the comparisons are very simple
 ### just clear-cut pairwise comparisons
-for l, l_data in results.items():
-    if l == 'en':
-        continue
-    out = os.path.join(
-               'tms',
-               'tms_bars_plots',
-               l, 
-               )
-    os.makedirs(out, exist_ok=True)
-    import pdb; pdb.set_trace()
-    rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d and 'bootstrap' in d])
-    print(rel_tasks)
-    #assert len(rel_tasks) in [1, 2]
-    for t in rel_tasks:
-        fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
-        ax.set_ylim(bottom=-0.04, top=0.4)
-        curr_ts = sorted([w for w in l_data.keys() if t in w])
-        if len(curr_ts) == 2:
-            xs = [0.5]
-        elif len(curr_ts) == 3:
-            xs = []
-        elif len(curr_ts) == 6:
-            xs = [1.5, 3.5]
-        ax.vlines(
-                  x=xs,
-                  ymin=-.5,
-                  ymax=.5,
-                  linewidth=10,
-                  linestyles='dashed',
-                  color='black',
-                  )
-        xs = [w.split('_tms_')[1] for w in curr_ts]
-        ax.bar(0, 0, color='mediumaquamarine', label='fasttext')
-        ax.bar(0, 0, color='goldenrod', label=best_other)
-        ### results for fasttext
-        #ft_model = lang_best[l][0]
-        ft_model = best_ft
-        ys = [l_data[c_t][ft_model] for c_t in curr_ts]
-        ax.bar(
-               [x-0.15 for x in range(len(xs))],
-               [numpy.average(y) for y in ys],
-               color='mediumaquamarine',
-               width=0.25,
-               )
-        ax.scatter(
-               [x-0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
-               ys,
-               edgecolor='aquamarine',
-               color='white',
-               alpha=0.5,
-               zorder=3.,
-               )
-        ### p-values
-        for y_i, y in enumerate(ys):
-            for y_two_i, y_two in enumerate(ys):
-                if y_two_i <= y_i:
-                    continue
-                if len(ys) == 6:
-                    if y_i % 2 != 0:
-                        continue
-                    if y_two_i>y_i+1:
-                        continue
-                    y_corr = 0.008
-                else:
-                    y_corr = y_two_i*0.01
-                #print(y)
-                #print(y_two)
-                p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
-                #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                if p < 0.99:
-                    ax.text(
-                            x=y_i-.2,
-                            y=-y_corr,
-                            s='{} - p={}'.format(xs[y_two_i], round(p, 3)),
-                            color='mediumaquamarine',
-                            )
-        ### results for other model
-        other_model = best_other
-        #first_part = '_'.join(other_model.split('_')[:-1])
-        #second_part = float(other_model.split('_')[-1])
-        #ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-        ys = [l_data[c_t][fasttext] for c_t in curr_ts]
-        ax.bar(
-               [x+0.15 for x in range(len(xs))],
-               [numpy.average(y) for y in ys],
-               color='goldenrod',
-               width=0.25,
-               )
-        ax.scatter(
-               [x+0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
-               ys,
-               edgecolor='goldenrod',
-               color='white',
-               alpha=0.5,
-               zorder=3.,
-               )
-        ### p-values
-        for y_i, y in enumerate(ys):
-            for y_two_i, y_two in enumerate(ys):
-                if y_two_i <= y_i:
-                    continue
-                if len(ys) == 6:
-                    if y_i % 2 != 0:
-                        continue
-                    if y_two_i>y_i+1:
-                        continue
-                    y_corr = 0.016
-                else:
-                    y_corr = y_two_i*0.01
-                #print(y)
-                #print(y_two)
-                if numpy.average(y) > numpy.average(y_two):
-                    alternative='greater'
-                    used_x = y_i
-                elif numpy.average(y) < numpy.average(y_two):
-                    alternative='less'
-                    used_x = y_two_i
-                p = scipy.stats.wilcoxon(x=y, y=y_two, alternative=alternative).pvalue
-                #p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
-                #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                if p < 0.99:
-                    ax.text(
-                            x=y_i+.2,
-                            y=-y_corr,
-                            s='{} - p={}'.format(xs[y_two_i], round(p, 3)),
-                            color='goldenrod',
-                            )
-        ax.legend(fontsize=20,
-                  ncols=2,
-                  loc=9,
-                  )
-        pyplot.ylabel(
-                      ylabel='RT - semantic dissimilarity correlation',
-                      fontsize=23,
-                      fontweight='bold'
-                      )
-        pyplot.yticks(fontsize=20)
-        pyplot.xticks(
-                     ticks=range(len(xs)),
-                     labels=[x.replace('_', ' ').replace('-', '\n') for x in xs],
-                     fontsize=25,
-                     fontweight='bold'
-                     )
-        pyplot.title(
-                     '{}'.format(t.replace('_', ' ')), 
-                     fontsize=30,
-                     )
-        pyplot.savefig(
-                os.path.join(
-                    out, 
-                   '{}.jpg'.format(t)))
-        pyplot.clf()
-        pyplot.close()
-### phil's dataset, where it is not clear how to look at results
-significance = 0.2
-for model in [best_ft, best_other]:
+for mode in ['boot', '']:
     for l, l_data in results.items():
-        if l != 'de':
+        if l == 'en':
             continue
         out = os.path.join(
                    'tms',
@@ -279,174 +124,135 @@ for model in [best_ft, best_other]:
                    l, 
                    )
         os.makedirs(out, exist_ok=True)
-        all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'sound-act' in d])
-
-        print(all_rel_tasks)
-        #assert len(all_rel_tasks) in [1, 2]
-        for t in all_rel_tasks:
-            all_curr_ts = sorted([w.split('_tms_')[1] for w in l_data.keys() if t in w])
-            indiv_bars = sorted(set([t.split('_')[-1] if '#' not in t else t.split('#')[-1] for t in all_curr_ts]))
-            corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
-            print(corrections)
+        if mode == 'boot':
+            rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d and 'bootstrap' in d])
+        else:
+            rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' not in d and 'bootstrap' not in d])
+        print(rel_tasks)
+        #assert len(rel_tasks) in [1, 2]
+        for t in rel_tasks:
             fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
-            ax.scatter(
-                       x=0., 
-                       y=1.,
-                       marker='*',
-                       s=100,
-                       color='black',
-                       #alpha=0.,
-                       label='p<{}'.format(significance)
-                       )
-            ax.set_ylim(bottom=-0.3, top=0.3)
-            xs = [1.5, 3.5]
-            xticks = sorted(set(['_'.join(t.split('_')[:-1]) if '#' not in t else '_'.join(t.split('#')[:-1]) for t in all_curr_ts]))
-            print(xticks)
+            ax.set_ylim(bottom=-0.04, top=0.4)
+            if mode == 'boot':
+                curr_ts = sorted([w for w in l_data.keys() if t in w])
+            else:
+                curr_ts = sorted([w for w in l_data.keys() if t in w and 'boot' not in w])
+            if len(curr_ts) == 2:
+                xs = [0.5]
+            elif len(curr_ts) == 3:
+                xs = []
+            elif len(curr_ts) == 6:
+                xs = [1.5, 3.5]
             ax.vlines(
                       x=xs,
-                      ymin=-.2,
-                      ymax=.3,
+                      ymin=-.5,
+                      ymax=.5,
                       linewidth=10,
                       linestyles='dashed',
                       color='black',
                       )
-            #xs = [w.split('_tms_')[1] for w in curr_ts]
-            colors_l = [
-                    'paleturquoise', 
-                    'mediumaquamarine', 
-                    'forestgreen', 
-                    'mediumblue',
-                    'palegoldenrod', 
-                    'palevioletred',
-                    'silver',
-                    'orange', 
-                    'teal',
-                    'magenta',
-                    'black',
-                    'indianred',
-                    'slateblue',
-                    'hotpink',
-                    ]
-            colors = dict()
-            for k, col in zip(corrections.keys(), colors_l):
-                ax.bar(0, 0, color=col, label=k)
-                colors[k] = col
-                #ax.bar(0, 0, color='goldenrod', label=best_other)
+            xs = [w.split('_tms_')[1] for w in curr_ts]
+            ax.bar(0, 0, color='mediumaquamarine', label='fasttext')
+            ax.bar(0, 0, color='goldenrod', label=best_other)
             ### results for fasttext
             #ft_model = lang_best[l][0]
-            for k, corr in corrections.items():
-                #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
-                curr_ts = sorted([w for w in l_data.keys() if w.split('_')[-1]==k or w.split('#')[-1]==k])
-                #ft_model = best_ft
-                if 'fasttext' in model:
-                    ys = [l_data[c_t][model] for c_t in curr_ts]
-                else:
-                    first_part = '_'.join(model.split('_')[:-1])
-                    second_part = float(model.split('_')[-1])
-                    ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-                #print(ys)
-                ax.bar(
-                       #[x-0.15+corr for x in range(len(ys))],
-                       [x+corr for x in range(len(ys))],
-                       [numpy.average(y) for y in ys],
-                       #color='mediumaquamarine',
-                       width=0.05,
-                       color=colors[k]
-                       )
-                ax.scatter(
-                       #[x-0.15+(random.randint(-100, 100)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
-                       [x+(random.randint(-10, 10)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
-                       ys,
-                       edgecolor=colors[k],
-                       color='white',
-                       alpha=0.5,
-                       zorder=3.,
-                       )
-                ### p-values
-                for y_i, y in enumerate(ys):
-                    for y_two_i, y_two in enumerate(ys):
-                        if y_two_i <= y_i:
+            ft_model = best_ft
+            ys = [l_data[c_t][ft_model][:100] for c_t in curr_ts]
+            print(xs)
+            print(len(ys))
+            print([len(y) for y in ys])
+            ax.bar(
+                   [x-0.15 for x in range(len(xs))],
+                   [numpy.average(y) for y in ys],
+                   color='mediumaquamarine',
+                   width=0.25,
+                   )
+            ax.scatter(
+                   [x-0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
+                   ys,
+                   edgecolor='aquamarine',
+                   color='white',
+                   alpha=0.5,
+                   zorder=3.,
+                   )
+            ### p-values
+            for y_i, y in enumerate(ys):
+                for y_two_i, y_two in enumerate(ys):
+                    if y_two_i <= y_i:
+                        continue
+                    if len(ys) == 6:
+                        if y_i % 2 != 0:
                             continue
-                        if len(ys) == 6:
-                            if y_i % 2 != 0:
-                                continue
-                            if y_two_i>y_i+1:
-                                continue
-                        #print(y)
-                        #print(y_two)
-                        ### setting the directionality
-                        if numpy.average(y) > numpy.average(y_two):
-                            alternative='greater'
-                            used_x = y_i
-                        elif numpy.average(y) < numpy.average(y_two):
-                            alternative='less'
-                            used_x = y_two_i
-                        p = scipy.stats.wilcoxon(x=y, y=y_two, alternative=alternative).pvalue
-                        #print(p)
-                        #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                        if p < significance:
-                            #ax.text(
-                            #        x=y_i-.2+corr,
-                            #        y=-y_corr,
-                            #        s='{} - p={}'.format(curr_ts[y_two_i], round(p, 3)),
-                            #        color='mediumaquamarine',
-                            #        )
-                            ax.scatter(
-                                       x=used_x+corr, 
-                                       y=.25,
-                                       marker='*',
-                                       s=100,
-                                       color=colors[k]
-                                       )
-
-                '''
-                ### results for other model
-                other_model = best_other
-                first_part = '_'.join(other_model.split('_')[:-1])
-                second_part = float(other_model.split('_')[-1])
-                ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-                ax.bar(
-                       [x+0.15+corr for x in range(len(xs))],
-                       [numpy.average(y) for y in ys],
-                       color='goldenrod',
-                       width=0.25,
-                       )
-                ax.scatter(
-                       [x+0.15+(random.randint(-100, 100)*0.001)+corr for x in range(len(xs)) for y in ys[x]],
-                       ys,
-                       edgecolor='goldenrod',
-                       color='white',
-                       alpha=0.5,
-                       zorder=3.,
-                       )
-                ### p-values
-                for y_i, y in enumerate(ys):
-                    for y_two_i, y_two in enumerate(ys):
-                        if y_two_i <= y_i:
+                        if y_two_i>y_i+1:
                             continue
-                        if len(ys) == 6:
-                            if y_i % 2 != 0:
-                                continue
-                            if y_two_i>y_i+1:
-                                continue
-                            y_corr = 0.016
-                        else:
-                            y_corr = y_two_i*0.01
-                        #print(y)
-                        #print(y_two)
-                        p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
-                        #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                        if p < 0.99:
-                            ax.text(
-                                    x=y_i+.2+corr,
-                                    y=-y_corr,
-                                    s='{} - p={}'.format(curr_ts[y_two_i], round(p, 3)),
-                                    color='goldenrod',
-                                    )
-                '''
-            ax.legend(fontsize=15,
-                      ncols=7,
-                      loc=8,
+                        y_corr = 0.008
+                    else:
+                        y_corr = y_two_i*0.01
+                    #print(y)
+                    #print(y_two)
+                    p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
+                    #p = scipy.stats.ttest_ind(y, y_two).pvalue
+                    if p < 0.99:
+                        ax.text(
+                                x=y_i-.2,
+                                y=-y_corr,
+                                s='{} - p={}'.format(xs[y_two_i], round(p, 3)),
+                                color='mediumaquamarine',
+                                )
+            ### results for other model
+            other_model = best_other
+            #first_part = '_'.join(other_model.split('_')[:-1])
+            #second_part = float(other_model.split('_')[-1])
+            #ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+            ys = [l_data[c_t]['fasttext'] for c_t in curr_ts]
+            ax.bar(
+                   [x+0.15 for x in range(len(xs))],
+                   [numpy.average(y) for y in ys],
+                   color='goldenrod',
+                   width=0.25,
+                   )
+            ax.scatter(
+                   [x+0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
+                   ys,
+                   edgecolor='goldenrod',
+                   color='white',
+                   alpha=0.5,
+                   zorder=3.,
+                   )
+            ### p-values
+            for y_i, y in enumerate(ys):
+                for y_two_i, y_two in enumerate(ys):
+                    if y_two_i <= y_i:
+                        continue
+                    if len(ys) == 6:
+                        if y_i % 2 != 0:
+                            continue
+                        if y_two_i>y_i+1:
+                            continue
+                        y_corr = 0.016
+                    else:
+                        y_corr = y_two_i*0.01
+                    #print(y)
+                    #print(y_two)
+                    if numpy.average(y) > numpy.average(y_two):
+                        alternative='greater'
+                        used_x = y_i
+                    elif numpy.average(y) < numpy.average(y_two):
+                        alternative='less'
+                        used_x = y_two_i
+                    p = scipy.stats.wilcoxon(x=y, y=y_two, alternative=alternative).pvalue
+                    #p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
+                    #p = scipy.stats.ttest_ind(y, y_two).pvalue
+                    if p < 0.99:
+                        ax.text(
+                                x=y_i+.2,
+                                y=-y_corr,
+                                s='{} - p={}'.format(xs[y_two_i], round(p, 3)),
+                                color='goldenrod',
+                                )
+            ax.legend(fontsize=20,
+                      ncols=2,
+                      loc=9,
                       )
             pyplot.ylabel(
                           ylabel='RT - semantic dissimilarity correlation',
@@ -455,18 +261,178 @@ for model in [best_ft, best_other]:
                           )
             pyplot.yticks(fontsize=20)
             pyplot.xticks(
-                         ticks=range(len(ys)),
-                         labels=[x.replace('_', ' ').replace('-', '\n') for x in xticks],
+                         ticks=range(len(xs)),
+                         labels=[x.replace('_', ' ').replace('-', '\n') for x in xs],
                          fontsize=25,
                          fontweight='bold'
                          )
             pyplot.title(
-                         '{} - {}'.format(t.replace('_', ' '), model), 
+                         '{}'.format(t.replace('_', ' ')), 
                          fontsize=30,
                          )
             pyplot.savefig(
                     os.path.join(
                         out, 
-                       '{}-{}.jpg'.format(t, model)))
+                       '{}.jpg'.format(t)))
             pyplot.clf()
             pyplot.close()
+    ### phil's dataset, where it is not clear how to look at results
+    '''
+    significance = 0.2
+    for model in [best_ft, best_other]:
+        for l, l_data in results.items():
+            if l != 'de':
+                continue
+            out = os.path.join(
+                       'tms',
+                       'tms_bars_plots',
+                       l, 
+                       )
+            os.makedirs(out, exist_ok=True)
+            all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'sound-act' in d])
+
+            print(all_rel_tasks)
+            #assert len(all_rel_tasks) in [1, 2]
+            for t in all_rel_tasks:
+                all_curr_ts = sorted([w.split('_tms_')[1] for w in l_data.keys() if t in w])
+                indiv_bars = sorted(set([t.split('_')[-1] if '#' not in t else t.split('#')[-1] for t in all_curr_ts]))
+                corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
+                print(corrections)
+                fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
+                ax.scatter(
+                           x=0., 
+                           y=1.,
+                           marker='*',
+                           s=100,
+                           color='black',
+                           #alpha=0.,
+                           label='p<{}'.format(significance)
+                           )
+                ax.set_ylim(bottom=-0.3, top=0.3)
+                xs = [1.5, 3.5]
+                xticks = sorted(set(['_'.join(t.split('_')[:-1]) if '#' not in t else '_'.join(t.split('#')[:-1]) for t in all_curr_ts]))
+                print(xticks)
+                ax.vlines(
+                          x=xs,
+                          ymin=-.2,
+                          ymax=.3,
+                          linewidth=10,
+                          linestyles='dashed',
+                          color='black',
+                          )
+                #xs = [w.split('_tms_')[1] for w in curr_ts]
+                colors_l = [
+                        'paleturquoise', 
+                        'mediumaquamarine', 
+                        'forestgreen', 
+                        'mediumblue',
+                        'palegoldenrod', 
+                        'palevioletred',
+                        'silver',
+                        'orange', 
+                        'teal',
+                        'magenta',
+                        'black',
+                        'indianred',
+                        'slateblue',
+                        'hotpink',
+                        ]
+                colors = dict()
+                for k, col in zip(corrections.keys(), colors_l):
+                    ax.bar(0, 0, color=col, label=k)
+                    colors[k] = col
+                    #ax.bar(0, 0, color='goldenrod', label=best_other)
+                ### results for fasttext
+                #ft_model = lang_best[l][0]
+                for k, corr in corrections.items():
+                    #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
+                    curr_ts = sorted([w for w in l_data.keys() if w.split('_')[-1]==k or w.split('#')[-1]==k])
+                    #ft_model = best_ft
+                    if 'fasttext' in model:
+                        ys = [l_data[c_t][model] for c_t in curr_ts]
+                    else:
+                        first_part = '_'.join(model.split('_')[:-1])
+                        second_part = float(model.split('_')[-1])
+                        ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+                    #print(ys)
+                    ax.bar(
+                           #[x-0.15+corr for x in range(len(ys))],
+                           [x+corr for x in range(len(ys))],
+                           [numpy.average(y) for y in ys],
+                           #color='mediumaquamarine',
+                           width=0.05,
+                           color=colors[k]
+                           )
+                    ax.scatter(
+                           #[x-0.15+(random.randint(-100, 100)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
+                           [x+(random.randint(-10, 10)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
+                           ys,
+                           edgecolor=colors[k],
+                           color='white',
+                           alpha=0.5,
+                           zorder=3.,
+                           )
+                    ### p-values
+                    for y_i, y in enumerate(ys):
+                        for y_two_i, y_two in enumerate(ys):
+                            if y_two_i <= y_i:
+                                continue
+                            if len(ys) == 6:
+                                if y_i % 2 != 0:
+                                    continue
+                                if y_two_i>y_i+1:
+                                    continue
+                            #print(y)
+                            #print(y_two)
+                            ### setting the directionality
+                            if numpy.average(y) > numpy.average(y_two):
+                                alternative='greater'
+                                used_x = y_i
+                            elif numpy.average(y) < numpy.average(y_two):
+                                alternative='less'
+                                used_x = y_two_i
+                            p = scipy.stats.wilcoxon(x=y, y=y_two, alternative=alternative).pvalue
+                            #print(p)
+                            #p = scipy.stats.ttest_ind(y, y_two).pvalue
+                            if p < significance:
+                                #ax.text(
+                                #        x=y_i-.2+corr,
+                                #        y=-y_corr,
+                                #        s='{} - p={}'.format(curr_ts[y_two_i], round(p, 3)),
+                                #        color='mediumaquamarine',
+                                #        )
+                                ax.scatter(
+                                           x=used_x+corr, 
+                                           y=.25,
+                                           marker='*',
+                                           s=100,
+                                           color=colors[k]
+                                           )
+
+                ax.legend(fontsize=15,
+                          ncols=7,
+                          loc=8,
+                          )
+                pyplot.ylabel(
+                              ylabel='RT - semantic dissimilarity correlation',
+                              fontsize=23,
+                              fontweight='bold'
+                              )
+                pyplot.yticks(fontsize=20)
+                pyplot.xticks(
+                             ticks=range(len(ys)),
+                             labels=[x.replace('_', ' ').replace('-', '\n') for x in xticks],
+                             fontsize=25,
+                             fontweight='bold'
+                             )
+                pyplot.title(
+                             '{} - {}'.format(t.replace('_', ' '), model), 
+                             fontsize=30,
+                             )
+                pyplot.savefig(
+                        os.path.join(
+                            out, 
+                           '{}-{}.jpg'.format(t, model)))
+                pyplot.clf()
+                pyplot.close()
+    '''
