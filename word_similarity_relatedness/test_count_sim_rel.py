@@ -557,6 +557,31 @@ def read_german_pipl_tms(lang):
     if lang == 'de':
         full_sims = reorganize_tms_sims(sims)
     return full_sims, test_vocab, prototypes
+def read_italian_behav(lang):
+    ### lexical decition times
+    sims = dict()
+    test_vocab = set()
+    if lang == 'it':
+        for case in ['word-naming',]: 
+            sims[case] = dict()
+            measures = dict()
+            with open(os.path.join('..', 'behavioural', 'data', 'varlex_{}_it.tsv'.format(case))) as i:
+                for l_i, l in enumerate(i):
+                    line = l.replace(',', '.').strip().split('\t')
+                    if l_i < 2:
+                        continue
+                    word = line[0].lower()
+                    test_vocab = test_vocab.union(set([word, word.capitalize()]))
+                    word_rt = float(line[-1])
+                    measures[word] = word_rt
+            for k_one_i, k_one in enumerate(sorted(measures.keys())):
+                for k_two_i, k_two in enumerate(sorted(measures.keys())):
+                    if k_two_i <= k_one_i:
+                        continue
+                    key = tuple(sorted([k_one, k_two]))
+                    sims[case][key] = abs(measures[k_one]-measures[k_two])
+    return sims, test_vocab
+
 def read_german_behav(lang):
     ### lexical decition times
     sims = dict()
@@ -815,8 +840,8 @@ def read_mitchell(lang):
 
 languages = [
              #'en',
-             'de',
-             #'it',
+             #'de',
+             'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -872,6 +897,7 @@ for lang in tqdm(languages):
     fern_one, fern_two, fern_vocab = read_fern(lang, trans_from_en)
     dirani_n400_words, dirani_n400_pictures, dirani_vocab = read_dirani_n400(lang)
     de_behav, de_behav_vocab = read_german_behav(lang)
+    it_behav, it_behav_vocab = read_italian_behav(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
     de_tms_pipl, de_tms_pipl_vocab, prototypes = read_german_pipl_tms(lang)
     related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
@@ -883,6 +909,7 @@ for lang in tqdm(languages):
                                   germ_tms_ifg_vocab,
                                   de_tms_pipl_vocab,
                                   de_behav_vocab,
+                                  it_behav_vocab,
                                   ita_tms_cereb_vocab,
                                   )
     rows[lang] = sorted(basic_vocab)
@@ -910,6 +937,8 @@ for lang in tqdm(languages):
                     #('de_sem-phon-bootstrap_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon-bootstrap_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
                     #('de_sem-phon-bootstrap_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
+                    ### italian naming times
+                    ('it_behav-word-naming', it_behav['word-naming'], {}),
                     ## italian TMS
                     #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
@@ -926,16 +955,16 @@ for lang in tqdm(languages):
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
     for dataset_name, dataset, proto in [
-            ('de_sound-act-bootstrap_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-            ('de_sound-act-bootstrap_tms_all-sham', de_tms_pipl['sham'], prototypes),
+            #('de_sound-act-bootstrap_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
+            #('de_sound-act-bootstrap_tms_all-sham', de_tms_pipl['sham'], prototypes),
             #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
             #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-            ('de_sound-act-bootstrap_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-            ('de_sound-act-bootstrap_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
+            #('de_sound-act-bootstrap_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
+            #('de_sound-act-bootstrap_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
             #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
             #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-            ('de_sound-act-bootstrap_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-            ('de_sound-act-bootstrap_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
+            #('de_sound-act-bootstrap_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
+            #('de_sound-act-bootstrap_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
             #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
             #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
             ]:
