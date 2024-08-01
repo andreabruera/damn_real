@@ -118,11 +118,13 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
     pred = list()
     #for k, v in test_sims.items():
     for w_ones, w_twos, v in test_sims:
-        if 'tms' or 'behav' in dataset_name:
-            ### for reaction times, it's the opposite
-            real.append(1 - v)
-        else:
-            real.append(v)
+        ###CHECK
+        #if 'tms' or 'behav' in dataset_name:
+        #    ### for reaction times, it's the opposite
+        #    real.append(-v)
+        #else:
+        #    real.append(v)
+        real.append(v)
         ### all possible transformations...
         if len(prototypes.keys()) > 0:
             current_pred = list()
@@ -839,9 +841,9 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             #'en',
+             'en',
              #'de',
-             'it',
+             #'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -923,8 +925,8 @@ for lang in tqdm(languages):
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ### EEG semantics RSA
-                    #('dirani-n400-words', dirani_n400_words, {}),
-                    #('dirani-n400-pictures', dirani_n400_pictures, {}),
+                    ('dirani-n400-words', dirani_n400_words, {}),
+                    ('dirani-n400-pictures', dirani_n400_pictures, {}),
                     ### german naming times
                     #('de_behav-word-naming', de_behav['word-naming'], {}),
                     #('de_behav-lexical-decision', de_behav['lexical-decision'], {}),
@@ -938,7 +940,7 @@ for lang in tqdm(languages):
                     #('de_sem-phon-bootstrap_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
                     #('de_sem-phon-bootstrap_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
                     ### italian naming times
-                    ('it_behav-word-naming', it_behav['word-naming'], {}),
+                    #('it_behav-word-naming', it_behav['word-naming'], {}),
                     ## italian TMS
                     #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
@@ -1004,7 +1006,7 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 'fasttext',
+                 #'fasttext',
                  #'fasttext_aligned',
                  #'conceptnet',
                  ]:
@@ -1052,9 +1054,9 @@ for lang in languages:
         continue
     for corpus in [
                #'bnc',
-               #'wac',
+               'wac',
                #'tagged_wiki',
-               #'opensubs',
+               'opensubs',
                #'joint',
                #'cc100',
                ]:

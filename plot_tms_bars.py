@@ -32,8 +32,8 @@ for root, direc, fz in os.walk(
             for l in i:
                 if 'rowincol' in l:
                     continue
-                #if 'perceptual' in l:
-                #    continue
+                if 'lancaster' not in l:
+                    continue
                 line = l.strip().split('\t')
                 lang = line[0]
                 if lang not in results.keys():
@@ -61,8 +61,8 @@ for root, direc, fz in os.walk(
 model_results = dict()
 for l, l_data in results.items():
     model_results[l] = dict()
-    rel_tasks = [d for d in l_data.keys() if '353' in d or '999' in d or 'fern' in d]
-    assert len(rel_tasks) == 4
+    rel_tasks = [d for d in l_data.keys() if '353' in d or '999' in d or 'fern' in d or 'dira' in d]
+    assert len(rel_tasks) == 6
     for t in rel_tasks:
         c_results = list()
         for model, m_data in l_data[t].items():
@@ -70,6 +70,10 @@ for l, l_data in results.items():
             if type(m_data) == dict:
                 for num, num_res in m_data.items():
                     key = '{}_{}'.format(model, num)
+                    if 'top' not in key:
+                        continue
+                    if 'lancaster' not in key:
+                        continue
                     c_results.append((key, numpy.average(num_res)))
             else:
                 c_results.append((model, numpy.average(m_data)))
@@ -93,6 +97,8 @@ for l, l_data in model_results.items():
     print(sorted_ranks[:10])
     best_ft = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])
     best_other = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])
+    print(l)
+    print(sorted_ranks[:20])
     lang_best[l] = (sorted_ranks[best_ft][0], sorted_ranks[best_other][0])
     if l == 'en':
         continue
@@ -277,9 +283,11 @@ for mode in ['boot', '']:
             pyplot.clf()
             pyplot.close()
     ### phil's dataset, where it is not clear how to look at results
-    '''
-    significance = 0.2
-    for model in [best_ft, best_other]:
+    significance = 0.05
+    for model in [
+                  best_ft, 
+                  #best_other,
+                  ]:
         for l, l_data in results.items():
             if l != 'de':
                 continue
@@ -289,14 +297,18 @@ for mode in ['boot', '']:
                        l, 
                        )
             os.makedirs(out, exist_ok=True)
-            all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'sound-act' in d])
+            #all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'sound-act' in d])
+            if mode == 'boot':
+                all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' in d and 'bootstrap' in d])
+            else:
+                all_rel_tasks = set([d.replace('all_tms-', 'all_tms_').split('_tms_')[0] for d in l_data.keys() if 'tms' in d and 'sound-act' in d and 'bootstrap' not in d])
 
             print(all_rel_tasks)
             #assert len(all_rel_tasks) in [1, 2]
             for t in all_rel_tasks:
                 all_curr_ts = sorted([w.split('_tms_')[1] for w in l_data.keys() if t in w])
                 indiv_bars = sorted(set([t.split('_')[-1] if '#' not in t else t.split('#')[-1] for t in all_curr_ts]))
-                corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
+                corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.4, .4, len(indiv_bars)))}
                 print(corrections)
                 fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
                 ax.scatter(
@@ -308,17 +320,25 @@ for mode in ['boot', '']:
                            #alpha=0.,
                            label='p<{}'.format(significance)
                            )
-                ax.set_ylim(bottom=-0.3, top=0.3)
+                ax.set_ylim(bottom=-0.26, top=0.26)
                 xs = [1.5, 3.5]
                 xticks = sorted(set(['_'.join(t.split('_')[:-1]) if '#' not in t else '_'.join(t.split('#')[:-1]) for t in all_curr_ts]))
                 print(xticks)
                 ax.vlines(
                           x=xs,
                           ymin=-.2,
-                          ymax=.3,
-                          linewidth=10,
+                          ymax=.24,
+                          linewidth=5,
                           linestyles='dashed',
                           color='black',
+                          )
+                ax.vlines(
+                          x=[0.5, 2.5, 4.5],
+                          ymin=-.2,
+                          ymax=.24,
+                          linewidth=3,
+                          linestyles='dashed',
+                          color='silver',
                           )
                 #xs = [w.split('_tms_')[1] for w in curr_ts]
                 colors_l = [
@@ -346,7 +366,10 @@ for mode in ['boot', '']:
                 #ft_model = lang_best[l][0]
                 for k, corr in corrections.items():
                     #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
-                    curr_ts = sorted([w for w in l_data.keys() if w.split('_')[-1]==k or w.split('#')[-1]==k])
+                    if mode == 'boot':
+                        curr_ts = sorted([w for w in l_data.keys() if w.split('_')[-1]==k or w.split('#')[-1]==k and 'boot' in w])
+                    else:
+                        curr_ts = sorted([w for w in l_data.keys() if w.split('_')[-1]==k or w.split('#')[-1]==k and 'boot' not in w])
                     #ft_model = best_ft
                     if 'fasttext' in model:
                         ys = [l_data[c_t][model] for c_t in curr_ts]
@@ -360,7 +383,7 @@ for mode in ['boot', '']:
                            [x+corr for x in range(len(ys))],
                            [numpy.average(y) for y in ys],
                            #color='mediumaquamarine',
-                           width=0.05,
+                           width=0.06,
                            color=colors[k]
                            )
                     ax.scatter(
@@ -369,7 +392,7 @@ for mode in ['boot', '']:
                            ys,
                            edgecolor=colors[k],
                            color='white',
-                           alpha=0.5,
+                           alpha=0.025,
                            zorder=3.,
                            )
                     ### p-values
@@ -391,7 +414,11 @@ for mode in ['boot', '']:
                             elif numpy.average(y) < numpy.average(y_two):
                                 alternative='less'
                                 used_x = y_two_i
-                            p = scipy.stats.wilcoxon(x=y, y=y_two, alternative=alternative).pvalue
+
+                            #alternative = 
+                            p = scipy.stats.wilcoxon(x=y, y=y_two, 
+                                                     #alternative=alternative,
+                                                     ).pvalue
                             #print(p)
                             #p = scipy.stats.ttest_ind(y, y_two).pvalue
                             if p < significance:
@@ -403,7 +430,7 @@ for mode in ['boot', '']:
                                 #        )
                                 ax.scatter(
                                            x=used_x+corr, 
-                                           y=.25,
+                                           y=-.2,
                                            marker='*',
                                            s=100,
                                            color=colors[k]
@@ -435,4 +462,3 @@ for mode in ['boot', '']:
                            '{}-{}.jpg'.format(t, model)))
                 pyplot.clf()
                 pyplot.close()
-    '''
