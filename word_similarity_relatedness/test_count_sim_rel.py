@@ -109,7 +109,6 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
     test_sims, missing_words = check_dataset_words(dataset_name, dataset, present_words, trans_from_en,)
     if len(prototypes.keys()) > 0:
         proto_vecs = prototypes
-
     if len(test_sims) == 0:
         #continue
         corr = None
@@ -122,9 +121,15 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
         #if 'tms' or 'behav' in dataset_name:
         #    ### for reaction times, it's the opposite
         #    real.append(-v)
-        #else:
-        #    real.append(v)
-        real.append(v)
+        #real.append(v)
+        if 'tms' in dataset_name:
+            real.append(1 - v)
+        elif 'decision' in dataset_name:
+            real.append(1 - v)
+        elif 'naming' in dataset_name:
+            real.append(1 - v)
+        else:
+            real.append(v)
         ### all possible transformations...
         if len(prototypes.keys()) > 0:
             current_pred = list()
@@ -245,6 +250,9 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
     #    vocab = vocabs[lang][case]
     present_words = list()
     for w in rows[lang]:
+        ### for fasttext we only use uppercase!
+        if w[0].isupper() == False and model=='fasttext':
+            continue
         try:
             vocab.index(w)
         except ValueError:
@@ -275,13 +283,13 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
         #    results[lang][case] = dict()
         if 'tms' not in dataset_name:
             if 'behav' not in dataset_name:
-                #all_dataset = [(k, v) for k, v in dataset.items()]
                 corr, missing_words = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
                 if corr == None:
                     print('error with {}'.format([lang, case, dataset_name]))
                     continue
                 corr = [corr]
             else:
+                '''
                 if 'bootstrap' not in dataset_name:
                     #all_dataset = [(k, v) for k, v in dataset.items()]
                     corr, missing_words = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
@@ -290,18 +298,21 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
                         continue
                     corr = [corr]
                 else:
-                    for _ in tqdm(range(1000)):
-                        ### bootstrap with subsampling
-                        missing_words = set()
-                        chosen_items = random.sample(range(len(dataset)), k=100)
-                        curr_data = [dataset[i] for i in chosen_items]
-                        curr_corr, new_miss = compute_corr(curr_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
-                        missing_words = missing_words.union(new_miss)
-                        if curr_corr == None:
-                            print('error with {} - subject {}'.format([lang, case, dataset_name, _]))
-                        else:
-                            corr.append(curr_corr)
-                        printing += 1
+                '''
+                corr = list()
+                all_dataset = [(k, v) for k, v in dataset.items()]
+                for _ in tqdm(range(1000)):
+                    ### bootstrap with subsampling
+                    missing_words = set()
+                    chosen_items = random.sample(range(len(all_dataset)), k=100)
+                    curr_data = [all_dataset[i] for i in chosen_items]
+                    curr_corr, new_miss = compute_corr(curr_data, dataset_name, present_words, prototypes, trans_from_en,)
+                    missing_words = missing_words.union(new_miss)
+                    if curr_corr == None:
+                        print('error with {} - subject {}'.format([lang, case, dataset_name, _]))
+                    else:
+                        corr.append(curr_corr)
+                    #printing += 1
         else:
             corr = list()
             printing = 0
@@ -559,12 +570,13 @@ def read_german_pipl_tms(lang):
     if lang == 'de':
         full_sims = reorganize_tms_sims(sims)
     return full_sims, test_vocab, prototypes
+
 def read_italian_behav(lang):
     ### lexical decition times
-    sims = dict()
+    sims = {'word-naming' : dict()}
     test_vocab = set()
     if lang == 'it':
-        for case in ['word-naming',]: 
+        for case in sims.keys(): 
             sims[case] = dict()
             measures = dict()
             with open(os.path.join('..', 'behavioural', 'data', 'varlex_{}_it.tsv'.format(case))) as i:
@@ -586,11 +598,10 @@ def read_italian_behav(lang):
 
 def read_german_behav(lang):
     ### lexical decition times
-    sims = dict()
+    sims = {'word-naming' : dict(), 'lexical-decision' : dict()}
     test_vocab = set()
     if lang == 'de':
-        for case in ['word-naming', 'lexical-decision']: 
-            sims[case] = dict()
+        for case in sims.keys(): 
             measures = dict()
             with open(os.path.join('..', 'behavioural', 'data', 'devel_{}_de.tsv'.format(case))) as i:
                 for l_i, l in enumerate(i):
@@ -716,9 +727,11 @@ def read_dirani_n400(lang):
                 line = l.strip().split('\t')
                 w_one = line[0]
                 w_two = line[1]
+                ### translating if needed
                 if lang != 'en':
                     w_one = trans[w_one]
                     w_two = trans[w_two]
+                ### german will be transformed
                 if lang != 'de':
                     test_vocab = test_vocab.union(set([w_one, w_two]))
                 else:
@@ -727,6 +740,27 @@ def read_dirani_n400(lang):
                 sims[dataset][(w_one, w_two)] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
 
     return sims['words'], sims['pictures'], test_vocab
+
+def read_abstract_ipc(lang):
+    sims = dict()
+    test_vocab = set()
+    if lang == 'de':
+        file_path = os.path.join(
+                                 '..', 
+                                 'fmri',
+                                 'data', 
+                                 'de_abstract-ipc_data.tsv')
+        with open(file_path) as i:
+            for l_i, l in enumerate(i):
+                line = l.strip().split('\t')
+                w_one = line[0]
+                w_two = line[1]
+                test_vocab = test_vocab.union(transform_german_word(w_one))
+                test_vocab = test_vocab.union(transform_german_word(w_two))
+                assert len(line[2:]) == 19
+                sims[(w_one, w_two)] = 1-numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+
+    return sims, test_vocab
 
 def read_fern(lang, trans_from_en):
     sims = {1 : dict(), 2 : dict()}
@@ -841,9 +875,9 @@ def read_mitchell(lang):
     return dimensions
 
 languages = [
-             'en',
+             #'en',
              #'de',
-             #'it',
+             'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
 print('loading original lancasted ratings...')
@@ -898,6 +932,7 @@ for lang in tqdm(languages):
     ws353, ws353_vocab = read_ws353(lang)
     fern_one, fern_two, fern_vocab = read_fern(lang, trans_from_en)
     dirani_n400_words, dirani_n400_pictures, dirani_vocab = read_dirani_n400(lang)
+    de_abstract_ipc, de_abstract_ipc_vocab = read_abstract_ipc(lang)
     de_behav, de_behav_vocab = read_german_behav(lang)
     it_behav, it_behav_vocab = read_italian_behav(lang)
     germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
@@ -908,6 +943,7 @@ for lang in tqdm(languages):
                                   ws353_vocab,
                                   fern_vocab,
                                   dirani_vocab,
+                                  de_abstract_ipc_vocab,
                                   germ_tms_ifg_vocab,
                                   de_tms_pipl_vocab,
                                   de_behav_vocab,
@@ -925,13 +961,13 @@ for lang in tqdm(languages):
                     #('fern1', fern_one, {}),
                     #('fern2', fern_two, {}),
                     ### EEG semantics RSA
-                    ('dirani-n400-words', dirani_n400_words, {}),
-                    ('dirani-n400-pictures', dirani_n400_pictures, {}),
+                    #('dirani-n400-words', dirani_n400_words, {}),
+                    #('dirani-n400-pictures', dirani_n400_pictures, {}),
                     ### german naming times
                     #('de_behav-word-naming', de_behav['word-naming'], {}),
                     #('de_behav-lexical-decision', de_behav['lexical-decision'], {}),
-                    #('de_behav-word-naming-bootstrap', de_behav['word-naming'], {}),
-                    #('de_behav-lexical-decision-bootstrap', de_behav['lexical-decision'], {}),
+                    ### german abstract words
+                    #('de_abstract-ipc', de_abstract_ipc, {}),
                     ## german TMS
                     #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
                     #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
@@ -945,15 +981,15 @@ for lang in tqdm(languages):
                     #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_related_tms_vertex', rewac_lancaster_freq_hi-perceptual__10000.0'lated_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn-bootstrap_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn-bootstrap_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
+                    ('it_distr-learn-bootstrap_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn-bootstrap_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn-bootstrap_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
+                    ('it_distr-learn-bootstrap_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn-bootstrap_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn-bootstrap_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
+                    ('it_distr-learn-bootstrap_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
     for dataset_name, dataset, proto in [
@@ -973,23 +1009,23 @@ for lang in tqdm(languages):
             ### possibilities in task-modelling:
             # centroid overall (all)
             # both positive (both_pos)
-            # both negative (both_neg)
+            # both negative (both_neg)wac_lancaster_freq_hi-perceptual__10000.0'
             # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
             # matched non-exclusive (action_pos, sound_pos)
             for poss in [
-                         'all', 
-                         'both_pos',
-                         'both_pos-topten',
-                         'both_pos-topfifty',
-                         'both_neg',
+                         #'all', 
+                         #'both_pos',
+                         #'both_pos-topten',
+                         #'both_pos-topfifty',
+                         #'both_neg',
                          'matched_excl',
-                         'matched_excl-topten',
-                         'matched_excl-topfifty',
-                         'matched_non_excl',
-                         'matched_non_excl-topten',
-                         'matched_non_excl-topfifty',
-                         'opposite_excl',
-                         'opposite_non_excl',
+                         #'matched_excl-topten',
+                         #'matched_excl-topfifty',
+                         #'matched_non_excl',
+                         #'matched_non_excl-topten',
+                         #'matched_non_excl-topfifty',
+                         #'opposite_excl',
+                         #'opposite_non_excl',
                          ]:
                 curr_dataset_name = '{}#{}'.format(dataset_name, poss)
                 datasets[lang][curr_dataset_name] = (dataset, proto)
@@ -1007,8 +1043,8 @@ for lang in languages:
     print('\n{}\n'.format(lang))
     for case in [
                  #'fasttext',
-                 #'fasttext_aligned',
-                 #'conceptnet',
+                 'fasttext_aligned',
+                 'conceptnet',
                  ]:
         #if case in results[lang].keys():
         #    continue
@@ -1016,8 +1052,8 @@ for lang in languages:
         base_folder = os.path.join(
                                     '/',
                                     'data',
-                                    #'u_bruera_software',
-                                    'tu_bruera',
+                                    'u_bruera_software',
+                                    #'tu_bruera',
                                     'word_vectors', 
                                     lang, 
                                     )
@@ -1055,10 +1091,10 @@ for lang in languages:
     for corpus in [
                #'bnc',
                'wac',
-               #'tagged_wiki',
+               'tagged_wiki',
                'opensubs',
-               #'joint',
-               #'cc100',
+               'joint',
+               'cc100',
                ]:
         print(corpus)
         if lang == 'en':
@@ -1076,7 +1112,8 @@ for lang in languages:
         with open(os.path.join(
                                 '/',
                                 'data',
-                                'u_bruera_software',
+                                #'u_bruera_software',
+                                'tu_bruera',
                                 'counts',
                                lang, corpus, 
                                '{}_{}_uncased_vocab_min_{}.pkl'.format(lang, corpus, min_count),
@@ -1085,7 +1122,8 @@ for lang in languages:
         with open(os.path.join(
                                 '/',
                                 'data',
-                                'u_bruera_software',
+                                #'u_bruera_software',
+                                'tu_bruera',
                                 'counts',
                                lang, corpus, 
                                '{}_{}_uncased_word_freqs.pkl'.format(lang, corpus),
@@ -1095,7 +1133,8 @@ for lang in languages:
         with open(os.path.join(
                                 '/',
                                 'data',
-                                'u_bruera_software',
+                                #'u_bruera_software',
+                                'tu_bruera',
                                 'counts',
                                lang, corpus, 
                                '{}_{}_coocs_uncased_min_{}_win_4.pkl'.format(lang, corpus, min_count),

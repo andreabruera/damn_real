@@ -32,14 +32,18 @@ for root, direc, fz in os.walk(
             for l in i:
                 if 'rowincol' in l:
                     continue
-                if 'lancaster' not in l:
-                    continue
                 line = l.strip().split('\t')
                 lang = line[0]
                 if lang not in results.keys():
                     results[lang] = dict()
                 model = line[1]
                 if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    if 'lancaster' not in l:
+                        continue
+                    if 'random' in l:
+                        continue
+                    #if 'hi-' or 'lo-' in l:
+                        continue
                     num = float(model.split('_')[-2])
                     if 'wiki' in model:
                         short_model = '_'.join(model.split('_')[2:-2])
@@ -49,7 +53,8 @@ for root, direc, fz in os.walk(
                 task = task.replace('all_tms-', 'all_tms_')
                 if task not in results[lang].keys():
                     results[lang][task] = dict()
-                res = numpy.array(line[3:], dtype=numpy.float32)
+                non_nan_res = [v if v!='nan' else 0. for v in line[3:]]
+                res = numpy.array(non_nan_res, dtype=numpy.float32)
                 if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
                     if short_model not in results[lang][task].keys():
                         results[lang][task][short_model] = dict()
@@ -61,8 +66,14 @@ for root, direc, fz in os.walk(
 model_results = dict()
 for l, l_data in results.items():
     model_results[l] = dict()
-    rel_tasks = [d for d in l_data.keys() if '353' in d or '999' in d or 'fern' in d or 'dira' in d]
-    assert len(rel_tasks) == 6
+    ### only brain tasks
+    rel_tasks = [d for d in l_data.keys() if 
+                                           #'353' in d or '999' in d 
+                                           #or
+                                           'fern' in d or 'dira' in d
+                                           ]
+    #assert len(rel_tasks) == 4
+    assert len(rel_tasks) == 4
     for t in rel_tasks:
         c_results = list()
         for model, m_data in l_data[t].items():
@@ -70,8 +81,8 @@ for l, l_data in results.items():
             if type(m_data) == dict:
                 for num, num_res in m_data.items():
                     key = '{}_{}'.format(model, num)
-                    if 'top' not in key:
-                        continue
+                    #if 'top' not in key:
+                    #    continue
                     if 'lancaster' not in key:
                         continue
                     c_results.append((key, numpy.average(num_res)))
@@ -163,7 +174,7 @@ for mode in ['boot', '']:
             ### results for fasttext
             #ft_model = lang_best[l][0]
             ft_model = best_ft
-            ys = [l_data[c_t][ft_model][:100] for c_t in curr_ts]
+            ys = [l_data[c_t][ft_model] for c_t in curr_ts]
             print(xs)
             print(len(ys))
             print([len(y) for y in ys])
@@ -207,10 +218,10 @@ for mode in ['boot', '']:
                                 )
             ### results for other model
             other_model = best_other
-            #first_part = '_'.join(other_model.split('_')[:-1])
-            #second_part = float(other_model.split('_')[-1])
-            #ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-            ys = [l_data[c_t]['fasttext'] for c_t in curr_ts]
+            first_part = '_'.join(other_model.split('_')[:-1])
+            second_part = float(other_model.split('_')[-1])
+            ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+            #ys = [l_data[c_t]['fasttext'] for c_t in curr_ts]
             ax.bar(
                    [x+0.15 for x in range(len(xs))],
                    [numpy.average(y) for y in ys],

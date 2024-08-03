@@ -1,6 +1,6 @@
 import re
 
-def transform_german_word(word):
+def transform_german_word(word, lowercase=True):
     word = word.lower()
     word = re.sub('^ein\s|^eine\s|^der\s|^das\s|^die\s|^ne\s|^dann\s', '', word)
     word = re.sub('^e\s', 'e-', word)
@@ -25,13 +25,23 @@ def transform_german_word(word):
                 for w in new_versions:
                     corr_word = w.replace(back, forw)
                     versions.append(corr_word)
-    versions = set(
-                   ### capitalized
-                   [' '.join([tok.capitalize() for tok in w.split()]) for w in versions] +\
-                   [' '.join([tok.capitalize() for tok in word.split()])] + \
-                   ### non-capitalized
-                   [w for w in versions]
-                   )
+    if not lowercase:
+        versions = set(
+                       ### capitalized
+                       [' '.join([tok.capitalize() for tok in w.split()]) for w in versions] +\
+                       [' '.join([tok.capitalize() for tok in word.split()])] + \
+                       []
+                       ### non-capitalized
+                       #[w for w in versions]
+                       )
+    else:
+        versions = set(
+                       ### capitalized
+                       [' '.join([tok.capitalize() for tok in w.split()]) for w in versions] +\
+                       [' '.join([tok.capitalize() for tok in word.split()])] + \
+                       ### non-capitalized
+                       [w for w in versions]
+                       )
 
     #print(versions)
     return versions
