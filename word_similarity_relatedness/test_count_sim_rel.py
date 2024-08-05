@@ -122,6 +122,7 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
         #    ### for reaction times, it's the opposite
         #    real.append(-v)
         #real.append(v)
+        '''
         if 'tms' in dataset_name:
             real.append(1 - v)
         elif 'decision' in dataset_name:
@@ -130,6 +131,8 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
             real.append(1 - v)
         else:
             real.append(v)
+        '''
+        real.append(v)
         ### all possible transformations...
         if len(prototypes.keys()) > 0:
             current_pred = list()
@@ -147,7 +150,11 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
                          'matched_non_excl-topten',
                          'matched_non_excl-topfifty',
                          'opposite_excl',
+                         'opposite_excl-topten',
+                         'opposite_excl-topfifty',
                          'opposite_non_excl',
+                         'opposite_non_excl-topten',
+                         'opposite_non_excl-topfifty',
                          ]
             assert proto_mode in proto_modes
             if 'top' in proto_mode:
@@ -210,17 +217,18 @@ def compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en
                             raise RuntimeError()
                     else:
                         raise RuntimeError()
-                ### this is similarity!
-                partial_pred = 1 - scipy.spatial.distance.cosine(vec_one, model[w_two])
-                #partial_pred = scipy.stats.spearmanr(vec_one, model[w_two]).statistic
+                ### always using dissimilarity
+                partial_pred = scipy.spatial.distance.cosine(vec_one, model[w_two])
+                #partial_pred = 1 - scipy.stats.spearmanr(vec_one, model[w_two]).statistic
                 current_pred.append(partial_pred)
             current_pred = numpy.average(current_pred)
         else:
             current_pred = list()
             for w in w_ones:
                 for w_two in w_twos:
-                    partial_pred = 1 - scipy.spatial.distance.cosine(model[w], model[w_two])
-                    #partial_pred = scipy.stats.spearmanr(model[w], model[w_two]).statistic
+                    ### always using dissimilarity
+                    partial_pred = scipy.spatial.distance.cosine(model[w], model[w_two])
+                    #partial_pred = 1 - scipy.stats.spearmanr(model[w], model[w_two]).statistic
                     current_pred.append(partial_pred)
             current_pred = numpy.average(current_pred)
         pred.append(current_pred)
@@ -403,7 +411,7 @@ def read_italian_cereb_tms(lang):
                 else:
                     current_cond = [l for l in lines if l[header.index('condition')]==name]
                 log_rts = [numpy.log10(float(l[header.index('RTs')].replace(',', '.'))) for l in current_cond]
-                #log_rts = [float(l[header.index('RTs')].replace(',', '.')) for l in current_cond]
+                rts = [float(l[header.index('RTs')].replace(',', '.')) for l in current_cond]
                 subjects = [int(l[header.index('Subject')]) for l in current_cond]
                 w_ones = [l[header.index('noun')].lower() for l in current_cond]
                 w_twos = [l[header.index('adj')].lower() for l in current_cond]
@@ -541,7 +549,7 @@ def read_german_pipl_tms(lang):
             current_cond = [l for l in lines if l[header.index('condition')]==c]
             subjects = [int(l[header.index('subject')]) for l in current_cond]
             log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
-            #log_rts = [float(l[header.index('rt')]) for l in current_cond]
+            rts = [float(l[header.index('rt')]) for l in current_cond]
             vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
             test_vocab = test_vocab.union(set(vocab_w_ones))
             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
@@ -555,7 +563,7 @@ def read_german_pipl_tms(lang):
                 subjects = [int(l[header.index('subject')]) for l in current_cond]
                 log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
                 exps = [l[header.index('expected_response')] for l in current_cond]
-                #log_rts = [float(l[header.index('rt')]) for l in current_cond]
+                rts = [float(l[header.index('rt')]) for l in current_cond]
                 vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
                 test_vocab = test_vocab.union(set(vocab_w_ones))
                 vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
@@ -693,7 +701,7 @@ def reorganize_tms_sims(sims):
     return full_sims
 
 def read_dirani_n400(lang):
-    sims = {'words' : dict(), 'pictures' : dict()}
+    dis_sims = {'words' : dict(), 'pictures' : dict()}
     if lang != 'en':
         trans_path = os.path.join(
                                  '..', 
@@ -710,8 +718,8 @@ def read_dirani_n400(lang):
                 trans[line[0].strip()] = line[rel_trans].strip()
 
     test_vocab = set()
-    for dataset in sims.keys():
-        sims[dataset] = dict()
+    for dataset in dis_sims.keys():
+        dis_sims[dataset] = dict()
         file_path = os.path.join(
                                  '..', 
                                  'meg-dirani',
@@ -737,12 +745,14 @@ def read_dirani_n400(lang):
                 else:
                     test_vocab = test_vocab.union(transform_german_word(w_one))
                     test_vocab = test_vocab.union(transform_german_word(w_two))
-                sims[dataset][(w_one, w_two)] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                ### we use dissimilarity!
+                dis_sims[dataset][(w_one, w_two)] = 1 - sim
 
-    return sims['words'], sims['pictures'], test_vocab
+    return dis_sims['words'], dis_sims['pictures'], test_vocab
 
 def read_abstract_ipc(lang):
-    sims = dict()
+    dis_sims = dict()
     test_vocab = set()
     if lang == 'de':
         file_path = os.path.join(
@@ -758,15 +768,17 @@ def read_abstract_ipc(lang):
                 test_vocab = test_vocab.union(transform_german_word(w_one))
                 test_vocab = test_vocab.union(transform_german_word(w_two))
                 assert len(line[2:]) == 19
-                sims[(w_one, w_two)] = 1-numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                ### the dataset provides already dissimilarities
+                dis_sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                dis_sims[(w_one, w_two)] = dis_sim
 
-    return sims, test_vocab
+    return dis_sims, test_vocab
 
 def read_fern(lang, trans_from_en):
-    sims = {1 : dict(), 2 : dict()}
+    dis_sims = {1 : dict(), 2 : dict()}
     test_vocab = set()
-    for dataset in sims.keys():
-        sims[dataset] = dict()
+    for dataset in dis_sims.keys():
+        dis_sims[dataset] = dict()
         file_path = os.path.join('data', 'fern{}.tsv'.format(dataset))
         with open(file_path) as i:
             for l_i, l in enumerate(i):
@@ -774,7 +786,9 @@ def read_fern(lang, trans_from_en):
                     continue
                 line = l.strip().split('\t')
                 test_vocab = test_vocab.union(set([line[0], line[1]]))
-                sims[dataset][(line[0], line[1])] = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                ### we want dissimilarity
+                dis_sims[dataset][(line[0], line[1])] = 1 - sim
     if lang != 'en':
         print(lang)
         trans_vocab = set()
@@ -788,7 +802,7 @@ def read_fern(lang, trans_from_en):
         del test_vocab
         test_vocab = trans_vocab.copy()
 
-    return sims[1], sims[2], test_vocab
+    return dis_sims[1], dis_sims[2], test_vocab
 
 def read_simlex(lang):
     if lang == 'de':
@@ -804,7 +818,7 @@ def read_simlex(lang):
         indices = [0, 1, 3]
         sep = '\t'
     assert os.path.exists(file_path)
-    sims = dict()
+    dis_sims = dict()
     test_vocab = set()
     with open(file_path) as i:
         for l_i, l in enumerate(i):
@@ -815,8 +829,9 @@ def read_simlex(lang):
             norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
-            sims[key] = val
-    return sims, test_vocab
+            ### transforming to dissimilarity
+            dis_sims[key] = 1 - val
+    return dis_sims, test_vocab
 
 def read_ws353(lang):
     if lang == 'de':
@@ -828,7 +843,7 @@ def read_ws353(lang):
     indices = [0, 1, -1]
     sep = ','
     assert os.path.exists(file_path)
-    sims = dict()
+    dis_sims = dict()
     test_vocab = set()
     with open(file_path) as i:
         for l_i, l in enumerate(i):
@@ -839,11 +854,12 @@ def read_ws353(lang):
             norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
-            sims[key] = val
-    return sims, test_vocab
+            ### transforming to dissimilarity
+            dis_sims[key] = 1 - val
+    return dis_sims, test_vocab
 
 def read_men(lang):
-    sims = dict()
+    dis_sims = dict()
     test_vocab = set()
     if lang != 'en':
         print('the MEN dataset is not available for this language!')
@@ -859,8 +875,9 @@ def read_men(lang):
                 norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
                 test_vocab = test_vocab.union(norm_key)
                 val = float(line[2].replace(',', '.'))
-                sims[key] = val
-    return sims, test_vocab
+                ### transforming to dissimilarity
+                dis_sims[key] = 1 - val
+    return dis_sims, test_vocab
 
 def read_mitchell(lang):
     assert lang == 'en'
@@ -876,7 +893,7 @@ def read_mitchell(lang):
 
 languages = [
              #'en',
-             #'de',
+             'de',
              'it',
              ]
 senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
@@ -958,8 +975,8 @@ for lang in tqdm(languages):
                     #('ws353', ws353, {}),
                     #('men', men, {}), 
                     ### semantic network brain RSA
-                    #('fern1', fern_one, {}),
-                    #('fern2', fern_two, {}),
+                    ('fern1', fern_one, {}),
+                    ('fern2', fern_two, {}),
                     ### EEG semantics RSA
                     #('dirani-n400-words', dirani_n400_words, {}),
                     #('dirani-n400-pictures', dirani_n400_pictures, {}),
@@ -981,15 +998,15 @@ for lang in tqdm(languages):
                     #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn_related_tms_vertex', rewac_lancaster_freq_hi-perceptual__10000.0'lated_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
                     #('it_distr-learn_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn-bootstrap_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn-bootstrap_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn-bootstrap_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn-bootstrap_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn-bootstrap_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn-bootstrap_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
                     #('it_distr-learn-bootstrap_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
-                    ('it_distr-learn-bootstrap_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
+                    #('it_distr-learn-bootstrap_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
     for dataset_name, dataset, proto in [
@@ -1013,19 +1030,23 @@ for lang in tqdm(languages):
             # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
             # matched non-exclusive (action_pos, sound_pos)
             for poss in [
-                         #'all', 
-                         #'both_pos',
-                         #'both_pos-topten',
-                         #'both_pos-topfifty',
-                         #'both_neg',
+                         'all', 
+                         'both_pos',
+                         'both_pos-topten',
+                         'both_pos-topfifty',
+                         'both_neg',
                          'matched_excl',
-                         #'matched_excl-topten',
-                         #'matched_excl-topfifty',
-                         #'matched_non_excl',
-                         #'matched_non_excl-topten',
-                         #'matched_non_excl-topfifty',
-                         #'opposite_excl',
-                         #'opposite_non_excl',
+                         'matched_excl-topten',
+                         'matched_excl-topfifty',
+                         'matched_non_excl',
+                         'matched_non_excl-topten',
+                         'matched_non_excl-topfifty',
+                         'opposite_excl',
+                         'opposite_excl-topten',
+                         'opposite_excl-topfifty',
+                         'opposite_non_excl',
+                         'opposite_non_excl-topten',
+                         'opposite_non_excl-topfifty',
                          ]:
                 curr_dataset_name = '{}#{}'.format(dataset_name, poss)
                 datasets[lang][curr_dataset_name] = (dataset, proto)
@@ -1042,7 +1063,7 @@ for lang in languages:
     vocabs[lang] = dict()
     print('\n{}\n'.format(lang))
     for case in [
-                 #'fasttext',
+                 'fasttext',
                  'fasttext_aligned',
                  'conceptnet',
                  ]:
