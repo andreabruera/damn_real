@@ -13,10 +13,61 @@ import time
 from scipy import spatial, stats
 from tqdm import tqdm
 
+from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
+from meeg_loaders import read_dirani_n400
+from behav_loaders import read_italian_behav, read_german_behav
+from tms_loaders import read_italian_cereb_tms, read_german_pipl_tms, read_german_ifg_tms
+from simrel_norms import read_men, read_simlex, read_ws353
+
 sys.path.append('..')
 
 from utf_utils import transform_german_word
 from utils import build_ppmi_vecs, read_lancaster_ratings
+
+def load_lancaster_en_de_it():
+    print('loading original lancaster ratings...')
+    lancaster_ratings = {
+                         'en' : read_lancaster_ratings(),
+                         }
+    trans_from_en = dict()
+    ### german translation
+    print('loading translations of ratings...')
+    for lang in tqdm(['de', 'it']):
+        print(lang)
+        lancaster_ratings[lang] = dict()
+        trans_from_en[lang] = dict()
+        with tqdm() as counter:
+            with open(os.path.join('..', 'translations', 'lanc_fern_{}_to_en.tsv'.format(lang))) as i:
+                for l in i:
+                    line = l.strip().split('\t')
+                    if lang == 'de':
+                        for w in transform_german_word(line[0].lower()):
+                            ### ratings
+                            try:
+                                lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
+                            except KeyError:
+                                pass
+                            ### translations
+                            try:
+                                trans_from_en['de'][line[1]].add(w)
+                            except KeyError:
+                                trans_from_en['de'][line[1]] = {w}
+                            counter.update(1)
+                    elif lang == 'it':
+                        for w in [line[0].lower(), line[0].capitalize()]:
+                            ### ratings
+                            try:
+                                lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
+                            except KeyError:
+                                print(w)
+                                pass
+                            ### translations
+                            try:
+                                trans_from_en['it'][line[1]].add(w)
+                            except KeyError:
+                                trans_from_en['it'][line[1]] = {w}
+                            counter.update(1)
+    return lancaster_ratings, trans_from_en
 
 def check_dataset_words(dataset_name, dataset, present_words, trans_from_en, prototyping=False, printing=False):
     #print('checking if words appear in the dictionary...')
@@ -289,30 +340,34 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
             continue
         #if case not in results[lang].keys():
         #    results[lang][case] = dict()
+        corr = list()
+        missing_words = set()
+        ### bootstrapping/iterations should be hard-coded now...
+        for iter_dataset in tqdm(dataset):
+            for s, s_data in iter_dataset.items():
+                curr_corr, new_miss = compute_corr(iter_dataset, dataset_name, present_words, prototypes, trans_from_en)
+                missing_words = missing_words.union(new_miss)
+                if corr == None:
+                    print('error with {}'.format([lang, case, dataset_name]))
+                    continue
+                corr.append(curr_corr)
+
+        '''
         if 'tms' not in dataset_name:
-            if 'behav' not in dataset_name:
+            if 'behav' not in dataset_name and dataset_name[:2] not in ['1-', '2-']:
                 corr, missing_words = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
                 if corr == None:
                     print('error with {}'.format([lang, case, dataset_name]))
                     continue
                 corr = [corr]
             else:
-                '''
-                if 'bootstrap' not in dataset_name:
-                    #all_dataset = [(k, v) for k, v in dataset.items()]
-                    corr, missing_words = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
-                    if corr == None:
-                        print('error with {}'.format([lang, case, dataset_name]))
-                        continue
-                    corr = [corr]
-                else:
-                '''
                 corr = list()
                 all_dataset = [(k, v) for k, v in dataset.items()]
                 for _ in tqdm(range(1000)):
                     ### bootstrap with subsampling
                     missing_words = set()
-                    chosen_items = random.sample(range(len(all_dataset)), k=100)
+                    k = 100
+                    chosen_items = random.sample(range(len(all_dataset)), k=k)
                     curr_data = [all_dataset[i] for i in chosen_items]
                     curr_corr, new_miss = compute_corr(curr_data, dataset_name, present_words, prototypes, trans_from_en,)
                     missing_words = missing_words.union(new_miss)
@@ -355,6 +410,7 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
                         corr.append(curr_corr)
                     printing += 1
             #corr = numpy.nanmean(corrs)
+        '''
         print('\n')
         print('{} model'.format(case))
         print('correlation with {} dataset:'.format(dataset_name))
@@ -369,515 +425,57 @@ def test_model(lang, case, model, vocab, datasets, trans_from_en):
                                   corpus_fold, 
                                   details,
                                   )
-        try:
-            os.makedirs(out_folder, exist_ok=True)
-        except PermissionError:
-            if os.path.exists(out_folder):
-                pass
-            else:
-                time.sleep(300)
-                os.makedirs(out_folder, exist_ok=True)
+        os.makedirs(out_folder, exist_ok=True)
         out_f = os.path.join(out_folder, '{}.tsv'.format(dataset_name))
-        try:
-            write_res(out_f, lang, case, dataset_name, corr)
-        except PermissionError:
-            time.sleep(300)
-            write_res(out_f, lang, case, dataset_name, corr, sleep=True)
+        write_res(out_f, lang, case, dataset_name, corr)
         print(out_f)
         #return results
 
-def read_italian_cereb_tms(lang):
-    lines = list()
-    with open(os.path.join('..', 'tms', 'data', 'italian_tms_cereb.tsv')) as i:
-        for l_i, l in enumerate(i):
-            line = l.strip().split('\t')
-            if l_i == 0:
-                header = [w for w in line]
-                continue
-            lines.append(line)
-    conds = set([l[header.index('condition')] for l in lines])
-    all_sims = dict()
-    all_full_sims = dict()
-    related_sims = dict()
-    related_full_sims = dict()
-    unrelated_sims = dict()
-    unrelated_full_sims = dict()
-    test_vocab = set()
-    for name in conds:
-        if lang == 'it':
-            for m_i, marker in enumerate(['1', '0', 'all']):
-                if m_i < 2:
-                    current_cond = [l for l in lines if l[header.index('condition')]==name and l[header.index('Meaningful')]==marker]
-                else:
-                    current_cond = [l for l in lines if l[header.index('condition')]==name]
-                log_rts = [numpy.log10(float(l[header.index('RTs')].replace(',', '.'))) for l in current_cond]
-                rts = [float(l[header.index('RTs')].replace(',', '.')) for l in current_cond]
-                subjects = [int(l[header.index('Subject')]) for l in current_cond]
-                w_ones = [l[header.index('noun')].lower() for l in current_cond]
-                w_twos = [l[header.index('adj')].lower() for l in current_cond]
-                vocab_w_ones = [w for ws in w_ones for w in [ws, ws.capitalize()]]
-                test_vocab = test_vocab.union(set(vocab_w_ones))
-                vocab_w_twos = [w for ws in w_twos for w in [ws, ws.capitalize()]]
-                test_vocab = test_vocab.union(set(vocab_w_twos))
-                if m_i == 0:
-                    related_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-                elif m_i == 1:
-                    unrelated_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-                elif m_i == 2:
-                    all_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-        else:
-            related_full_sims[name] = list()
-            unrelated_full_sims[name] = list()
-            all_full_sims[name] = list()
-    if lang == 'it':
-        related_full_sims = reorganize_tms_sims(related_sims)
-        unrelated_full_sims = reorganize_tms_sims(unrelated_sims)
-        all_full_sims = reorganize_tms_sims(all_sims)
-    return related_full_sims, unrelated_full_sims, all_full_sims, test_vocab
+def bootstrapper(full_data, residualize=False):
+    ### bootstrapping with 1/4 of the original data
+    proportion = 0.25
+    ### labels
+    labels = list(full_data.keys())
+    ### subjects
+    all_subjects = [list(v.keys()) for v in full_data.values()]
+    # checking
+    n_subjects = set([len(v) for v in all_subjects])
+    assert len(n_subjects) == 1
+    n_subjects = list(n_subjects[0])
+    subjects = list(set([val for v in all_subjects for val in v]))
+    assert len(subjects) == n_subjects
+    n_iter_sub = int(n_subjects*proportion)
+    ### here we create 1000
+    boot_data = {l : list() for l in labels}
+    for _ in range(1000):
+        iter_subs = random.sample(subjects, k=n_iter_sub)
+        iter_data_keys = {l : 
+                               {s : random.sample(
+                                                 full_data[l][s].keys(), 
+                                                 k=int(len(full_data[l][s].keys())*proportion)
+                                                 ) for s in iter_subs}
+                                                 for l in labels}
+        iter_data = {l : {s : {k : full_data[l][s][k] for k in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
+        ### residualization
+        if residualization:
+            struct_train_data = {l : {s : {k : full_data[l][s][k] for k in full_data[l][s].keys() if k not in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
+            flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_data in l_res.items() for k, rt in s_res.items()]
+            flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_data in l_res.items() for k, rt in s_res.items()]
+            model = sklearn.linear_model.LinearRegression()
+            model.fit(
+                      [[t[0],] for t in flat_train_data],
+                      [[t[2]] for t in flat_train_data],
+                      )
+            preds = model.predict(
+                                  [[t[0],] for t in flat_test_data]
+                                  )
+            residuals = [(real[0], real[1], real[2], real[3]-pred[0]) for real, pred in zip(flat_test_data, preds)]
+            for l, s, k, r in residuals:
+                iter_data[l][s][k] = r
+        for l, l_data in iter_data.items():
+            boot_data[l].append(l_data)
+    return boot_data
 
-def read_german_pipl_tms(lang):
-    ### first reading ratings
-    ratings = dict()
-    with open(os.path.join('..', 'tms', 'data', 'phil_annotated_ratings_v9.tsv')) as i:
-        for l_i, l in enumerate(i):
-            line = l.replace(',', '.').strip().split('\t')
-            if l_i == 0:
-                header = [w for w in line]
-                continue
-            ratings[line[0]] = dict()
-            sound = line[header.index('Geraeusch')]
-            try:
-                sound = float(sound)
-                ratings[line[0]]['sound'] = sound
-            except ValueError:
-                pass
-            action = line[header.index('Handlung')]
-            try:
-                action = float(action)
-                ratings[line[0]]['action'] = action
-            except ValueError:
-                pass
-            if len(ratings[line[0]].keys()) == 0:
-                print(line[0])
-                del ratings[line[0]]
-    ### topten
-    sims = dict()
-    test_vocab = set()
-    lines = list()
-    ### possibilities in task-modelling:
-    # centroid overall (all)
-    # both positive (both_pos)
-    # both negative (both_neg)
-    # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
-    # matched non-exclusive (action_pos, sound_pos)
-    prototypes = {
-                  'action_pos' : list(), 
-                  'sound_pos' : list(),
-                  'action_neg' : list(),
-                  'sound_neg' : list(), 
-                  'all' : list(),
-                  'both_pos' : list(),
-                  'both_neg' : list(),
-                  'action_pos_sound_neg' : list(), 
-                  'sound_pos_action_neg' : list(),
-                  }
-    with open(os.path.join('..', 'tms', 'data', 'de_tms_pipl.tsv')) as i:
-        for l_i, l in enumerate(i):
-            line = l.strip().split('\t')
-            if l_i == 0:
-                header = [w for w in line]
-                continue
-            missing = list()
-            w = line[header.index('stimulus')]
-            if line[header.index('sound_word')] != 'NA':
-                if w not in ratings.keys():
-                    missing.append(w)
-            assert len(missing) == 0
-            if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '-1':
-                prototypes['action_pos_sound_neg'].append(line[header.index('stimulus')])
-            if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
-                prototypes['sound_pos_action_neg'].append(line[header.index('stimulus')])
-            if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '1':
-                prototypes['both_pos'].append(line[header.index('stimulus')])
-            if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '-1':
-                prototypes['both_neg'].append(line[header.index('stimulus')])
-            if line[header.index('action_word')] == '1':
-                prototypes['action_pos'].append(line[header.index('stimulus')])
-            if line[header.index('action_word')] == '-1':
-                prototypes['action_neg'].append(line[header.index('stimulus')])
-            if line[header.index('sound_word')] == '1':
-                prototypes['sound_pos'].append(line[header.index('stimulus')])
-            if line[header.index('sound_word')] == '-1':
-                prototypes['sound_neg'].append(line[header.index('stimulus')])
-            #if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
-            #    prototypes['action'].append(line[header.index('stimulus')])
-            #if line[header.index('sound_word')] == '-1' and line[header.index('action_word')] == '1':
-            #    prototypes['sound'].append(line[header.index('stimulus')])
-            if 'lexical_decision' in line:
-                continue
-            prototypes['all'].append(line[header.index('stimulus')])
-            lines.append(line)
-    prototypes = {k : set(v) for k, v in prototypes.items()}
-    top_tenned = [
-          'action_pos', 
-          'sound_pos',
-          'both_pos',
-          'action_pos_sound_neg', 
-          'sound_pos_action_neg',
-          ]
-    for tenned in top_tenned:
-        ### top ten percent
-        for percent, mult in [('ten', 0.1), ('fifty', 0.5)]:
-            ten_percent = int(len(prototypes[tenned])*mult)
-            if 'sound_pos' in tenned:
-                top = [s[0] for s in sorted([(k, ratings[k]['sound']) for k in prototypes[tenned]], key=lambda item : item[1], reverse=True)][:ten_percent]
-            if 'action_pos' in tenned:
-                top = [s[0] for s in sorted([(k, ratings[k]['action']) for k in prototypes[tenned]], key=lambda item : item[1], reverse=True)][:ten_percent]
-            else:
-                top_s = [s[0] for s in sorted([(k, ratings[k]['sound']) for k in prototypes[tenned]], key=lambda item : item[1], reverse=True)]
-                top_a = [s[0] for s in sorted([(k, ratings[k]['action']) for k in prototypes[tenned]], key=lambda item : item[1], reverse=True)]
-                top = [s[0] for s in sorted([(k, top_a.index(k)+top_s.index(k)) for k in prototypes[tenned]], key=lambda item : item[1])][:ten_percent]
-            print(top)
-            prototypes['{}-top{}'.format(tenned, percent)] = top
-
-    full_sims = dict()
-    conditions = set([l[header.index('condition')] for l in lines])
-    tasks = set([l[header.index('task')] for l in lines])
-    for c in conditions:
-        if lang == 'de':
-            ### both tasks together
-            current_cond = [l for l in lines if l[header.index('condition')]==c]
-            subjects = [int(l[header.index('subject')]) for l in current_cond]
-            log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
-            rts = [float(l[header.index('rt')]) for l in current_cond]
-            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
-            test_vocab = test_vocab.union(set(vocab_w_ones))
-            vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
-            test_vocab = test_vocab.union(set(vocab_w_twos))
-            w_ones = [l[header.index('task')] for l in current_cond]
-            w_twos = [l[header.index('stimulus')] for l in current_cond]
-            sims[c]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-            for t in tasks:
-                ### separate tasks
-                current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t]
-                subjects = [int(l[header.index('subject')]) for l in current_cond]
-                log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
-                exps = [l[header.index('expected_response')] for l in current_cond]
-                rts = [float(l[header.index('rt')]) for l in current_cond]
-                vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
-                test_vocab = test_vocab.union(set(vocab_w_ones))
-                vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
-                test_vocab = test_vocab.union(set(vocab_w_twos))
-                w_ones = [l[header.index('task')] for l in current_cond]
-                w_twos = [l[header.index('stimulus')] for l in current_cond]
-                sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-        else:
-            full_sims[c] = list()
-            for t in tasks:
-                full_sims['{}_{}'.format(t, c)] = list()
-    if lang == 'de':
-        full_sims = reorganize_tms_sims(sims)
-    return full_sims, test_vocab, prototypes
-
-def read_italian_behav(lang):
-    ### lexical decition times
-    sims = {'word-naming' : dict()}
-    test_vocab = set()
-    if lang == 'it':
-        for case in sims.keys(): 
-            sims[case] = dict()
-            measures = dict()
-            with open(os.path.join('..', 'behavioural', 'data', 'varlex_{}_it.tsv'.format(case))) as i:
-                for l_i, l in enumerate(i):
-                    line = l.replace(',', '.').strip().split('\t')
-                    if l_i < 2:
-                        continue
-                    word = line[0].lower()
-                    test_vocab = test_vocab.union(set([word, word.capitalize()]))
-                    word_rt = float(line[-1])
-                    measures[word] = word_rt
-            for k_one_i, k_one in enumerate(sorted(measures.keys())):
-                for k_two_i, k_two in enumerate(sorted(measures.keys())):
-                    if k_two_i <= k_one_i:
-                        continue
-                    key = tuple(sorted([k_one, k_two]))
-                    sims[case][key] = abs(measures[k_one]-measures[k_two])
-    return sims, test_vocab
-
-def read_german_behav(lang):
-    ### lexical decition times
-    sims = {'word-naming' : dict(), 'lexical-decision' : dict()}
-    test_vocab = set()
-    if lang == 'de':
-        for case in sims.keys(): 
-            measures = dict()
-            with open(os.path.join('..', 'behavioural', 'data', 'devel_{}_de.tsv'.format(case))) as i:
-                for l_i, l in enumerate(i):
-                    line = l.replace(',', '.').strip().split('\t')
-                    if l_i == 0:
-                        header = [w for w in line]
-                        marker = 'rt' if 'lex' in case else 'on'
-                        ya = header.index('{}.ya.m'.format(marker))
-                        oa = header.index('{}.oa.m'.format(marker))
-                        continue
-                    if len(line) != len(header):
-                        print(line)
-                        continue
-                    word = line[0].lower()
-                    versions = transform_german_word(word)
-                    test_vocab = test_vocab.union(versions)
-                    word_rt = float(float(line[ya])+float(line[oa]))/2
-                    measures[word] = word_rt
-            for k_one_i, k_one in enumerate(sorted(measures.keys())):
-                for k_two_i, k_two in enumerate(sorted(measures.keys())):
-                    if k_two_i <= k_one_i:
-                        continue
-                    key = tuple(sorted([k_one, k_two]))
-                    sims[case][key] = abs(measures[k_one]-measures[k_two])
-    return sims, test_vocab
-
-def read_german_ifg_tms(lang):
-    sims = dict()
-    test_vocab = set()
-    lines = list()
-    with open(os.path.join('..', 'tms', 'data', 'original', 'de_tms_sem-phon_ifg.tsv')) as i:
-        for l_i, l in enumerate(i):
-            line = l.replace(',', '.').strip().split('\t')
-            if 'NA' in line:
-                print(line)
-                continue
-            if l_i == 0:
-                header = [w for w in line]
-                continue
-            #assert len(line)==len(header)
-            if '' in line:
-                continue
-            if len(line) < len(header)-1:
-                print(line)
-                continue
-            lines.append(line)
-    ###
-    conditions = set([l[header.index('stim')] for l in lines])
-    tasks = set([l[header.index('task')] for l in lines])
-    full_sims = dict()
-    #for c, name in conditions.items():
-    for t in tasks:
-        for c in conditions:
-            name = '{}-{}'.format(c, t)
-            #print(name)
-            if lang == 'de':
-                ###One participant was replaced due to an overall mean error rate of 41.8% - sub 3
-                #current_cond = [l for l in lines if l[header.index('stim')] in c and int(l[header.index('subj')])!=3]
-                current_cond = [l for l in lines if l[header.index('stim')] in name and l[header.index('task')] in name and int(l[header.index('subj')])!=3]
-                        #and l[header.index('utterance')]!='NA']
-                tasks = [l[header.index('task')] for l in current_cond]
-                assert len(set(tasks)) == 1
-                subjects = [int(l[header.index('subj')]) for l in current_cond]
-                assert len(set(subjects)) == 24
-                #print(subjects)
-                rts = [float(l[header.index('RT')]) for l in current_cond]
-                log_rts = [numpy.log10(float(l[header.index('RT')])) for l in current_cond]
-                vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('utterance')])]
-                test_vocab = test_vocab.union(set(vocab_w_ones))
-                vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('item')].split('.')[0])]
-                test_vocab = test_vocab.union(set(vocab_w_twos))
-                w_ones = [l[header.index('utterance')] for l in current_cond]
-                w_twos = [l[header.index('item')].split('.')[0] for l in current_cond]
-                sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-            else:
-                full_sims[name] = list()
-    if lang == 'de':
-        full_sims = reorganize_tms_sims(sims)
-    return full_sims, test_vocab
-
-def reorganize_tms_sims(sims):
-    full_sims = dict()
-    for n, n_data in sims.items():
-        full_sims[n] = dict()
-        for s, ws, rt in n_data:
-            if s not in full_sims[n].keys():
-                full_sims[n][s] = dict()
-            full_sims[n][s][ws] = rt
-    return full_sims
-
-def read_dirani_n400(lang):
-    dis_sims = {'words' : dict(), 'pictures' : dict()}
-    if lang != 'en':
-        trans_path = os.path.join(
-                                 '..', 
-                                 'meg-dirani',
-                                 'meg-dirani-n400_stimuli_translations_it_de.tsv'
-                                 )
-        trans = dict()
-        with open(trans_path) as i:
-            for l_i, l in enumerate(i):
-                line = l.strip().split('\t')
-                if l_i == 0:
-                    rel_trans = line.index('word_{}'.format(lang))
-                    continue
-                trans[line[0].strip()] = line[rel_trans].strip()
-
-    test_vocab = set()
-    for dataset in dis_sims.keys():
-        dis_sims[dataset] = dict()
-        file_path = os.path.join(
-                                 '..', 
-                                 'meg-dirani',
-                                 'data', 
-                                 'reorganized_dataset',
-                                 dataset,
-                                 'tsv',
-                                 '300-400ms_similarities.tsv')
-        with open(file_path) as i:
-            for l_i, l in enumerate(i):
-                if l_i == 0:
-                    continue
-                line = l.strip().split('\t')
-                w_one = line[0]
-                w_two = line[1]
-                ### translating if needed
-                if lang != 'en':
-                    w_one = trans[w_one]
-                    w_two = trans[w_two]
-                ### german will be transformed
-                if lang != 'de':
-                    test_vocab = test_vocab.union(set([w_one, w_two]))
-                else:
-                    test_vocab = test_vocab.union(transform_german_word(w_one))
-                    test_vocab = test_vocab.union(transform_german_word(w_two))
-                sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
-                ### we use dissimilarity!
-                dis_sims[dataset][(w_one, w_two)] = 1 - sim
-
-    return dis_sims['words'], dis_sims['pictures'], test_vocab
-
-def read_abstract_ipc(lang):
-    dis_sims = dict()
-    test_vocab = set()
-    if lang == 'de':
-        file_path = os.path.join(
-                                 '..', 
-                                 'fmri',
-                                 'data', 
-                                 'de_abstract-ipc_data.tsv')
-        with open(file_path) as i:
-            for l_i, l in enumerate(i):
-                line = l.strip().split('\t')
-                w_one = line[0]
-                w_two = line[1]
-                test_vocab = test_vocab.union(transform_german_word(w_one))
-                test_vocab = test_vocab.union(transform_german_word(w_two))
-                assert len(line[2:]) == 19
-                ### the dataset provides already dissimilarities
-                dis_sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
-                dis_sims[(w_one, w_two)] = dis_sim
-
-    return dis_sims, test_vocab
-
-def read_fern(lang, trans_from_en):
-    dis_sims = {1 : dict(), 2 : dict()}
-    test_vocab = set()
-    for dataset in dis_sims.keys():
-        dis_sims[dataset] = dict()
-        file_path = os.path.join('data', 'fern{}.tsv'.format(dataset))
-        with open(file_path) as i:
-            for l_i, l in enumerate(i):
-                if l_i == 0:
-                    continue
-                line = l.strip().split('\t')
-                test_vocab = test_vocab.union(set([line[0], line[1]]))
-                sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
-                ### we want dissimilarity
-                dis_sims[dataset][(line[0], line[1])] = 1 - sim
-    if lang != 'en':
-        print(lang)
-        trans_vocab = set()
-        for w in test_vocab:
-            try:
-                trs_w = trans_from_en[lang][w]
-            except KeyError:
-                print(w)
-                continue
-            trans_vocab = trans_vocab.union(trs_w)
-        del test_vocab
-        test_vocab = trans_vocab.copy()
-
-    return dis_sims[1], dis_sims[2], test_vocab
-
-def read_simlex(lang):
-    if lang == 'de':
-        file_path = os.path.join('data', 'MSimLex999_German.txt')
-        indices = [0, 1, -1]
-        sep = ','
-    if lang == 'it':
-        file_path = os.path.join('data', 'MSimLex999_Italian.txt')
-        indices = [0, 1, -1]
-        sep = ','
-    if lang == 'en':
-        file_path = os.path.join('data', 'SimLex-999.txt')
-        indices = [0, 1, 3]
-        sep = '\t'
-    assert os.path.exists(file_path)
-    dis_sims = dict()
-    test_vocab = set()
-    with open(file_path) as i:
-        for l_i, l in enumerate(i):
-            if l_i == 0:
-                continue
-            line = l.lower().strip().split(sep)
-            key = tuple(sorted([line[indices[0]], line[indices[1]]]))
-            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
-            test_vocab = test_vocab.union(norm_key)
-            val = float(line[indices[2]].replace(',', '.'))
-            ### transforming to dissimilarity
-            dis_sims[key] = 1 - val
-    return dis_sims, test_vocab
-
-def read_ws353(lang):
-    if lang == 'de':
-        file_path = os.path.join('data', 'MWS353_German.txt')
-    if lang == 'it':
-        file_path = os.path.join('data', 'MWS353_Italian.txt')
-    if lang == 'en':
-        file_path = os.path.join('data', 'MWS353_English.txt')
-    indices = [0, 1, -1]
-    sep = ','
-    assert os.path.exists(file_path)
-    dis_sims = dict()
-    test_vocab = set()
-    with open(file_path) as i:
-        for l_i, l in enumerate(i):
-            if l_i == 0:
-                continue
-            line = l.lower().strip().split(sep)
-            key = tuple(sorted([line[indices[0]], line[indices[1]]]))
-            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
-            test_vocab = test_vocab.union(norm_key)
-            val = float(line[indices[2]].replace(',', '.'))
-            ### transforming to dissimilarity
-            dis_sims[key] = 1 - val
-    return dis_sims, test_vocab
-
-def read_men(lang):
-    dis_sims = dict()
-    test_vocab = set()
-    if lang != 'en':
-        print('the MEN dataset is not available for this language!')
-    else:
-        file_path = os.path.join('data', 'MEN_dataset_natural_form_full')
-        assert os.path.exists(file_path)
-        with open(file_path) as i:
-            for l_i, l in enumerate(i):
-                if l_i == 0:
-                    continue
-                line = l.lower().strip().split()
-                key = tuple(sorted([line[0], line[1]]))
-                norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
-                test_vocab = test_vocab.union(norm_key)
-                val = float(line[2].replace(',', '.'))
-                ### transforming to dissimilarity
-                dis_sims[key] = 1 - val
-    return dis_sims, test_vocab
 
 def read_mitchell(lang):
     assert lang == 'en'
@@ -891,70 +489,36 @@ def read_mitchell(lang):
 
     return dimensions
 
-languages = [
-             #'en',
-             'de',
-             'it',
-             ]
-senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
-print('loading original lancasted ratings...')
-lancaster_ratings = {
-                     'en' : read_lancaster_ratings(),
-                     }
-trans_from_en = dict()
-### german translation
-print('loading translations of ratings...')
-for lang in tqdm(['de', 'it']):
-    print(lang)
-    lancaster_ratings[lang] = dict()
-    trans_from_en[lang] = dict()
-    with tqdm() as counter:
-        with open(os.path.join('..', 'translations', 'lanc_fern_{}_to_en.tsv'.format(lang))) as i:
-            for l in i:
-                line = l.strip().split('\t')
-                if lang == 'de':
-                    for w in transform_german_word(line[0].lower()):
-                        ### ratings
-                        try:
-                            lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
-                        except KeyError:
-                            pass
-                        ### translations
-                        try:
-                            trans_from_en['de'][line[1]].add(w)
-                        except KeyError:
-                            trans_from_en['de'][line[1]] = {w}
-                        counter.update(1)
-                elif lang == 'it':
-                    for w in [line[0].lower(), line[0].capitalize()]:
-                        ### ratings
-                        try:
-                            lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
-                        except KeyError:
-                            print(w)
-                            pass
-                        ### translations
-                        try:
-                            trans_from_en['it'][line[1]].add(w)
-                        except KeyError:
-                            trans_from_en['it'][line[1]] = {w}
-                        counter.update(1)
+def check_args(args):
+    if '_' in args.dataset:
+        assert args.dataset.split('_')[0] == args.language
 
-rows = dict()
-datasets = dict()
-print('loading datasets...')
-for lang in tqdm(languages):
-    men, men_vocab = read_men(lang)
-    simlex, simlex_vocab = read_simlex(lang)
-    ws353, ws353_vocab = read_ws353(lang)
-    fern_one, fern_two, fern_vocab = read_fern(lang, trans_from_en)
-    dirani_n400_words, dirani_n400_pictures, dirani_vocab = read_dirani_n400(lang)
-    de_abstract_ipc, de_abstract_ipc_vocab = read_abstract_ipc(lang)
-    de_behav, de_behav_vocab = read_german_behav(lang)
-    it_behav, it_behav_vocab = read_italian_behav(lang)
-    germ_tms_ifg, germ_tms_ifg_vocab = read_german_ifg_tms(lang)
-    de_tms_pipl, de_tms_pipl_vocab, prototypes = read_german_pipl_tms(lang)
-    related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, ita_tms_cereb_vocab = read_italian_cereb_tms(lang)
+def load_dataset(args):
+    if args.dataset == 'en_men':
+        men, vocab = read_men(lang)
+    if '999' in args.dataset:
+        simlex, vocab = read_simlex(lang)
+    if '353' in args.dataset:
+        ws353, vocab = read_ws353(lang)
+    if 'fern-all' in args.dataset:
+        fern, vocab = read_fern(lang, trans_from_en)
+    if 'fern-categories' in args.dataset:
+        fern_cats, vocab = read_fern_categories(lang, trans_from_en)
+    if 'dirani' in args.dataset:
+        dirani_n400_words, dirani_n400_pictures, vocab = read_dirani_n400(lang)
+    if 'abstract' in args.dataset:
+        de_abstract_ipc, vocab = read_abstract_ipc(lang)
+    if 'de_behav' in args.dataset:
+        de_behav, vocab = read_german_behav(lang)
+    if 'it_behav' in args.dataset:
+        it_behav, vocab = read_italian_behav(lang)
+    if 'sem-phon' in args.dataset:
+        germ_tms_ifg, vocab = read_german_ifg_tms(lang)
+    if 'sound-act' in args.dataset:
+        de_tms_pipl, vocab, prototypes = read_german_pipl_tms(lang)
+    if 'distr-learn' in args.dataset:
+        related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, vocab = read_italian_cereb_tms(lang)
+    '''
     basic_vocab = men_vocab.union(
                                   simlex_vocab,
                                   ws353_vocab,
@@ -975,8 +539,8 @@ for lang in tqdm(languages):
                     #('ws353', ws353, {}),
                     #('men', men, {}), 
                     ### semantic network brain RSA
-                    ('fern1', fern_one, {}),
-                    ('fern2', fern_two, {}),
+                    #('fern1', fern_one, {}),
+                    #('fern2', fern_two, {}),
                     ### EEG semantics RSA
                     #('dirani-n400-words', dirani_n400_words, {}),
                     #('dirani-n400-pictures', dirani_n400_pictures, {}),
@@ -1009,6 +573,9 @@ for lang in tqdm(languages):
                     #('it_distr-learn-bootstrap_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
                     ]:
         datasets[lang][dataset_name] = (dataset, proto)
+    ### fern categories
+    #for dataset_name, dataset in fern_cats.items():
+    #    datasets[lang][dataset_name] = (dataset, {})
     for dataset_name, dataset, proto in [
             #('de_sound-act-bootstrap_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
             #('de_sound-act-bootstrap_tms_all-sham', de_tms_pipl['sham'], prototypes),
@@ -1030,92 +597,144 @@ for lang in tqdm(languages):
             # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
             # matched non-exclusive (action_pos, sound_pos)
             for poss in [
-                         'all', 
-                         'both_pos',
-                         'both_pos-topten',
-                         'both_pos-topfifty',
-                         'both_neg',
-                         'matched_excl',
-                         'matched_excl-topten',
-                         'matched_excl-topfifty',
-                         'matched_non_excl',
-                         'matched_non_excl-topten',
-                         'matched_non_excl-topfifty',
-                         'opposite_excl',
-                         'opposite_excl-topten',
-                         'opposite_excl-topfifty',
-                         'opposite_non_excl',
-                         'opposite_non_excl-topten',
-                         'opposite_non_excl-topfifty',
+                         #'all', 
+                         #'both_pos',
+                         #'both_pos-topten',
+                         #'both_pos-topfifty',
+                         #'both_neg',
+                         #'matched_excl',
+                         #'matched_excl-topten',
+                         #'matched_excl-topfifty',
+                         #'matched_non_excl',
+                         #'matched_non_excl-topten',
+                         #'matched_non_excl-topfifty',
+                         #'opposite_excl',
+                         #'opposite_excl-topten',
+                         #'opposite_excl-topfifty',
+                         #'opposite_non_excl',
+                         #'opposite_non_excl-topten',
+                         #'opposite_non_excl-topfifty',
                          ]:
                 curr_dataset_name = '{}#{}'.format(dataset_name, poss)
                 datasets[lang][curr_dataset_name] = (dataset, proto)
+    '''
 
-#fasttext_only = True
-fasttext_only = False
+    return vocab, datasets
 
-models = dict()
-vocabs = dict()
-for lang in languages:
-    #if lang not in results.keys():
-    #    results[lang] = dict()
-    models[lang] = dict()
-    vocabs[lang] = dict()
-    print('\n{}\n'.format(lang))
-    for case in [
+def load_static_model(args):
+    print('loading {}'.format(args.model))
+    base_folder = os.path.join(
+                                '/',
+                                'data',
+                                'u_bruera_software',
+                                #'tu_bruera',
+                                'word_vectors', 
+                                args.lang, 
+                                )
+    if args.model == 'fasttext':
+        model = fasttext.load_model(
+                                    os.path.join(
+                                        base_folder,
+                                        'cc.{}.300.bin'.format(args.lang)
+                                        )
+                                    )
+        vocab = model.words
+    elif case == 'conceptnet':
+        with open(
+                os.path.join(
+                    base_folder,
+                   'conceptnet_{}.pkl'.format(args.lang)
+                   ), 'rb') as i:
+            model = pickle.load(i)
+        vocab = model.keys()
+    elif case == 'fasttext_aligned':
+        with open(
+                  os.path.join(
+                            base_folder,
+                           'ft_{}_aligned.pkl'.format(args.lang)
+                           ), 'rb') as i:
+            model = pickle.load(i)
+        vocab = model.keys()
+    model = {w : model[w] for w in vocab}
+    vocab = [w for w in vocab]
+
+    return model, vocab
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+                    '--model',
+                    choices=[
+                             'fasttext',
+                             'fasttext_aligned',
+                             'conceptnet',
+                             'bnc',
+                             'wac',
+                             'tagged_wiki',
+                             'opensubs',
+                             'joint',
+                             'cc100',
+                             ],
+                    required=True,
+                    )
+parser.add_argument(
+                    '--lang',
+                    choices=[
+                             'en',
+                             'de',
+                             'it',
+                             ],
+                    required=True
+                    )
+parser.add_argument(
+                    '--dataset',
+                    choices=[
+                            ### sim-lex norms
+                            'simlex999-sim',
+                            'ws353',
+                            'en_men',
+                            ### fmri
+                            'fern-all',
+                            'fern-categories',
+                            'de_abstract',
+                            ### meeg
+                            'dirani',
+                            ### behav
+                            'de_behav',
+                            'it_behav',
+                            ### tms
+                            'de_sem-phon',
+                            'de_sem-phon-bootstrap',
+                            'de_sound-act',
+                            'de_sound-act-bootstrap',
+                            'it_distr-learn',
+                            'it_distr-learn-bootstrap',
+                            ],
+                    required=True,
+                    )
+#senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
+args = parser.parse_args()
+lancaster_ratings, trans_from_en = load_lancaster_en_de_it()
+check_args(args)
+
+rows, datasets = load_dataset(args)
+model, vocab = load_model(args)
+
+static_models = [
                  'fasttext',
                  'fasttext_aligned',
                  'conceptnet',
-                 ]:
-        #if case in results[lang].keys():
-        #    continue
-        print('loading {}'.format(case))
-        base_folder = os.path.join(
-                                    '/',
-                                    'data',
-                                    'u_bruera_software',
-                                    #'tu_bruera',
-                                    'word_vectors', 
-                                    lang, 
-                                    )
-        if case == 'fasttext':
-            model = fasttext.load_model(
-                                        os.path.join(
-                                            base_folder,
-                                            'cc.{}.300.bin'.format(lang)
-                                            )
-                                        )
-            vocab = model.words
-        elif case == 'conceptnet':
-            with open(
-                    os.path.join(
-                        base_folder,
-                       'conceptnet_{}.pkl'.format(lang)
-                       ), 'rb') as i:
-                model = pickle.load(i)
-            vocab = model.keys()
-        elif case == 'fasttext_aligned':
-            with open(
-                      os.path.join(
-                                base_folder,
-                               'ft_{}_aligned.pkl'.format(lang)
-                               ), 'rb') as i:
-                model = pickle.load(i)
-            vocab = model.keys()
-        model = {w : model[w] for w in vocab}
-        vocab = [w for w in vocab]
-        print('getting results for {}...'.format(case))
-        #results = test_model(lang, case, model, vocab, results, datasets, trans_from_en)
-        test_model(lang, case, model, vocab, datasets, trans_from_en)
-    if fasttext_only:
-        continue
+                 ]
+if args.model in static_models:
+    model, vocab = load_static_model(args)
+    test_model(args.lang, args.model, model, vocab, datasets, trans_from_en)
+
     for corpus in [
                #'bnc',
-               'wac',
-               'tagged_wiki',
-               'opensubs',
-               'joint',
-               'cc100',
+               #'wac',
+               #'tagged_wiki',
+               #'opensubs',
+               #'joint',
+               #'cc100',
                ]:
         print(corpus)
         if lang == 'en':
@@ -1175,21 +794,14 @@ for lang in languages:
                 else:
                     ctx_words = [w for ws in read_mitchell(lang) for w in ws]
                 trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
                 model = {k : v for k, v in trans_pmi_vecs.items()}
-                #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                 curr_vocab = [w for w in trans_pmi_vecs.keys()]
                 test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
-                #results = test_model(lang, key, model, curr_vocab, results, datasets)
         ### lancaster
         filt_ratings = {w : freqs[w] for w in lancaster_ratings[lang].keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1], reverse=True)]
         filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings[lang].items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
         sorted_perc = [w[0] for w in sorted(filt_perc.items(), key=lambda item: item[1], reverse=True)]
-        #inv_sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1])]
-        #for percentage in [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]:
-        #    freq = int(len(sorted_ratings)*percentage)
-        #for freq in [7500, 10000, 12500, 15000, 17500]:
         for freq in tqdm([
                           100, 
                           200, 
@@ -1199,12 +811,16 @@ for lang in languages:
                           2500, 
                           5000, 
                           7500,
-                          10000, 12500, 15000, 17500,
-                          20000, 25000
+                          10000, 
+                          12500, 
+                          15000, 
+                          17500,
+                          20000, 
+                          25000,
                           ]):
             for row_mode in [
                              '', 
-                          #   'rowincol',
+                             #'rowincol',
                              ]:
                 for selection_mode in [
                                        'top', 
@@ -1213,12 +829,6 @@ for lang in languages:
                                        'lo-perceptual',
                                        ]: 
                     key = 'ppmi_{}_lancaster_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
-                    #if key in results[lang].keys():
-                    #    continue
-                    #ctx_words = [w for w in inv_sorted_ratings
-                    #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=False)
-                    ### using the basic required vocab for all tests as a basis set of words
-                    #ctx_words = [w for w in sorted_ratings[:freq]]
                     if selection_mode == 'top':
                         if row_mode == 'rowincol':
                             ctx_words = set([w for w in sorted_ratings[:freq]]+row_words)
@@ -1243,38 +853,37 @@ for lang in languages:
                             ctx_words = [sorted_ratings[i] for i in idxs]
                     ctx_idxs = [vocab[w] for w in ctx_words]
                     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                    #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
                     model = {k : v for k, v in trans_pmi_vecs.items()}
-                    #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
                     test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
-                    #results = test_model(lang, key, model, curr_vocab, results, datasets, trans_from_en)
         ### top-n frequencies
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
         for freq in tqdm([
-                          100, 200, 500, 750,
+                          100, 
+                          200, 
+                          500, 
+                          750,
                           1000, 
                           2500, 
-                          5000, 7500,
-                          10000, 12500, 15000, 17500,
-                          20000, 25000
+                          5000, 
+                          7500,
+                          10000, 
+                          12500, 
+                          15000, 
+                          17500,
+                          20000, 
+                          25000,
                           ]):
             for row_mode in [
-                             '', 
-                             #'rowincol',
+                             '_', 
+                             #'_rowincol',
                              ]:
                 for selection_mode in [
                                        'top', 
                                        'random',
                                        ]: 
-                    #ctx_words = [w for w in inv_sorted_ratings
-                    #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, ctx_words, ctx_words, smoothing=False)
-                    ### using the basic required vocab for all tests as a basis set of words
-                    #ctx_words = [w for w in sorted_ratings[:freq]]
                     key = 'ppmi_{}_abs_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
-                    #if key in results[lang].keys():
-                    #    continue
                     if selection_mode == 'top':
                         if row_mode == 'rowincol':
                             ctx_words = set([w for w in sorted_freqs[:freq]]+row_words)
@@ -1290,8 +899,6 @@ for lang in languages:
                     ### using the basic required vocab for all tests as a basis set of words
                     ctx_idxs = [vocab[w] for w in ctx_words]
                     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                    #models[lang][key] = {k : v for k, v in trans_pmi_vecs.items()}
-                    #vocabs[lang][key] = [w for w in trans_pmi_vecs.keys()]
                     model = {k : v for k, v in trans_pmi_vecs.items()}
                     curr_vocab = [w for w in trans_pmi_vecs.keys()]
                     test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
