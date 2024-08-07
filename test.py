@@ -1,5 +1,3 @@
-import argparse
-
 from tqdm import tqdm
 
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
@@ -10,69 +8,10 @@ from simrel_norms_loaders import read_men, read_simlex, read_ws353
 from psycholing_norms_loaders import load_lancaster_en_de_it
 
 from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs
-from test_utils import check_args, load_dataset, load_static_model, test_model
+from test_utils import args, load_dataset, load_static_model, test_model, test_count_model
 
-i = read_fern_categories()
-import pdb; pdb.set_trace()
-
-parser = argparse.ArgumentParser()
-parser.add_argument(
-                    '--model',
-                    choices=[
-                             'fasttext',
-                             'fasttext_aligned',
-                             'conceptnet',
-                             'bnc',
-                             'wac',
-                             'tagged_wiki',
-                             'opensubs',
-                             'joint',
-                             'cc100',
-                             ],
-                    required=True,
-                    )
-parser.add_argument(
-                    '--lang',
-                    choices=[
-                             'en',
-                             'de',
-                             'it',
-                             ],
-                    required=True
-                    )
-parser.add_argument(
-                    '--dataset',
-                    choices=[
-                            ### sim-lex norms
-                            'simlex999-sim',
-                            'ws353',
-                            'en_men',
-                            ### fmri
-                            'fern-all',
-                            'fern-categories',
-                            'fern1-all',
-                            'fern2-categories',
-                            'de_abstract',
-                            ### meeg
-                            'dirani-words',
-                            'dirani-pictures',
-                            ### behav
-                            'de_behav',
-                            'it_behav',
-                            ### tms
-                            'de_sem-phon',
-                            'de_sem-phon-bootstrap',
-                            'de_sound-act',
-                            'de_sound-act-bootstrap',
-                            'it_distr-learn',
-                            'it_distr-learn-bootstrap',
-                            ],
-                    required=True,
-                    )
-#senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
-args = parser.parse_args()
+args = args()
 lancaster_ratings, trans_from_en = load_lancaster_en_de_it()
-check_args(args)
 
 rows, datasets = load_dataset(args)
 model, vocab = load_model(args)
@@ -85,28 +24,35 @@ static_models = [
                  ]
 if args.model in static_models:
     model, vocab = load_static_model(args)
-    test_model(args.lang, args.model, model, vocab, datasets, trans_from_en)
+    test_model(
+               args.lang, 
+               args.model, 
+               model, 
+               vocab, 
+               datasets, 
+               trans_from_en,
+               )
 ### for count models, we test with a lot of different possibilities
 else:
     vocab, coocs, freqs = load_count_coocs(args)
-    ### selecting dimensions from ratings
-    row_words = [w for w in rows[lang] if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
-    ### mitchell
+    ### keeping row words that are actually available
+    row_words = [w for w in rows[args.lang] if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
+    #
+    ### mitchell hand-picked dimensions
+    #
     for row_mode in [
                      '', 
-                     #'rowincol',
+                     #'_rowincol',
                      ]:
-        if lang == 'en':
-            key = 'ppmi_{}_mitchell_{}_words'.format(corpus, row_mode)
-            if row_mode == 'rowincol':
-                ctx_words = set([w for ws in read_mitchell(lang) for w in ws] + row_words)
-            else:
-                ctx_words = [w for ws in read_mitchell(lang) for w in ws]
-            trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-            model = {k : v for k, v in trans_pmi_vecs.items()}
-            curr_vocab = [w for w in trans_pmi_vecs.keys()]
-            test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+        key = 'ppmi_{}_mitchell{}_words'.format(args.model, row_mode)
+        if row_mode == 'rowincol':
+            ctx_words = set([w for ws in read_mitchell_25dims(args.lang) for w in ws] + row_words)
+        else:
+            ctx_words = [w for ws in read_mitchell(args.lang) for w in ws]
+        test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words)
+    #
     ### lancaster
+    #
     filt_ratings = {w : freqs[w] for w in lancaster_ratings[lang].keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
     sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1], reverse=True)]
     filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings[lang].items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
@@ -129,15 +75,15 @@ else:
                       ]):
         for row_mode in [
                          '', 
-                         #'rowincol',
+                         #'_rowincol',
                          ]:
             for selection_mode in [
                                    'top', 
-                                   'random', 
+                                   #'random', 
                                    'hi-perceptual', 
                                    'lo-perceptual',
                                    ]: 
-                key = 'ppmi_{}_lancaster_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
+                key = 'ppmi_{}_lancaster_freq_{}{}_{}_words'.format(args.model, selection_mode, row_mode, freq)
                 if selection_mode == 'top':
                     if row_mode == 'rowincol':
                         ctx_words = set([w for w in sorted_ratings[:freq]]+row_words)
@@ -160,12 +106,15 @@ else:
                         ctx_words = set([sorted_ratings[i] for i in idxs]+row_words)
                     else:
                         ctx_words = [sorted_ratings[i] for i in idxs]
-                ctx_idxs = [vocab[w] for w in ctx_words]
-                trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                model = {k : v for k, v in trans_pmi_vecs.items()}
-                curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+                test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words)
+                #ctx_idxs = [vocab[w] for w in ctx_words]
+                #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
+                #model = {k : v for k, v in trans_pmi_vecs.items()}
+                #curr_vocab = [w for w in trans_pmi_vecs.keys()]
+                #test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+    #
     ### top-n frequencies
+    #
     filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
     sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
     for freq in tqdm([
@@ -190,9 +139,9 @@ else:
                          ]:
             for selection_mode in [
                                    'top', 
-                                   'random',
+                                   #'random',
                                    ]: 
-                key = 'ppmi_{}_abs_freq_{}_{}_{}_words'.format(corpus, selection_mode, row_mode, freq)
+                key = 'ppmi_{}_abs_freq_{}{}_{}_words'.format(args.model, selection_mode, row_mode, freq)
                 if selection_mode == 'top':
                     if row_mode == 'rowincol':
                         ctx_words = set([w for w in sorted_freqs[:freq]]+row_words)
@@ -206,8 +155,9 @@ else:
                     else:
                         ctx_words = [sorted_freqs[i] for i in idxs]
                 ### using the basic required vocab for all tests as a basis set of words
-                ctx_idxs = [vocab[w] for w in ctx_words]
-                trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                model = {k : v for k, v in trans_pmi_vecs.items()}
-                curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+                test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words)
+                #ctx_idxs = [vocab[w] for w in ctx_words]
+                #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
+                #model = {k : v for k, v in trans_pmi_vecs.items()}
+                #curr_vocab = [w for w in trans_pmi_vecs.keys()]
+                #test_model(lang, key, model, curr_vocab, datasets, trans_from_en)

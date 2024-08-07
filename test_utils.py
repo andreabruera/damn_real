@@ -1,3 +1,4 @@
+import argparse
 import fasttext
 #import gensim
 import numpy
@@ -589,3 +590,64 @@ def load_static_model(args):
     vocab = [w for w in vocab]
 
     return model, vocab
+
+def args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+                        '--model',
+                        choices=[
+                                 'fasttext',
+                                 'fasttext_aligned',
+                                 'conceptnet',
+                                 'bnc',
+                                 'wac',
+                                 'tagged_wiki',
+                                 'opensubs',
+                                 'joint',
+                                 'cc100',
+                                 ],
+                        required=True,
+                        )
+    parser.add_argument(
+                        '--lang',
+                        choices=[
+                                 'en',
+                                 'de',
+                                 'it',
+                                 ],
+                        required=True
+                        )
+    parser.add_argument(
+                        '--dataset',
+                        choices=[
+                                ### sim-lex norms
+                                'simlex999-sim',
+                                'ws353',
+                                'en_men',
+                                ### fmri
+                                'fern-all',
+                                'fern-categories',
+                                'fern1-all',
+                                'fern2-categories',
+                                'de_abstract',
+                                ### meeg
+                                'dirani-words',
+                                'dirani-pictures',
+                                ### behav
+                                'de_behav',
+                                'it_behav',
+                                ### tms
+                                'de_sem-phon',
+                                'de_sem-phon-bootstrap',
+                                'de_sound-act',
+                                'de_sound-act-bootstrap',
+                                'it_distr-learn',
+                                'it_distr-learn-bootstrap',
+                                ],
+                        required=True,
+                        )
+    #senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
+    args = parser.parse_args()
+    check_args(args)
+
+    return args

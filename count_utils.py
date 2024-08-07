@@ -3,10 +3,15 @@ import os
 import pickle
 import random
 
+def test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words):
+    trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
+    model = {k : v for k, v in trans_pmi_vecs.items()}
+    curr_vocab = [w for w in trans_pmi_vecs.keys()]
+    test_model(args.lang, key, model, curr_vocab, datasets, trans_from_en)
+
 def read_mitchell_25dims(lang):
-    assert lang == 'en'
     dimensions = list()
-    with open(os.path.join('data', 'fmri', 'mitchell', 'mitchell_dimensions.tsv')) as i:
+    with open(os.path.join('data', 'fmri', 'mitchell', 'mitchell_dimensions_{}.tsv'.format(lang))) as i:
         for l in i:
             line = l.strip().split()
             assert len(line) >= 2
