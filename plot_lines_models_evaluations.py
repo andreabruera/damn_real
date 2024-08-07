@@ -8,12 +8,10 @@ from tqdm import tqdm
 
 results = dict()
 
-#with open('evaluation.tsv') as i:
 with tqdm() as counter:
     for root, direc, fz in os.walk(
                               os.path.join(
-                                  'word_similarity_relatedness', 
-                                  'sim-rel_results',
+                                  'results',
                                   )):
 
         for f in fz:
@@ -35,6 +33,8 @@ with tqdm() as counter:
                         task = 'tms'
                     elif 'fern' in dataset or 'abstract-ipc' in dataset:
                         task = 'fmri'
+                    elif dataset in ['1-abstract', '2-abstract', '1-concrete', '2-concrete']:
+                        task = 'fmri'
                     elif 'dirani' in dataset:
                         task = 'meg'
                     elif 'lexical' in dataset or 'naming' in dataset:
@@ -42,7 +42,9 @@ with tqdm() as counter:
                     elif '999' in dataset or '353' in dataset or 'men' in dataset:
                         task = 'sim-rel_norms'
                     else:
-                        raise AssertionError
+                        print(dataset)
+                        continue
+                        #raise AssertionError
                     if task not in results[lang].keys():
                         results[lang][task] = {dataset : dict()}
                     if dataset not in results[lang][task].keys():
