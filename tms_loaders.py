@@ -1,9 +1,16 @@
+import numpy
+import os
 
 def read_german_ifg_tms(lang):
     sims = dict()
     test_vocab = set()
     lines = list()
-    with open(os.path.join('..', 'tms', 'data', 'original', 'de_tms_sem-phon_ifg.tsv')) as i:
+    with open(os.path.join(
+                           'data', 
+                           'tms', 
+                           'de_sem-phon', 
+                           'de_tms_sem-phon_ifg.tsv')
+                           ) as i:
         for l_i, l in enumerate(i):
             line = l.replace(',', '.').strip().split('\t')
             if 'NA' in line:
@@ -57,7 +64,11 @@ def read_german_ifg_tms(lang):
 def read_german_pipl_tms(lang):
     ### first reading ratings
     ratings = dict()
-    with open(os.path.join('..', 'tms', 'data', 'phil_annotated_ratings_v9.tsv')) as i:
+    with open(os.path.join(
+                           'data', 
+                           'tms', 
+                           'de_sound-act', 
+                           'phil_annotated_ratings_v9.tsv')) as i:
         for l_i, l in enumerate(i):
             line = l.replace(',', '.').strip().split('\t')
             if l_i == 0:
@@ -100,7 +111,12 @@ def read_german_pipl_tms(lang):
                   'action_pos_sound_neg' : list(), 
                   'sound_pos_action_neg' : list(),
                   }
-    with open(os.path.join('..', 'tms', 'data', 'de_tms_pipl.tsv')) as i:
+    with open(os.path.join(
+                           'data', 
+                           'tms', 
+                           'de_sound-act', 
+                           'de_tms_pipl.tsv')
+                           ) as i:
         for l_i, l in enumerate(i):
             line = l.strip().split('\t')
             if l_i == 0:
@@ -200,7 +216,11 @@ def read_german_pipl_tms(lang):
 
 def read_italian_cereb_tms(lang, bootstrap=False, residualize=False):
     lines = list()
-    with open(os.path.join('..', 'tms', 'data', 'italian_tms_cereb.tsv')) as i:
+    with open(os.path.join(
+                           'data'
+                           'tms',
+                           'it_distr-learn',
+                           'italian_tms_cereb.tsv')) as i:
         for l_i, l in enumerate(i):
             line = l.strip().split('\t')
             if l_i == 0:

@@ -1,10 +1,17 @@
+import numpy
+import os
 
 def read_fern(lang, trans_from_en):
     dis_sims = {1 : {'all' : dict()}, 2 : dict()}
     test_vocab = set()
     for dataset in dis_sims.keys():
         dis_sims[dataset] = {'all' : dict()}
-        file_path = os.path.join('data', 'fern{}.tsv'.format(dataset))
+        file_path = os.path.join(
+                                 'data', 
+                                 'fmri', 
+                                 'fernandino', 
+                                 'fern{}_semantic_network.tsv'.format(dataset)
+                                 )
         with open(file_path) as i:
             for l_i, l in enumerate(i):
                 if l_i == 0:
@@ -37,7 +44,12 @@ def read_fern(lang, trans_from_en):
 
 def read_fern_categories(lang, trans_from_en):
     mapper = dict()
-    with open(os.path.join('..', 'data', 'fernandino_brain_concepts_categories.tsv')) as i:
+    with open(os.path.join(
+                           'data', 
+                           'fmri', 
+                           'fernandino', 
+                           'fernandino_brain_concepts_categories.tsv')
+                           ) as i:
         for l_i, l in enumerate(i):
             if l_i == 0:
                 continue
@@ -57,7 +69,12 @@ def read_fern_categories(lang, trans_from_en):
     dis_sims = dict()
     test_vocab = set()
     for dataset in [1, 2]:
-        file_path = os.path.join('data', 'fern{}.tsv'.format(dataset))
+        file_path = os.path.join(
+                                 'data', 
+                                 'fmri', 
+                                 'fernandino', 
+                                 'fern{}_semantic_network.tsv'.format(dataset)
+                                 )
         with open(file_path) as i:
             for l_i, l in enumerate(i):
                 if l_i == 0:
@@ -110,9 +127,9 @@ def read_abstract_ipc(lang):
     test_vocab = set()
     if lang == 'de':
         file_path = os.path.join(
-                                 '..', 
-                                 'fmri',
                                  'data', 
+                                 'fmri',
+                                 'kaiser',
                                  'de_abstract-ipc_data.tsv')
         with open(file_path) as i:
             for l_i, l in enumerate(i):

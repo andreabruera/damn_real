@@ -1,10 +1,13 @@
+import numpy
+import os
 
 def read_dirani_n400(lang):
     dis_sims = {'words' : dict(), 'pictures' : dict()}
     if lang != 'en':
         trans_path = os.path.join(
-                                 '..', 
-                                 'meg-dirani',
+                                 'data', 
+                                 'meeg',
+                                 'dirani',
                                  'meg-dirani-n400_stimuli_translations_it_de.tsv'
                                  )
         trans = dict()
@@ -20,9 +23,9 @@ def read_dirani_n400(lang):
     for dataset in dis_sims.keys():
         dis_sims[dataset] = {'all' : dict()}
         file_path = os.path.join(
-                                 '..', 
-                                 'meg-dirani',
                                  'data', 
+                                 'meeg',
+                                 'dirani',
                                  'reorganized_dataset',
                                  dataset,
                                  'tsv',

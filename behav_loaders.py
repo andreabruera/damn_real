@@ -1,3 +1,4 @@
+import os
 
 def read_italian_behav(lang):
     ### lexical decition times
@@ -7,7 +8,7 @@ def read_italian_behav(lang):
         for case in sims.keys(): 
             sims[case] = dict()
             measures = dict()
-            with open(os.path.join('..', 'behavioural', 'data', 'varlex_{}_it.tsv'.format(case))) as i:
+            with open(os.path.join('data', 'behavioural', 'LexVar', 'lexvar_{}_it.tsv'.format(case))) as i:
                 for l_i, l in enumerate(i):
                     line = l.replace(',', '.').strip().split('\t')
                     if l_i < 2:
@@ -31,7 +32,7 @@ def read_german_behav(lang):
     if lang == 'de':
         for case in sims.keys(): 
             measures = dict()
-            with open(os.path.join('..', 'behavioural', 'data', 'devel_{}_de.tsv'.format(case))) as i:
+            with open(os.path.join('data', 'behavioural', 'DeveL', 'devel_{}_de.tsv'.format(case))) as i:
                 for l_i, l in enumerate(i):
                     line = l.replace(',', '.').strip().split('\t')
                     if l_i == 0:

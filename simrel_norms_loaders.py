@@ -1,11 +1,13 @@
+import os
 
 def read_ws353(lang):
+    base_folder = os.path.join('data', 'simrel_norms', 'ws353')
     if lang == 'de':
-        file_path = os.path.join('data', 'MWS353_German.txt')
+        file_path = os.path.join(base_folder, 'MWS353_German.txt')
     if lang == 'it':
-        file_path = os.path.join('data', 'MWS353_Italian.txt')
+        file_path = os.path.join(base_folder, 'MWS353_Italian.txt')
     if lang == 'en':
-        file_path = os.path.join('data', 'MWS353_English.txt')
+        file_path = os.path.join(base_folder, 'MWS353_English.txt')
     indices = [0, 1, -1]
     sep = ','
     assert os.path.exists(file_path)
@@ -30,7 +32,7 @@ def read_men(lang):
     if lang != 'en':
         print('the MEN dataset is not available for this language!')
     else:
-        file_path = os.path.join('data', 'MEN_dataset_natural_form_full')
+        file_path = os.path.join('data', 'simrel_norms', 'men', 'MEN_dataset_natural_form_full')
         assert os.path.exists(file_path)
         with open(file_path) as i:
             for l_i, l in enumerate(i):
@@ -46,16 +48,17 @@ def read_men(lang):
     return dis_sims, test_vocab
 
 def read_simlex(lang):
+    base_folder = os.path.join('data', 'simrel_norms', 'simlex999')
     if lang == 'de':
-        file_path = os.path.join('data', 'MSimLex999_German.txt')
+        file_path = os.path.join(base_folder, 'MSimLex999_German.txt')
         indices = [0, 1, -1]
         sep = ','
     if lang == 'it':
-        file_path = os.path.join('data', 'MSimLex999_Italian.txt')
+        file_path = os.path.join(base_folder, 'MSimLex999_Italian.txt')
         indices = [0, 1, -1]
         sep = ','
     if lang == 'en':
-        file_path = os.path.join('data', 'SimLex-999.txt')
+        file_path = os.path.join(base_folder, 'SimLex-999.txt')
         indices = [0, 1, 3]
         sep = '\t'
     assert os.path.exists(file_path)
