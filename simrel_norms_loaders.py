@@ -1,5 +1,7 @@
 import os
 
+from utf_utils import transform_german_word
+
 def read_ws353(lang):
     base_folder = os.path.join('data', 'simrel_norms', 'ws353')
     if lang == 'de':
@@ -26,25 +28,22 @@ def read_ws353(lang):
             dis_sims['norms']['all'][key] = 1 - val
     return dis_sims, test_vocab
 
-def read_men(lang):
+def read_men():
     dis_sims = {'norms' : {'all' : dict()}}
     test_vocab = set()
-    if lang != 'en':
-        print('the MEN dataset is not available for this language!')
-    else:
-        file_path = os.path.join('data', 'simrel_norms', 'men', 'MEN_dataset_natural_form_full')
-        assert os.path.exists(file_path)
-        with open(file_path) as i:
-            for l_i, l in enumerate(i):
-                if l_i == 0:
-                    continue
-                line = l.lower().strip().split()
-                key = tuple(sorted([line[0], line[1]]))
-                norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
-                test_vocab = test_vocab.union(norm_key)
-                val = float(line[2].replace(',', '.'))
-                ### transforming to dissimilarity
-                dis_sims['norms']['all'][key] = 1 - val
+    file_path = os.path.join('data', 'simrel_norms', 'men', 'MEN_dataset_natural_form_full')
+    assert os.path.exists(file_path)
+    with open(file_path) as i:
+        for l_i, l in enumerate(i):
+            if l_i == 0:
+                continue
+            line = l.lower().strip().split()
+            key = tuple(sorted([line[0], line[1]]))
+            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            test_vocab = test_vocab.union(norm_key)
+            val = float(line[2].replace(',', '.'))
+            ### transforming to dissimilarity
+            dis_sims['norms']['all'][key] = 1 - val
     return dis_sims, test_vocab
 
 def read_simlex(lang):

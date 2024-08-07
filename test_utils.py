@@ -417,12 +417,15 @@ def bootstrapper(full_data, residualize=False):
 
 
 def check_args(args):
+    ### checking language if in first part of the name
     if '_' in args.dataset:
         assert args.dataset.split('_')[0] == args.language
+    if args.dataset == 'men' and args.language != 'en':
+        raise AssertionError
 
 def load_dataset(args):
     if args.dataset == 'en_men':
-        men, vocab = read_men(lang)
+        men, vocab = read_men()
     if '999' in args.dataset:
         simlex, vocab = read_simlex(lang)
     if '353' in args.dataset:
@@ -434,17 +437,17 @@ def load_dataset(args):
     if 'dirani' in args.dataset:
         dirani_n400_words, dirani_n400_pictures, vocab = read_dirani_n400(lang)
     if 'abstract' in args.dataset:
-        de_abstract_ipc, vocab = read_abstract_ipc(lang)
+        de_abstract_ipc, vocab = read_abstract_ipc()
     if 'de_behav' in args.dataset:
-        de_behav, vocab = read_german_behav(lang)
+        de_behav, vocab = read_german_behav()
     if 'it_behav' in args.dataset:
-        it_behav, vocab = read_italian_behav(lang)
+        it_behav, vocab = read_italian_behav()
     if 'sem-phon' in args.dataset:
-        germ_tms_ifg, vocab = read_german_ifg_tms(lang)
+        germ_tms_ifg, vocab = read_de_sem_phon_tms()
     if 'sound-act' in args.dataset:
-        de_tms_pipl, vocab, prototypes = read_german_pipl_tms(lang)
+        de_tms_pipl, vocab, prototypes = read_de_sound_act_tms()
     if 'distr-learn' in args.dataset:
-        related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, vocab = read_italian_cereb_tms(lang)
+        related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, vocab = read_it_distr_learn_tms()
     '''
     basic_vocab = men_vocab.union(
                                   simlex_vocab,

@@ -3,10 +3,10 @@ import os
 import pickle
 import random
 
-def read_mitchell(lang):
+def read_mitchell_25dims(lang):
     assert lang == 'en'
     dimensions = list()
-    with open(os.path.join('..', 'data', 'mitchell_dimensions.tsv')) as i:
+    with open(os.path.join('data', 'fmri', 'mitchell', 'mitchell_dimensions.tsv')) as i:
         for l in i:
             line = l.strip().split()
             assert len(line) >= 2

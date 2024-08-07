@@ -5,13 +5,15 @@ from tqdm import tqdm
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
 from meeg_loaders import read_dirani_n400
 from behav_loaders import read_italian_behav, read_german_behav
-from tms_loaders import read_italian_cereb_tms, read_german_pipl_tms, read_german_ifg_tms
+from tms_loaders import read_it_distr_learn_tms, read_de_sound_act_tms, read_de_sem_phon_tms
 from simrel_norms_loaders import read_men, read_simlex, read_ws353
 from psycholing_norms_loaders import load_lancaster_en_de_it
 
-from utf_utils import transform_german_word
-from count_utils import build_ppmi_vecs, read_mitchell, load_count_coocs
+from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs
 from test_utils import check_args, load_dataset, load_static_model, test_model
+
+i = read_fern_categories()
+import pdb; pdb.set_trace()
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

@@ -1,6 +1,8 @@
 import numpy
 import os
 
+from utf_utils import transform_german_word
+
 def load_lancaster_en_de_it():
     print('loading original lancaster ratings...')
     lancaster_ratings = {
@@ -9,41 +11,42 @@ def load_lancaster_en_de_it():
     trans_from_en = dict()
     ### german translation
     print('loading translations of ratings...')
-    for lang in tqdm(['de', 'it']):
+    for lang in ['de', 'it']:
         print(lang)
         lancaster_ratings[lang] = dict()
         trans_from_en[lang] = dict()
-        with tqdm() as counter:
-            with open(os.path.join('data', 'translations', 'lanc_fern_{}_to_en.tsv'.format(lang))) as i:
-                for l in i:
-                    line = l.strip().split('\t')
-                    if lang == 'de':
-                        for w in transform_german_word(line[0].lower()):
-                            ### ratings
-                            try:
-                                lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
-                            except KeyError:
-                                pass
-                            ### translations
-                            try:
-                                trans_from_en['de'][line[1]].add(w)
-                            except KeyError:
-                                trans_from_en['de'][line[1]] = {w}
-                            counter.update(1)
-                    elif lang == 'it':
-                        for w in [line[0].lower(), line[0].capitalize()]:
-                            ### ratings
-                            try:
-                                lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
-                            except KeyError:
-                                print(w)
-                                pass
-                            ### translations
-                            try:
-                                trans_from_en['it'][line[1]].add(w)
-                            except KeyError:
-                                trans_from_en['it'][line[1]] = {w}
-                            counter.update(1)
+        missing_words = list()
+        with open(os.path.join('data', 'translations', 'lanc_fern_{}_to_en.tsv'.format(lang))) as i:
+            for l in i:
+                line = l.strip().split('\t')
+                if lang == 'de':
+                    for w in transform_german_word(line[0].lower()):
+                        ### ratings
+                        try:
+                            lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]
+                        except KeyError:
+                            #print(w)
+                            missing_words.append(line[1])
+                            pass
+                        ### translations
+                        try:
+                            trans_from_en['de'][line[1]].add(w)
+                        except KeyError:
+                            trans_from_en['de'][line[1]] = {w}
+                elif lang == 'it':
+                    for w in [line[0].lower(), line[0].capitalize()]:
+                        ### ratings
+                        try:
+                            lancaster_ratings['it'][w] = lancaster_ratings['en'][line[1]]
+                        except KeyError:
+                            missing_words.append(line[1])
+                            pass
+                        ### translations
+                        try:
+                            trans_from_en['it'][line[1]].add(w)
+                        except KeyError:
+                            trans_from_en['it'][line[1]] = {w}
+        print('missing words from the lancaster norms: {}'.format(set(missing_words)))
     return lancaster_ratings, trans_from_en
 
 def read_lancaster_ratings():
@@ -57,7 +60,6 @@ def read_lancaster_ratings():
                              )
     assert os.path.exists(file_path)
     with open(file_path) as i:
-        counter = 0
         for l_i, l in enumerate(i):
             line = l.strip().split('\t')
             if l_i == 0:
