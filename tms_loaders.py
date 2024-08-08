@@ -38,8 +38,10 @@ def read_de_sem_phon_tms():
     full_sims = dict()
     #for c, name in conditions.items():
     for t in tasks:
+        if t!='sem':
+            continue
         for c in conditions:
-            name = '{}-{}'.format(c, t)
+            name = 'de_sem-phon#{}-{}'.format(t, c)
             #print(name)
             ###One participant was replaced due to an overall mean error rate of 41.8% - sub 3
             #current_cond = [l for l in lines if l[header.index('stim')] in c and int(l[header.index('subj')])!=3]
@@ -260,8 +262,14 @@ def read_it_distr_learn_tms():
     related_full_sims = reorganize_tms_sims(related_sims)
     unrelated_full_sims = reorganize_tms_sims(unrelated_sims)
     all_full_sims = reorganize_tms_sims(all_sims)
+
+    final_sims = {'it_distr-learn-all-trials#{}'.format(k) : v for k, v in all_full_sims.items()}
+    for k, v in related_full_sims.items():
+        final_sims['it_distr-learn-related-trials#{}'.format(k)] = v
+    for k, v in unrelated_full_sims.items():
+        final_sims['it_distr-learn-unrelated-trials#{}'.format(k)] = v
     
-    return related_full_sims, unrelated_full_sims, all_full_sims, test_vocab
+    return final_sims, test_vocab
 
 def reorganize_tms_sims(sims):
     full_sims = dict()

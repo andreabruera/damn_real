@@ -3,8 +3,11 @@ import os
 
 from utf_utils import transform_german_word
 
-def read_fern(lang, trans_from_en):
+def read_fern(args, trans_from_en):
+
+    required_dataset = int(re.sub('\D', '', args.dataset))
     dis_sims = {1 : {'all' : dict()}, 2 : dict()}
+    dis_sims = {'{}_fern{}-all'.format(args.lang, required_dataset) : dis_sims[required_dataset]}
     test_vocab = set()
     for dataset in dis_sims.keys():
         dis_sims[dataset] = {'all' : dict()}
@@ -29,12 +32,12 @@ def read_fern(lang, trans_from_en):
                         if sub not in dis_sims[dataset].keys():
                             dis_sims[dataset][sub] = dict()  
                         dis_sims[dataset][sub][(line[0], line[1])] = 1 - float(sub_val)
-    if lang != 'en':
-        print(lang)
+    if args.lang != 'en':
+        print(args.lang)
         trans_vocab = set()
         for w in test_vocab:
             try:
-                trs_w = trans_from_en[lang][w]
+                trs_w = trans_from_en[args.lang][w]
             except KeyError:
                 print(w)
                 continue
@@ -44,7 +47,8 @@ def read_fern(lang, trans_from_en):
 
     return dis_sims, test_vocab
 
-def read_fern_categories(lang, trans_from_en):
+def read_fern_categories(args, trans_from_en):
+    required_dataset = int(re.sub('\D', '', args.dataset))
     mapper = dict()
     with open(os.path.join(
                            'data', 
@@ -70,7 +74,7 @@ def read_fern_categories(lang, trans_from_en):
             
     dis_sims = dict()
     test_vocab = set()
-    for dataset in [1, 2]:
+    for dataset in [required_dataset]:
         file_path = os.path.join(
                                  'data', 
                                  'fmri', 
@@ -97,7 +101,7 @@ def read_fern_categories(lang, trans_from_en):
                             ]:
                     cat = set([mapper[line[0]][idx], mapper[line[1]][idx]])
                     if len(cat) == 1:
-                        marker = 'fern{}-{}'.format(dataset, list(cat)[0])
+                        marker = '{}_fern{}-{}'.format(args.lang, dataset, list(cat)[0])
                         if marker not in dis_sims.keys():
                             dis_sims[marker] = {'all' : dict()}
                         ### we want dissimilarity
@@ -110,12 +114,12 @@ def read_fern_categories(lang, trans_from_en):
                                 if sub not in dis_sims[dataset].keys():
                                     dis_sims[dataset][sub] = dict()  
                                 dis_sims[marker][sub][(line[0], line[1])] = 1 - float(sub_val)
-    if lang != 'en':
-        print(lang)
+    if args.lang != 'en':
+        print(args.lang)
         trans_vocab = set()
         for w in test_vocab:
             try:
-                trs_w = trans_from_en[lang][w]
+                trs_w = trans_from_en[args.lang][w]
             except KeyError:
                 print(w)
                 continue
@@ -134,7 +138,7 @@ def read_fern_categories(lang, trans_from_en):
     return dis_sims, test_vocab
 
 def read_abstract_ipc():
-    dis_sims = {'ipc' : {'all' : dict()}}
+    dis_sims = {'de_abstract-fmri' : {'all' : dict()}}
     test_vocab = set()
     file_path = os.path.join(
                              'data', 
@@ -151,6 +155,6 @@ def read_abstract_ipc():
             assert len(line[2:]) == 19
             ### the dataset provides already dissimilarities
             dis_sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
-            dis_sims['ipc']['all'][(w_one, w_two)] = dis_sim
+            dis_sims['de_abstract-fmri']['all'][(w_one, w_two)] = dis_sim
 
     return dis_sims, test_vocab

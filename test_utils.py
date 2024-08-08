@@ -431,24 +431,30 @@ def load_dataset(args):
         simlex, vocab = read_simlex(lang)
     if '353' in args.dataset:
         ws353, vocab = read_ws353(lang)
-    if 'fern-all' in args.dataset:
-        fern, vocab = read_fern(lang, trans_from_en)
-    if 'fern-categories' in args.dataset:
-        fern_cats, vocab = read_fern_categories(lang, trans_from_en)
+    if 'fern' in args.dataset:
+        if 'all' in args.dataset:
+            fern, vocab = read_fern(lang, trans_from_en)
+        elif 'categories' in args.dataset:
+            fern_cats, vocab = read_fern_categories(lang, trans_from_en)
     if 'dirani' in args.dataset:
         dirani_n400_words, dirani_n400_pictures, vocab = read_dirani_n400(lang)
+        if 'words' in args.dataset:
+            data = {k : v for k, v in dirani_n400_words.items()}
+        elif 'pictures' in args.dataset:
+            data = {k : v for k, v in dirani_n400_pictures.items()}
     if 'abstract' in args.dataset:
-        de_abstract_ipc, vocab = read_abstract_ipc()
+        data, vocab = read_abstract_ipc()
     if 'de_behav' in args.dataset:
-        de_behav, vocab = read_german_behav()
+        data, vocab = read_german_behav()
     if 'it_behav' in args.dataset:
-        it_behav, vocab = read_italian_behav()
+        data, vocab = read_italian_behav()
     if 'sem-phon' in args.dataset:
-        germ_tms_ifg, vocab = read_de_sem_phon_tms()
+        data, vocab = read_de_sem_phon_tms()
     if 'sound-act' in args.dataset:
-        de_tms_pipl, vocab, prototypes = read_de_sound_act_tms()
+        data, vocab, prototypes = read_de_sound_act_tms()
     if 'distr-learn' in args.dataset:
-        related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, vocab = read_it_distr_learn_tms()
+        #related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, vocab = read_it_distr_learn_tms()
+        data, vocab = read_it_distr_learn_tms()
     '''
     basic_vocab = men_vocab.union(
                                   simlex_vocab,
@@ -625,14 +631,13 @@ def args():
                                 'ws353',
                                 'en_men',
                                 ### fmri
-                                'fern-all',
-                                'fern-categories',
+                                'fern2-all',
+                                'fern1-categories',
                                 'fern1-all',
                                 'fern2-categories',
-                                'de_abstract',
+                                'de_abstract-fmri',
                                 ### meeg
-                                'dirani-words',
-                                'dirani-pictures',
+                                'dirani-n400',
                                 ### behav
                                 'de_behav',
                                 'it_behav',
