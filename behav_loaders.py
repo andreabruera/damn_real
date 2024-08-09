@@ -4,12 +4,12 @@ from utf_utils import transform_german_word
 
 def read_italian_behav():
     ### lexical decition times
-    sims = {'word-naming' : dict()}
+    sims = {'it_word-naming' : {'all' : dict()}}
     test_vocab = set()
     for case in sims.keys(): 
-        sims[case] = dict()
+        short_case = case.replace('it_', '')
         measures = dict()
-        with open(os.path.join('data', 'behavioural', 'LexVar', 'lexvar_{}_it.tsv'.format(case))) as i:
+        with open(os.path.join('data', 'behavioural', 'LexVar', 'lexvar_{}_it.tsv'.format(short_case))) as i:
             for l_i, l in enumerate(i):
                 line = l.replace(',', '.').strip().split('\t')
                 if l_i < 2:
@@ -23,16 +23,17 @@ def read_italian_behav():
                 if k_two_i <= k_one_i:
                     continue
                 key = tuple(sorted([k_one, k_two]))
-                sims[case][key] = abs(measures[k_one]-measures[k_two])
+                sims[case]['all'][key] = abs(measures[k_one]-measures[k_two])
     return sims, test_vocab
 
 def read_german_behav():
     ### lexical decition times
-    sims = {'word-naming' : dict(), 'lexical-decision' : dict()}
+    sims = {'de_word-naming' : {'all' : dict()}, 'de_lexical-decision' : {'all' : dict()}}
     test_vocab = set()
     for case in sims.keys(): 
+        short_case = case.replace('de_', '')
         measures = dict()
-        with open(os.path.join('data', 'behavioural', 'DeveL', 'devel_{}_de.tsv'.format(case))) as i:
+        with open(os.path.join('data', 'behavioural', 'DeveL', 'devel_{}_de.tsv'.format(short_case))) as i:
             for l_i, l in enumerate(i):
                 line = l.replace(',', '.').strip().split('\t')
                 if l_i == 0:
@@ -54,5 +55,5 @@ def read_german_behav():
                 if k_two_i <= k_one_i:
                     continue
                 key = tuple(sorted([k_one, k_two]))
-                sims[case][key] = abs(measures[k_one]-measures[k_two])
+                sims[case]['all'][key] = abs(measures[k_one]-measures[k_two])
     return sims, test_vocab

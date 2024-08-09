@@ -65,6 +65,70 @@ def read_de_sem_phon_tms():
 
     return full_sims, test_vocab
 
+def read_it_distr_learn_tms():
+    lines = list()
+    with open(os.path.join(
+                           'data',
+                           'tms',
+                           'it_distr-learn',
+                           'italian_tms_cereb.tsv')) as i:
+        for l_i, l in enumerate(i):
+            line = l.strip().split('\t')
+            if l_i == 0:
+                header = [w for w in line]
+                continue
+            lines.append(line)
+    conds = set([l[header.index('condition')] for l in lines])
+    all_sims = dict()
+    all_full_sims = dict()
+    related_sims = dict()
+    related_full_sims = dict()
+    unrelated_sims = dict()
+    unrelated_full_sims = dict()
+    test_vocab = set()
+    for name in conds:
+        for m_i, marker in enumerate(['1', '0', 'all']):
+            if m_i < 2:
+                current_cond = [l for l in lines if l[header.index('condition')]==name and l[header.index('Meaningful')]==marker]
+            else:
+                current_cond = [l for l in lines if l[header.index('condition')]==name]
+            log_rts = [numpy.log10(float(l[header.index('RTs')].replace(',', '.'))) for l in current_cond]
+            rts = [float(l[header.index('RTs')].replace(',', '.')) for l in current_cond]
+            subjects = [int(l[header.index('Subject')]) for l in current_cond]
+            w_ones = [l[header.index('noun')].lower() for l in current_cond]
+            w_twos = [l[header.index('adj')].lower() for l in current_cond]
+            vocab_w_ones = [w for ws in w_ones for w in [ws, ws.capitalize()]]
+            test_vocab = test_vocab.union(set(vocab_w_ones))
+            vocab_w_twos = [w for ws in w_twos for w in [ws, ws.capitalize()]]
+            test_vocab = test_vocab.union(set(vocab_w_twos))
+            if m_i == 0:
+                related_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+            elif m_i == 1:
+                unrelated_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+            elif m_i == 2:
+                all_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+    related_full_sims = reorganize_tms_sims(related_sims)
+    unrelated_full_sims = reorganize_tms_sims(unrelated_sims)
+    all_full_sims = reorganize_tms_sims(all_sims)
+
+    final_sims = {'it_distr-learn-all-trials#{}'.format(k) : v for k, v in all_full_sims.items()}
+    for k, v in related_full_sims.items():
+        final_sims['it_distr-learn-related-trials#{}'.format(k)] = v
+    for k, v in unrelated_full_sims.items():
+        final_sims['it_distr-learn-unrelated-trials#{}'.format(k)] = v
+    
+    return final_sims, test_vocab
+
+def reorganize_tms_sims(sims):
+    full_sims = dict()
+    for n, n_data in sims.items():
+        full_sims[n] = dict()
+        for s, ws, rt in n_data:
+            if s not in full_sims[n].keys():
+                full_sims[n][s] = dict()
+            full_sims[n][s][ws] = rt
+    return full_sims
+
 def read_de_sound_act_tms():
     ### first reading ratings
     ratings = dict()
@@ -216,67 +280,3 @@ def read_de_sound_act_tms():
     full_sims = reorganize_tms_sims(sims)
 
     return full_sims, test_vocab, prototypes
-
-def read_it_distr_learn_tms():
-    lines = list()
-    with open(os.path.join(
-                           'data',
-                           'tms',
-                           'it_distr-learn',
-                           'italian_tms_cereb.tsv')) as i:
-        for l_i, l in enumerate(i):
-            line = l.strip().split('\t')
-            if l_i == 0:
-                header = [w for w in line]
-                continue
-            lines.append(line)
-    conds = set([l[header.index('condition')] for l in lines])
-    all_sims = dict()
-    all_full_sims = dict()
-    related_sims = dict()
-    related_full_sims = dict()
-    unrelated_sims = dict()
-    unrelated_full_sims = dict()
-    test_vocab = set()
-    for name in conds:
-        for m_i, marker in enumerate(['1', '0', 'all']):
-            if m_i < 2:
-                current_cond = [l for l in lines if l[header.index('condition')]==name and l[header.index('Meaningful')]==marker]
-            else:
-                current_cond = [l for l in lines if l[header.index('condition')]==name]
-            log_rts = [numpy.log10(float(l[header.index('RTs')].replace(',', '.'))) for l in current_cond]
-            rts = [float(l[header.index('RTs')].replace(',', '.')) for l in current_cond]
-            subjects = [int(l[header.index('Subject')]) for l in current_cond]
-            w_ones = [l[header.index('noun')].lower() for l in current_cond]
-            w_twos = [l[header.index('adj')].lower() for l in current_cond]
-            vocab_w_ones = [w for ws in w_ones for w in [ws, ws.capitalize()]]
-            test_vocab = test_vocab.union(set(vocab_w_ones))
-            vocab_w_twos = [w for ws in w_twos for w in [ws, ws.capitalize()]]
-            test_vocab = test_vocab.union(set(vocab_w_twos))
-            if m_i == 0:
-                related_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-            elif m_i == 1:
-                unrelated_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-            elif m_i == 2:
-                all_sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-    related_full_sims = reorganize_tms_sims(related_sims)
-    unrelated_full_sims = reorganize_tms_sims(unrelated_sims)
-    all_full_sims = reorganize_tms_sims(all_sims)
-
-    final_sims = {'it_distr-learn-all-trials#{}'.format(k) : v for k, v in all_full_sims.items()}
-    for k, v in related_full_sims.items():
-        final_sims['it_distr-learn-related-trials#{}'.format(k)] = v
-    for k, v in unrelated_full_sims.items():
-        final_sims['it_distr-learn-unrelated-trials#{}'.format(k)] = v
-    
-    return final_sims, test_vocab
-
-def reorganize_tms_sims(sims):
-    full_sims = dict()
-    for n, n_data in sims.items():
-        full_sims[n] = dict()
-        for s, ws, rt in n_data:
-            if s not in full_sims[n].keys():
-                full_sims[n][s] = dict()
-            full_sims[n][s][ws] = rt
-    return full_sims

@@ -1,20 +1,13 @@
 from tqdm import tqdm
 
-from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
-from meeg_loaders import read_dirani_n400
-from behav_loaders import read_italian_behav, read_german_behav
-from tms_loaders import read_it_distr_learn_tms, read_de_sound_act_tms, read_de_sem_phon_tms
-from simrel_norms_loaders import read_men, read_simlex, read_ws353
 from psycholing_norms_loaders import load_lancaster_en_de_it
-
-from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs
-from test_utils import args, load_dataset, load_static_model, test_model, test_count_model
+from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs, test_count_model
+from test_utils import args, check_present_words, load_dataset, load_static_model, test_model
 
 args = args()
 lancaster_ratings, trans_from_en = load_lancaster_en_de_it()
 
-rows, datasets = load_dataset(args)
-model, vocab = load_model(args)
+rows, datasets = load_dataset(args, trans_from_en)
 
 ### for static models, we only test once
 static_models = [
@@ -24,19 +17,22 @@ static_models = [
                  ]
 if args.model in static_models:
     model, vocab = load_static_model(args)
+    present_words = check_present_words(args, rows, vocab)
     test_model(
-               args.lang, 
-               args.model, 
+               args, 
+               args.model,
                model, 
                vocab, 
                datasets, 
+               present_words,
                trans_from_en,
                )
 ### for count models, we test with a lot of different possibilities
 else:
     vocab, coocs, freqs = load_count_coocs(args)
     ### keeping row words that are actually available
-    row_words = [w for w in rows[args.lang] if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
+    row_words = [w for w in rows if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
+    present_words = check_present_words(args, row_words, vocab)
     #
     ### mitchell hand-picked dimensions
     #

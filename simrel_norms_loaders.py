@@ -13,7 +13,8 @@ def read_ws353(lang):
     indices = [0, 1, -1]
     sep = ','
     assert os.path.exists(file_path)
-    dis_sims = {'norms' : {'all' : dict()}}
+    case = '{}_ws353'.format(args.lang)
+    dis_sims = {case : {'all' : dict()}}
     test_vocab = set()
     with open(file_path) as i:
         for l_i, l in enumerate(i):
@@ -25,11 +26,11 @@ def read_ws353(lang):
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity
-            dis_sims['norms']['all'][key] = 1 - val
+            dis_sims[case]['all'][key] = 1 - val
     return dis_sims, test_vocab
 
 def read_men():
-    dis_sims = {'norms' : {'all' : dict()}}
+    dis_sims = {'en_men' : {'all' : dict()}}
     test_vocab = set()
     file_path = os.path.join('data', 'simrel_norms', 'men', 'MEN_dataset_natural_form_full')
     assert os.path.exists(file_path)
@@ -43,7 +44,7 @@ def read_men():
             test_vocab = test_vocab.union(norm_key)
             val = float(line[2].replace(',', '.'))
             ### transforming to dissimilarity
-            dis_sims['norms']['all'][key] = 1 - val
+            dis_sims['en_men']['all'][key] = 1 - val
     return dis_sims, test_vocab
 
 def read_simlex(lang):
@@ -61,7 +62,8 @@ def read_simlex(lang):
         indices = [0, 1, 3]
         sep = '\t'
     assert os.path.exists(file_path)
-    dis_sims = {'norms' : {'all' : dict()}}
+    case = '{}_simlex999'.format(args.lang)
+    dis_sims = {case : {'all' : dict()}}
     test_vocab = set()
     with open(file_path) as i:
         for l_i, l in enumerate(i):
@@ -73,5 +75,5 @@ def read_simlex(lang):
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity
-            dis_sims['norms']['all'][key] = 1 - val
+            dis_sims[case]['all'][key] = 1 - val
     return dis_sims, test_vocab
