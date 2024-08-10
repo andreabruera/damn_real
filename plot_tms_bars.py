@@ -23,8 +23,8 @@ results = dict()
 #with open('evaluation.tsv') as i:
 for root, direc, fz in os.walk(
                           os.path.join(
-                              'word_similarity_relatedness', 
-                              'sim-rel_results',
+                              #'word_similarity_relatedness', 
+                              'test_results',
                               )):
 
     for f in fz:

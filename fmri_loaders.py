@@ -1,7 +1,8 @@
 import numpy
 import os
+import re
 
-from utf_utils import transform_german_word
+from utf_utils import transform_basic_word, transform_german_word
 
 def read_fern(args, trans_from_en):
 
@@ -10,20 +11,22 @@ def read_fern(args, trans_from_en):
     dis_sims = {'{}_fern{}-all'.format(args.lang, required_dataset) : dis_sims[required_dataset]}
     test_vocab = set()
     for dataset in dis_sims.keys():
-        dis_sims[dataset] = {'all' : dict()}
+        #dis_sims[dataset] = {'all' : dict()}
         file_path = os.path.join(
                                  'data', 
                                  'fmri', 
                                  'fernandino', 
-                                 'fern{}_semantic_network.tsv'.format(dataset)
+                                 'fern{}_semantic_network.tsv'.format(required_dataset)
                                  )
         with open(file_path) as i:
             for l_i, l in enumerate(i):
                 if l_i == 0:
                     continue
                 line = l.strip().split('\t')
-                test_vocab = test_vocab.union(set([line[0], line[1]]))
-                if dataset == 1:
+                test_vocab = test_vocab.union(set(
+                    transform_basic_word(line[0])+transform_basic_word(line[1])
+                    ))
+                if required_dataset == 1:
                     sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
                     ### we want dissimilarity
                     dis_sims[dataset]['all'][(line[0], line[1])] = 1 - sim
@@ -79,7 +82,7 @@ def read_fern_categories(args, trans_from_en):
                                  'data', 
                                  'fmri', 
                                  'fernandino', 
-                                 'fern{}_semantic_network.tsv'.format(dataset)
+                                 'fern{}_semantic_network.tsv'.format(required_dataset)
                                  )
         with open(file_path) as i:
             for l_i, l in enumerate(i):
@@ -92,7 +95,9 @@ def read_fern_categories(args, trans_from_en):
                 if line[1] not in mapper.keys():
                     print(line[1])
                     continue
-                test_vocab = test_vocab.union(set([line[0], line[1]]))
+                test_vocab = test_vocab.union(set(
+                    transform_basic_word(line[0])+transform_basic_word(line[1])
+                    ))
                 ### abstract/concrete: idx 0
                 ### finer grained categories: idx 1
                 for idx in [
@@ -101,18 +106,18 @@ def read_fern_categories(args, trans_from_en):
                             ]:
                     cat = set([mapper[line[0]][idx], mapper[line[1]][idx]])
                     if len(cat) == 1:
-                        marker = '{}_fern{}-{}'.format(args.lang, dataset, list(cat)[0])
+                        marker = '{}_fern{}-{}'.format(args.lang, required_dataset, list(cat)[0])
                         if marker not in dis_sims.keys():
                             dis_sims[marker] = {'all' : dict()}
                         ### we want dissimilarity
-                        if dataset == 1:
+                        if required_dataset == 1:
                             sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
                             ### we want dissimilarity
                             dis_sims[marker]['all'][(line[0], line[1])] = 1 - sim
                         else:
                             for sub, sub_val in enumerate(line[2:]):
-                                if sub not in dis_sims[dataset].keys():
-                                    dis_sims[dataset][sub] = dict()  
+                                if sub not in dis_sims[marker].keys():
+                                    dis_sims[marker][sub] = dict()  
                                 dis_sims[marker][sub][(line[0], line[1])] = 1 - float(sub_val)
     if args.lang != 'en':
         print(args.lang)

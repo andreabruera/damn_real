@@ -15,6 +15,7 @@ from meeg_loaders import read_dirani_n400
 from behav_loaders import read_italian_behav, read_german_behav
 from tms_loaders import read_it_distr_learn_tms, read_de_sound_act_tms, read_de_sem_phon_tms
 from simrel_norms_loaders import read_men, read_simlex, read_ws353
+from utf_utils import transform_german_word
 
 def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en, ):
     #print('checking if words appear in the dictionary...')
@@ -235,8 +236,8 @@ def write_res(args, case, dataset_name, corr):
 def check_present_words(args, rows, vocab):
     present_words = list()
     for w in rows:
-        ### for fasttext we only use uppercase!
-        if w[0].isupper() == False and args.model=='fasttext':
+        ### for fasttext in german we only use uppercase!
+        if w[0].isupper() == False and args.model=='fasttext' and args.lang=='de':
             continue
         try:
             vocab.index(w)
@@ -374,13 +375,22 @@ def bootstrapper(args, full_data, residualize=False):
     ### sizes b and then looking for a region where the intervals do not change
     ### see figure in page 191
     ### we do not estimate it, but use values used in their simulation (page 208)
-    proportions = [
-                   4/256,
-                   8/256,
-                   16/256,
-                   32/256,
-                   64/256,
-                   ]
+    if 'behav' in args.dataset:
+        proportions = [
+                       4/256,
+                       8/256,
+                       16/256,
+                       32/256,
+                       64/256,
+                       ]
+    else:
+        ### Riccardo De Bin, Silke Janitza, Willi Sauerbrei, Anne-Laure Boulesteix, 
+        ### Subsampling Versus Bootstrapping in Resampling-Based Model Selection for 
+        ### Multivariable Regression, Biometrics, Volume 72, Issue 1, 
+        ### March 2016, Pages 272–280
+        proportions = [
+                0.632
+                ]
     ### labels
     labels = list(full_data.keys())
     ### subjects
@@ -435,16 +445,16 @@ def load_dataset(args, trans_from_en):
     if args.dataset == 'en_men':
         data, vocab = read_men()
     if '999' in args.dataset:
-        data, vocab = read_simlex(lang)
+        data, vocab = read_simlex(args)
     if '353' in args.dataset:
-        data, vocab = read_ws353(lang)
+        data, vocab = read_ws353(args)
     if 'fern' in args.dataset:
         if 'all' in args.dataset:
-            data, vocab = read_fern(lang, trans_from_en)
+            data, vocab = read_fern(args, trans_from_en)
         elif 'categories' in args.dataset:
-            data, vocab = read_fern_categories(lang, trans_from_en)
+            data, vocab = read_fern_categories(args, trans_from_en)
     if 'dirani' in args.dataset:
-        data, vocab = read_dirani_n400(lang)
+        data, vocab = read_dirani_n400(args)
     if 'abstract' in args.dataset:
         data, vocab = read_abstract_ipc()
     if 'de_behav' in args.dataset:
@@ -601,7 +611,7 @@ def args():
                         '--dataset',
                         choices=[
                                 ### sim-lex norms
-                                'simlex999-sim',
+                                'simlex999',
                                 'ws353',
                                 'en_men',
                                 ### fmri

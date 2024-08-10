@@ -2,13 +2,13 @@ import os
 
 from utf_utils import transform_german_word
 
-def read_ws353(lang):
+def read_ws353(args):
     base_folder = os.path.join('data', 'simrel_norms', 'ws353')
-    if lang == 'de':
+    if args.lang == 'de':
         file_path = os.path.join(base_folder, 'MWS353_German.txt')
-    if lang == 'it':
+    if args.lang == 'it':
         file_path = os.path.join(base_folder, 'MWS353_Italian.txt')
-    if lang == 'en':
+    if args.lang == 'en':
         file_path = os.path.join(base_folder, 'MWS353_English.txt')
     indices = [0, 1, -1]
     sep = ','
@@ -22,7 +22,12 @@ def read_ws353(lang):
                 continue
             line = l.lower().strip().split(sep)
             key = tuple(sorted([line[indices[0]], line[indices[1]]]))
-            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            if args.lang == 'de':
+                norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            else:
+                norm_key = set(
+                    [transform_basic_word(w) for w in key]
+                    )
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity
@@ -40,24 +45,27 @@ def read_men():
                 continue
             line = l.lower().strip().split()
             key = tuple(sorted([line[0], line[1]]))
-            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            #norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            norm_key = set(
+                [transform_basic_word(w) for w in key]
+                )
             test_vocab = test_vocab.union(norm_key)
             val = float(line[2].replace(',', '.'))
             ### transforming to dissimilarity
             dis_sims['en_men']['all'][key] = 1 - val
     return dis_sims, test_vocab
 
-def read_simlex(lang):
+def read_simlex(args):
     base_folder = os.path.join('data', 'simrel_norms', 'simlex999')
-    if lang == 'de':
+    if args.lang == 'de':
         file_path = os.path.join(base_folder, 'MSimLex999_German.txt')
         indices = [0, 1, -1]
         sep = ','
-    if lang == 'it':
+    if args.lang == 'it':
         file_path = os.path.join(base_folder, 'MSimLex999_Italian.txt')
         indices = [0, 1, -1]
         sep = ','
-    if lang == 'en':
+    if args.lang == 'en':
         file_path = os.path.join(base_folder, 'SimLex-999.txt')
         indices = [0, 1, 3]
         sep = '\t'
@@ -71,7 +79,13 @@ def read_simlex(lang):
                 continue
             line = l.lower().strip().split(sep)
             key = tuple(sorted([line[indices[0]], line[indices[1]]]))
-            norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            #norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            if args.lang == 'de':
+                norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
+            else:
+                norm_key = set(
+                            [transform_basic_word(w) for w in key]
+                            )
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity

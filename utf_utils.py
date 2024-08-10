@@ -1,5 +1,9 @@
 import re
 
+def transform_basic_word(word):
+    versions = [word.lower(), word.capitalize()]
+    return versions
+
 def transform_german_word(word, lowercase=True):
     word = word.lower()
     word = re.sub('^ein\s|^eine\s|^der\s|^das\s|^die\s|^ne\s|^dann\s', '', word)

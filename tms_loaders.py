@@ -35,17 +35,18 @@ def read_de_sem_phon_tms():
     ###
     conditions = set([l[header.index('stim')] for l in lines])
     tasks = set([l[header.index('task')] for l in lines])
+    #print(tasks)
     full_sims = dict()
     #for c, name in conditions.items():
     for t in tasks:
-        if t!='sem':
+        if 'sem' not in t:
             continue
         for c in conditions:
             name = 'de_sem-phon#{}-{}'.format(t, c)
             #print(name)
             ###One participant was replaced due to an overall mean error rate of 41.8% - sub 3
             #current_cond = [l for l in lines if l[header.index('stim')] in c and int(l[header.index('subj')])!=3]
-            current_cond = [l for l in lines if l[header.index('stim')] in name and l[header.index('task')] in name and int(l[header.index('subj')])!=3]
+            current_cond = [l for l in lines if l[header.index('stim')] in name and l[header.index('task')] in t and int(l[header.index('subj')])!=3]
                     #and l[header.index('utterance')]!='NA']
             tasks = [l[header.index('task')] for l in current_cond]
             assert len(set(tasks)) == 1
