@@ -6,8 +6,10 @@ import os
 import pickle
 import random
 import scipy
+import sklearn
 
 from scipy import spatial
+from sklearn import linear_model
 from tqdm import tqdm
 
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
@@ -274,10 +276,14 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
         datasets = {k : [v] for k, v in datasets.items()}
     for dataset_name, dataset in datasets.items():
         if args.bootstrap:
-            if '#' in dataset_name:
-                dataset_name = dataset_name.replace('#', '-bootstrap#')
+            if args.residualize:
+                mark = '-bootstrap-residual'
             else:
-                dataset_name = '{}-bootstrap'.format(dataset_name)
+                mark = '-bootstrap'
+            if '#' in dataset_name:
+                dataset_name = dataset_name.replace('#', '{}#'.format(mark))
+            else:
+                dataset_name = '{}{}'.format(dataset_name, mark)
         assert type(dataset) == list
         assert len(dataset) in [1, 1000]
         corr = list()
@@ -375,22 +381,28 @@ def bootstrapper(args, full_data, residualize=False):
     ### sizes b and then looking for a region where the intervals do not change
     ### see figure in page 191
     ### we do not estimate it, but use values used in their simulation (page 208)
-    if 'behav' in args.dataset:
+    if residualize:
         proportions = [
-                       4/256,
-                       8/256,
-                       16/256,
-                       32/256,
-                       64/256,
+                       0.5
                        ]
     else:
-        ### Riccardo De Bin, Silke Janitza, Willi Sauerbrei, Anne-Laure Boulesteix, 
-        ### Subsampling Versus Bootstrapping in Resampling-Based Model Selection for 
-        ### Multivariable Regression, Biometrics, Volume 72, Issue 1, 
-        ### March 2016, Pages 272–280
-        proportions = [
-                0.632
-                ]
+        if 'behav' in args.dataset:
+            proportions = [
+                           4/256,
+                           8/256,
+                           16/256,
+                           32/256,
+                           64/256,
+                           ]
+        else:
+            ### Riccardo De Bin, Silke Janitza, Willi Sauerbrei, Anne-Laure Boulesteix, 
+            ### Subsampling Versus Bootstrapping in Resampling-Based Model Selection for 
+            ### Multivariable Regression, Biometrics, Volume 72, Issue 1, 
+            ### March 2016, Pages 272–280
+            proportions = [
+                    #0.632
+                    0.5
+                    ]
     ### labels
     labels = list(full_data.keys())
     ### subjects
@@ -404,6 +416,8 @@ def bootstrapper(args, full_data, residualize=False):
     n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
     ### here we create 1000
     boot_data = {l : list() for l in labels}
+    if residualize:
+        print('residualizing...')
     for _ in range(1000):
         iter_subs = random.sample(subjects, k=n_iter_sub)
         iter_data_keys = {l : 
@@ -417,16 +431,19 @@ def bootstrapper(args, full_data, residualize=False):
         ### residualization
         if residualize:
             struct_train_data = {l : {s : {k : full_data[l][s][k] for k in full_data[l][s].keys() if k not in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
-            flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_data in l_res.items() for k, rt in s_res.items()]
-            flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_data in l_res.items() for k, rt in s_res.items()]
+            flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_res in l_res.items() for k, rt in s_res.items()]
+            flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_res in l_res.items() for k, rt in s_res.items()]
             model = sklearn.linear_model.LinearRegression()
+            ### we remove tms/sham -> t[0] per subject -> t[1]
             model.fit(
-                      [[t[0],] for t in flat_train_data],
+                      [[labels.index(t[0]), t[1]] for t in flat_train_data],
                       [[t[2]] for t in flat_train_data],
                       )
             preds = model.predict(
-                                  [[t[0],] for t in flat_test_data]
+                                  [[labels.index(t[0]),t[1]] for t in flat_test_data]
                                   )
+            #print(preds)
+            #print([t[3] for t in flat_test_data])
             residuals = [(real[0], real[1], real[2], real[3]-pred[0]) for real, pred in zip(flat_test_data, preds)]
             for l, s, k, r in residuals:
                 iter_data[l][s][k] = r
