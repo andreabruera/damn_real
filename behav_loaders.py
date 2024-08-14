@@ -2,12 +2,12 @@ import os
 
 from utf_utils import transform_german_word
 
-def read_italian_behav():
+def read_italian_behav(args):
     ### lexical decition times
-    sims = {'it_word-naming' : {'all' : dict()}}
+    sims = {'it_word-naming_{}'.format(args.stat_approach) : {'all' : dict()}}
     test_vocab = set()
     for case in sims.keys(): 
-        short_case = case.replace('it_', '')
+        short_case = case.split('_')[1]
         measures = dict()
         with open(os.path.join('data', 'behavioural', 'LexVar', 'lexvar_{}_it.tsv'.format(short_case))) as i:
             for l_i, l in enumerate(i):
@@ -26,12 +26,12 @@ def read_italian_behav():
                 sims[case]['all'][key] = abs(measures[k_one]-measures[k_two])
     return sims, test_vocab
 
-def read_german_behav():
+def read_german_behav(args):
     ### lexical decition times
-    sims = {'de_word-naming' : {'all' : dict()}, 'de_lexical-decision' : {'all' : dict()}}
+    sims = {'de_word-naming_{}'.format(stat_approach) : {'all' : dict()}, 'de_lexical-decision_{}'.format(stat_approach) : {'all' : dict()}}
     test_vocab = set()
     for case in sims.keys(): 
-        short_case = case.replace('de_', '')
+        short_case = case.split('_')[1]
         measures = dict()
         with open(os.path.join('data', 'behavioural', 'DeveL', 'devel_{}_de.tsv'.format(short_case))) as i:
             for l_i, l in enumerate(i):

@@ -23,28 +23,34 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
     #print('checking if words appear in the dictionary...')
     missing_words = set()
     test_sims = list()
-    #if prototyping:
-    #    dataset = [((w, w), 0)  for w in dataset] 
     if type(dataset) != list:
         dataset = [(k, v) for k, v in dataset.items()]
     for ws, val in dataset:
+        ### prototypes
+        if type(ws[0]) != tuple:
+            first_word = set([ws[0]])
+        else:
+            for w in ws[0]:
+                assert type(w) == str
+            first_word = ws[0]
         marker = True
         w_ones = list()
         w_twos = list()
         if 'fern' in dataset_name and args.lang in ['de', 'it']:
             ### word one
-            try:
-                candidates = trans_from_en[args.lang][ws[0]]
-                for c in candidates:
-                    try:
-                        present_words.index(c)
-                        w_ones.append(c)
-                    except ValueError:
-                        #print(c)
-                        pass
-            except KeyError:
-                #print(ws[0])
-                pass
+            for word in first_word:
+                try:
+                    candidates = trans_from_en[args.lang][word]
+                    for c in candidates:
+                        try:
+                            present_words.index(c)
+                            w_ones.append(c)
+                        except ValueError:
+                            #print(c)
+                            pass
+                except KeyError:
+                    #print(ws[0])
+                    pass
             ### word two 
             try:
                 candidates = trans_from_en[args.lang][ws[1]]
@@ -60,12 +66,14 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                 pass
         else:
             if args.lang == 'de':
-                for w in transform_german_word(ws[0]):
-                    try:
-                        present_words.index(w)
-                    except ValueError:
-                        continue
-                    w_ones.append(w)
+                for word in first_word:
+                    #print(word)
+                    for w in transform_german_word(word):
+                        try:
+                            present_words.index(w)
+                        except ValueError:
+                            continue
+                        w_ones.append(w)
                 for w in transform_german_word(ws[1]):
                     try:
                         present_words.index(w)
@@ -73,12 +81,13 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                         continue
                     w_twos.append(w)
             else:
-                for w in [ws[0].lower(), ws[0].capitalize()]:
-                    try:
-                        present_words.index(w)
-                    except ValueError:
-                        continue
-                    w_ones.append(w)
+                for word in first_word:
+                    for w in [word.lower(), word.capitalize()]:
+                        try:
+                            present_words.index(w)
+                        except ValueError:
+                            continue
+                        w_ones.append(w)
                 for w in [ws[1].lower(), ws[1].capitalize()]:
                     try:
                         present_words.index(w)
@@ -86,7 +95,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                         continue
                     w_twos.append(w)
         if len(w_ones)<1:
-            missing_words.add(ws[0])
+            missing_words = missing_words.union(first_word)
         if len(w_twos)<1:
             missing_words.add(ws[1])
         if len(w_ones)<1 or len(w_twos)<1:
@@ -249,54 +258,30 @@ def check_present_words(args, rows, vocab):
     return present_words
 
 def test_model(args, case, model, vocab, datasets, present_words, trans_from_en):
-    '''
-    for dataset_name, dataset_proto in datasets.items():
-        dataset = dataset_proto[0]
-        prototypes = dataset_proto[1]
-        if len(prototypes.keys())>0:
-            proto_sims = dict()
-            for k, v in prototypes.items():
-                ws, _ = check_dataset_words(dataset_name, v, present_words, trans_from_en, prototyping=True)
-                proto_sims[k] = set([w for _ in ws for w in _[0]])
-            del prototypes
-            prototypes = dict()
-            for k, v in proto_sims.items():
-                print(k)
-                print(v)
-                assert len(v) > 0
-                current_vecs = list()
-                for w in v:
-                    current_vecs.append(model[w])
-                current_vec = numpy.average(current_vecs, axis=0)
-                prototypes[k] = current_vec
-    '''
-    if args.bootstrap:
-        datasets = bootstrapper(args, datasets, residualize=args.residualize)
+    if args.stat_approach != 'simple':
+        datasets = bootstrapper(args, datasets, )
     else:
         datasets = {k : [v] for k, v in datasets.items()}
     for dataset_name, dataset in datasets.items():
-        if args.bootstrap:
-            if args.residualize:
-                mark = '-bootstrap-residual'
-            else:
-                mark = '-bootstrap'
-            if '#' in dataset_name:
-                dataset_name = dataset_name.replace('#', '{}#'.format(mark))
-            else:
-                dataset_name = '{}{}'.format(dataset_name, mark)
         assert type(dataset) == list
         assert len(dataset) in [1, 1000]
         corr = list()
         missing_words = set()
         ### bootstrapping/iterations should be hard-coded now...
         for iter_dataset in tqdm(dataset):
+            iter_corrs = list()
             for s, s_data in iter_dataset.items():
                 curr_corr, new_miss = compute_corr(args, model, s_data, dataset_name, present_words, trans_from_en)
                 missing_words = missing_words.union(new_miss)
                 if corr == None:
                     print('error with {}'.format([args.lang, case, dataset_name]))
                     continue
-                corr.append(curr_corr)
+                iter_corrs.append(curr_corr)
+            if args.stat_approach == 'simple':
+                corr.extend(iter_corrs)
+            else:
+                iter_corr = numpy.average(iter_corrs)
+                corr.append(iter_corr)
 
         print('\n')
         print('{} model'.format(case))
@@ -306,67 +291,8 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
             print('missing words: {}'.format(missing_words))
         write_res(args, case, dataset_name, corr)
         #return results
-        '''
-        if 'tms' not in dataset_name:
-            if 'behav' not in dataset_name and dataset_name[:2] not in ['1-', '2-']:
-                corr, missing_words = compute_corr(dataset, dataset_name, present_words, prototypes, trans_from_en)
-                if corr == None:
-                    print('error with {}'.format([lang, case, dataset_name]))
-                    continue
-                corr = [corr]
-            else:
-                corr = list()
-                all_dataset = [(k, v) for k, v in dataset.items()]
-                for _ in tqdm(range(1000)):
-                    ### bootstrap with subsampling
-                    missing_words = set()
-                    k = 100
-                    chosen_items = random.sample(range(len(all_dataset)), k=k)
-                    curr_data = [all_dataset[i] for i in chosen_items]
-                    curr_corr, new_miss = compute_corr(curr_data, dataset_name, present_words, prototypes, trans_from_en,)
-                    missing_words = missing_words.union(new_miss)
-                    if curr_corr == None:
-                        print('error with {} - subject {}'.format([lang, case, dataset_name, _]))
-                    else:
-                        corr.append(curr_corr)
-                    #printing += 1
-        else:
-            corr = list()
-            printing = 0
-            if 'bootstrap' not in dataset_name:
-                for s, s_data in dataset.items():
-                    missing_words = set()
-                    curr_corr, new_miss = compute_corr(s_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
-                    missing_words = missing_words.union(new_miss)
-                    if curr_corr == None:
-                        print('error with {} - subject {}'.format([lang, case, dataset_name, s]))
-                    else:
-                        corr.append(curr_corr)
-                    printing += 1
-            ### bootstrapping 1000 data splits
-            else:
-                for _ in tqdm(range(1000)):
-                    ### hierarchical bootstrap with subsampling
-                    chosen_subs = random.sample(list(dataset.keys()), k=int(len(dataset.keys())/4))
-                    #all_data = [(k, v) for sub in chosen_subs for k, v in dataset[sub].items()]
-                    #curr_data = random.choices(all_data, k=int(len(all_data)/10))
-                    missing_words = set()
-                    curr_data = list()
-                    for sub in chosen_subs:
-                        possibilities = [(k, v) for k, v in dataset[sub].items()]
-                        chosen_items = random.sample(range(len(possibilities)), k=len(possibilities))
-                        curr_data.extend([possibilities[i] for i in chosen_items])
-                    curr_corr, new_miss = compute_corr(curr_data, dataset_name, present_words, prototypes, trans_from_en, printing=printing)
-                    missing_words = missing_words.union(new_miss)
-                    if curr_corr == None:
-                        print('error with {} - subject {}'.format([lang, case, dataset_name, _]))
-                    else:
-                        corr.append(curr_corr)
-                    printing += 1
-            #corr = numpy.nanmean(corrs)
-        '''
 
-def bootstrapper(args, full_data, residualize=False):
+def bootstrapper(args, full_data, ):
     ### bootstrapping with b=block_size of the original data
     ### Politis et al 1999, Bootstrapping page 198 "Indeed, for b too close to n 
     ### all subsample statistics (On,b,i or On,b,t) will be almost equal to On, 
@@ -381,7 +307,7 @@ def bootstrapper(args, full_data, residualize=False):
     ### sizes b and then looking for a region where the intervals do not change
     ### see figure in page 191
     ### we do not estimate it, but use values used in their simulation (page 208)
-    if residualize:
+    if args.stat_approach == 'residualize':
         proportions = [
                        0.5
                        ]
@@ -400,8 +326,8 @@ def bootstrapper(args, full_data, residualize=False):
             ### Multivariable Regression, Biometrics, Volume 72, Issue 1, 
             ### March 2016, Pages 272–280
             proportions = [
-                    #0.632
-                    0.5
+                    0.632
+                    #0.5
                     ]
     ### labels
     labels = list(full_data.keys())
@@ -413,23 +339,41 @@ def bootstrapper(args, full_data, residualize=False):
     n_subjects = list(n_subjects)[0]
     subjects = list(set([val for v in all_subjects for val in v]))
     assert len(subjects) == n_subjects
-    n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
+    ### for tms we fix n=20
+    tms_datasets = [
+                   'it_distr-learn',
+                   'de_sem-phon', 
+                   'de_sound-act_'
+                   ]
+    if args.dataset not in tms_datasets:
+        n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
+    else:
+        n_iter_sub = 20
     ### here we create 1000
     boot_data = {l : list() for l in labels}
-    if residualize:
+    if args.stat_approach == 'residualize':
         print('residualizing...')
     for _ in range(1000):
         iter_subs = random.sample(subjects, k=n_iter_sub)
-        iter_data_keys = {l : 
+        ### for tms we fix n=20
+        if args.dataset not in tms_datasets:
+            iter_data_keys = {l : 
                                {s : random.sample(
                                                  full_data[l][s].keys(), 
                                                  k=int(len(full_data[l][s].keys())*random.choice(proportions))
                                                  #k=100,
                                                  ) for s in iter_subs}
                                                  for l in labels}
+        else:
+            iter_data_keys = {l : 
+                               {s : random.sample(
+                                                 full_data[l][s].keys(), 
+                                                 k=20,
+                                                 ) for s in iter_subs}
+                                                 for l in labels}
         iter_data = {l : {s : {k : full_data[l][s][k] for k in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
         ### residualization
-        if residualize:
+        if args.stat_approach == 'residualize':
             struct_train_data = {l : {s : {k : full_data[l][s][k] for k in full_data[l][s].keys() if k not in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
             flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_res in l_res.items() for k, rt in s_res.items()]
             flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_res in l_res.items() for k, rt in s_res.items()]
@@ -460,7 +404,7 @@ def check_args(args):
 
 def load_dataset(args, trans_from_en):
     if args.dataset == 'en_men':
-        data, vocab = read_men()
+        data, vocab = read_men(args)
     if '999' in args.dataset:
         data, vocab = read_simlex(args)
     if '353' in args.dataset:
@@ -473,91 +417,18 @@ def load_dataset(args, trans_from_en):
     if 'dirani' in args.dataset:
         data, vocab = read_dirani_n400(args)
     if 'abstract' in args.dataset:
-        data, vocab = read_abstract_ipc()
+        data, vocab = read_abstract_ipc(args)
     if 'de_behav' in args.dataset:
-        data, vocab = read_german_behav()
+        data, vocab = read_german_behav(args)
     if 'it_behav' in args.dataset:
-        data, vocab = read_italian_behav()
+        data, vocab = read_italian_behav(args)
     if 'sem-phon' in args.dataset:
-        data, vocab = read_de_sem_phon_tms()
+        data, vocab = read_de_sem_phon_tms(args)
     if 'sound-act' in args.dataset:
-        raise RuntimeError('this still has to be implemented!')
-        data, vocab, prototypes = read_de_sound_act_tms()
+        data, vocab, prototypes = read_de_sound_act_tms(args)
     if 'distr-learn' in args.dataset:
-        #related_ita_tms_cereb, unrelated_ita_tms_cereb, all_ita_tms_cereb, vocab = read_it_distr_learn_tms()
-        data, vocab = read_it_distr_learn_tms()
+        data, vocab = read_it_distr_learn_tms(args)
     return vocab, data
-    '''
-                    ## german TMS
-                    #('de_sem-phon_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
-                    #('de_sem-phon_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
-                    #('de_sem-phon_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
-                    #('de_sem-phon-bootstrap_tms_vertex', germ_tms_ifg['vertex-sem'], {}),
-                    #('de_sem-phon-bootstrap_tms_pIFG', germ_tms_ifg['pIFG-sem'], {}),
-                    #('de_sem-phon-bootstrap_tms_aIFG', germ_tms_ifg['aIFG-sem'], {}),
-                    ### italian naming times
-                    #('it_behav-word-naming', it_behav['word-naming'], {}),
-                    ## italian TMS
-                    #('it_distr-learn_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
-                    #('it_distr-learn_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
-                    #('it_distr-learn_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
-                    #('it_distr-learn-bootstrap_all_tms_cereb', all_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn-bootstrap_all_tms_vertex', all_ita_tms_cereb['cz'], {}),
-                    #('it_distr-learn-bootstrap_related_tms_cereb', related_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn-bootstrap_related_tms_vertex', related_ita_tms_cereb['cz'], {}),
-                    #('it_distr-learn-bootstrap_unrelated_tms_cereb', unrelated_ita_tms_cereb['cedx'], {}),
-                    #('it_distr-learn-bootstrap_unrelated_tms_vertex', unrelated_ita_tms_cereb['cz'], {}),
-                    ]:
-        datasets[lang][dataset_name] = (dataset, proto)
-    ### fern categories
-    #for dataset_name, dataset in fern_cats.items():
-    #    datasets[lang][dataset_name] = (dataset, {})
-    for dataset_name, dataset, proto in [
-            #('de_sound-act-bootstrap_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-            #('de_sound-act-bootstrap_tms_all-sham', de_tms_pipl['sham'], prototypes),
-            #('de_sound-act_tms_all-pIPL', de_tms_pipl['pIPL'], prototypes),
-            #('de_sound-act_tms_all-sham', de_tms_pipl['sham'], prototypes),
-            #('de_sound-act-bootstrap_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-            #('de_sound-act-bootstrap_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-            #('de_sound-act_tms_soundtask-sham', de_tms_pipl['Geraeusch_sham'], prototypes),
-            #('de_sound-act_tms_actiontask-sham', de_tms_pipl['Handlung_sham'], prototypes),
-            #('de_sound-act-bootstrap_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-            #('de_sound-act-bootstrap_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
-            #('de_sound-act_tms_soundtask-pIPL', de_tms_pipl['Geraeusch_pIPL'], prototypes),
-            #('de_sound-act_tms_actiontask-pIPL', de_tms_pipl['Handlung_pIPL'], prototypes),
-            ]:
-            ### possibilities in task-modelling:
-            # centroid overall (all)
-            # both positive (both_pos)
-            # both negative (both_neg)wac_lancaster_freq_hi-perceptual__10000.0'
-            # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
-            # matched non-exclusive (action_pos, sound_pos)
-            for poss in [
-                         #'all', 
-                         #'both_pos',
-                         #'both_pos-topten',
-                         #'both_pos-topfifty',
-                         #'both_neg',
-                         #'matched_excl',
-                         #'matched_excl-topten',
-                         #'matched_excl-topfifty',
-                         #'matched_non_excl',
-                         #'matched_non_excl-topten',
-                         #'matched_non_excl-topfifty',
-                         #'opposite_excl',
-                         #'opposite_excl-topten',
-                         #'opposite_excl-topfifty',
-                         #'opposite_non_excl',
-                         #'opposite_non_excl-topten',
-                         #'opposite_non_excl-topfifty',
-                         ]:
-                curr_dataset_name = '{}#{}'.format(dataset_name, poss)
-                datasets[lang][curr_dataset_name] = (dataset, proto)
-    '''
-
 
 def load_static_model(args):
     print('loading {}'.format(args.model))
@@ -650,12 +521,8 @@ def args():
                         required=True,
                         )
     parser.add_argument(
-                        '--bootstrap',
-                        action='store_true',
-                        )
-    parser.add_argument(
-                        '--residualize',
-                        action='store_true',
+                        '--stat_approach',
+                        choices=['simple', 'bootstrap', 'residualize'],
                         )
     #senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
     args = parser.parse_args()

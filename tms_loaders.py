@@ -3,7 +3,7 @@ import os
 
 from utf_utils import transform_german_word
 
-def read_de_sem_phon_tms():
+def read_de_sem_phon_tms(args):
     sims = dict()
     test_vocab = set()
     lines = list()
@@ -42,7 +42,7 @@ def read_de_sem_phon_tms():
         if 'sem' not in t:
             continue
         for c in conditions:
-            name = 'de_sem-phon#{}-{}'.format(t, c)
+            name = 'de_sem-phon_{}#{}-{}'.format(args.stat_approach, t, c)
             #print(name)
             ###One participant was replaced due to an overall mean error rate of 41.8% - sub 3
             #current_cond = [l for l in lines if l[header.index('stim')] in c and int(l[header.index('subj')])!=3]
@@ -63,10 +63,11 @@ def read_de_sem_phon_tms():
             w_twos = [l[header.index('item')].split('.')[0] for l in current_cond]
             sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     full_sims = reorganize_tms_sims(sims)
+    collect_info(full_sims)
 
     return full_sims, test_vocab
 
-def read_it_distr_learn_tms():
+def read_it_distr_learn_tms(args):
     lines = list()
     with open(os.path.join(
                            'data',
@@ -112,11 +113,12 @@ def read_it_distr_learn_tms():
     unrelated_full_sims = reorganize_tms_sims(unrelated_sims)
     all_full_sims = reorganize_tms_sims(all_sims)
 
-    final_sims = {'it_distr-learn-all-trials#{}'.format(k) : v for k, v in all_full_sims.items()}
+    final_sims = {'it_distr-learn_{}#all-trials_{}'.format(args.stat_approach, k) : v for k, v in all_full_sims.items()}
     for k, v in related_full_sims.items():
-        final_sims['it_distr-learn-related-trials#{}'.format(k)] = v
+        final_sims['it_distr-learn_{}#related-trials_{}'.format(args.stat_approach, k)] = v
     for k, v in unrelated_full_sims.items():
-        final_sims['it_distr-learn-unrelated-trials#{}'.format(k)] = v
+        final_sims['it_distr-learn_{}#unrelated-trials_{}'.format(args.stat_approach, k)] = v
+    collect_info(final_sims)
     
     return final_sims, test_vocab
 
@@ -130,7 +132,7 @@ def reorganize_tms_sims(sims):
             full_sims[n][s][ws] = rt
     return full_sims
 
-def read_de_sound_act_tms():
+def read_phil_ratings():
     ### first reading ratings
     ratings = dict()
     with open(os.path.join(
@@ -159,10 +161,9 @@ def read_de_sound_act_tms():
             if len(ratings[line[0]].keys()) == 0:
                 print(line[0])
                 del ratings[line[0]]
-    ### topten
-    sims = dict()
-    test_vocab = set()
-    lines = list()
+    return ratings
+
+def read_soundact_prototypes(ratings):
     ### possibilities in task-modelling:
     # centroid overall (all)
     # both positive (both_pos)
@@ -170,15 +171,14 @@ def read_de_sound_act_tms():
     # matched exclusive (action_pos_sound_neg, sound_pos_action_neg)
     # matched non-exclusive (action_pos, sound_pos)
     prototypes = {
-                  'action_pos' : list(), 
-                  'sound_pos' : list(),
-                  'action_neg' : list(),
-                  'sound_neg' : list(), 
-                  'all' : list(),
-                  'both_pos' : list(),
-                  'both_neg' : list(),
-                  'action_pos_sound_neg' : list(), 
-                  'sound_pos_action_neg' : list(),
+                  'action_pos-all' : list(), 
+                  'sound_pos-all' : list(),
+                  'action_neg-all' : list(),
+                  'sound_neg-all' : list(), 
+                  'all-pos-all' : list(),
+                  'all-neg-all' : list(),
+                  'action_pos_sound_neg-all' : list(), 
+                  'sound_pos_action_neg-all' : list(),
                   }
     with open(os.path.join(
                            'data', 
@@ -198,36 +198,35 @@ def read_de_sound_act_tms():
                     missing.append(w)
             assert len(missing) == 0
             if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '-1':
-                prototypes['action_pos_sound_neg'].append(line[header.index('stimulus')])
+                prototypes['action_pos_sound_neg-all'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
-                prototypes['sound_pos_action_neg'].append(line[header.index('stimulus')])
+                prototypes['sound_pos_action_neg-all'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '1' and line[header.index('sound_word')] == '1':
-                prototypes['both_pos'].append(line[header.index('stimulus')])
+                prototypes['all-pos-all'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '-1':
-                prototypes['both_neg'].append(line[header.index('stimulus')])
+                prototypes['all-neg-all'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '1':
-                prototypes['action_pos'].append(line[header.index('stimulus')])
+                prototypes['action_pos-all'].append(line[header.index('stimulus')])
             if line[header.index('action_word')] == '-1':
-                prototypes['action_neg'].append(line[header.index('stimulus')])
+                prototypes['action_neg-all'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '1':
-                prototypes['sound_pos'].append(line[header.index('stimulus')])
+                prototypes['sound_pos-all'].append(line[header.index('stimulus')])
             if line[header.index('sound_word')] == '-1':
-                prototypes['sound_neg'].append(line[header.index('stimulus')])
+                prototypes['sound_neg-all'].append(line[header.index('stimulus')])
             #if line[header.index('action_word')] == '-1' and line[header.index('sound_word')] == '1':
             #    prototypes['action'].append(line[header.index('stimulus')])
             #if line[header.index('sound_word')] == '-1' and line[header.index('action_word')] == '1':
             #    prototypes['sound'].append(line[header.index('stimulus')])
             if 'lexical_decision' in line:
                 continue
-            prototypes['all'].append(line[header.index('stimulus')])
-            lines.append(line)
+            prototypes['all-pos-all'].append(line[header.index('stimulus')])
     prototypes = {k : set(v) for k, v in prototypes.items()}
     top_tenned = [
-          'action_pos', 
-          'sound_pos',
-          'both_pos',
-          'action_pos_sound_neg', 
-          'sound_pos_action_neg',
+          'action_pos-all', 
+          'sound_pos-all',
+          'all-pos-all',
+          'action_pos_sound_neg-all', 
+          'sound_pos_action_neg-all',
           ]
     for tenned in top_tenned:
         ### top ten percent
@@ -246,38 +245,163 @@ def read_de_sound_act_tms():
                 print('top-fifty percent prototypes for {}:\n'.format(tenned))
                 print(sorted(top))
                 print('\n')
-            prototypes['{}-top{}'.format(tenned, percent)] = top
+            prototypes['{}-top{}'.format(tenned[:-4], percent)] = top
+    prototypes = {k : tuple(v) if type(v)!=tuple else v for k, v in prototypes.items()}
+    return prototypes
 
-    full_sims = dict()
+def return_proto_words(task, proto_mode, prototypes):
+    val = proto_mode.split('-')[-1]
+    if proto_mode in [
+                      'all-all-all', 
+                      'all-pos-all', 
+                      'all-pos-topten', 
+                      'all-pos-topfifty', 
+                      'all-neg-all'
+                      ]:
+        words = prototypes['{}'.format(proto_mode)]
+    else:
+        if 'incl' in proto_mode:
+            if 'matched' in proto_mode:
+                ### sound
+                if 'er' in task:
+                    words = prototypes['sound_pos-{}'.format(val)]
+                elif 'andlung' in task:
+                    words = prototypes['action_pos-{}'.format(val)]
+                else:
+                    raise RuntimeError()
+            elif 'opposite' in proto_mode:
+                ### sound
+                if 'er' in task:
+                    words = prototypes['sound_neg-{}'.format(val)]
+                elif 'andlung' in task:
+                    words = prototypes['action_neg-{}'.format(val)]
+                else:
+                    raise RuntimeError()
+            else:
+                raise RuntimeError()
+        elif 'excl' in proto_mode:
+            if 'matched' in proto_mode:
+                ### sound
+                if 'er' in task:
+                    words = prototypes['sound_pos_action_neg-{}'.format(val)]
+                elif 'andlung' in task:
+                    words = prototypes['action_pos_sound_neg-{}'.format(val)]
+                else:
+                    raise RuntimeError()
+            elif 'opposite' in proto_mode:
+                ### sound
+                if 'er' in task:
+                    words = prototypes['action_pos_sound_neg-{}'.format(val)]
+                elif 'andlung' in task:
+                    words = prototypes['sound_pos_action_neg-{}'.format(val)]
+                else:
+                    raise RuntimeError()
+            else:
+                raise RuntimeError()
+        else:
+            raise RuntimeError()
+    return words
+
+def read_de_sound_act_tms(args):
+    ratings = read_phil_ratings()
+    prototypes = read_soundact_prototypes(ratings)
+    ### reading dataset
+    lines = list()
+    with open(os.path.join(
+                           'data', 
+                           'tms', 
+                           'de_sound-act', 
+                           'de_tms_pipl.tsv')
+                           ) as i:
+        for l_i, l in enumerate(i):
+            line = l.strip().split('\t')
+            if l_i == 0:
+                header = [w for w in line]
+                continue
+            missing = list()
+            w = line[header.index('stimulus')]
+            if line[header.index('sound_word')] != 'NA':
+                if w not in ratings.keys():
+                    missing.append(w)
+            assert len(missing) == 0
+            if 'lexical_decision' in line:
+                continue
+            lines.append(line)
+
+    proto_modes = [
+                 #'all-all-all', 
+                 'all-pos-all',
+                 #'all-pos-topten',
+                 #'all-pos-topfifty',
+                 'all-neg-all',
+                 'matched-excl-all',
+                 #'matched-excl-topten',
+                 #'matched-excl-topfifty',
+                 #'matched-incl-all',
+                 #'matched-incl-topten',
+                 #'matched-incl-topfifty',
+                 'opposite-excl-all',
+                 #'opposite-excl-topten',
+                 #'opposite-excl-topfifty',
+                 #'opposite-incl-all',
+                 #'opposite-incl-topten',
+                 #'opposite-incl-topfifty',
+                 ]
+    sims = dict()
+    test_vocab = set()
     conditions = set([l[header.index('condition')] for l in lines])
     tasks = set([l[header.index('task')] for l in lines])
-    for c in conditions:
-        ### both tasks together
-        current_cond = [l for l in lines if l[header.index('condition')]==c]
-        subjects = [int(l[header.index('subject')]) for l in current_cond]
-        log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
-        rts = [float(l[header.index('rt')]) for l in current_cond]
-        vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
-        test_vocab = test_vocab.union(set(vocab_w_ones))
-        vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
-        test_vocab = test_vocab.union(set(vocab_w_twos))
-        w_ones = [l[header.index('task')] for l in current_cond]
-        w_twos = [l[header.index('stimulus')] for l in current_cond]
-        sims[c]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-        for t in tasks:
-            ### separate tasks
-            current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t]
+    for proto_mode in proto_modes:
+        for c in conditions:
+            key = 'de_sound-act_{}#all_{}_{}'.format(args.stat_approach, proto_mode, c)
+            ### both tasks together
+            current_cond = [l for l in lines if l[header.index('condition')]==c]
             subjects = [int(l[header.index('subject')]) for l in current_cond]
-            log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
-            exps = [l[header.index('expected_response')] for l in current_cond]
             rts = [float(l[header.index('rt')]) for l in current_cond]
-            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
-            test_vocab = test_vocab.union(set(vocab_w_ones))
+            log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
+            ### with prototyping, we actually use words as first items
+            #w_ones = [l[header.index('task')] for l in current_cond]
+            w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
+            all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+            test_vocab = test_vocab.union(set([w for ws in all_w_ones for w in ws]))
+            ### these are the words subjects actually saw
             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
             test_vocab = test_vocab.union(set(vocab_w_twos))
-            w_ones = [l[header.index('task')] for l in current_cond]
             w_twos = [l[header.index('stimulus')] for l in current_cond]
-            sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+            sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+            for t in tasks:
+                key = 'de_sound-act_{}#{}_{}_{}'.format(args.stat_approach, proto_mode, t, c)
+                ### separate tasks
+                current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t]
+                subjects = [int(l[header.index('subject')]) for l in current_cond]
+                log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
+                exps = [l[header.index('expected_response')] for l in current_cond]
+                rts = [float(l[header.index('rt')]) for l in current_cond]
+                #vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('task')])]
+                #test_vocab = test_vocab.union(set(vocab_w_ones))
+                ### with prototyping, we actually use words as first items
+                #w_ones = [l[header.index('task')] for l in current_cond]
+                w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
+                all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                test_vocab = test_vocab.union(set([w for ws in all_w_ones for w in ws]))
+                vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
+                test_vocab = test_vocab.union(set(vocab_w_twos))
+                w_twos = [l[header.index('stimulus')] for l in current_cond]
+                #sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+                sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     full_sims = reorganize_tms_sims(sims)
+    collect_info(full_sims)
 
     return full_sims, test_vocab, prototypes
+
+def collect_info(full_sims):
+    labels = set(full_sims.keys())
+    subjects = set([s for subs in full_sims.values() for s in subs.keys()])
+    trials = set([len(s.keys()) for subs in full_sims.values() for s in subs.values()])
+    print('labels: ')
+    print(labels)
+    print('subjects: ')
+    print(subjects)
+    print('trials: ')
+    print(trials)
+

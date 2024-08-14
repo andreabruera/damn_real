@@ -4,7 +4,7 @@ import os
 from utf_utils import transform_german_word, transform_basic_word
 
 def read_dirani_n400(args):
-    dis_sims = {'{}_dirani-n400-words'.format(args.lang) : dict(), '{}_dirani-n400-pictures'.format(args.lang) : dict()}
+    dis_sims = {'{}_dirani-n400_{}#words'.format(args.lang, args.stat_approach) : dict(), '{}_dirani-n400_{}#pictures'.format(args.lang, args.stat_approach) : dict()}
     if args.lang != 'en':
         trans_path = os.path.join(
                                  'data', 

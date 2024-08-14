@@ -8,7 +8,7 @@ def read_fern(args, trans_from_en):
 
     required_dataset = int(re.sub('\D', '', args.dataset))
     dis_sims = {1 : {'all' : dict()}, 2 : dict()}
-    dis_sims = {'{}_fern{}-all'.format(args.lang, required_dataset) : dis_sims[required_dataset]}
+    dis_sims = {'{}_fern{}_{}#all'.format(args.lang, args.stat_approach, required_dataset) : dis_sims[required_dataset]}
     test_vocab = set()
     for dataset in dis_sims.keys():
         #dis_sims[dataset] = {'all' : dict()}
@@ -106,7 +106,7 @@ def read_fern_categories(args, trans_from_en):
                             ]:
                     cat = set([mapper[line[0]][idx], mapper[line[1]][idx]])
                     if len(cat) == 1:
-                        marker = '{}_fern{}-{}'.format(args.lang, required_dataset, list(cat)[0])
+                        marker = '{}_fern{}_{}#{}'.format(args.lang, required_dataset, args.stat_approach, list(cat)[0])
                         if marker not in dis_sims.keys():
                             dis_sims[marker] = {'all' : dict()}
                         ### we want dissimilarity
@@ -142,8 +142,8 @@ def read_fern_categories(args, trans_from_en):
 
     return dis_sims, test_vocab
 
-def read_abstract_ipc():
-    dis_sims = {'de_abstract-fmri' : {'all' : dict()}}
+def read_abstract_ipc(args):
+    dis_sims = {'de_abstract-fmri_{}'.format(args.stat_approach) : {'all' : dict()}}
     test_vocab = set()
     file_path = os.path.join(
                              'data', 
