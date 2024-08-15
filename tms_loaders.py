@@ -353,7 +353,7 @@ def read_de_sound_act_tms(args):
     tasks = set([l[header.index('task')] for l in lines])
     for proto_mode in proto_modes:
         for c in conditions:
-            key = 'de_sound-act_{}#all_{}_{}'.format(args.stat_approach, proto_mode, c)
+            key = 'de_sound-act_{}#{}_all_{}'.format(args.stat_approach, proto_mode, c)
             ### both tasks together
             current_cond = [l for l in lines if l[header.index('condition')]==c]
             subjects = [int(l[header.index('subject')]) for l in current_cond]
