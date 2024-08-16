@@ -150,8 +150,8 @@ print('using models: {}, {}'.format(best_ft, best_other))
 ### datasets where the comparisons are very simple
 ### just clear-cut pairwise comparisons
 for mode in [
-             #'residualize',
-             #'bootstrap', 
+             'residualize',
+             'bootstrap', 
              'simple',
              ]:
     for l, l_data in results.items():
@@ -334,7 +334,7 @@ for mode in [
             #    #indiv_bars = sorted(set([t.split('_')[0] for t in curr_ts]))
             #    indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and c in w and mode in w]))
             #    print(indiv_bars)
-            corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.4, .4, len(indiv_bars)))}
+            corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
             #print(corrections)
             fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
             ax.scatter(
@@ -368,11 +368,11 @@ for mode in [
                       )
             #xs = [w.split('_tms_')[1] for w in curr_ts]
             colors_l = [
-                    'paleturquoise', 
-                    'mediumaquamarine', 
+                    #'paleturquoise', 
+                    #'mediumaquamarine', 
                     'forestgreen', 
-                    'mediumblue',
-                    'palegoldenrod', 
+                    #'mediumblue',
+                    #'palegoldenrod', 
                     'palevioletred',
                     'silver',
                     'orange', 
@@ -390,33 +390,35 @@ for mode in [
                 #ax.bar(0, 0, color='goldenrod', label=best_other)
             ### results for fasttext
             #ft_model = lang_best[l][0]
-            xticks = list()
+            x_ticks = list()
             for k, corr in corrections.items():
                 #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
                 curr_ts = sorted([w for w in l_data['tms'].keys() if k in w and soundact in w and mode in w])
-                #ft_model = best_ft
+                if len(x_ticks) == 0:
+                    x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
+                else:
+                    new_x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
+                    assert new_x_ticks == x_ticks
                 if 'fasttext' in model:
                     ys = [l_data['tms'][c_t][model] for c_t in curr_ts]
                 else:
                     first_part = '_'.join(model.split('_')[:-1])
                     second_part = float(model.split('_')[-1])
                     ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-                #print(ys)
+                width=0.8/len(ys)
                 ax.bar(
-                       #[x-0.15+corr for x in range(len(ys))],
                        [x+corr for x in range(len(ys))],
                        [numpy.average(y) for y in ys],
                        #color='mediumaquamarine',
-                       width=0.06,
+                       width=width,
                        color=colors[k]
                        )
                 ax.scatter(
-                       #[x-0.15+(random.randint(-100, 100)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
-                       [x+(random.randint(-10, 10)*0.001)+corr for x in range(len(ys)) for y in ys[x]],
+                       [x+((random.randint(-8, 8)*0.1)/len(ys))+corr for x in range(len(ys)) for y in ys[x]],
                        ys,
                        edgecolor=colors[k],
                        color='white',
-                       alpha=0.025,
+                       alpha=0.1,
                        zorder=3.,
                        )
                 ### p-values
@@ -471,8 +473,8 @@ for mode in [
                           )
             pyplot.yticks(fontsize=20)
             pyplot.xticks(
-                         ticks=range(len(ys)),
-                         labels=[x.replace('_', ' ').replace('-', '\n') for x in xticks],
+                         ticks=range(len(x_ticks)),
+                         labels=[x.replace('Geraeusch', 'sound-task').replace('Handlung', 'action-task') for x in x_ticks],
                          fontsize=25,
                          fontweight='bold'
                          )

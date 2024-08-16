@@ -175,6 +175,7 @@ def read_soundact_prototypes(ratings):
                   'sound_pos-all' : list(),
                   'action_neg-all' : list(),
                   'sound_neg-all' : list(), 
+                  'all-all-all' : list(),
                   'all-pos-all' : list(),
                   'all-neg-all' : list(),
                   'action_pos_sound_neg-all' : list(), 
@@ -219,12 +220,13 @@ def read_soundact_prototypes(ratings):
             #    prototypes['sound'].append(line[header.index('stimulus')])
             if 'lexical_decision' in line:
                 continue
-            prototypes['all-pos-all'].append(line[header.index('stimulus')])
+            prototypes['all-all-all'].append(line[header.index('stimulus')])
     prototypes = {k : set(v) for k, v in prototypes.items()}
     top_tenned = [
           'action_pos-all', 
           'sound_pos-all',
           'all-pos-all',
+          'all-neg-all',
           'action_pos_sound_neg-all', 
           'sound_pos_action_neg-all',
           ]
@@ -254,9 +256,9 @@ def return_proto_words(task, proto_mode, prototypes):
     if proto_mode in [
                       'all-all-all', 
                       'all-pos-all', 
+                      'all-neg-all',
                       'all-pos-topten', 
                       'all-pos-topfifty', 
-                      'all-neg-all'
                       ]:
         words = prototypes['{}'.format(proto_mode)]
     else:
@@ -330,20 +332,20 @@ def read_de_sound_act_tms(args):
 
     proto_modes = [
                  #'all-all-all', 
-                 'all-pos-all',
+                 #'all-pos-all',
                  #'all-pos-topten',
                  #'all-pos-topfifty',
-                 'all-neg-all',
-                 'matched-excl-all',
+                 #'all-neg-all',
+                 #'matched-excl-all',
                  #'matched-excl-topten',
                  #'matched-excl-topfifty',
-                 #'matched-incl-all',
+                 'matched-incl-all',
                  #'matched-incl-topten',
                  #'matched-incl-topfifty',
-                 'opposite-excl-all',
+                 #'opposite-excl-all',
                  #'opposite-excl-topten',
                  #'opposite-excl-topfifty',
-                 #'opposite-incl-all',
+                 'opposite-incl-all',
                  #'opposite-incl-topten',
                  #'opposite-incl-topfifty',
                  ]
@@ -404,4 +406,3 @@ def collect_info(full_sims):
     print(subjects)
     print('trials: ')
     print(trials)
-
