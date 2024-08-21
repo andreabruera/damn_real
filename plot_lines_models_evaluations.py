@@ -11,7 +11,8 @@ results = dict()
 with tqdm() as counter:
     for root, direc, fz in os.walk(
                               os.path.join(
-                                  'results',
+                                  'test_results',
+                                  #'old_results',
                                   )):
 
         for f in fz:
@@ -29,7 +30,35 @@ with tqdm() as counter:
                         else:
                             short_model = '_'.join(model.split('_')[1:-2])
                     dataset = line[2]
-                    if 'tms' in dataset:
+                    #print(dataset)
+                    if 'en_men' in dataset:
+                        task = 'simrel_norms'
+                    elif '999' in dataset:
+                        task = 'simrel_norms'
+                    elif '353' in dataset:
+                        task = 'simrel_norms'
+                    elif 'fern' in dataset:
+                        task = 'fmri'
+                    elif 'dirani' in dataset:
+                        task = 'meeg'
+                    elif 'abstract' in dataset:
+                        task = 'fmri'
+                    elif 'de_behav' in dataset:
+                        task = 'behavioural'
+                    elif 'it_behav' in dataset:
+                        task = 'behavioural'
+                    elif 'sem-phon' in dataset:
+                        task = 'tms'
+                    elif 'sound-act' in dataset:
+                        task = 'tms'
+                    elif 'distr-learn' in dataset:
+                        task = 'tms'
+                    else:
+                        print(dataset)
+                        #continue
+                        raise AssertionError
+                    '''
+                    if 'sem-' in dataset:
                         task = 'tms'
                     elif 'fern' in dataset or 'abstract-ipc' in dataset:
                         task = 'fmri'
@@ -45,6 +74,7 @@ with tqdm() as counter:
                         print(dataset)
                         continue
                         #raise AssertionError
+                    '''
                     if task not in results[lang].keys():
                         results[lang][task] = {dataset : dict()}
                     if dataset not in results[lang][task].keys():
@@ -76,8 +106,13 @@ with tqdm() as counter:
                                   'mitch' not in k and \
                                   'rowincol' not in k and \
                                   'concept' not in k and \
-                                  ('top' in k
-                                  or '_hi-' in k or '_lo-' in k
+                                  #('top' in k
+                                  (
+                                  #'top' in k
+                                  #or '_hi-' in k or '_lo-' in k
+                                  #or 
+                                  'abs' in k and 'random' not in k
+                                  #and 'abs' not in k
                                   )
                                   }
                 ### plotting horizontal lines
@@ -143,8 +178,10 @@ with tqdm() as counter:
                 ### setting plot limits
                 corr = numpy.nanstd(alls)
                 ax.set_ylim(
-                            bottom=min(0, min(alls))-corr, 
-                            top=max(0, max(alls))+corr
+                            #bottom=min(0, min(alls))-corr, 
+                            #top=max(0, max(alls))+corr
+                            bottom=-.2,
+                            top=.2,
                             )
                 ### legend
                 pyplot.legend(
@@ -156,7 +193,7 @@ with tqdm() as counter:
                 specific_task = task.split('_')[min(1, len(task.split('_'))-1)]
                 assert len(specific_task) > 0
                 folder = os.path.join(
-                                      'line_plots',
+                                      'test_lineplots',
                                       lang, 
                                       general_task,
                                       specific_task,

@@ -323,168 +323,236 @@ for mode in [
             os.makedirs(out, exist_ok=True)
             all_rel_tasks = [k.split('#')[0] for k in l_data['tms'].keys() if mode in k and 'act' in k]
 
-            print(set(all_rel_tasks))
-            assert len(set(all_rel_tasks)) == 1
-            #for t in all_rel_tasks:
-            soundact= list(set((all_rel_tasks)))[0]
-            indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and mode in w]))
-            #print(cases)
-            #for c in cases:
-            #    #indiv_bars = sorted(['_'.join(w.split('#')[-1].split('_')[1:]) for w in l_data['tms'].keys() if t in w and curr_t])
-            #    #indiv_bars = sorted(set([t.split('_')[0] for t in curr_ts]))
-            #    indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and c in w and mode in w]))
-            #    print(indiv_bars)
-            corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
-            #print(corrections)
-            fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
-            ax.scatter(
-                       x=0., 
-                       y=1.,
-                       marker='*',
-                       s=100,
-                       color='black',
-                       #alpha=0.,
-                       label='p<{}'.format(significance)
-                       )
-            ax.set_ylim(bottom=-0.26, top=0.26)
-            xs = [1.5, 3.5]
-            #xticks = sorted(set([w.split('#')[1].split('_')[1] for w in l_data['tms'].keys() if soundact in w and mode in w]))
-            #print(xticks)
-            ax.vlines(
-                      x=xs,
-                      ymin=-.2,
-                      ymax=.24,
-                      linewidth=5,
-                      linestyles='dashed',
-                      color='black',
-                      )
-            ax.vlines(
-                      x=[0.5, 2.5, 4.5],
-                      ymin=-.2,
-                      ymax=.24,
-                      linewidth=3,
-                      linestyles='dashed',
-                      color='silver',
-                      )
-            #xs = [w.split('_tms_')[1] for w in curr_ts]
-            colors_l = [
-                    #'paleturquoise', 
-                    #'mediumaquamarine', 
-                    'forestgreen', 
-                    #'mediumblue',
-                    #'palegoldenrod', 
-                    'palevioletred',
-                    'silver',
-                    'orange', 
-                    'teal',
-                    'magenta',
-                    'black',
-                    'indianred',
-                    'slateblue',
-                    'hotpink',
-                    ]
-            colors = dict()
-            for k, col in zip(corrections.keys(), colors_l):
-                ax.bar(0, 0, color=col, label=k)
-                colors[k] = col
-                #ax.bar(0, 0, color='goldenrod', label=best_other)
-            ### results for fasttext
-            #ft_model = lang_best[l][0]
-            x_ticks = list()
-            for k, corr in corrections.items():
-                #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
-                curr_ts = sorted([w for w in l_data['tms'].keys() if k in w and soundact in w and mode in w])
-                if len(x_ticks) == 0:
-                    x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
+            #print(set(all_rel_tasks))
+            #assert len(set(all_rel_tasks)) == 1
+            for soundact in all_rel_tasks:
+                if 'detailed' in soundact:
+                    jump=8
+                    width_max=3
+                    rotation=90
+                    start=1
                 else:
-                    new_x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
-                    assert new_x_ticks == x_ticks
-                if 'fasttext' in model:
-                    ys = [l_data['tms'][c_t][model] for c_t in curr_ts]
-                else:
-                    first_part = '_'.join(model.split('_')[:-1])
-                    second_part = float(model.split('_')[-1])
-                    ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-                width=0.8/len(ys)
-                ax.bar(
-                       [x+corr for x in range(len(ys))],
-                       [numpy.average(y) for y in ys],
-                       #color='mediumaquamarine',
-                       width=width,
-                       color=colors[k]
-                       )
+                    jump =2
+                    width_max=1.
+                    rotation=0.
+                    start=0
+                indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and mode in w]))
+                #print(cases)
+                #for c in cases:
+                #    #indiv_bars = sorted(['_'.join(w.split('#')[-1].split('_')[1:]) for w in l_data['tms'].keys() if t in w and curr_t])
+                #    #indiv_bars = sorted(set([t.split('_')[0] for t in curr_ts]))
+                #    indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and c in w and mode in w]))
+                #    print(indiv_bars)
+                corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
+                #print(corrections)
+                fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
                 ax.scatter(
-                       [x+((random.randint(-8, 8)*0.1)/len(ys))+corr for x in range(len(ys)) for y in ys[x]],
-                       ys,
-                       edgecolor=colors[k],
-                       color='white',
-                       alpha=0.1,
-                       zorder=3.,
-                       )
-                ### p-values
-                for y_i, y in enumerate(ys):
-                    for y_two_i, y_two in enumerate(ys):
-                        if y_two_i <= y_i:
-                            continue
-                        if len(ys) == 6:
-                            if y_i % 2 != 0:
-                                continue
-                            if y_two_i>y_i+1:
-                                continue
-                        #print(y)
-                        #print(y_two)
-                        ### setting the directionality
-                        if numpy.average(y) > numpy.average(y_two):
-                            alternative='greater'
-                            used_x = y_i
-                        elif numpy.average(y) < numpy.average(y_two):
-                            alternative='less'
-                            used_x = y_two_i
+                           x=0., 
+                           y=1.,
+                           marker='*',
+                           s=100,
+                           color='black',
+                           #alpha=0.,
+                           label='p<{}'.format(significance)
+                           )
+                ax.set_ylim(bottom=-0.3, top=0.3)
+                #xs = [1.5, 3.5]
+                #xticks = sorted(set([w.split('#')[1].split('_')[1] for w in l_data['tms'].keys() if soundact in w and mode in w]))
+                #print(xticks)
+                #xs = [w.split('_tms_')[1] for w in curr_ts]
+                colors_l = [
+                        #'paleturquoise', 
+                        #'mediumaquamarine', 
+                        'forestgreen', 
+                        #'mediumblue',
+                        #'palegoldenrod', 
+                        'palevioletred',
+                        'silver',
+                        'orange', 
+                        'teal',
+                        'magenta',
+                        'black',
+                        'indianred',
+                        'slateblue',
+                        'hotpink',
+                        ]
+                colors = dict()
+                for k, col in zip(corrections.keys(), colors_l):
+                    ax.bar(0, 0, color=col, label=k)
+                    colors[k] = col
+                    #ax.bar(0, 0, color='goldenrod', label=best_other)
+                ### results for fasttext
+                #ft_model = lang_best[l][0]
+                x_ticks = list()
+                for k, corr in corrections.items():
+                    #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
+                    curr_ts = sorted([w for w in l_data['tms'].keys() if k in w and soundact in w and mode in w])
+                    if len(x_ticks) == 0:
+                        x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
+                    else:
+                        new_x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
+                        assert new_x_ticks == x_ticks
+                    if 'fasttext' in model:
+                        ys = [l_data['tms'][c_t][model] for c_t in curr_ts]
+                    else:
+                        first_part = '_'.join(model.split('_')[:-1])
+                        second_part = float(model.split('_')[-1])
+                        ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+                    width=width_max/len(ys)
+                    ax.bar(
+                           [x+corr for x in range(len(ys))],
+                           [numpy.average(y) for y in ys],
+                           #color='mediumaquamarine',
+                           width=width,
+                           color=colors[k]
+                           )
+                    ax.scatter(
+                           [x+((random.randint(-8, 8)*0.04)/len(ys))+corr for x in range(len(ys)) for y in ys[x]],
+                           ys,
+                           edgecolor=colors[k],
+                           color='white',
+                           alpha=0.05,
+                           zorder=3.,
+                           )
+                    if 'detailed' in soundact:
+                        for tick in x_ticks[:8]:
+                            assert 'Geraeusch' in tick
+                        for tick in x_ticks[8:16]:
+                            assert 'Handlung' in tick
+                        for tick in x_ticks[16:]:
+                            assert 'Geraeusch' not in tick
+                            assert 'Handlung' not in tick
+                        ax.text(
+                                x=3.5,
+                                y=0.28,
+                                s='sound task',
+                                ha='center',
+                                va='center',
+                                fontweight='bold',
+                                fontsize=25,
+                                )
+                        ax.text(
+                                x=11.5,
+                                y=0.28,
+                                s='action task',
+                                ha='center',
+                                va='center',
+                                fontweight='bold',
+                                fontsize=25,
+                                )
+                        ax.text(
+                                x=19.5,
+                                y=0.28,
+                                s='both tasks',
+                                ha='center',
+                                va='center',
+                                fontweight='bold',
+                                fontsize=25,
+                                )
+                        for _ in range(0, len(x_ticks), 2):
+                            case = x_ticks[_].replace('Geraeusch-', '').replace('Handlung-', '').replace('all-', '')
+                            case = case.split('\n')[0]
+                            next_case = x_ticks[_+1].replace('Geraeusch-', '').replace('Handlung-', '').replace('all-', '')
+                            next_case = next_case.split('\n')[0]
+                            assert case == next_case
+                            ax.text(
+                                    x=_+0.5,
+                                    y=-0.24, 
+                                    s=case,
+                                    fontweight='bold',
+                                    va='center',
+                                    ha='center',
+                                    )
+                        pyplot.xticks(
+                             ticks=range(len(x_ticks)),
+                             labels=[x.split('\n')[-1] for x in x_ticks],
+                             fontsize=20,
+                             fontweight='bold',
+                             rotation=rotation
+                             )
+                    else:
+                        pyplot.xticks(
+                             ticks=range(len(x_ticks)),
+                             labels=[x.replace('Geraeusch-', 'sound-task\n').replace('Handlung-', 'action-task\n') for x in x_ticks],
+                             fontsize=15,
+                             fontweight='bold',
+                             rotation=rotation
+                             )
+                        ### p-values
+                        for y_i, y in enumerate(ys):
+                            for y_two_i, y_two in enumerate(ys):
+                                if y_two_i <= y_i:
+                                    continue
+                                if len(ys) == 6:
+                                    if y_i % 2 != 0:
+                                        continue
+                                    if y_two_i>y_i+1:
+                                        continue
+                                #print(y)
+                                #print(y_two)
+                                ### setting the directionality
+                                if numpy.average(y) > numpy.average(y_two):
+                                    alternative='greater'
+                                    used_x = y_i
+                                elif numpy.average(y) < numpy.average(y_two):
+                                    alternative='less'
+                                    used_x = y_two_i
 
-                        #alternative = 
-                        p = scipy.stats.wilcoxon(x=y, y=y_two, 
-                                                 #alternative=alternative,
-                                                 ).pvalue
-                        #print(p)
-                        #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                        if p < significance:
-                            #ax.text(
-                            #        x=y_i-.2+corr,
-                            #        y=-y_corr,
-                            #        s='{} - p={}'.format(curr_ts[y_two_i], round(p, 3)),
-                            #        color='mediumaquamarine',
-                            #        )
-                            ax.scatter(
-                                       x=used_x+corr, 
-                                       y=-.2,
-                                       marker='*',
-                                       s=100,
-                                       color=colors[k]
-                                       )
+                                #alternative = 
+                                p = scipy.stats.wilcoxon(x=y, y=y_two, 
+                                                         #alternative=alternative,
+                                                         ).pvalue
+                                #print(p)
+                                #p = scipy.stats.ttest_ind(y, y_two).pvalue
+                                if p < significance:
+                                    #ax.text(
+                                    #        x=y_i-.2+corr,
+                                    #        y=-y_corr,
+                                    #        s='{} - p={}'.format(curr_ts[y_two_i], round(p, 3)),
+                                    #        color='mediumaquamarine',
+                                    #        )
+                                    ax.scatter(
+                                               x=used_x+corr, 
+                                               y=-.2,
+                                               marker='*',
+                                               s=100,
+                                               color=colors[k]
+                                               )
 
-            ax.legend(fontsize=15,
-                      ncols=7,
-                      loc=8,
-                      )
-            pyplot.ylabel(
-                          ylabel='log(RT) - semantic dissimilarity correlation',
-                          fontsize=23,
-                          fontweight='bold'
+                ax.vlines(
+                        x=[_+.5 for _ in range(jump-1, len(ys)-1)][::jump],
+                          ymin=-.2,
+                          ymax=.24,
+                          linewidth=5,
+                          linestyles='dashed',
+                          color='black',
                           )
-            pyplot.yticks(fontsize=20)
-            pyplot.xticks(
-                         ticks=range(len(x_ticks)),
-                         labels=[x.replace('Geraeusch', 'sound-task').replace('Handlung', 'action-task') for x in x_ticks],
-                         fontsize=25,
-                         fontweight='bold'
-                         )
-            pyplot.title(
-                         '{} - {}'.format(t.replace('_', ' '), model), 
-                         fontsize=30,
-                         )
-            pyplot.savefig(
-                    os.path.join(
-                        out, 
-                       '{}-{}-{}.jpg'.format(mode, soundact, model)))
-            pyplot.clf()
-            pyplot.close()
+                ax.vlines(
+                        x=[x for x in [_+.5 for _ in range(start, len(ys)-1)][::2] if x not in [7.5, 15.5]],
+                          ymin=-.2,
+                          ymax=.24,
+                          linewidth=3,
+                          linestyles='dashed',
+                          color='silver',
+                          )
+
+                ax.legend(fontsize=15,
+                          ncols=7,
+                          loc=8,
+                          )
+                pyplot.ylabel(
+                              ylabel='log(RT) - semantic dissimilarity correlation',
+                              fontsize=23,
+                              fontweight='bold'
+                              )
+                pyplot.yticks(fontsize=20)
+                pyplot.title(
+                             '{} - {}'.format(t.replace('_', ' '), model), 
+                             fontsize=30,
+                             )
+                pyplot.savefig(
+                        os.path.join(
+                            out, 
+                           '{}-{}-{}.jpg'.format(mode, soundact, model)))
+                pyplot.clf()
+                pyplot.close()

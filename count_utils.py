@@ -3,11 +3,13 @@ import os
 import pickle
 import random
 
-def test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words):
+from test_utils import test_model
+
+def test_count_model(args, key, datasets, present_words, trans_from_en, coocs, vocab, row_words, ctx_words):
     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
     model = {k : v for k, v in trans_pmi_vecs.items()}
     curr_vocab = [w for w in trans_pmi_vecs.keys()]
-    test_model(args.lang, key, model, curr_vocab, datasets, trans_from_en)
+    test_model(args, key, model, curr_vocab, datasets, present_words, trans_from_en)
 
 def read_mitchell_25dims(lang):
     dimensions = list()
@@ -60,11 +62,11 @@ def build_ppmi_vecs(coocs, vocab, row_words, col_words, smoothing=False, power=1
     return trans_pmi_vecs
 
 def load_count_coocs(args):
-    print(corpus)
+    print(args.model)
     if args.lang == 'en':
         if args.model == 'bnc':
             min_count = 10
-        elif model == 'cc100':
+        elif args.model == 'cc100':
             min_count = 500
         else:
             min_count = 100

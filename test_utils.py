@@ -102,130 +102,29 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
             marker = False
         if marker:
             test_sims.append((w_ones, w_twos, val))
+            #print(w_ones)
     return test_sims, missing_words
 
-def compute_corr(args, model, dataset, dataset_name, present_words, trans_from_en,):
-    test_sims, missing_words = check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en,)
-    #if len(prototypes.keys()) > 0:
-    #    proto_vecs = prototypes
-    #if len(test_sims) == 0:
-    #    corr = None
-    #    return corr
+def compute_corr(model_sims, test_sims):
+    #test_sims, missing_words = check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en,)
     assert len(test_sims) > 0
     real = list()
     pred = list()
     for w_ones, w_twos, v in test_sims:
         real.append(v)
         ### all possible transformations...
-        '''
-        if len(prototypes.keys()) > 0:
-            current_pred = list()
-            proto_mode = dataset_name.split('#')[-1]
-            proto_modes = [
-                         'all', 
-                         'both_pos',
-                         'both_pos-topten',
-                         'both_pos-topfifty',
-                         'both_neg',
-                         'matched_excl',
-                         'matched_excl-topten',
-                         'matched_excl-topfifty',
-                         'matched_non_excl',
-                         'matched_non_excl-topten',
-                         'matched_non_excl-topfifty',
-                         'opposite_excl',
-                         'opposite_excl-topten',
-                         'opposite_excl-topfifty',
-                         'opposite_non_excl',
-                         'opposite_non_excl-topten',
-                         'opposite_non_excl-topfifty',
-                         ]
-            assert proto_mode in proto_modes
-            if 'top' in proto_mode:
-                val = proto_mode.split('-')[-1]
-            #print(proto_mode)
-            for w_two in w_twos:
-                if proto_mode in ['all', 'both_pos', 'both_pos-topten', 'both_pos-topfifty', 'both_neg']:
-                    #proto_mode = proto_mode.replace('-', '_')
-                    vec_one = proto_vecs['{}'.format(proto_mode)]
-                else:
-                    if 'non-excl' in proto_mode:
-                        if 'matched' in proto_mode:
-                            ### sound
-                            if 'er' in w_ones[0]:
-                                if 'top' in proto_mode:
-                                    vec_one = proto_vecs['sound_pos-{}'.format(val)]
-                                else:
-                                    vec_one = proto_vecs['sound_pos']
-                            elif 'andlung' in w_ones[0]:
-                                if 'top' in proto_mode:
-                                    vec_one = proto_vecs['action_pos-{}'.format(val)]
-                                else:
-                                    vec_one = proto_vecs['action_pos']
-                            else:
-                                raise RuntimeError()
-                        elif 'opposite' in proto_mode:
-                            ### sound
-                            if 'er' in w_ones[0]:
-                                vec_one = proto_vecs['sound_neg']
-                            elif 'andlung' in w_ones[0]:
-                                vec_one = proto_vecs['action_neg']
-                            else:
-                                raise RuntimeError()
-                        else:
-                            raise RuntimeError()
-                    elif 'excl' in proto_mode:
-                        if 'matched' in proto_mode:
-                            ### sound
-                            if 'er' in w_ones[0]:
-                                if 'top' in proto_mode:
-                                    vec_one = proto_vecs['sound_pos_action_neg-{}'.format(val)]
-                                else:
-                                    vec_one = proto_vecs['sound_pos_action_neg']
-                            elif 'andlung' in w_ones[0]:
-                                if 'top' in proto_mode:
-                                    vec_one = proto_vecs['action_pos_sound_neg-{}'.format(val)]
-                                else:
-                                    vec_one = proto_vecs['action_pos_sound_neg']
-                            else:
-                                raise RuntimeError()
-                        elif 'opposite' in proto_mode:
-                            ### sound
-                            if 'er' in w_ones[0]:
-                                vec_one = proto_vecs['action_pos_sound_neg']
-                            elif 'andlung' in w_ones[0]:
-                                vec_one = proto_vecs['sound_pos_action_neg']
-                            else:
-                                raise RuntimeError()
-                        else:
-                            raise RuntimeError()
-                    else:
-                        raise RuntimeError()
-                ### always using dissimilarity
-                partial_pred = scipy.spatial.distance.cosine(vec_one, model[w_two])
-                #partial_pred = 1 - scipy.stats.spearmanr(vec_one, model[w_two]).statistic
-                current_pred.append(partial_pred)
-            current_pred = numpy.average(current_pred)
-        else:
-        '''
-        current_pred = list()
-        for w in w_ones:
-            for w_two in w_twos:
-                ### always using dissimilarity
-                partial_pred = scipy.spatial.distance.cosine(model[w], model[w_two])
-                #partial_pred = 1 - scipy.stats.spearmanr(model[w], model[w_two]).statistic
-                current_pred.append(partial_pred)
-        current_pred = numpy.average(current_pred)
-        pred.append(current_pred)
+        #current_pred = list()
+        #for w in w_ones:
+        #    for w_two in w_twos:
+        #        ### always using dissimilarity
+        #        partial_pred = scipy.spatial.distance.cosine(model[w], model[w_two])
+        #        #partial_pred = 1 - scipy.stats.spearmanr(model[w], model[w_two]).statistic
+        #        current_pred.append(partial_pred)
+        #current_pred = numpy.average(current_pred)
+        #pred.append(current_pred)
+        pred.append(model_sims[('_'.join(w_ones), '_'.join(w_twos))])
     corr = scipy.stats.spearmanr(real, pred).statistic
-    '''
-    try:
-        #corr = scipy.stats.pearsonr(real, pred).statistic
-        corr = scipy.stats.spearmanr(real, pred).statistic
-    except ValueError:
-        corr = None
-    '''
-    return corr, missing_words
+    return corr
 
 def write_res(args, case, dataset_name, corr):
     corpus_fold = case.split('_')[1] if 'ppmi' in case else case
@@ -262,18 +161,69 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
         datasets = bootstrapper(args, datasets, )
     else:
         datasets = {k : [v] for k, v in datasets.items()}
-    for dataset_name, dataset in datasets.items():
-        assert type(dataset) == list
-        assert len(dataset) in [1, 1000]
+    ### time shortcut 1:
+    ### we pre-load all sim tests
+    print('now pre-checking words...')
+    all_sims_data = dict()
+    to_be_computed = set()
+    with tqdm() as counter:
+        for dataset_name, dataset in datasets.items():
+            assert type(dataset) == list
+            assert len(dataset) in [1, 1000]
+            all_sims_data[dataset_name] = list()
+            missing_words = set()
+            for iter_dataset in dataset:
+                iter_dict = dict()
+                for s, s_data in iter_dataset.items():
+                    test_sims, new_miss = check_dataset_words(
+                                                              args, 
+                                                              dataset_name, 
+                                                              s_data, 
+                                                              present_words, 
+                                                              trans_from_en,
+                                                              )
+                    #all_sims_data[dataset_name][iter_dataset].append(test_sims)
+                    iter_dict[s] = test_sims
+                    missing_words = missing_words.union(new_miss)
+                    for w_ones, w_twos, v in test_sims:
+                        key = ('_'.join(w_ones), '_'.join(w_twos))
+                        to_be_computed.add(key)
+                all_sims_data[dataset_name].append(iter_dict)
+                counter.update(1)
+    ### time-shortcut 2:
+    ### we pre-compute all pairwise similarities
+    ws_vecs = dict()
+    ws_sims = dict()
+    print('now pre-computing model dissimilarities...')
+    with tqdm() as counter:
+        for joint_ones, joint_twos in to_be_computed:
+            ### first words
+            w_ones = tuple(joint_ones.split('_'))
+            try:
+                vecs_ones = ws_vecs[w_ones]
+            except KeyError:
+                ws_vecs[w_ones] = numpy.average([model[w] for w in w_ones], axis=0)
+                vecs_ones = ws_vecs[w_ones]
+            ### second words
+            w_twos = tuple(joint_twos.split('_'))
+            try:
+                vecs_twos = ws_vecs[w_twos]
+            except KeyError:
+                ws_vecs[w_twos] = numpy.average([model[w] for w in w_twos], axis=0)
+                vecs_twos = ws_vecs[w_twos]
+            sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
+            ws_sims[(joint_ones, joint_twos)] = sim
+            counter.update(1)
+    ### now we can run correlations
+    #for dataset_name, dataset in datasets.items():
+    for dataset_name, dataset in all_sims_data.items():
         corr = list()
-        missing_words = set()
         ### bootstrapping/iterations should be hard-coded now...
         for iter_dataset in tqdm(dataset):
             iter_corrs = list()
             for s, s_data in iter_dataset.items():
-                curr_corr, new_miss = compute_corr(args, model, s_data, dataset_name, present_words, trans_from_en)
-                missing_words = missing_words.union(new_miss)
-                if corr == None:
+                curr_corr = compute_corr(ws_sims, s_data)
+                if curr_corr == None:
                     print('error with {}'.format([args.lang, case, dataset_name]))
                     continue
                 iter_corrs.append(curr_corr)
@@ -448,7 +398,7 @@ def load_static_model(args):
                                         )
                                     )
         vocab = model.words
-    elif case == 'conceptnet':
+    elif args.model == 'conceptnet':
         with open(
                 os.path.join(
                     base_folder,
@@ -456,7 +406,7 @@ def load_static_model(args):
                    ), 'rb') as i:
             model = pickle.load(i)
         vocab = model.keys()
-    elif case == 'fasttext_aligned':
+    elif args.model == 'fasttext_aligned':
         with open(
                   os.path.join(
                             base_folder,

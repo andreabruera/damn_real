@@ -32,7 +32,8 @@ else:
     vocab, coocs, freqs = load_count_coocs(args)
     ### keeping row words that are actually available
     row_words = [w for w in rows if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0]
-    present_words = check_present_words(args, row_words, vocab)
+    present_words = check_present_words(args, row_words, list(vocab.keys()))
+    '''
     #
     ### mitchell hand-picked dimensions
     #
@@ -49,9 +50,9 @@ else:
     #
     ### lancaster
     #
-    filt_ratings = {w : freqs[w] for w in lancaster_ratings[lang].keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
+    filt_ratings = {w : freqs[w] for w in lancaster_ratings[args.lang].keys() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
     sorted_ratings = [w[0] for w in sorted(filt_ratings.items(), key=lambda item: item[1], reverse=True)]
-    filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings[lang].items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
+    filt_perc = {w : v['minkowski3'] for w, v in lancaster_ratings[args.lang].items() if w in vocab.keys() and w in freqs.keys() and vocab[w]!=0}
     sorted_perc = [w[0] for w in sorted(filt_perc.items(), key=lambda item: item[1], reverse=True)]
     for freq in tqdm([
                       100, 
@@ -76,8 +77,8 @@ else:
             for selection_mode in [
                                    'top', 
                                    #'random', 
-                                   'hi-perceptual', 
-                                   'lo-perceptual',
+                                   #'hi-perceptual', 
+                                   #'lo-perceptual',
                                    ]: 
                 key = 'ppmi_{}_lancaster_freq_{}{}_{}_words'.format(args.model, selection_mode, row_mode, freq)
                 if selection_mode == 'top':
@@ -102,12 +103,8 @@ else:
                         ctx_words = set([sorted_ratings[i] for i in idxs]+row_words)
                     else:
                         ctx_words = [sorted_ratings[i] for i in idxs]
-                test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words)
-                #ctx_idxs = [vocab[w] for w in ctx_words]
-                #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                #model = {k : v for k, v in trans_pmi_vecs.items()}
-                #curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                #test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+                test_count_model(args, key, datasets, present_words, trans_from_en, coocs, vocab, row_words, ctx_words)
+    '''
     #
     ### top-n frequencies
     #
@@ -128,6 +125,33 @@ else:
                       17500,
                       20000, 
                       25000,
+                      30000,
+                      35000,
+                      40000,
+                      45000,
+                      50000,
+                      60000,
+                      70000,
+                      80000,
+                      100000,
+                      150000,
+                      200000,
+                      250000,
+                      300000,
+                      350000,
+                      400000,
+                      450000,
+                      500000,
+                      550000,
+                      600000,
+                      650000,
+                      700000,
+                      750000,
+                      800000,
+                      850000,
+                      900000,
+                      950000,
+                      100000,
                       ]):
         for row_mode in [
                          '_', 
@@ -151,9 +175,4 @@ else:
                     else:
                         ctx_words = [sorted_freqs[i] for i in idxs]
                 ### using the basic required vocab for all tests as a basis set of words
-                test_count_model(args, key, datasets, trans_from_en, coocs, vocab, row_words, ctx_words)
-                #ctx_idxs = [vocab[w] for w in ctx_words]
-                #trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
-                #model = {k : v for k, v in trans_pmi_vecs.items()}
-                #curr_vocab = [w for w in trans_pmi_vecs.keys()]
-                #test_model(lang, key, model, curr_vocab, datasets, trans_from_en)
+                test_count_model(args, key, datasets, present_words, trans_from_en, coocs, vocab, row_words, ctx_words)
