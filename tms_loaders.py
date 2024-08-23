@@ -3,6 +3,50 @@ import os
 
 from utf_utils import transform_german_word
 
+def read_de_pmtg_production_tms(args):
+    lines = list()
+    with open(os.path.join(
+                           'data',
+                           'tms',
+                           'de_pmtg-production.tsv')) as i:
+        for l_i, l in enumerate(i):
+            line = l.split('\t')
+            if l_i == 0:
+                header = [w.strip() for w in line]
+                continue
+            lines.append([w.strip() for w in line])
+    stims = set([l[header.index('stimulation')] for l in lines])
+    conds = {
+             'u' : 'unrelated',
+             'r' : 'related',
+             'ur' : 'all-but-same',
+             'urt' : 'all',
+             }
+    all_sims = dict()
+    test_vocab = set()
+    for name, cond in conds.items():
+        for stim in stims:
+            print(name)
+            key = 'de_pmtg-production_{}#{}-{}'.format(args.stat_approach, cond, stim)
+            current_cond = [l for l in lines if l[header.index('condition')].strip() in name and \
+                                                l[header.index('stimulation')] == stim and \
+                                                l[header.index('response')] not in ['0', 'NA'] and \
+                                                l[header.index('rt')] not in ['0', 'NA']
+                                                ]
+            log_rts = [numpy.log10(float(l[header.index('rt')])) for l in current_cond]
+            rts = [float(l[header.index('rt')]) for l in current_cond]
+            subjects = [int(l[header.index('sbj')]) for l in current_cond]
+            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('picture')].split('.')[0])]
+            test_vocab = test_vocab.union(set(vocab_w_ones))
+            vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('distractor')])]
+            test_vocab = test_vocab.union(set(vocab_w_twos))
+            w_ones = [l[header.index('picture')].split('.')[0] for l in current_cond]
+            w_twos = [l[header.index('distractor')].strip() for l in current_cond]
+            all_sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+    final_sims = reorganize_tms_sims(all_sims)
+
+    return final_sims, test_vocab
+
 def read_de_sem_phon_tms(args):
     sims = dict()
     test_vocab = set()
@@ -30,6 +74,8 @@ def read_de_sem_phon_tms(args):
             if len(line) < len(header)-1:
                 print(line)
                 continue
+            ### removing trailing spaces
+            line = [w.strip() for w in line]
             lines.append(line)
     print('sem trials containing a NA: {}'.format(len(na_lines)))
     ###

@@ -14,12 +14,12 @@ from tqdm import tqdm
 
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
 from meeg_loaders import read_dirani_n400
-from behav_loaders import read_italian_behav, read_german_behav
-from tms_loaders import read_it_distr_learn_tms, read_de_sound_act_tms, read_de_sem_phon_tms
+from behav_loaders import read_italian_behav, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav
+from tms_loaders import read_it_distr_learn_tms, read_de_pmtg_production_tms, read_de_sound_act_tms, read_de_sem_phon_tms
 from simrel_norms_loaders import read_men, read_simlex, read_ws353
 from utf_utils import transform_german_word
 
-def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en, ):
+def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en, trans_words):
     #print('checking if words appear in the dictionary...')
     missing_words = set()
     test_sims = list()
@@ -67,19 +67,32 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
         else:
             if args.lang == 'de':
                 for word in first_word:
+                    try:
+                        w_ones.extend(trans_words[word])
+                    except KeyError:
+                        curr_words = transform_german_word(word)
+                        #print(word)
+                        trans_words[word] = list()
+                        for w in curr_words:
+                            try:
+                                present_words.index(w)
+                                trans_words[word].append(w)
+                            except ValueError:
+                                continue
+                        w_ones.extend(trans_words[word])
+                try:
+                    w_twos.extend(trans_words[ws[1]])
+                except KeyError:
+                    curr_words = transform_german_word(ws[1])
                     #print(word)
-                    for w in transform_german_word(word):
+                    trans_words[ws[1]] = list()
+                    for w in curr_words:
                         try:
                             present_words.index(w)
+                            trans_words[ws[1]].append(w)
                         except ValueError:
                             continue
-                        w_ones.append(w)
-                for w in transform_german_word(ws[1]):
-                    try:
-                        present_words.index(w)
-                    except ValueError:
-                        continue
-                    w_twos.append(w)
+                    w_twos.extend(trans_words[word])
             else:
                 for word in first_word:
                     for w in [word.lower(), word.capitalize()]:
@@ -103,7 +116,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
         if marker:
             test_sims.append((w_ones, w_twos, val))
             #print(w_ones)
-    return test_sims, missing_words
+    return test_sims, missing_words, trans_words
 
 def compute_corr(model_sims, test_sims):
     #test_sims, missing_words = check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en,)
@@ -167,6 +180,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
     all_sims_data = dict()
     to_be_computed = set()
     with tqdm() as counter:
+        trans_words = dict()
         for dataset_name, dataset in datasets.items():
             assert type(dataset) == list
             assert len(dataset) in [1, 1000]
@@ -175,12 +189,13 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
             for iter_dataset in dataset:
                 iter_dict = dict()
                 for s, s_data in iter_dataset.items():
-                    test_sims, new_miss = check_dataset_words(
+                    test_sims, new_miss, trans_words = check_dataset_words(
                                                               args, 
                                                               dataset_name, 
                                                               s_data, 
                                                               present_words, 
                                                               trans_from_en,
+                                                              trans_words
                                                               )
                     #all_sims_data[dataset_name][iter_dataset].append(test_sims)
                     iter_dict[s] = test_sims
@@ -293,7 +308,8 @@ def bootstrapper(args, full_data, ):
     tms_datasets = [
                    'it_distr-learn',
                    'de_sem-phon', 
-                   'de_sound-act_'
+                   'de_sound-act',
+                   'de_pmtg-prod',
                    ]
     if args.dataset not in tms_datasets:
         n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
@@ -350,7 +366,10 @@ def check_args(args):
     if '_' in args.dataset:
         assert args.dataset.split('_')[0] == args.lang
     if args.dataset == 'men' and args.lang != 'en':
-        raise AssertionError
+        raise RuntimeError()
+    if 'lexical' in args.dataset or 'naming' in args.dataset:
+        if args.stat_approach!= 'simple':
+            raise RuntimeError()
 
 def load_dataset(args, trans_from_en):
     if args.dataset == 'en_men':
@@ -372,10 +391,18 @@ def load_dataset(args, trans_from_en):
         data, vocab = read_german_behav(args)
     if 'it_behav' in args.dataset:
         data, vocab = read_italian_behav(args)
+    if 'it_deafhearing' in args.dataset:
+        data, vocab = read_italian_deafhearing(args)
+    if 'it_blindsighted' in args.dataset:
+        data, vocab = read_italian_blindsighted(args)
+    if 'mouse' in args.dataset:
+        data, vocab = read_italian_mouse(args)
     if 'sem-phon' in args.dataset:
         data, vocab = read_de_sem_phon_tms(args)
     if 'sound-act' in args.dataset:
         data, vocab, prototypes = read_de_sound_act_tms(args)
+    if 'pmtg-prod' in args.dataset:
+        data, vocab = read_de_pmtg_production_tms(args)
     if 'distr-learn' in args.dataset:
         data, vocab = read_it_distr_learn_tms(args)
     return vocab, data
@@ -463,8 +490,12 @@ def args():
                                 ### behav
                                 'de_behav',
                                 'it_behav',
+                                'it_mouse',
+                                'it_deafhearing',
+                                'it_blindsighted',
                                 ### tms
                                 'de_sem-phon',
+                                'de_pmtg-prod',
                                 'de_sound-act',
                                 'it_distr-learn',
                                 ],
@@ -473,6 +504,7 @@ def args():
     parser.add_argument(
                         '--stat_approach',
                         choices=['simple', 'bootstrap', 'residualize'],
+                        required=True,
                         )
     #senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   
     args = parser.parse_args()

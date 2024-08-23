@@ -31,8 +31,8 @@ for root, direc, fz in os.walk(
                     results[lang] = dict()
                 model = line[1]
                 if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-                    if 'lancaster' not in l:
-                        continue
+                    #if 'lancaster' not in l:
+                    #    continue
                     if 'random' in l:
                         continue
                     #if 'hi-' or 'lo-' in l:
@@ -47,6 +47,8 @@ for root, direc, fz in os.walk(
                 assert task[:3] == '{}_'.format(lang)
                 task_setup = task[3:].split('#')[0]
                 if 'distr-learn' in task_setup:
+                    mode = 'tms'
+                elif 'pmtg-prod' in task_setup:
                     mode = 'tms'
                 elif 'sem-phon' in task_setup:
                     mode = 'tms'
@@ -142,8 +144,8 @@ best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_r
 best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
 '''
 best_ft = 'fasttext'
-#best_other = 'cc100_lancaster_freq_top__5000.0'
-best_other = 'fasttext'
+best_other = 'opensubs_abs_freq_top__50000.0'
+#best_other = 'fasttext'
 #best_other = 'cc100_lancaster_freq_hi-perceptual__2500.0'
 print('using models: {}, {}'.format(best_ft, best_other))
 
@@ -151,8 +153,8 @@ print('using models: {}, {}'.format(best_ft, best_other))
 ### just clear-cut pairwise comparisons
 for mode in [
              'residualize',
-             'bootstrap', 
-             'simple',
+             #'bootstrap', 
+             #'simple',
              ]:
     for l, l_data in results.items():
         if l == 'en':
@@ -232,10 +234,13 @@ for mode in [
                                 )
             ### results for other model
             other_model = best_other
-            #first_part = '_'.join(other_model.split('_')[:-1])
-            #second_part = float(other_model.split('_')[-1])
-            #ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
-            ys = [l_data['tms'][c_t]['fasttext'] for c_t in curr_ts]
+            first_part = '_'.join(other_model.split('_')[:-1])
+            second_part = float(other_model.split('_')[-1])
+            ### for italian we use a larger vocabulary
+            if l == 'it':
+                second_part = 200000.
+            ys = [l_data['tms'][c_t][first_part][second_part] for c_t in curr_ts]
+            #ys = [l_data['tms'][c_t]['fasttext'] for c_t in curr_ts]
             ax.bar(
                    [x+0.15 for x in range(len(xs))],
                    [numpy.average(y) for y in ys],
@@ -311,7 +316,7 @@ for mode in [
     significance = 0.05
     for model in [
                   best_ft, 
-                  #best_other,
+                  best_other,
                   ]:
         for l, l_data in results.items():
             if l != 'de':
@@ -326,6 +331,8 @@ for mode in [
             #print(set(all_rel_tasks))
             #assert len(set(all_rel_tasks)) == 1
             for soundact in all_rel_tasks:
+                if model != 'fastext' and 'detailed' in soundact:
+                    continue
                 if 'detailed' in soundact:
                     jump=8
                     width_max=3
@@ -397,7 +404,7 @@ for mode in [
                     else:
                         first_part = '_'.join(model.split('_')[:-1])
                         second_part = float(model.split('_')[-1])
-                        ys = [l_data[c_t][first_part][second_part] for c_t in curr_ts]
+                        ys = [l_data['tms'][c_t][first_part][second_part] for c_t in curr_ts]
                     width=width_max/len(ys)
                     ax.bar(
                            [x+corr for x in range(len(ys))],

@@ -30,7 +30,6 @@ with tqdm() as counter:
                         else:
                             short_model = '_'.join(model.split('_')[1:-2])
                     dataset = line[2]
-                    #print(dataset)
                     if 'en_men' in dataset:
                         task = 'simrel_norms'
                     elif '999' in dataset:
@@ -43,38 +42,23 @@ with tqdm() as counter:
                         task = 'meeg'
                     elif 'abstract' in dataset:
                         task = 'fmri'
-                    elif 'de_behav' in dataset:
+                    elif 'lexical' in dataset:
                         task = 'behavioural'
-                    elif 'it_behav' in dataset:
+                    elif 'naming' in dataset:
+                        task = 'behavioural'
+                    elif 'abs-conc-decision' in dataset:
                         task = 'behavioural'
                     elif 'sem-phon' in dataset:
                         task = 'tms'
                     elif 'sound-act' in dataset:
                         task = 'tms'
+                    elif 'pmtg-prod' in dataset:
+                        task = 'tms'
                     elif 'distr-learn' in dataset:
                         task = 'tms'
                     else:
-                        print(dataset)
                         #continue
-                        raise AssertionError
-                    '''
-                    if 'sem-' in dataset:
-                        task = 'tms'
-                    elif 'fern' in dataset or 'abstract-ipc' in dataset:
-                        task = 'fmri'
-                    elif dataset in ['1-abstract', '2-abstract', '1-concrete', '2-concrete']:
-                        task = 'fmri'
-                    elif 'dirani' in dataset:
-                        task = 'meg'
-                    elif 'lexical' in dataset or 'naming' in dataset:
-                        task = 'behavioural'
-                    elif '999' in dataset or '353' in dataset or 'men' in dataset:
-                        task = 'sim-rel_norms'
-                    else:
-                        print(dataset)
-                        continue
-                        #raise AssertionError
-                    '''
+                        raise RuntimeError
                     if task not in results[lang].keys():
                         results[lang][task] = {dataset : dict()}
                     if dataset not in results[lang][task].keys():
@@ -92,6 +76,40 @@ with tqdm() as counter:
     for lang, l_res in results.items():
         for general_task, task_res in l_res.items():
             for task, t_res in task_res.items():
+                if 'en_men' in task:
+                    pass
+                elif '999' in task:
+                    pass
+                elif '353' in task:
+                    pass
+                elif 'fern' in task:
+                    ymin = -.05
+                    ymax = .15
+                elif 'dirani' in task:
+                    pass
+                elif 'abstract' in task:
+                    pass
+                elif 'lexical' in task:
+                    ymin = -0.05
+                    ymax = 0.25
+                elif 'naming' in task:
+                    ymin = -0.05
+                    ymax = 0.15
+                elif 'abs-conc-decision' in task:
+                    ymin = -.1
+                    ymax = .1
+                elif 'sem-phon' in task:
+                    ymin = -0.05
+                    ymax = 0.35
+                elif 'sound-act' in task:
+                    ymin = -.3
+                    ymax = .3
+                elif 'distr-learn' in task:
+                    ymin = -.1
+                    ymax = .3
+                elif 'pmtg-prod' in task:
+                    ymin = -0.13
+                    ymax = 0.35
                 fig, ax = pyplot.subplots(
                                           constrained_layout=True,
                                           figsize=(20, 10),
@@ -180,8 +198,12 @@ with tqdm() as counter:
                 ax.set_ylim(
                             #bottom=min(0, min(alls))-corr, 
                             #top=max(0, max(alls))+corr
-                            bottom=-.2,
-                            top=.2,
+                            bottom=ymin,
+                            top=ymax,
+                            )
+                ax.set_xlim(
+                            #left=0., 
+                            right=500000,
                             )
                 ### legend
                 pyplot.legend(

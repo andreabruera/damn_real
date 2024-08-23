@@ -104,6 +104,7 @@ def load_count_coocs(args):
                            ), 'rb') as i:
         freqs = pickle.load(i)
     print('total size of the corpus: {:,} tokens'.format(sum(freqs.values())))
+    print('total size of the vocabulary: {:,} words'.format(max(vocab.values())))
     with open(os.path.join(
                             '/',
                             'data',

@@ -4553,7 +4553,7 @@ subj	trial	item	utterance	ERR	stim	session	task	RT	difficulty
 002	51	Doktor.bmp	Patient	1	aIFG	3	sem	1560,45022205281	0
 003	51	Doktor.bmp	Arzt	0	pIFG	2	sem	1509,99999999999	0
 004	51	Doktor.bmp	Arzt	0	pIFG	3	sem	1617,12554626765	0
-005	51	Doktor.bmp	Hausm	1	vertex	2	sem	4054,16448750565	0
+005	51	Doktor.bmp	Hausarzt	1	vertex	2	sem	4054,16448750565	0
 006	51	Doktor.bmp	Patient	1	vertex	1	sem	1551,00433468367	0
 007	51	Doktor.bmp	Professor	0	pIFG	2	sem	1900,50216734183	0
 008	51	Doktor.bmp	Arzt	0	aIFG	3	sem	2424,74891632908	0
