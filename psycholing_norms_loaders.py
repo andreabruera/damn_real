@@ -3,7 +3,7 @@ import os
 
 from utf_utils import transform_german_word
 
-def load_lancaster_en_de_it():
+def load_lancaster_en_de_it(args):
     print('loading original lancaster ratings...')
     lancaster_ratings = {
                          'en' : read_lancaster_ratings(),
@@ -20,7 +20,12 @@ def load_lancaster_en_de_it():
             for l in i:
                 line = l.strip().split('\t')
                 if lang == 'de':
-                    for w in transform_german_word(line[0].lower()):
+                    #if 'frequency' in args.model:
+                    #    ws = line[0].lower()
+                    #else:
+                    #    ws = transform_german_word(line[0].lower())
+                    ws = transform_german_word(line[0].lower())
+                    for w in ws:
                         ### ratings
                         try:
                             lancaster_ratings['de'][w] = lancaster_ratings['en'][line[1]]

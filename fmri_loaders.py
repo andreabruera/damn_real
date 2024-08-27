@@ -4,6 +4,71 @@ import re
 
 from utf_utils import transform_basic_word, transform_german_word
 
+def read_fern_areas(args, trans_from_en):
+
+    required_dataset = int(re.sub('\D', '', args.dataset))
+    #dis_sims = {1 : {'all' : dict()}, 2 : dict()}
+    #dis_sims = {'{}_fern{}_{}#{}'.format(args.lang, required_dataset, args.stat_approach, area) : {k : v for k, v in dis_sims[required_dataset].items()} for area in [
+    #            'L_IFG', 
+    #            'L_PMTG', 
+    #            'L_inferiorparietal'
+    #            ]
+    #            }
+    dis_sims = dict()
+    test_vocab = set()
+    areas = [
+            'L_IFG', 
+            'L_PMTG', 
+            'L_inferiorparietal'
+            ]
+    #for dataset in dis_sims.keys():
+    #    #dis_sims[dataset] = {'all' : dict()}
+    for area in areas:
+        #area = dataset.split('#')[-1]
+        key = '{}_fern{}_{}#{}'.format(args.lang, required_dataset, args.stat_approach, area)
+        if required_dataset == 1:
+            dis_sims[key] = {'all' : dict()}
+        else:
+            dis_sims[key] = dict()
+        file_path = os.path.join(
+                                 'data', 
+                                 'fmri', 
+                                 'fernandino', 
+                                 'fern{}_{}_similarities.tsv'.format(required_dataset, area)
+                                 )
+        #print(file_path)
+        with open(file_path) as i:
+            for l_i, l in enumerate(i):
+                if l_i == 0:
+                    continue
+                line = l.strip().split('\t')
+                test_vocab = test_vocab.union(set(
+                    transform_basic_word(line[0])+transform_basic_word(line[1])
+                    ))
+                if required_dataset == 1:
+                    sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
+                    ### we want dissimilarity
+                    dis_sims[key]['all'][(line[0], line[1])] = 1 - sim
+                else:
+                    for sub, sub_val in enumerate(line[2:]):
+                        if sub not in dis_sims[key].keys():
+                            dis_sims[key][sub] = dict()  
+                        dis_sims[key][sub][(line[0], line[1])] = 1 - float(sub_val)
+    if args.lang != 'en':
+        print(args.lang)
+        trans_vocab = set()
+        for w in test_vocab:
+            try:
+                trs_w = trans_from_en[args.lang][w]
+            except KeyError:
+                print(w)
+                continue
+            trans_vocab = trans_vocab.union(trs_w)
+        del test_vocab
+        test_vocab = trans_vocab.copy()
+
+    return dis_sims, test_vocab
+
 def read_fern(args, trans_from_en):
 
     required_dataset = int(re.sub('\D', '', args.dataset))

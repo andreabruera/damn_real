@@ -11,6 +11,18 @@ def test_count_model(args, key, datasets, present_words, trans_from_en, coocs, v
     curr_vocab = [w for w in trans_pmi_vecs.keys()]
     test_model(args, key, model, curr_vocab, datasets, present_words, trans_from_en)
 
+def test_frequency_model(args, key, datasets, present_words, trans_from_en, freqs, vocab, row_words):
+    trans_pmi_vecs = build_frequency_vecs(args, freqs, row_words, )
+    model = {k : v for k, v in trans_pmi_vecs.items()}
+    curr_vocab = [w for w in trans_pmi_vecs.keys()]
+    test_model(args, key, model, curr_vocab, datasets, present_words, trans_from_en)
+
+def test_coocs_model(args, key, datasets, present_words, trans_from_en, coocs, vocab, row_words):
+    trans_pmi_vecs = build_coocs_vecs(args, coocs, row_words, vocab)
+    model = {k : v for k, v in trans_pmi_vecs.items()}
+    #curr_vocab = [w for w in trans_pmi_vecs.keys()]
+    test_model(args, key, model, row_words, datasets, present_words, trans_from_en)
+
 def read_mitchell_25dims(lang):
     dimensions = list()
     with open(os.path.join('data', 'fmri', 'mitchell', 'mitchell_dimensions_{}.tsv'.format(lang))) as i:
@@ -21,6 +33,33 @@ def read_mitchell_25dims(lang):
     assert len(dimensions) == 25
 
     return dimensions
+
+def build_coocs_vecs(args, coocs, row_words, vocab):
+    pmi_mtrx = numpy.array(
+                             [
+                              [coocs[vocab[w]][vocab[w_two]] if vocab[w_two] in coocs[vocab[w]].keys() else 0 for w_two in row_words]
+                              for w in row_words])
+    assert pmi_mtrx.shape[0] == len(row_words)
+    assert pmi_mtrx.shape[1] == len(row_words)
+    trans_pmi_vecs = {w : {w_two : pmi_mtrx[w_i][w_two_i] for w_two_i, w_two in enumerate(row_words)} for w_i, w in enumerate(row_words)}
+    for v in trans_pmi_vecs.values():
+        for v_two in v.values():
+            assert not numpy.isnan(v_two)
+
+    return trans_pmi_vecs
+
+def build_frequency_vecs(args, freqs, row_words, ):
+    pmi_mtrx = numpy.array(
+                             [
+                              freqs[w]
+                              for w in row_words]
+                              )
+    assert pmi_mtrx.shape[0] == len(row_words)
+    trans_pmi_vecs = {w : pmi_mtrx[w_i] for w_i, w in enumerate(row_words)}
+    for v in trans_pmi_vecs.values():
+        assert not numpy.isnan(v)
+
+    return trans_pmi_vecs
 
 def build_ppmi_vecs(coocs, vocab, row_words, col_words, smoothing=False, power=1.):
     pmi_mtrx = numpy.array(
@@ -71,20 +110,25 @@ def load_count_coocs(args):
         else:
             min_count = 100
     else:
-        if args.model == 'cc100':
-            min_count = 100
-        else:
-            min_count = 10
+        #if args.model == 'cc100':
+        #    min_count = 100
+        #else:
+        min_count = 10
+    print(min_count)
+    f = args.model.split('-')[0]
     with open(os.path.join(
                             '/',
                             'data',
                             'tu_bruera',
                             'counts',
                            args.lang, 
-                           args.model, 
+                           #args.model, 
+                           f,
+                           #'{}_{}_cased_vocab_min_{}.pkl'.format(
                            '{}_{}_uncased_vocab_min_{}.pkl'.format(
                                                                    args.lang, 
-                                                                   args.model, 
+                                                                   #args.model, 
+                                                                   f,
                                                                    min_count
                                                                    ),
                            ), 'rb') as i:
@@ -96,28 +140,54 @@ def load_count_coocs(args):
                             'tu_bruera',
                             'counts',
                            args.lang, 
-                           args.model, 
+                           #args.model, 
+                           f,
+                           #'{}_{}_cased_word_freqs.pkl'.format(
                            '{}_{}_uncased_word_freqs.pkl'.format(
                                                                  args.lang, 
-                                                                 args.model
+                                                                 #args.model
+                                                                 f
                                                                  ),
                            ), 'rb') as i:
         freqs = pickle.load(i)
     print('total size of the corpus: {:,} tokens'.format(sum(freqs.values())))
     print('total size of the vocabulary: {:,} words'.format(max(vocab.values())))
-    with open(os.path.join(
+    if 'fwd' not in args.model and 'surprisal' not in args.model:
+        f = os.path.join(
                             '/',
                             'data',
                             #'u_bruera_software',
                             'tu_bruera',
                             'counts',
                             args.lang, 
-                            args.model, 
-                           '{}_{}_coocs_uncased_min_{}_win_4.pkl'.format(
+                            #args.model, 
+                            f,
+                           #'{}_{}_coocs_cased_min_{}_win_20.pkl'.format(
+                           '{}_{}_coocs_uncased_min_{}_win_20.pkl'.format(
                                                                          args.lang,
-                                                                         args.model, 
+                                                                         #args.model, 
+                                                                         f,
                                                                          min_count
                                                                          ),
-                           ), 'rb') as i:
+                           )
+    else:
+        f = os.path.join(
+                            '/',
+                            'data',
+                            #'u_bruera_software',
+                            'tu_bruera',
+                            'counts',
+                            args.lang, 
+                            #args.model, 
+                            f,
+                           #'{}_{}_forward-coocs_cased_min_{}_win_20.pkl'.format(
+                           '{}_{}_forward-coocs_uncased_min_{}_win_20.pkl'.format(
+                                                                         args.lang,
+                                                                         #args.model, 
+                                                                         f,
+                                                                         min_count
+                                                                         ),
+                           )
+    with open(f, 'rb') as i:
         coocs = pickle.load(i)
     return vocab, coocs, freqs

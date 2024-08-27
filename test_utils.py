@@ -12,7 +12,7 @@ from scipy import spatial
 from sklearn import linear_model
 from tqdm import tqdm
 
-from fmri_loaders import read_abstract_ipc, read_fern, read_fern_categories
+from fmri_loaders import read_abstract_ipc, read_fern, read_fern_areas, read_fern_categories
 from meeg_loaders import read_dirani_n400
 from behav_loaders import read_italian_behav, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav
 from tms_loaders import read_it_distr_learn_tms, read_de_pmtg_production_tms, read_de_sound_act_tms, read_de_sem_phon_tms
@@ -36,6 +36,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
         marker = True
         w_ones = list()
         w_twos = list()
+        ### hard-coded translations
         if 'fern' in dataset_name and args.lang in ['de', 'it']:
             ### word one
             for word in first_word:
@@ -66,12 +67,12 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                 pass
         else:
             if args.lang == 'de':
+                ### first words
                 for word in first_word:
                     try:
                         w_ones.extend(trans_words[word])
                     except KeyError:
                         curr_words = transform_german_word(word)
-                        #print(word)
                         trans_words[word] = list()
                         for w in curr_words:
                             try:
@@ -80,11 +81,11 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                             except ValueError:
                                 continue
                         w_ones.extend(trans_words[word])
+                ### second words
                 try:
                     w_twos.extend(trans_words[ws[1]])
                 except KeyError:
                     curr_words = transform_german_word(ws[1])
-                    #print(word)
                     trans_words[ws[1]] = list()
                     for w in curr_words:
                         try:
@@ -92,7 +93,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                             trans_words[ws[1]].append(w)
                         except ValueError:
                             continue
-                    w_twos.extend(trans_words[word])
+                    w_twos.extend(trans_words[ws[1]])
             else:
                 for word in first_word:
                     for w in [word.lower(), word.capitalize()]:
@@ -125,18 +126,9 @@ def compute_corr(model_sims, test_sims):
     pred = list()
     for w_ones, w_twos, v in test_sims:
         real.append(v)
-        ### all possible transformations...
-        #current_pred = list()
-        #for w in w_ones:
-        #    for w_two in w_twos:
-        #        ### always using dissimilarity
-        #        partial_pred = scipy.spatial.distance.cosine(model[w], model[w_two])
-        #        #partial_pred = 1 - scipy.stats.spearmanr(model[w], model[w_two]).statistic
-        #        current_pred.append(partial_pred)
-        #current_pred = numpy.average(current_pred)
-        #pred.append(current_pred)
         pred.append(model_sims[('_'.join(w_ones), '_'.join(w_twos))])
-    corr = scipy.stats.spearmanr(real, pred).statistic
+    #corr = scipy.stats.spearmanr(real, pred).statistic
+    corr = scipy.stats.pearsonr(real, pred).statistic
     return corr
 
 def write_res(args, case, dataset_name, corr):
@@ -211,26 +203,62 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
     ws_sims = dict()
     print('now pre-computing model dissimilarities...')
     with tqdm() as counter:
-        for joint_ones, joint_twos in to_be_computed:
-            ### first words
-            w_ones = tuple(joint_ones.split('_'))
-            try:
-                vecs_ones = ws_vecs[w_ones]
-            except KeyError:
-                ws_vecs[w_ones] = numpy.average([model[w] for w in w_ones], axis=0)
-                vecs_ones = ws_vecs[w_ones]
-            ### second words
-            w_twos = tuple(joint_twos.split('_'))
-            try:
-                vecs_twos = ws_vecs[w_twos]
-            except KeyError:
-                ws_vecs[w_twos] = numpy.average([model[w] for w in w_twos], axis=0)
-                vecs_twos = ws_vecs[w_twos]
-            sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
-            ws_sims[(joint_ones, joint_twos)] = sim
-            counter.update(1)
+        if 'cond-prob' in args.model or 'surprisal' in args.model:
+            for joint_ones, joint_twos in to_be_computed:
+                ### first words
+                w_ones = tuple(joint_ones.split('_'))
+                ### second words
+                w_twos = tuple(joint_twos.split('_'))
+                cooc = list()
+                for one in w_ones:
+                    for two in w_twos:
+                        try:
+                            cooc.append(model[one][two])
+                        except KeyError:
+                            continue
+                ### negative!
+                if 'log10' in args.model or 'surprisal' in args.model:
+                    sim = -numpy.log10(sum(cooc)+1)
+                else:
+                    sim = -sum(cooc)
+                ws_sims[(joint_ones, joint_twos)] = sim
+                counter.update(1)
+        else:
+            for joint_ones, joint_twos in to_be_computed:
+                ### first words
+                w_ones = tuple(joint_ones.split('_'))
+                try:
+                    vecs_ones = ws_vecs[w_ones]
+                except KeyError:
+                    if 'abs-prob' in args.model:
+                        ws_vecs[w_ones] = numpy.sum([model[w] for w in w_ones], axis=0)
+                    else:
+                        ws_vecs[w_ones] = numpy.average([model[w] for w in w_ones], axis=0)
+                    vecs_ones = ws_vecs[w_ones]
+                ### second words
+                w_twos = tuple(joint_twos.split('_'))
+                try:
+                    vecs_twos = ws_vecs[w_twos]
+                except KeyError:
+                    if 'abs-prob' in args.model:
+                        ws_vecs[w_twos] = numpy.sum([model[w] for w in w_twos], axis=0)
+                    else:
+                        ws_vecs[w_twos] = numpy.average([model[w] for w in w_twos], axis=0)
+                    vecs_twos = ws_vecs[w_twos]
+                if 'abs-prob' in args.model:
+                    ### negative!
+                    if 'log' in args.model:
+                        #print('using smoothed log')
+                        sim = -numpy.log10(sum([vecs_ones, vecs_twos])+1)
+                    else:
+                        ### negative!
+                        sim = -sum([vecs_ones, vecs_twos])
+                else:
+                    sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
+                ws_sims[(joint_ones, joint_twos)] = sim
+                counter.update(1)
     ### now we can run correlations
-    #for dataset_name, dataset in datasets.items():
+    #for dataset_name, dataset in datasets.items(): for dataset_name, dataset
     for dataset_name, dataset in all_sims_data.items():
         corr = list()
         ### bootstrapping/iterations should be hard-coded now...
@@ -379,10 +407,16 @@ def load_dataset(args, trans_from_en):
     if '353' in args.dataset:
         data, vocab = read_ws353(args)
     if 'fern' in args.dataset:
-        if 'all' in args.dataset:
-            data, vocab = read_fern(args, trans_from_en)
-        elif 'categories' in args.dataset:
-            data, vocab = read_fern_categories(args, trans_from_en)
+        if 'areas' in args.dataset:
+            if 'all' in args.dataset:
+                data, vocab = read_fern_areas(args, trans_from_en)
+            elif 'categories' in args.dataset:
+                raise RuntimeError('to be implemented')
+        else:
+            if 'all' in args.dataset:
+                data, vocab = read_fern(args, trans_from_en)
+            elif 'categories' in args.dataset:
+                data, vocab = read_fern_categories(args, trans_from_en)
     if 'dirani' in args.dataset:
         data, vocab = read_dirani_n400(args)
     if 'abstract' in args.dataset:
@@ -448,19 +482,32 @@ def load_static_model(args):
 
 def args():
     parser = argparse.ArgumentParser()
+    corpora_choices = list()
+    for corpus in [
+                   'bnc',
+                   'wac',
+                   'tagged_wiki',
+                   'opensubs',
+                   'wac',
+                   'cc100',
+                   ]:
+        corpora_choices.append('{}-ppmi-vecs'.format(corpus))
+        for mode in [
+                     'neg-raw-abs-prob',
+                     'neg-log10-abs-prob',
+                     'neg-sym-raw-cond-prob',
+                     'neg-fwd-raw-cond-prob',
+                     'neg-sym-log10-cond-prob',
+                     'surprisal',
+                     ]:
+            corpora_choices.append('{}-{}'.format(corpus, mode))
     parser.add_argument(
                         '--model',
                         choices=[
                                  'fasttext',
                                  'fasttext_aligned',
                                  'conceptnet',
-                                 'bnc',
-                                 'wac',
-                                 'tagged_wiki',
-                                 'opensubs',
-                                 'joint',
-                                 'cc100',
-                                 ],
+                                 ] + corpora_choices,
                         required=True,
                         )
     parser.add_argument(
@@ -481,8 +528,10 @@ def args():
                                 'en_men',
                                 ### fmri
                                 'fern2-all',
+                                'fern2-areas-all',
                                 'fern1-categories',
                                 'fern1-all',
+                                'fern1-areas-all',
                                 'fern2-categories',
                                 'de_abstract-fmri',
                                 ### meeg

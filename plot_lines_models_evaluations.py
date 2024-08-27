@@ -1,6 +1,7 @@
 import matplotlib
 import numpy
 import os
+import random
 import re
 
 from matplotlib import colormaps, pyplot
@@ -23,7 +24,7 @@ with tqdm() as counter:
                     if lang not in results.keys():
                         results[lang] = dict()
                     model = line[1]
-                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model:
                         num = float(model.split('_')[-2])
                         if 'wiki' in model:
                             short_model = '_'.join(model.split('_')[2:-2])
@@ -64,7 +65,7 @@ with tqdm() as counter:
                     if dataset not in results[lang][task].keys():
                         results[lang][task][dataset] = dict()
                     res = numpy.array(line[3:], dtype=numpy.float32)
-                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
+                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model:
                         if short_model not in results[lang][task][dataset].keys():
                             results[lang][task][dataset][short_model] = dict()
                         results[lang][task][dataset][short_model][num] = res
@@ -86,7 +87,8 @@ with tqdm() as counter:
                     ymin = -.05
                     ymax = .15
                 elif 'dirani' in task:
-                    pass
+                    ymin = -.02
+                    ymax = .15
                 elif 'abstract' in task:
                     pass
                 elif 'lexical' in task:
@@ -100,7 +102,7 @@ with tqdm() as counter:
                     ymax = .1
                 elif 'sem-phon' in task:
                     ymin = -0.05
-                    ymax = 0.35
+                    ymax = 0.5
                 elif 'sound-act' in task:
                     ymin = -.3
                     ymax = .3
@@ -108,14 +110,14 @@ with tqdm() as counter:
                     ymin = -.1
                     ymax = .3
                 elif 'pmtg-prod' in task:
-                    ymin = -0.13
-                    ymax = 0.35
+                    ymin = -0.02
+                    ymax = 0.32
                 fig, ax = pyplot.subplots(
                                           constrained_layout=True,
                                           figsize=(20, 10),
                                           )
                 ### dividing into lines and regular values
-                fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k]
+                fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k or 'prob' in k or 'surpr' in k]
                 mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
                 others = {
                           k : sorted(vals.items(), key=lambda item : item[0]) \
@@ -124,6 +126,8 @@ with tqdm() as counter:
                                   'mitch' not in k and \
                                   'rowincol' not in k and \
                                   'concept' not in k and \
+                                  'prob' not in k and \
+                                  'surpr' not in k and \
                                   #('top' in k
                                   (
                                   #'top' in k
@@ -143,7 +147,10 @@ with tqdm() as counter:
                           )
                 alls = list()
                 ### fasttext
-                for ft, style in zip(fts, ['solid', 'dashdot', 'dotted']):
+                ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, len(fts)))
+                for ft_i, ft in enumerate(fts):
+                    style = random.choice(['solid', 'dashdot', 'dotted', ])
+                    color = ft_colors[ft_i]
                     y = numpy.average(t_res[ft])
                     alls.append(y)
                     ax.hlines(
@@ -152,7 +159,7 @@ with tqdm() as counter:
                               xmax=max(all_vals)+.1,
                               label=ft,
                               linestyles=style,
-                              color='red',
+                              color=color,
                               )
                 ### mitchell dimensions
                 for mitch, col in zip(mitchs, numpy.linspace(0, 1, len(mitchs))):
@@ -205,6 +212,7 @@ with tqdm() as counter:
                             #left=0., 
                             right=500000,
                             )
+                pyplot.ylabel('Pearson correlation')
                 ### legend
                 pyplot.legend(
                         ncols=5,

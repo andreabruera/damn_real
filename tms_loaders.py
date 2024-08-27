@@ -40,8 +40,12 @@ def read_de_pmtg_production_tms(args):
             test_vocab = test_vocab.union(set(vocab_w_ones))
             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('distractor')])]
             test_vocab = test_vocab.union(set(vocab_w_twos))
-            w_ones = [l[header.index('picture')].split('.')[0] for l in current_cond]
-            w_twos = [l[header.index('distractor')].strip() for l in current_cond]
+            ### picture -> word
+            #w_ones = [l[header.index('picture')].split('.')[0] for l in current_cond]
+            #w_twos = [l[header.index('distractor')].strip() for l in current_cond]
+            ### word -> picture
+            w_ones = [l[header.index('distractor')].strip() for l in current_cond]
+            w_twos = [l[header.index('picture')].split('.')[0] for l in current_cond]
             all_sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     final_sims = reorganize_tms_sims(all_sims)
 
@@ -101,12 +105,13 @@ def read_de_sem_phon_tms(args):
             #print(subjects)
             rts = [float(l[header.index('RT')]) for l in current_cond]
             log_rts = [numpy.log10(float(l[header.index('RT')])) for l in current_cond]
-            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('utterance')])]
+            vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('item')].split('.')[0])]
             test_vocab = test_vocab.union(set(vocab_w_ones))
-            vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('item')].split('.')[0])]
+            vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('utterance')])]
             test_vocab = test_vocab.union(set(vocab_w_twos))
-            w_ones = [l[header.index('utterance')] for l in current_cond]
-            w_twos = [l[header.index('item')].split('.')[0] for l in current_cond]
+            ### image -> utterance
+            w_ones = [l[header.index('item')].split('.')[0] for l in current_cond]
+            w_twos = [l[header.index('utterance')] for l in current_cond]
             sims[name]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     full_sims = reorganize_tms_sims(sims)
     collect_info(full_sims)
@@ -143,6 +148,7 @@ def read_it_distr_learn_tms(args):
             log_rts = [numpy.log10(float(l[header.index('RTs')].replace(',', '.'))) for l in current_cond]
             rts = [float(l[header.index('RTs')].replace(',', '.')) for l in current_cond]
             subjects = [int(l[header.index('Subject')]) for l in current_cond]
+            ### noun -> adj
             w_ones = [l[header.index('noun')].lower() for l in current_cond]
             w_twos = [l[header.index('adj')].lower() for l in current_cond]
             vocab_w_ones = [w for ws in w_ones for w in [ws, ws.capitalize()]]
@@ -398,13 +404,13 @@ def read_de_sound_act_tms(args):
                  'matched-excl-all',
                  #'matched-excl-topten',
                  #'matched-excl-topfifty',
-                 #'matched-incl-all',
+                 'matched-incl-all',
                  #'matched-incl-topten',
                  #'matched-incl-topfifty',
                  'opposite-excl-all',
                  #'opposite-excl-topten',
                  #'opposite-excl-topfifty',
-                 #'opposite-incl-all',
+                 'opposite-incl-all',
                  #'opposite-incl-topten',
                  #'opposite-incl-topfifty',
                  ]
@@ -429,6 +435,7 @@ def read_de_sound_act_tms(args):
             ### these are the words subjects actually saw
             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
             test_vocab = test_vocab.union(set(vocab_w_twos))
+            ### prototype -> task
             w_twos = [l[header.index('stimulus')] for l in current_cond]
             sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
             for t in tasks:
