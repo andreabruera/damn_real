@@ -37,6 +37,8 @@ with tqdm() as counter:
                         task = 'simrel_norms'
                     elif '353' in dataset:
                         task = 'simrel_norms'
+                    elif 'mitchell' in dataset:
+                        task = 'fmri'
                     elif 'fern' in dataset:
                         task = 'fmri'
                     elif 'dirani' in dataset:
@@ -98,6 +100,9 @@ with tqdm() as counter:
                     ymin = -0.05
                     ymax = 0.15
                 elif 'abs-conc-decision' in task:
+                    ymin = -.1
+                    ymax = .1
+                elif 'mitchell' in task:
                     ymin = -.1
                     ymax = .1
                 elif 'sem-phon' in task:

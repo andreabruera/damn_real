@@ -228,3 +228,61 @@ def read_abstract_ipc(args):
             dis_sims['de_abstract-fmri']['all'][(w_one, w_two)] = dis_sim
 
     return dis_sims, test_vocab
+
+def read_mitchell2008(args):
+    if args.lang != 'en':
+        trans_path = os.path.join(
+                                 'data', 
+                                 'fmri',
+                                 'mitchell'
+                                 'mitchell2008_pairwise',
+                                 'mitchell2008_stimuli_translations_it_de.tsv'
+                                 )
+        trans = dict()
+        with open(trans_path) as i:
+            for l_i, l in enumerate(i):
+                line = l.strip().split('\t')
+                if l_i == 0:
+                    rel_trans = line.index('word_{}'.format(args.lang))
+                    continue
+                trans[line[0].strip()] = line[rel_trans].strip()
+    test_vocab = set()
+    dis_sims = dict()
+    for area in ['semantic-network', 'L_IFG', 'L_MTG', 'L_pIPL', 'L_AG', 'L_occipital']:
+        key = '{}_mitchell2008_{}#{}_all'.format(args.lang, args.stat_approach, area)
+        dis_sims[key] = dict()
+        file_path = os.path.join(
+                                 'data', 
+                                 'fmri',
+                                 'mitchell',
+                                 'mitchell2008_pairwise',
+                                 'tsv',
+                                'mitchell2008_pairwise_{}.tsv'.format(area))
+        with open(file_path) as i:
+            for l_i, l in enumerate(i):
+                if l_i == 0:
+                    continue
+                line = l.strip().split('\t')
+                w_one = line[0]
+                w_two = line[1]
+                ### translating if needed
+                if args.lang != 'en':
+                    w_one = trans[w_one]
+                    w_two = trans[w_two]
+                ### german will be transformed
+                if args.lang != 'de':
+                    test_vocab = test_vocab.union(
+                                                  set(
+                              transform_basic_word(w_one)+transform_basic_word(w_two)
+                                                      )
+                                                  )
+                else:
+                    test_vocab = test_vocab.union(transform_german_word(w_one))
+                    test_vocab = test_vocab.union(transform_german_word(w_two))
+                ### we use dissimilarity!
+                for sub, sim in enumerate(line[2:]):
+                    if sub not in dis_sims[key].keys():
+                        dis_sims[key][sub] = dict()
+                    dis_sims[key][sub][(w_one, w_two)] = 1 - float(sim)
+
+    return dis_sims, test_vocab

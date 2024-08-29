@@ -103,18 +103,21 @@ def build_ppmi_vecs(coocs, vocab, row_words, col_words, smoothing=False, power=1
 def load_count_coocs(args):
     print(args.model)
     if args.lang == 'en':
-        if args.model == 'bnc':
+        if 'bnc' in args.model:
             min_count = 10
-        elif args.model == 'cc100':
+        elif 'cc100' in args.model:
             min_count = 500
         else:
             min_count = 100
     else:
-        #if args.model == 'cc100':
-        #    min_count = 100
-        #else:
-        min_count = 10
-    print(min_count)
+        if 'cc100' in args.model:
+            if args.lang == 'it':
+                min_count = 10
+            else:
+                min_count = 100
+        else:
+            min_count = 10
+    #print(min_count)
     f = args.model.split('-')[0]
     with open(os.path.join(
                             '/',
@@ -125,7 +128,8 @@ def load_count_coocs(args):
                            #args.model, 
                            f,
                            #'{}_{}_cased_vocab_min_{}.pkl'.format(
-                           '{}_{}_uncased_vocab_min_{}.pkl'.format(
+                           #'{}_{}_uncased_vocab_min_{}.pkl'.format(
+                           '{}_{}_uncased_vocab_min_{}_no-entities.pkl'.format(
                                                                    args.lang, 
                                                                    #args.model, 
                                                                    f,
@@ -162,8 +166,8 @@ def load_count_coocs(args):
                             args.lang, 
                             #args.model, 
                             f,
-                           #'{}_{}_coocs_cased_min_{}_win_20.pkl'.format(
-                           '{}_{}_coocs_uncased_min_{}_win_20.pkl'.format(
+                            #'{}_{}_coocs_uncased_min_{}_win_20.pkl'.format(
+                            '{}_{}_coocs_uncased_min_{}_win_20_no-entities.pkl'.format(
                                                                          args.lang,
                                                                          #args.model, 
                                                                          f,
@@ -181,7 +185,8 @@ def load_count_coocs(args):
                             #args.model, 
                             f,
                            #'{}_{}_forward-coocs_cased_min_{}_win_20.pkl'.format(
-                           '{}_{}_forward-coocs_uncased_min_{}_win_20.pkl'.format(
+                           #'{}_{}_forward-coocs_uncased_min_{}_win_20.pkl'.format(
+                           '{}_{}_forward-coocs_uncased_min_{}_win_20_no-entities.pkl'.format(
                                                                          args.lang,
                                                                          #args.model, 
                                                                          f,

@@ -12,7 +12,7 @@ from scipy import spatial
 from sklearn import linear_model
 from tqdm import tqdm
 
-from fmri_loaders import read_abstract_ipc, read_fern, read_fern_areas, read_fern_categories
+from fmri_loaders import read_abstract_ipc, read_fern, read_fern_areas, read_fern_categories, read_mitchell2008
 from meeg_loaders import read_dirani_n400
 from behav_loaders import read_italian_behav, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav
 from tms_loaders import read_it_distr_learn_tms, read_de_pmtg_production_tms, read_de_sound_act_tms, read_de_sem_phon_tms
@@ -255,6 +255,8 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                         sim = -sum([vecs_ones, vecs_twos])
                 else:
                     sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
+                if str(sim) == 'nan':
+                    import pdb; pdb.set_trace()
                 ws_sims[(joint_ones, joint_twos)] = sim
                 counter.update(1)
     ### now we can run correlations
@@ -419,6 +421,8 @@ def load_dataset(args, trans_from_en):
                 data, vocab = read_fern_categories(args, trans_from_en)
     if 'dirani' in args.dataset:
         data, vocab = read_dirani_n400(args)
+    if 'mitchell' in args.dataset:
+        data, vocab = read_mitchell2008(args)
     if 'abstract' in args.dataset:
         data, vocab = read_abstract_ipc(args)
     if 'de_behav' in args.dataset:
@@ -490,6 +494,7 @@ def args():
                    'opensubs',
                    'wac',
                    'cc100',
+                   'tagged_leipzig',
                    ]:
         corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
@@ -534,6 +539,7 @@ def args():
                                 'fern1-areas-all',
                                 'fern2-categories',
                                 'de_abstract-fmri',
+                                'mitchell2008',
                                 ### meeg
                                 'dirani-n400',
                                 ### behav
