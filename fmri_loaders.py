@@ -225,7 +225,7 @@ def read_abstract_ipc(args):
             assert len(line[2:]) == 19
             ### the dataset provides already dissimilarities
             dis_sim = numpy.average(numpy.array(line[2:], dtype=numpy.float32))
-            dis_sims['de_abstract-fmri']['all'][(w_one, w_two)] = dis_sim
+            dis_sims['de_abstract-fmri_{}'.format(args.stat_approach)]['all'][(w_one, w_two)] = dis_sim
 
     return dis_sims, test_vocab
 
@@ -234,18 +234,20 @@ def read_mitchell2008(args):
         trans_path = os.path.join(
                                  'data', 
                                  'fmri',
-                                 'mitchell'
-                                 'mitchell2008_pairwise',
-                                 'mitchell2008_stimuli_translations_it_de.tsv'
+                                 'mitchell',
+                                 'mitchell2008_translations_en-de-it.tsv'
                                  )
         trans = dict()
         with open(trans_path) as i:
             for l_i, l in enumerate(i):
                 line = l.strip().split('\t')
                 if l_i == 0:
-                    rel_trans = line.index('word_{}'.format(args.lang))
                     continue
-                trans[line[0].strip()] = line[rel_trans].strip()
+                if args.lang == 'it':
+                    idx = 2
+                elif args.lang == 'de':
+                    idx = 1
+                trans[line[0].strip()] = line[idx].strip()
     test_vocab = set()
     dis_sims = dict()
     for area in ['semantic-network', 'L_IFG', 'L_MTG', 'L_pIPL', 'L_AG', 'L_occipital']:

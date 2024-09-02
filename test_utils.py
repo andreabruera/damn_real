@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_areas, read_fern_categories, read_mitchell2008
 from meeg_loaders import read_dirani_n400
-from behav_loaders import read_italian_behav, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav
+from behav_loaders import read_italian_behav, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav, read_picnaming_seven
 from tms_loaders import read_it_distr_learn_tms, read_de_pmtg_production_tms, read_de_sound_act_tms, read_de_sem_phon_tms
 from simrel_norms_loaders import read_men, read_simlex, read_ws353
 from utf_utils import transform_german_word
@@ -119,14 +119,21 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
             #print(w_ones)
     return test_sims, missing_words, trans_words
 
-def compute_corr(model_sims, test_sims):
+def compute_corr(model_sims, test_sims, to_be_removed):
     #test_sims, missing_words = check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en,)
     assert len(test_sims) > 0
     real = list()
     pred = list()
     for w_ones, w_twos, v in test_sims:
+        joint_key = ('_'.join(w_ones), '_'.join(w_twos))
+        marker = False
+        for k in joint_key:
+            if k in to_be_removed:
+                marker = True
+        if marker:
+            continue
         real.append(v)
-        pred.append(model_sims[('_'.join(w_ones), '_'.join(w_twos))])
+        pred.append(model_sims[joint_key])
     #corr = scipy.stats.spearmanr(real, pred).statistic
     corr = scipy.stats.pearsonr(real, pred).statistic
     return corr
@@ -201,6 +208,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
     ### we pre-compute all pairwise similarities
     ws_vecs = dict()
     ws_sims = dict()
+    to_be_removed = list()
     print('now pre-computing model dissimilarities...')
     with tqdm() as counter:
         if 'cond-prob' in args.model or 'surprisal' in args.model:
@@ -256,9 +264,16 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                 else:
                     sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
                 if str(sim) == 'nan':
-                    import pdb; pdb.set_trace()
+                    if sum(vecs_ones) == 0:
+                        to_be_removed.append(joint_ones)
+                    if sum(vecs_ones) == 1:
+                        to_be_removed.append(joint_twos)
+                    #to_be_removed.append((joint_ones, joint_twos))
+                    continue
                 ws_sims[(joint_ones, joint_twos)] = sim
                 counter.update(1)
+    print('impossible to compute similarities in these cases:')
+    print(set([w for w in to_be_removed]))
     ### now we can run correlations
     #for dataset_name, dataset in datasets.items(): for dataset_name, dataset
     for dataset_name, dataset in all_sims_data.items():
@@ -267,7 +282,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
         for iter_dataset in tqdm(dataset):
             iter_corrs = list()
             for s, s_data in iter_dataset.items():
-                curr_corr = compute_corr(ws_sims, s_data)
+                curr_corr = compute_corr(ws_sims, s_data, to_be_removed)
                 if curr_corr == None:
                     print('error with {}'.format([args.lang, case, dataset_name]))
                     continue
@@ -425,6 +440,8 @@ def load_dataset(args, trans_from_en):
         data, vocab = read_mitchell2008(args)
     if 'abstract' in args.dataset:
         data, vocab = read_abstract_ipc(args)
+    if 'seven' in args.dataset:
+        data, vocab = read_picnaming_seven(args)
     if 'de_behav' in args.dataset:
         data, vocab = read_german_behav(args)
     if 'it_behav' in args.dataset:
@@ -548,6 +565,7 @@ def args():
                                 'it_mouse',
                                 'it_deafhearing',
                                 'it_blindsighted',
+                                'picture-naming-seven',
                                 ### tms
                                 'de_sem-phon',
                                 'de_pmtg-prod',

@@ -2,6 +2,10 @@ import os
 
 from utf_utils import transform_german_word
 
+def transform_basic_word(w):
+    ws = [w, w.capitalize()]
+    return ws
+
 def read_ws353(args):
     base_folder = os.path.join('data', 'simrel_norms', 'ws353')
     if args.lang == 'de':
@@ -26,8 +30,9 @@ def read_ws353(args):
                 norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
             else:
                 norm_key = set(
-                    [transform_basic_word(w) for w in key]
+                    [bw for ws in key for bw in transform_basic_word(ws)]
                     )
+            #print(norm_key)
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity
@@ -47,8 +52,9 @@ def read_men(args):
             key = tuple(sorted([line[0], line[1]]))
             #norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
             norm_key = set(
-                [transform_basic_word(w) for w in key]
+                [bw for ws in key for bw in transform_basic_word(ws)]
                 )
+            #print(norm_key)
             test_vocab = test_vocab.union(norm_key)
             val = float(line[2].replace(',', '.'))
             ### transforming to dissimilarity
@@ -84,8 +90,9 @@ def read_simlex(args):
                 norm_key = set([m for k in key for w in k for m in transform_german_word(k)])
             else:
                 norm_key = set(
-                            [transform_basic_word(w) for w in key]
-                            )
+                [bw for ws in key for bw in transform_basic_word(ws)]
+                )
+            #print(norm_key)
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity

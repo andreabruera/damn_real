@@ -119,55 +119,40 @@ def load_count_coocs(args):
             min_count = 10
     #print(min_count)
     f = args.model.split('-')[0]
-    with open(os.path.join(
+    base_folder = os.path.join(
                             '/',
                             'data',
                             'tu_bruera',
                             'counts',
                            args.lang, 
-                           #args.model, 
                            f,
-                           #'{}_{}_cased_vocab_min_{}.pkl'.format(
-                           #'{}_{}_uncased_vocab_min_{}.pkl'.format(
-                           '{}_{}_uncased_vocab_min_{}_no-entities.pkl'.format(
+                           )
+    with open(os.path.join(
+                            base_folder,
+                           '{}_{}_uncased_word_freqs.pkl'.format(
+                                                                 args.lang, 
+                                                                 f
+                                                                 ),
+                           ), 'rb') as i:
+        freqs = pickle.load(i)
+    vocab_file = os.path.join(
+                            base_folder,
+                           '{}_{}_uncased_vocab_min_{}.pkl'.format(
                                                                    args.lang, 
                                                                    #args.model, 
                                                                    f,
                                                                    min_count
                                                                    ),
-                           ), 'rb') as i:
+                           )
+    if 'tagged_' in args.model:
+        vocab_file = vocab_file.replace('.pkl', '_no-entities.pkl')
+    with open(vocab_file, 'rb') as i:
         vocab = pickle.load(i)
-    with open(os.path.join(
-                            '/',
-                            'data',
-                            #'u_bruera_software',
-                            'tu_bruera',
-                            'counts',
-                           args.lang, 
-                           #args.model, 
-                           f,
-                           #'{}_{}_cased_word_freqs.pkl'.format(
-                           '{}_{}_uncased_word_freqs.pkl'.format(
-                                                                 args.lang, 
-                                                                 #args.model
-                                                                 f
-                                                                 ),
-                           ), 'rb') as i:
-        freqs = pickle.load(i)
     print('total size of the corpus: {:,} tokens'.format(sum(freqs.values())))
     print('total size of the vocabulary: {:,} words'.format(max(vocab.values())))
     if 'fwd' not in args.model and 'surprisal' not in args.model:
-        f = os.path.join(
-                            '/',
-                            'data',
-                            #'u_bruera_software',
-                            'tu_bruera',
-                            'counts',
-                            args.lang, 
-                            #args.model, 
-                            f,
-                            #'{}_{}_coocs_uncased_min_{}_win_20.pkl'.format(
-                            '{}_{}_coocs_uncased_min_{}_win_20_no-entities.pkl'.format(
+        coocs_file = os.path.join(base_folder,
+                      '{}_{}_coocs_uncased_min_{}_win_20.pkl'.format(
                                                                          args.lang,
                                                                          #args.model, 
                                                                          f,
@@ -175,24 +160,16 @@ def load_count_coocs(args):
                                                                          ),
                            )
     else:
-        f = os.path.join(
-                            '/',
-                            'data',
-                            #'u_bruera_software',
-                            'tu_bruera',
-                            'counts',
-                            args.lang, 
-                            #args.model, 
-                            f,
-                           #'{}_{}_forward-coocs_cased_min_{}_win_20.pkl'.format(
-                           #'{}_{}_forward-coocs_uncased_min_{}_win_20.pkl'.format(
-                           '{}_{}_forward-coocs_uncased_min_{}_win_20_no-entities.pkl'.format(
+        coocs_file = os.path.join(base_folder,
+                      '{}_{}_forward-coocs_uncased_min_{}_win_20.pkl'.format(
                                                                          args.lang,
                                                                          #args.model, 
                                                                          f,
                                                                          min_count
-                                                                         ),
-                           )
-    with open(f, 'rb') as i:
+                                                                         )
+                      )
+    if 'tagged_' in args.model:
+        coocs_file = coocs_file.replace('.pkl', '_no-entities.pkl')
+    with open(coocs_file, 'rb') as i:
         coocs = pickle.load(i)
     return vocab, coocs, freqs

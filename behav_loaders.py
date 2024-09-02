@@ -113,6 +113,40 @@ def read_italian_mouse(args):
                 sims[case][sub][(word, word_two)] = words_rt
     return sims, test_vocab
 
+def read_picnaming_seven(args):
+    if args.lang == 'en':
+        w_key = 'ename'
+    elif args.lang ==  'it':
+        w_key = 'iname'
+    elif args.lang == 'de':
+        w_key = 'gname'
+    ### lexical picture naming times in seven languages
+    sims = {'{}_picture-naming-seven_{}'.format(args.lang, args.stat_approach) : {'all' : dict()}}
+    test_vocab = set()
+    for case in sims.keys(): 
+        short_case = case.split('_')[1]
+        measures = dict()
+        with open(os.path.join('data', 'behavioural', 'picture-naming_seven-languages.tsv')) as i:
+            for l_i, l in enumerate(i):
+                line = [w.strip() for w in l.replace(',', '.').split('\t')]
+                if l_i == 0:
+                    header = [w for w in line]
+                    continue
+                word = line[header.index(w_key)].lower()
+                if args.lang != 'de':
+                    test_vocab = test_vocab.union(set([word, word.capitalize()]))
+                else:
+                    test_vocab = test_vocab.union(set(transform_german_word(word)))
+                word_rt = float(line[header.index('erttar')])
+                measures[word] = word_rt
+        for k_one_i, k_one in enumerate(sorted(measures.keys())):
+            for k_two_i, k_two in enumerate(sorted(measures.keys())):
+                if k_two_i <= k_one_i:
+                    continue
+                key = tuple(sorted([k_one, k_two]))
+                sims[case]['all'][key] = abs(measures[k_one]-measures[k_two])
+    return sims, test_vocab
+
 def read_italian_behav(args):
     ### lexical decition times
     sims = {'it_word-naming_{}'.format(args.stat_approach) : {'all' : dict()}}

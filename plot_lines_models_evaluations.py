@@ -77,8 +77,22 @@ with tqdm() as counter:
 
 with tqdm() as counter:
     for lang, l_res in results.items():
+        print(lang)
         for general_task, task_res in l_res.items():
+            print(general_task)
             for task, t_res in task_res.items():
+                print(task)
+                ### creating folder
+                specific_task = task.split('_')[min(1, len(task.split('_'))-1)]
+                assert len(specific_task) > 0
+                folder = os.path.join(
+                                      'test_lineplots',
+                                      lang, 
+                                      general_task,
+                                      specific_task,
+                                      )
+                if not os.path.exists(folder):
+                    os.makedirs(folder, exist_ok=True)
                 if 'en_men' in task:
                     pass
                 elif '999' in task:
@@ -95,7 +109,7 @@ with tqdm() as counter:
                     pass
                 elif 'lexical' in task:
                     ymin = -0.05
-                    ymax = 0.25
+                    ymax = 0.35
                 elif 'naming' in task:
                     ymin = -0.05
                     ymax = 0.15
@@ -103,8 +117,8 @@ with tqdm() as counter:
                     ymin = -.1
                     ymax = .1
                 elif 'mitchell' in task:
-                    ymin = -.1
-                    ymax = .1
+                    ymin = -.05
+                    ymax = .15
                 elif 'sem-phon' in task:
                     ymin = -0.05
                     ymax = 0.5
@@ -153,6 +167,7 @@ with tqdm() as counter:
                 alls = list()
                 ### fasttext
                 ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, len(fts)))
+                print('fasttext')
                 for ft_i, ft in enumerate(fts):
                     style = random.choice(['solid', 'dashdot', 'dotted', ])
                     color = ft_colors[ft_i]
@@ -167,6 +182,7 @@ with tqdm() as counter:
                               color=color,
                               )
                 ### mitchell dimensions
+                print('mitchell')
                 for mitch, col in zip(mitchs, numpy.linspace(0, 1, len(mitchs))):
                     y = numpy.average(t_res[mitch])
                     alls.append(y)
@@ -179,6 +195,7 @@ with tqdm() as counter:
                               )
                 ### count models
                 ### we use rainbow as a set of colours to sample from
+                print('count')
                 colors = {k : v for k, v in zip(others.keys(), matplotlib.cm.rainbow(numpy.linspace(0, 1, len(others.keys()))))}
                 for case, sort_freqs in others.items():
                     xs_freqs = [v[0] for v in sort_freqs]
@@ -224,22 +241,15 @@ with tqdm() as counter:
                         loc=8,
                         fontsize=10,
                         )
-                ### creating folder
-                specific_task = task.split('_')[min(1, len(task.split('_'))-1)]
-                assert len(specific_task) > 0
-                folder = os.path.join(
-                                      'test_lineplots',
-                                      lang, 
-                                      general_task,
-                                      specific_task,
-                                      )
-                os.makedirs(folder, exist_ok=True)
                 ### saving figure
+                print('saving')
                 pyplot.savefig(
                                 os.path.join(
                                              folder,
                                      '{}.jpg'.format(task))
                                 )
+                print('saved')
                 pyplot.clf()
                 pyplot.close()
+                print(os.path.join(folder, task))
                 counter.update(1)
