@@ -31,8 +31,8 @@ if args.modality == 'fmri':
 elif args.modality == 'tms':
     datasets = [
             ### tms
-            'de_sem-phon',
-            'de_pmtg-prod',
+            #'de_sem-phon',
+            #'de_pmtg-prod',
             'de_sound-act',
             'it_distr-learn',
             ]
@@ -52,7 +52,7 @@ elif args.modality == 'behav':
     datasets = [
                 ### behav
                 'de_behav',
-                #'it_behav',
+                'it_behav',
                 #'it_mouse',
                 #'it_deafhearing',
                 'it_blindsighted',

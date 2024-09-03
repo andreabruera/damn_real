@@ -17,6 +17,10 @@ with tqdm() as counter:
                                   )):
 
         for f in fz:
+            if 'raw' in root: 
+                continue
+            if 'sym' in root: 
+                continue
             with open(os.path.join(root, f)) as i:
                 for l in i:
                     line = l.strip().split('\t')
@@ -167,7 +171,7 @@ with tqdm() as counter:
                 alls = list()
                 ### fasttext
                 ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, len(fts)))
-                print('fasttext')
+                #print('fasttext')
                 for ft_i, ft in enumerate(fts):
                     style = random.choice(['solid', 'dashdot', 'dotted', ])
                     color = ft_colors[ft_i]
@@ -182,7 +186,7 @@ with tqdm() as counter:
                               color=color,
                               )
                 ### mitchell dimensions
-                print('mitchell')
+                #print('mitchell')
                 for mitch, col in zip(mitchs, numpy.linspace(0, 1, len(mitchs))):
                     y = numpy.average(t_res[mitch])
                     alls.append(y)
@@ -195,7 +199,7 @@ with tqdm() as counter:
                               )
                 ### count models
                 ### we use rainbow as a set of colours to sample from
-                print('count')
+                #print('count')
                 colors = {k : v for k, v in zip(others.keys(), matplotlib.cm.rainbow(numpy.linspace(0, 1, len(others.keys()))))}
                 for case, sort_freqs in others.items():
                     xs_freqs = [v[0] for v in sort_freqs]
@@ -242,13 +246,13 @@ with tqdm() as counter:
                         fontsize=10,
                         )
                 ### saving figure
-                print('saving')
+                #print('saving')
                 pyplot.savefig(
                                 os.path.join(
                                              folder,
                                      '{}.jpg'.format(task))
                                 )
-                print('saved')
+                #print('saved')
                 pyplot.clf()
                 pyplot.close()
                 print(os.path.join(folder, task))
