@@ -5,6 +5,7 @@ from utf_utils import transform_german_word
 
 def read_de_pmtg_production_tms(args):
     lines = list()
+    missing = 0
     with open(os.path.join(
                            'data',
                            'tms',
@@ -14,7 +15,12 @@ def read_de_pmtg_production_tms(args):
             if l_i == 0:
                 header = [w.strip() for w in line]
                 continue
+            line = [w.strip() for w in line]
+            if line[header.index('accuracy')] == '0':
+                missing += 1
+                continue
             lines.append([w.strip() for w in line])
+    print(missing)
     stims = set([l[header.index('stimulation')] for l in lines])
     conds = {
              'u' : 'unrelated',
@@ -56,6 +62,7 @@ def read_de_sem_phon_tms(args):
     test_vocab = set()
     lines = list()
     na_lines = list()
+    missing = 0
     with open(os.path.join(
                            'data', 
                            'tms', 
@@ -80,7 +87,11 @@ def read_de_sem_phon_tms(args):
                 continue
             ### removing trailing spaces
             line = [w.strip() for w in line]
+            if line[header.index('ERR')] == '1':
+                missing += 1
+                continue
             lines.append(line)
+    print(missing)
     print('sem trials containing a NA: {}'.format(len(na_lines)))
     ###
     conditions = set([l[header.index('stim')] for l in lines])
@@ -125,12 +136,18 @@ def read_it_distr_learn_tms(args):
                            'tms',
                            'it_distr-learn',
                            'italian_tms_cereb.tsv')) as i:
+        missing = 0
         for l_i, l in enumerate(i):
-            line = l.strip().split('\t')
+            line = [w.strip() for w in l.strip().split('\t')]
             if l_i == 0:
                 header = [w for w in line]
                 continue
+            if line[header.index('accuracy')] == '0':
+                #print(line)
+                missing += 1
+                continue
             lines.append(line)
+    print(missing)
     conds = set([l[header.index('condition')] for l in lines])
     all_sims = dict()
     all_full_sims = dict()
@@ -374,6 +391,7 @@ def read_de_sound_act_tms(args):
     prototypes = read_soundact_prototypes(ratings)
     ### reading dataset
     lines = list()
+    errs = 0
     with open(os.path.join(
                            'data', 
                            'tms', 
@@ -393,7 +411,11 @@ def read_de_sound_act_tms(args):
             assert len(missing) == 0
             if 'lexical_decision' in line:
                 continue
+            if line[header.index('expected_response')] != line[header.index('response')]:
+                errs += 1
+                continue
             lines.append(line)
+    print(errs)
 
     proto_modes = [
                  #'all-all-all', 
