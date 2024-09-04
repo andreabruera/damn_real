@@ -1,7 +1,8 @@
 import argparse
 import os
 
-stat_approach = 'simple'
+#stat_approach = 'simple'
+stat_approach = 'residualize'
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -31,8 +32,8 @@ if args.modality == 'fmri':
 elif args.modality == 'tms':
     datasets = [
             ### tms
-            #'de_sem-phon',
-            #'de_pmtg-prod',
+            'de_sem-phon',
+            'de_pmtg-prod',
             'de_sound-act',
             'it_distr-learn',
             ]
@@ -77,21 +78,21 @@ for dataset in final_datasets:
                    'tagged_leipzig',
                    'tagged_wiki',
                    ]:
-        corpora_choices.append('{}-ppmi-vecs'.format(corpus))
+        #corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
-                     'neg-raw-abs-prob',
+                     #'neg-raw-abs-prob',
                      'neg-log10-abs-prob',
-                     'neg-sym-raw-cond-prob',
-                     'neg-fwd-raw-cond-prob',
-                     'neg-sym-log10-cond-prob',
+                     #'neg-sym-raw-cond-prob',
+                     #'neg-fwd-raw-cond-prob',
+                     #'neg-sym-log10-cond-prob',
                      'surprisal',
                      ]:
             corpora_choices.append('{}-{}'.format(corpus, mode))
 
     choices=[
              'fasttext',
-             'fasttext_aligned',
-             'conceptnet',
+             #'fasttext_aligned',
+             #'conceptnet',
              ] + corpora_choices
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))

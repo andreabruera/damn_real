@@ -360,6 +360,7 @@ def bootstrapper(args, full_data, ):
         n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
     else:
         n_iter_sub = 20
+        n_iter_trials = 15
     ### here we create 1000
     boot_data = {l : list() for l in labels}
     if args.stat_approach == 'residualize':
@@ -379,7 +380,7 @@ def bootstrapper(args, full_data, ):
             iter_data_keys = {l : 
                                {s : random.sample(
                                                  full_data[l][s].keys(), 
-                                                 k=20,
+                                                 k=n_iter_trials,
                                                  ) for s in iter_subs}
                                                  for l in labels}
         iter_data = {l : {s : {k : full_data[l][s][k] for k in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
