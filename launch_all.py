@@ -78,7 +78,7 @@ for dataset in final_datasets:
                    'tagged_leipzig',
                    'tagged_wiki',
                    ]:
-        #corpora_choices.append('{}-ppmi-vecs'.format(corpus))
+        corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
                      #'neg-raw-abs-prob',
                      'neg-log10-abs-prob',
