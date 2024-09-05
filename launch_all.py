@@ -2,7 +2,8 @@ import argparse
 import os
 
 #stat_approach = 'simple'
-stat_approach = 'residualize'
+#stat_approach = 'residualize'
+stat_approach = 'bootstrap'
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

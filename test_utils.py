@@ -348,6 +348,9 @@ def bootstrapper(args, full_data, ):
     assert len(n_subjects) == 1
     n_subjects = list(n_subjects)[0]
     subjects = list(set([val for v in all_subjects for val in v]))
+    #subjects = [s if s!='all' else 0 for s in subjects]
+    if 'all' in subjects and args.stat_approach ==  'residualize':
+        raise RuntimeError('single subject not implemented')
     assert len(subjects) == n_subjects
     ### for tms we fix n=20
     tms_datasets = [
@@ -356,10 +359,18 @@ def bootstrapper(args, full_data, ):
                    'de_sound-act',
                    'de_pmtg-prod',
                    ]
-    if args.dataset not in tms_datasets:
+    behav_datasets = [
+                'de_behav',
+                'it_behav',
+                'it_mouse',
+                'it_deafhearing',
+                'it_blindsighted',
+                'picture-naming-seven',
+            ]
+    if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
         n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
     else:
-        n_iter_sub = 20
+        n_iter_sub = min(20, n_subjects)
         n_iter_trials = 15
     ### here we create 1000
     boot_data = {l : list() for l in labels}
@@ -368,7 +379,7 @@ def bootstrapper(args, full_data, ):
     for _ in range(1000):
         iter_subs = random.sample(subjects, k=n_iter_sub)
         ### for tms we fix n=20
-        if args.dataset not in tms_datasets:
+        if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
             iter_data_keys = {l : 
                                {s : random.sample(
                                                  full_data[l][s].keys(), 
