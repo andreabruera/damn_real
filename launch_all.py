@@ -74,7 +74,6 @@ for dataset in final_datasets:
     for corpus in [
                    'wac',
                    'opensubs',
-                   'wac',
                    'cc100',
                    'tagged_leipzig',
                    'tagged_wiki',
