@@ -21,6 +21,10 @@ with tqdm() as counter:
                 continue
             if 'sym' in root: 
                 continue
+            if 'concept' in root: 
+                continue
+            if 'aligned' in root: 
+                continue
             with open(os.path.join(root, f)) as i:
                 for l in i:
                     line = l.strip().split('\t')
@@ -128,19 +132,21 @@ with tqdm() as counter:
                     ymax = 0.5
                 elif 'sound-act' in task:
                     ymin = -.3
-                    ymax = .3
+                    ymax = .1
                 elif 'distr-learn' in task:
                     ymin = -.1
                     ymax = .3
                 elif 'pmtg-prod' in task:
                     ymin = -0.02
-                    ymax = 0.32
+                    ymax = 0.36
                 fig, ax = pyplot.subplots(
                                           constrained_layout=True,
                                           figsize=(20, 10),
                                           )
                 ### dividing into lines and regular values
-                fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k or 'prob' in k or 'surpr' in k]
+                fts = [k for k in t_res.keys() if 'fast' in k]
+                surprs = [k for k in t_res.keys() if 'surpr' in k]
+                abss = [k for k in t_res.keys() if 'abs-prob' in k]
                 mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
                 others = {
                           k : sorted(vals.items(), key=lambda item : item[0]) \
@@ -170,14 +176,15 @@ with tqdm() as counter:
                           )
                 alls = list()
                 ### fasttext
-                ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, len(fts)))
+                ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, 6))
                 #print('fasttext')
-                for ft_i, ft in enumerate(fts):
-                    style = random.choice(['solid', 'dashdot', 'dotted', ])
-                    color = ft_colors[ft_i]
-                    y = numpy.average(t_res[ft])
-                    alls.append(y)
-                    ax.hlines(
+                for ds, style in [(fts, 'solid'), (surprs, 'dotted'), (abss, 'dashdot')]: 
+                    for ft_i, ft in enumerate(ds):
+                        #style = random.choice(['solid', 'dashdot', 'dotted', ])
+                        color = ft_colors[ft_i]
+                        y = numpy.average(t_res[ft])
+                        alls.append(y)
+                        ax.hlines(
                               y=y,
                               xmin=-.1,
                               xmax=max(all_vals)+.1,
