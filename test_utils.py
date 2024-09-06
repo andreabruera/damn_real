@@ -424,8 +424,8 @@ def check_args(args):
         assert args.dataset.split('_')[0] == args.lang
     if args.dataset == 'men' and args.lang != 'en':
         raise RuntimeError()
-    if 'lexical' in args.dataset or 'naming' in args.dataset:
-        if args.stat_approach!= 'simple':
+    if 'lexical' in args.dataset or 'naming' in args.dataset or 'behav' in args.dataset:
+        if args.stat_approach == 'residualize':
             raise RuntimeError()
 
 def load_dataset(args, trans_from_en):
@@ -524,6 +524,7 @@ def args():
                    'wac',
                    'cc100',
                    'tagged_leipzig',
+                   'tagged_gutenberg',
                    ]:
         corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
