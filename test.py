@@ -15,7 +15,20 @@ static_models = [
                  'fasttext_aligned',
                  'conceptnet',
                  ]
-if args.model in static_models:
+if args.model == 'word_length':
+    model = {k : [len(k)] for k in rows}
+    vocab = [w for w in rows]
+    present_words = [w for w in rows]
+    test_model(
+               args, 
+               args.model,
+               model, 
+               vocab, 
+               datasets, 
+               present_words,
+               trans_from_en,
+               )
+elif args.model in static_models:
     model, vocab = load_static_model(args)
     present_words = check_present_words(args, rows, vocab)
     test_model(

@@ -1,8 +1,8 @@
 import argparse
 import os
 
-#stat_approach = 'simple'
-stat_approach = 'residualize'
+stat_approach = 'simple'
+#stat_approach = 'residualize'
 #stat_approach = 'bootstrap'
 
 parser = argparse.ArgumentParser()
@@ -35,13 +35,15 @@ elif args.modality == 'tms':
             ### tms
             #'de_sem-phon',
             #'de_pmtg-prod',
-            'de_sound-act',
-            'it_distr-learn',
+            #'de_sound-act',
+            #'it_distr-learn',
+            'it_social-quantity',
             ]
 elif args.modality == 'meeg':
     datasets = [
             ### meeg
             'dirani-n400',
+            'kaneshiro-n400'
             ]
 elif args.modality == 'simrel':
     datasets = [
@@ -54,11 +56,12 @@ elif args.modality == 'behav':
     datasets = [
                 ### behav
                 'de_behav',
-                'it_behav',
+                #'it_behav',
                 #'it_mouse',
                 #'it_deafhearing',
                 'it_blindsighted',
-                'picture-naming-seven',
+                #'picture-naming-seven',
+                'it_anew',
                 ]
 final_datasets = list()
 for d in datasets:
@@ -72,7 +75,7 @@ for dataset in final_datasets:
     
     corpora_choices = list()
     for corpus in [
-                   #'wac',
+                   'wac',
                    'opensubs',
                    'cc100',
                    'tagged_leipzig',
@@ -92,8 +95,8 @@ for dataset in final_datasets:
 
     choices=[
              'fasttext',
-             #'fasttext_aligned',
-             #'conceptnet',
+             'fasttext_aligned',
+             'conceptnet',
              ] + corpora_choices
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))

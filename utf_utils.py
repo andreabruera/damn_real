@@ -4,6 +4,30 @@ def transform_basic_word(word):
     versions = [word.lower(), word.capitalize()]
     return versions
 
+def transform_italian_word(word):
+    word = word.lower()
+    versions = [word]
+    accents = ['à', 'è', 'ò', 'ù', 'ì']
+    '''
+    if word[-1] in accents:
+        versions.append(word[:-1])
+        if 'à' in word:
+            versions.append(word.replace('à', 'a'))
+        if 'è' in word:
+            versions.append(word.replace('è', 'e'))
+        if 'ì' in word:
+            versions.append(word.replace('ì', 'i'))
+        if 'ò' in word:
+            versions.append(word.replace('ò', 'o'))
+        if 'ù' in word:
+            versions.append(word.replace('ù', 'u'))
+    '''
+    final_versions = list()
+    for w in versions:
+        final_versions.append(w)
+        #final_versions.append(w.capitalize())
+    return final_versions
+
 def transform_german_word(word, lowercase=True):
     word = word.lower()
     word = re.sub('^ein\s|^eine\s|^der\s|^das\s|^die\s|^ne\s|^dann\s', '', word)

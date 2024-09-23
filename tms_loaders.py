@@ -1,7 +1,54 @@
+import matplotlib
 import numpy
 import os
 
-from utf_utils import transform_german_word
+from matplotlib import pyplot
+
+from utf_utils import transform_german_word, transform_italian_word
+
+def plot_tms_raw_rts(sims):
+    res = dict()
+    for k, v in sims.items():
+        general = k.split('#')[0]
+        specific = k.split('#')[1].split('_')[0].split('-')[0]
+        superspecific = k.split('#')[1].split('_')[0].split('-')[1]
+        area = k.split('#')[1].split('_')[1]
+        area = '{} {}'.format(area, superspecific)
+        #print(specific)
+        #print(area)
+        try:
+            res[specific][area] = [r[2] for r in v]
+        except KeyError:
+            res[specific] = {area : [r[2] for r in v]}
+    for spec, ar_dict in res.items():
+        fig, ax = pyplot.subplots(constrained_layout=True)
+        std = 1.*max([numpy.std(v) for v in ar_dict.values()])
+        ymin = min([numpy.average(v) for v in ar_dict.values()])-std
+        ymax = max([numpy.average(v) for v in ar_dict.values()])+std
+        count = 0
+        #for area, ar_res in ar_dict.items():
+        areas = sorted(list(ar_dict.keys()))
+        for _ in range(int(len(areas)*2)):
+            if count > len(areas)-1:
+                continue
+            if _ in range(3, int(len(areas)*2), 4):
+                continue
+            else:
+                area = areas[count]
+                ar_res = ar_dict[area]
+                ax.bar(_, numpy.average(ar_res), label=area)
+                ax.errorbar(_, numpy.average(ar_res), yerr=numpy.std(ar_res), color='black')
+                count += 1
+        ax.legend(
+                  ncol=3
+                  )
+        ax.set_ylim(bottom = ymin, top=ymax)
+        pyplot.title('{} - {}'.format(general, spec.replace('_', ' ')))
+        path = os.path.join('raw_tms_rts', general)
+        os.makedirs(path, exist_ok=True)
+        gen_path = os.path.join(path, '{}.jpg'.format(spec))
+        pyplot.savefig(gen_path)
+        print(gen_path)
 
 def read_de_pmtg_production_tms(args):
     lines = list()
@@ -128,6 +175,125 @@ def read_de_sem_phon_tms(args):
     collect_info(full_sims)
 
     return full_sims, test_vocab
+
+def read_it_social_quantity_tms(args):
+    lines = list()
+    it_mapper = dict()
+    prototypes = {'social' : set(), 'quantity' : set()}
+    exclusions = dict()
+    with open(os.path.join(
+                           'data',
+                           'tms',
+                           'it_tms_social-quant.tsv')) as i:
+        missing = 0
+        for l_i, l in enumerate(i):
+            line = [w.strip() for w in l.strip().split('\t')]
+            if l_i == 0:
+                header = [w for w in line]
+                continue
+            if line[header.index('accuracy')] == '-1':
+                #print(line)
+                missing += 1
+                continue
+            sub = line[header.index('subject')]
+            if sub not in exclusions.keys():
+                exclusions[sub] = dict()
+            rt = line[header.index('response_time')]
+            cond = line[header.index('condition')]
+            cat = line[header.index('target_category')]
+            if cat not in exclusions[sub].keys():
+                exclusions[sub][cat] = {'cong' : list(), 'incong' : list()}
+            w = line[header.index('target')]
+            p = line[header.index('prime')]
+            if cat[:4] == p[:4]:
+                ### congruent
+                it_mapper[cat] = p
+                if len(cond) == 2:
+                    exclusions[sub][cat]['cong'].append(float(rt))
+            else:
+                if len(cond) == 2:
+                    exclusions[sub][cat]['incong'].append(float(rt))
+            prototypes[cat].add(w)
+            lines.append(line)
+    excluded = dict()
+    for s, s_data in exclusions.items():
+        for c, c_data in s_data.items():
+            if numpy.average(c_data['cong']) > numpy.average(c_data['incong']):
+                try:
+                    excluded[c].append(s)
+                except KeyError:
+                    excluded[c] = [s]
+    print(excluded)
+    prototypes = {k[:4] : tuple([w for w in v]) for k, v in prototypes.items()}
+    print(missing)
+    conds = set([l[header.index('condition')] for l in lines])
+    all_sims = dict()
+    test_vocab = set()
+    for name in conds:
+        for marker in [
+                       'social', 
+                       'quantity', 
+                       #'all',
+                       ]:
+            for cong in [
+                         'congruent', 'incongruent', 
+                         'all',
+                         ]:
+                for prime in [
+                              'prime-proto', 
+                              'target-proto', 
+                              'target-cat', 
+                              'prime-cat',
+                              ]:
+                    ### in congruent cases primes and targets are the same
+                    if 'target' in prime and cong == 'congruent':
+                        continue
+                    if cong == 'congruent':
+                        possible_lines = [l for l in lines if l[header.index('target_category')][:4]==l[header.index('prime')][:4]]
+                    elif cong == 'incongruent':
+                        possible_lines = [l for l in lines if l[header.index('target_category')][:4]!=l[header.index('prime')][:4]]
+                    elif cong == 'all':
+                        possible_lines = [l for l in lines]
+                    ### removing excluded subjects
+                    impossible_lines = [l for l in possible_lines if l[header.index('subject')] in excluded[marker]]
+                    #print('removed {} lines'.format(len(impossible_lines)))
+                    assert len(impossible_lines)>0
+                    #possible_lines = [l for l in possible_lines if l[header.index('subject')] not in excluded[marker]]
+                    ### not excluding subjects
+                    key = 'it_social-quantity_{}#{}-{}-trials-{}_{}'.format(args.stat_approach, marker, cong, prime, name)
+                    if marker != 'all':
+                        current_cond = [l for l in possible_lines if l[header.index('condition')]==name and l[header.index('target_category')]==marker]
+                    else:
+                        current_cond = [l for l in possible_lines if l[header.index('condition')]==name]
+                    log_rts = [numpy.log10(float(l[header.index('response_time')].replace(',', '.'))) for l in current_cond]
+                    rts = [float(l[header.index('response_time')].replace(',', '.')) for l in current_cond]
+                    subjects = [int(l[header.index('subject')][1:3]) for l in current_cond]
+                    if prime == 'prime-cat':
+                        ### prime -> target
+                        w_ones = [l[header.index('prime')].lower() for l in current_cond]
+                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
+                    elif prime == 'prime-proto':
+                        w_ones = [prototypes[l[header.index('prime')][:4]] for l in current_cond]
+                        vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
+                    elif prime == 'target-cat':
+                        ### prime -> target
+                        w_ones = [it_mapper[l[header.index('target_category')]] for l in current_cond]
+                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
+                    elif prime == 'target-proto':
+                        w_ones = [prototypes[it_mapper[l[header.index('target_category')]][:4]] for l in current_cond]
+                        vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
+                    w_twos = [l[header.index('target')].lower() for l in current_cond]
+                    test_vocab = test_vocab.union(set(vocab_w_ones))
+                    vocab_w_twos = [w for ws in w_twos for w in transform_italian_word(ws)] 
+                    test_vocab = test_vocab.union(set(vocab_w_twos))
+                    all_sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+    final_sims = reorganize_tms_sims(all_sims)
+    collect_info(final_sims)
+
+    plot_tms_raw_rts(all_sims)
+    
+    return final_sims, test_vocab
+
 
 def read_it_distr_learn_tms(args):
     lines = list()

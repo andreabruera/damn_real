@@ -1,17 +1,76 @@
+import numpy
 import os
 
 from utf_utils import transform_german_word
 
-def read_italian_blindsighted(args):
+def read_italian_anew(args):
     ### lexical decition times
-    sims = {'it_lexical-decision-blindsighted_{}'.format(args.stat_approach) : dict()}
+    sims = dict()
     test_vocab = set()
-    for case in sims.keys(): 
-        short_case = case.split('_')[1]
-        measures = dict()
-        with open(os.path.join('data', 'behavioural', 'it_lexical-decision-blindsighted.tsv'.format(short_case))) as i:
+    for task in [
+                  'lexical-decision', 
+                  'word-naming', 
+                  ]:
+        full_case = 'it_anew-{}_{}#all-words'.format(task, args.stat_approach)
+        sims[full_case] = dict()
+        with open(os.path.join('data', 'behavioural', 'it_anew', 'it_anew-{}.tsv'.format(task))) as i:
             for l_i, l in enumerate(i):
                 line = l.replace(',', '.').split('\t')
+                #print(line)
+                if l_i == 0:
+                    header = [w.strip() for w in line]
+                assert len(line) == len(header)
+                if task == 'lexical-decision':
+                    if line[header.index('Stimulus_Type')] != 'Word':
+                        continue
+                if line[header.index('Accuracy')] != '1':
+                    continue
+                word = line[header.index('Ita_Word')].lower()
+                sub = line[header.index('Subject')]
+                ### compressing...
+                sub = 'all'
+                if sub not in sims[full_case].keys():
+                    sims[full_case][sub] = dict()
+                test_vocab = test_vocab.union(set([word, word.capitalize()]))
+                try:
+                    word_rt = float(line[header.index('RTs')])
+                except ValueError:
+                    print([sub, word])
+                    continue
+                try:
+                    sims[full_case][sub][word].append(word_rt)
+                except KeyError:
+                    sims[full_case][sub][word] = [word_rt]
+    final_sims = dict()
+    for case, case_r in sims.items():
+        final_sims[case] = dict()
+        for sub, measures in case_r.items():
+            final_sims[case][sub] = dict()
+            for k_one_i, k_one in enumerate(sorted(measures.keys())):
+                for k_two_i, k_two in enumerate(sorted(measures.keys())):
+                    if k_two_i <= k_one_i:
+                        continue
+                    key = tuple(sorted([k_one, k_two]))
+                    final_sims[case][sub][key] = abs(numpy.average(measures[k_one])-numpy.average(measures[k_two]))
+    return final_sims, test_vocab
+
+def read_italian_blindsighted(args):
+    ### lexical decition times
+    #sims = {'it_lexical-decision-blindsighted_{}'.format(args.stat_approach) : dict()}
+    sims = dict()
+    test_vocab = set()
+    for w_typ in [
+                  'abs', 
+                  'vis', 
+                  'multi',
+                  'all'
+                  ]:
+        full_case = 'it_lexical-decision-blindsighted_{}#{}-words'.format(args.stat_approach, w_typ)
+        sims[full_case] = dict()
+        with open(os.path.join('data', 'behavioural', 'it_lexical-decision-blindsighted.tsv')) as i:
+            for l_i, l in enumerate(i):
+                line = l.replace(',', '.').split('\t')
+                #print(line)
                 if l_i == 0:
                     header = [w.strip() for w in line]
                 assert len(line) == len(header)
@@ -21,17 +80,20 @@ def read_italian_blindsighted(args):
                     continue
                 if line[header.index('accuracy')] != '1':
                     continue
+                if w_typ != 'all':
+                    if line[header.index('Type')] != w_typ:
+                        continue
                 word = line[header.index('Stimulus')].lower()
                 sub = line[header.index('SubjectID')]
-                if sub not in sims[case].keys():
-                    sims[case][sub] = dict()
+                if sub not in sims[full_case].keys():
+                    sims[full_case][sub] = dict()
                 test_vocab = test_vocab.union(set([word, word.capitalize()]))
                 try:
                     word_rt = float(line[header.index('RT')])
                 except ValueError:
                     print([sub, word])
                     continue
-                sims[case][sub][word] = word_rt
+                sims[full_case][sub][word] = word_rt
     final_sims = dict()
     for case, case_r in sims.items():
         final_sims[case] = dict()
@@ -51,7 +113,6 @@ def read_italian_deafhearing(args):
     test_vocab = set()
     for case in sims.keys(): 
         short_case = case.split('_')[1]
-        measures = dict()
         with open(os.path.join('data', 'behavioural', 'it_lexical-decision-deafhearing.tsv'.format(short_case))) as i:
             for l_i, l in enumerate(i):
                 line = l.replace(',', '.').split('\t')

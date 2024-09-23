@@ -3,7 +3,7 @@ import os
 import pickle
 import random
 
-from test_utils import test_model
+from test_utils import social_test, test_model
 
 def test_count_model(args, key, datasets, present_words, trans_from_en, coocs, vocab, row_words, ctx_words):
     trans_pmi_vecs = build_ppmi_vecs(coocs, vocab, row_words, ctx_words, smoothing=False)
@@ -108,7 +108,7 @@ def load_count_coocs(args):
         elif 'cc100' in args.model:
             min_count = 500
         else:
-            min_count = 100
+            min_count = 10
     else:
         if 'cc100' in args.model:
             if args.lang == 'it':

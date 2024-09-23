@@ -13,11 +13,35 @@ from sklearn import linear_model
 from tqdm import tqdm
 
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_areas, read_fern_categories, read_mitchell2008
-from meeg_loaders import read_dirani_n400
-from behav_loaders import read_italian_behav, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav, read_picnaming_seven
-from tms_loaders import read_it_distr_learn_tms, read_de_pmtg_production_tms, read_de_sound_act_tms, read_de_sem_phon_tms
+from meeg_loaders import read_dirani_n400, read_kaneshiro_n400
+from behav_loaders import read_italian_behav, read_italian_anew, read_italian_mouse, read_italian_deafhearing, read_italian_blindsighted, read_german_behav, read_picnaming_seven
+from tms_loaders import read_it_social_quantity_tms, read_it_distr_learn_tms, read_de_pmtg_production_tms, read_de_sound_act_tms, read_de_sem_phon_tms
 from simrel_norms_loaders import read_men, read_simlex, read_ws353
-from utf_utils import transform_german_word
+from utf_utils import transform_german_word, transform_italian_word
+
+def social_test(args, model, present_words):
+    trust = True
+    if args.dataset == 'it_social-quantity' and 'abs-prob' not in args.model and 'surp' not in args.model:
+        ws = {'sociale' : list(), 'quantità' : list()}
+        with open('data/tms/it_tms_social-quant.tsv') as i:
+            for l in i:
+                line = l.strip().split('\t')
+                if line[4][:4] == line[6][:4]:
+                    ws[line[4]].append(line[5])
+        sims = {k : numpy.average([1-scipy.spatial.distance.cosine(model[k], model[v_two]) for v_two in v]) for k, v in ws.items()}
+        for k, v in ws.items():
+            for k_two, v_two in ws.items():
+                if k == k_two:
+                    continue
+                sims[(k, k_two)] = numpy.average([1-scipy.spatial.distance.cosine(model[k], model[v]) for v in v_two])
+        print(sims)
+        if sims['quantità']<sims[('quantità', 'sociale')] or sims['quantità']<sims[('sociale', 'quantità')]:
+            #raise RuntimeError('untrustworthy model')
+            trust = False
+        if sims['sociale']<sims[('sociale', 'quantità')] or sims['sociale']<sims[('quantità', 'sociale')]:
+            #raise RuntimeError('untrustworthy model')
+            trust = False
+    return trust
 
 def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en, trans_words):
     #print('checking if words appear in the dictionary...')
@@ -66,15 +90,23 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                 #print(ws[1])
                 pass
         else:
-            if args.lang == 'de':
+            #if args.lang in ['de', 'it']:
+            if args.lang in ['de']:
                 ### first words
                 for word in first_word:
+                    if '_' in word:
+                        word = word.split('_')[1]
                     try:
                         w_ones.extend(trans_words[word])
                     except KeyError:
-                        curr_words = transform_german_word(word)
+                        if args.lang == 'de':
+                            curr_words = transform_german_word(word)
+                        if args.lang == 'it':
+                            curr_words = transform_italian_word(word)
                         trans_words[word] = list()
                         for w in curr_words:
+                            if '_' in w:
+                                w = w.split('_')[1]
                             try:
                                 present_words.index(w)
                                 trans_words[word].append(w)
@@ -85,9 +117,14 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                 try:
                     w_twos.extend(trans_words[ws[1]])
                 except KeyError:
-                    curr_words = transform_german_word(ws[1])
+                    if args.lang == 'de':
+                        curr_words = transform_german_word(word)
+                    if args.lang == 'it':
+                        curr_words = transform_italian_word(word)
                     trans_words[ws[1]] = list()
                     for w in curr_words:
+                        if '_' in w:
+                            w = w.split('_')[1]
                         try:
                             present_words.index(w)
                             trans_words[ws[1]].append(w)
@@ -96,6 +133,8 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                     w_twos.extend(trans_words[ws[1]])
             else:
                 for word in first_word:
+                    if '_' in word:
+                        word = word.split('_')[1]
                     for w in [word.lower(), word.capitalize()]:
                         try:
                             present_words.index(w)
@@ -103,6 +142,8 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                             continue
                         w_ones.append(w)
                 for w in [ws[1].lower(), ws[1].capitalize()]:
+                    if '_' in w:
+                        w = w.split('_')[1]
                     try:
                         present_words.index(w)
                     except ValueError:
@@ -117,6 +158,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
         if marker:
             test_sims.append((w_ones, w_twos, val))
             #print(w_ones)
+            #print(w_twos)
     return test_sims, missing_words, trans_words
 
 def compute_corr(model_sims, test_sims, to_be_removed):
@@ -134,11 +176,11 @@ def compute_corr(model_sims, test_sims, to_be_removed):
             continue
         real.append(v)
         pred.append(model_sims[joint_key])
-    #corr = scipy.stats.spearmanr(real, pred).statistic
-    corr = scipy.stats.pearsonr(real, pred).statistic
+    corr = scipy.stats.spearmanr(real, pred).statistic
+    #corr = scipy.stats.pearsonr(real, pred).statistic
     return corr
 
-def write_res(args, case, dataset_name, corr):
+def write_res(args, case, dataset_name, corr, trust):
     corpus_fold = case.split('_')[1] if 'ppmi' in case else case
     details = '_'.join(case.split('_')[2:]) if 'ppmi' in case else case
     out_folder = os.path.join(
@@ -149,6 +191,9 @@ def write_res(args, case, dataset_name, corr):
                               )
     os.makedirs(out_folder, exist_ok=True)
     out_f = os.path.join(out_folder, '{}.tsv'.format(dataset_name))
+    if trust == False:
+
+        out_f = out_f.replace('.tsv', '_DONTRUST.tsv')
     with open(out_f, 'w') as o:
         o.write('{}\t{}\t{}\t'.format(args.lang, case, dataset_name))
         for c in corr:
@@ -169,6 +214,7 @@ def check_present_words(args, rows, vocab):
     return present_words
 
 def test_model(args, case, model, vocab, datasets, present_words, trans_from_en):
+    trust = social_test(args, model, present_words)
     if args.stat_approach != 'simple':
         datasets = bootstrapper(args, datasets, )
     else:
@@ -196,6 +242,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                                                               trans_from_en,
                                                               trans_words
                                                               )
+                    #print(trans_words)
                     #all_sims_data[dataset_name][iter_dataset].append(test_sims)
                     iter_dict[s] = test_sims
                     missing_words = missing_words.union(new_miss)
@@ -235,25 +282,27 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
             for joint_ones, joint_twos in to_be_computed:
                 ### first words
                 w_ones = tuple(joint_ones.split('_'))
+                #print(w_ones)
                 try:
                     vecs_ones = ws_vecs[w_ones]
                 except KeyError:
-                    if 'abs-prob' in args.model:
+                    if 'abs-prob' in args.model or 'length' in args.model:
                         ws_vecs[w_ones] = numpy.sum([model[w] for w in w_ones], axis=0)
                     else:
                         ws_vecs[w_ones] = numpy.average([model[w] for w in w_ones], axis=0)
                     vecs_ones = ws_vecs[w_ones]
                 ### second words
                 w_twos = tuple(joint_twos.split('_'))
+                #print(w_twos)
                 try:
                     vecs_twos = ws_vecs[w_twos]
                 except KeyError:
-                    if 'abs-prob' in args.model:
+                    if 'abs-prob' in args.model or 'length' in args.model:
                         ws_vecs[w_twos] = numpy.sum([model[w] for w in w_twos], axis=0)
                     else:
                         ws_vecs[w_twos] = numpy.average([model[w] for w in w_twos], axis=0)
                     vecs_twos = ws_vecs[w_twos]
-                if 'abs-prob' in args.model:
+                if 'abs-prob' in args.model or 'length' in args.model:
                     ### negative!
                     if 'log' in args.model:
                         #print('using smoothed log')
@@ -299,7 +348,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
         print(numpy.nanmean(corr))
         if len(missing_words) > 0:
             print('missing words: {}'.format(missing_words))
-        write_res(args, case, dataset_name, corr)
+        write_res(args, case, dataset_name, corr, trust=trust)
         #return results
 
 def bootstrapper(args, full_data, ):
@@ -355,6 +404,7 @@ def bootstrapper(args, full_data, ):
     ### for tms we fix n=20
     tms_datasets = [
                    'it_distr-learn',
+                   'it_social-quantity',
                    'de_sem-phon', 
                    'de_sound-act',
                    'de_pmtg-prod',
@@ -366,6 +416,8 @@ def bootstrapper(args, full_data, ):
                 'it_deafhearing',
                 'it_blindsighted',
                 'picture-naming-seven',
+                'it_anew-lexical-decision',
+                'it_anew-word-naming',
             ]
     if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
         n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
@@ -448,6 +500,8 @@ def load_dataset(args, trans_from_en):
                 data, vocab = read_fern_categories(args, trans_from_en)
     if 'dirani' in args.dataset:
         data, vocab = read_dirani_n400(args)
+    if 'kane' in args.dataset:
+        data, vocab = read_kaneshiro_n400(args)
     if 'mitchell' in args.dataset:
         data, vocab = read_mitchell2008(args)
     if 'abstract' in args.dataset:
@@ -458,6 +512,8 @@ def load_dataset(args, trans_from_en):
         data, vocab = read_german_behav(args)
     if 'it_behav' in args.dataset:
         data, vocab = read_italian_behav(args)
+    if 'it_anew' in args.dataset:
+        data, vocab = read_italian_anew(args)
     if 'it_deafhearing' in args.dataset:
         data, vocab = read_italian_deafhearing(args)
     if 'it_blindsighted' in args.dataset:
@@ -472,6 +528,8 @@ def load_dataset(args, trans_from_en):
         data, vocab = read_de_pmtg_production_tms(args)
     if 'distr-learn' in args.dataset:
         data, vocab = read_it_distr_learn_tms(args)
+    if 'social-quantity' in args.dataset:
+        data, vocab = read_it_social_quantity_tms(args)
     return vocab, data
 
 def load_static_model(args):
@@ -515,7 +573,7 @@ def load_static_model(args):
 
 def args():
     parser = argparse.ArgumentParser()
-    corpora_choices = list()
+    corpora_choices = ['word_length']
     for corpus in [
                    'bnc',
                    'wac',
@@ -572,10 +630,12 @@ def args():
                                 'mitchell2008',
                                 ### meeg
                                 'dirani-n400',
+                                'kaneshiro-n400',
                                 ### behav
                                 'de_behav',
                                 'it_behav',
                                 'it_mouse',
+                                'it_anew',
                                 'it_deafhearing',
                                 'it_blindsighted',
                                 'picture-naming-seven',
@@ -584,6 +644,7 @@ def args():
                                 'de_pmtg-prod',
                                 'de_sound-act',
                                 'it_distr-learn',
+                                'it_social-quantity',
                                 ],
                         required=True,
                         )

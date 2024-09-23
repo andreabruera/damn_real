@@ -21,10 +21,12 @@ with tqdm() as counter:
                 continue
             if 'sym' in root: 
                 continue
-            if 'concept' in root: 
-                continue
-            if 'aligned' in root: 
-                continue
+            #if 'DON' in f: 
+            #    continue
+            #if 'concept' in root: 
+            #    continue
+            #if 'aligned' in root: 
+            #    continue
             with open(os.path.join(root, f)) as i:
                 for l in i:
                     line = l.strip().split('\t')
@@ -32,7 +34,7 @@ with tqdm() as counter:
                     if lang not in results.keys():
                         results[lang] = dict()
                     model = line[1]
-                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model:
+                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model:
                         num = float(model.split('_')[-2])
                         if 'wiki' in model:
                             short_model = '_'.join(model.split('_')[2:-2])
@@ -51,6 +53,8 @@ with tqdm() as counter:
                         task = 'fmri'
                     elif 'dirani' in dataset:
                         task = 'meeg'
+                    elif 'kaneshiro' in dataset:
+                        task = 'meeg'
                     elif 'abstract' in dataset:
                         task = 'fmri'
                     elif 'lexical' in dataset:
@@ -67,6 +71,8 @@ with tqdm() as counter:
                         task = 'tms'
                     elif 'distr-learn' in dataset:
                         task = 'tms'
+                    elif 'social-quant' in dataset:
+                        task = 'tms'
                     else:
                         #continue
                         raise RuntimeError
@@ -75,7 +81,7 @@ with tqdm() as counter:
                     if dataset not in results[lang][task].keys():
                         results[lang][task][dataset] = dict()
                     res = numpy.array(line[3:], dtype=numpy.float32)
-                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model:
+                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model:
                         if short_model not in results[lang][task][dataset].keys():
                             results[lang][task][dataset][short_model] = dict()
                         results[lang][task][dataset][short_model][num] = res
@@ -109,12 +115,21 @@ with tqdm() as counter:
                     pass
                 elif 'fern' in task:
                     ymin = -.05
-                    ymax = .15
+                    ymax = .2
                 elif 'dirani' in task:
                     ymin = -.02
                     ymax = .15
+                elif 'kaneshiro' in task:
+                    ymin = -.02
+                    ymax = .1
                 elif 'abstract' in task:
                     pass
+                elif 'anew-lexical' in task:
+                    ymin = -0.05
+                    ymax = 0.4
+                elif 'anew-word' in task:
+                    ymin = -0.05
+                    ymax = 0.2
                 elif 'lexical' in task:
                     ymin = -0.05
                     ymax = 0.35
@@ -124,6 +139,9 @@ with tqdm() as counter:
                 elif 'abs-conc-decision' in task:
                     ymin = -.1
                     ymax = .1
+                elif 'social-quant' in task:
+                    ymin = -.25
+                    ymax = .25
                 elif 'mitchell' in task:
                     ymin = -.05
                     ymax = .15
@@ -144,7 +162,7 @@ with tqdm() as counter:
                                           figsize=(20, 10),
                                           )
                 ### dividing into lines and regular values
-                fts = [k for k in t_res.keys() if 'fast' in k]
+                fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k or 'length' in k]
                 surprs = [k for k in t_res.keys() if 'surpr' in k]
                 abss = [k for k in t_res.keys() if 'abs-prob' in k]
                 mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
@@ -157,6 +175,7 @@ with tqdm() as counter:
                                   'concept' not in k and \
                                   'prob' not in k and \
                                   'surpr' not in k and \
+                                  'length' not in k and \
                                   #('top' in k
                                   (
                                   #'top' in k
@@ -245,7 +264,8 @@ with tqdm() as counter:
                             #left=0., 
                             right=500000,
                             )
-                pyplot.ylabel('Pearson correlation')
+                #pyplot.ylabel('Pearson correlation')
+                pyplot.ylabel('Spearman correlation')
                 ### legend
                 pyplot.legend(
                         ncols=5,
