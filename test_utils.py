@@ -27,14 +27,14 @@ def social_test(args, model, present_words):
             for l in i:
                 line = l.strip().split('\t')
                 if line[4][:4] == line[6][:4]:
-                    ws[line[4]].append(line[5])
+                    if line[5] in present_words:
+                        ws[line[4]].append(line[5])
         sims = {k : numpy.average([1-scipy.spatial.distance.cosine(model[k], model[v_two]) for v_two in v]) for k, v in ws.items()}
         for k, v in ws.items():
             for k_two, v_two in ws.items():
                 if k == k_two:
                     continue
                 sims[(k, k_two)] = numpy.average([1-scipy.spatial.distance.cosine(model[k], model[v]) for v in v_two])
-        print(sims)
         if sims['quantità']<sims[('quantità', 'sociale')] or sims['quantità']<sims[('sociale', 'quantità')]:
             #raise RuntimeError('untrustworthy model')
             trust = False
@@ -273,7 +273,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                             continue
                 ### negative!
                 if 'log10' in args.model or 'surprisal' in args.model:
-                    sim = -numpy.log10(sum(cooc)+1)
+                    sim = -numpy.log10(sum(cooc))
                 else:
                     sim = -sum(cooc)
                 ws_sims[(joint_ones, joint_twos)] = sim
@@ -306,12 +306,27 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                     ### negative!
                     if 'log' in args.model:
                         #print('using smoothed log')
-                        sim = -numpy.log10(sum([vecs_ones, vecs_twos])+1)
+                        if 'social' in args.dataset:
+                            #print(w_twos)
+                            sim = -numpy.log10(vecs_twos)
+                        else:
+                            sim = -numpy.log10(sum([vecs_ones, vecs_twos]))
                     else:
                         ### negative!
-                        sim = -sum([vecs_ones, vecs_twos])
+                        if 'social' in args.dataset:
+                            #print(w_twos)
+                            sim = -vecs_twos
+                        else:
+                            sim = -sum([vecs_ones, vecs_twos])
                 else:
                     sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
+                if 'social' in args.dataset:
+                    if 'abs-prob' in args.model or 'length' in args.model:
+                        #print('checking')
+                        if 'log' in args.model:
+                            assert sim == -numpy.log10(ws_vecs[w_twos])
+                        else:
+                            assert sim == -ws_vecs[w_twos]
                 if str(sim) == 'nan':
                     if sum(vecs_ones) == 0:
                         to_be_removed.append(joint_ones)
@@ -321,6 +336,13 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                     continue
                 ws_sims[(joint_ones, joint_twos)] = sim
                 counter.update(1)
+    if 'social' in args.dataset:
+        if 'abs-prob' in args.model:
+            #print('checking')
+            ts = set([v[1] for v in ws_sims.keys()])
+            for t in ts:
+                poss = set([v for k, v in ws_sims.items() if t in k])
+                assert len(list(poss)) == 1
     print('impossible to compute similarities in these cases:')
     print(set([w for w in to_be_removed]))
     ### now we can run correlations
@@ -390,17 +412,22 @@ def bootstrapper(args, full_data, ):
                     ]
     ### labels
     labels = list(full_data.keys())
+    all_subjects = {k : list(v.keys()) for k, v in full_data.items()}
+    #if 'all' in subjects and args.stat_approach ==  'residualize':
+    #    raise RuntimeError('single subject not implemented')
+    '''
     ### subjects
     all_subjects = [list(v.keys()) for v in full_data.values()]
     # checking
     n_subjects = set([len(v) for v in all_subjects])
-    assert len(n_subjects) == 1
+    #assert len(n_subjects) == 1
     n_subjects = list(n_subjects)[0]
     subjects = list(set([val for v in all_subjects for val in v]))
     #subjects = [s if s!='all' else 0 for s in subjects]
-    if 'all' in subjects and args.stat_approach ==  'residualize':
-        raise RuntimeError('single subject not implemented')
-    assert len(subjects) == n_subjects
+    if 'social' not in args.dataset:
+        assert len(subjects) == n_subjects
+        n_subjects = min([len(v) for v in all_subjects])
+    '''
     ### for tms we fix n=20
     tms_datasets = [
                    'it_distr-learn',
@@ -420,38 +447,39 @@ def bootstrapper(args, full_data, ):
                 'it_anew-word-naming',
             ]
     if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
-        n_iter_sub = max(1, int(n_subjects*random.choice(proportions)))
+        n_iter_sub = max(1, int(min(list(all_subjects.values()))*random.choice(proportions)))
     else:
-        n_iter_sub = min(20, n_subjects)
-        n_iter_trials = 15
+        #n_iter_sub = min(10, n_subjects)
+        #n_iter_trials = 20
+        n_iter_sub = 20
+        n_iter_trials = 20
     ### here we create 1000
     boot_data = {l : list() for l in labels}
     if args.stat_approach == 'residualize':
         print('residualizing...')
     for _ in range(1000):
-        iter_subs = random.sample(subjects, k=n_iter_sub)
-        ### for tms we fix n=20
+        iter_subs = {l : random.sample(subjects, k=n_iter_sub) for l, subjects in all_subjects.items()}
+        ### for tms we fix ns=15,20
         if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
-            iter_data_keys = {l : 
+            iter_data_idxs = {l : 
                                {s : random.sample(
-                                                 full_data[l][s].keys(), 
+                                                 range(len(full_data[l][s])), 
                                                  k=int(len(full_data[l][s].keys())*random.choice(proportions))
-                                                 #k=100,
-                                                 ) for s in iter_subs}
+                                                 ) for s in iter_subs[l]}
                                                  for l in labels}
         else:
-            iter_data_keys = {l : 
+            iter_data_idxs = {l : 
                                {s : random.sample(
-                                                 full_data[l][s].keys(), 
-                                                 k=n_iter_trials,
-                                                 ) for s in iter_subs}
+                                                 range(len(full_data[l][s])), 
+                                                 k=min(n_iter_trials, len(full_data[l][s])),
+                                                 ) for s in iter_subs[l]}
                                                  for l in labels}
-        iter_data = {l : {s : {k : full_data[l][s][k] for k in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
+        iter_data = {l : {s : [(full_data[l][s][k][0], full_data[l][s][k][1]) for k in iter_data_idxs[l][s]] for s in iter_subs[l]} for l in labels}
         ### residualization
         if args.stat_approach == 'residualize':
-            struct_train_data = {l : {s : {k : full_data[l][s][k] for k in full_data[l][s].keys() if k not in iter_data_keys[l][s]} for s in iter_subs} for l in labels}
-            flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_res in l_res.items() for k, rt in s_res.items()]
-            flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_res in l_res.items() for k, rt in s_res.items()]
+            struct_train_data = {l : {s : [(full_data[l][s][k][0], full_data[l][s][k][1]) for k in range(len(full_data[l][s])) if k not in iter_data_idxs[l][s]] for s in iter_subs[l]} for l in labels}
+            flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_res in l_res.items() for k, rt in s_res]
+            flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_res in l_res.items() for k, rt in s_res]
             model = sklearn.linear_model.LinearRegression()
             ### we remove tms/sham -> t[0] per subject -> t[1]
             model.fit(
@@ -465,7 +493,10 @@ def bootstrapper(args, full_data, ):
             #print([t[3] for t in flat_test_data])
             residuals = [(real[0], real[1], real[2], real[3]-pred[0]) for real, pred in zip(flat_test_data, preds)]
             for l, s, k, r in residuals:
-                iter_data[l][s][k] = r
+                try:
+                    iter_data[l][s].append((k, r))
+                except KeyError:
+                    iter_data[l][s] = [(k, r)]
         for l, l_data in iter_data.items():
             boot_data[l].append(l_data)
     return boot_data

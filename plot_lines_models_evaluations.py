@@ -21,8 +21,8 @@ with tqdm() as counter:
                 continue
             if 'sym' in root: 
                 continue
-            #if 'DON' in f: 
-            #    continue
+            if 'DON' in f: 
+                continue
             #if 'concept' in root: 
             #    continue
             #if 'aligned' in root: 

@@ -42,6 +42,8 @@ def plot_tms_raw_rts(sims):
         ax.legend(
                   ncol=3
                   )
+        ymin = 2.75
+        ymax = 3.05
         ax.set_ylim(bottom = ymin, top=ymax)
         pyplot.title('{} - {}'.format(general, spec.replace('_', ' ')))
         path = os.path.join('raw_tms_rts', general)
@@ -229,16 +231,22 @@ def read_it_social_quantity_tms(args):
     conds = set([l[header.index('condition')] for l in lines])
     all_sims = dict()
     test_vocab = set()
-    for name in conds:
-        for marker in [
-                       'social', 
-                       'quantity', 
-                       #'all',
-                       ]:
-            for cong in [
-                         'congruent', 'incongruent', 
-                         'all',
-                         ]:
+    for cong in [
+                 'congruent', 'incongruent', 
+                 'all',
+                 ]:
+        if cong == 'congruent':
+            cong_lines = [l for l in lines if l[header.index('target_category')][:4]==l[header.index('prime')][:4]]
+        elif cong == 'incongruent':
+            cong_lines = [l for l in lines if l[header.index('target_category')][:4]!=l[header.index('prime')][:4]]
+        elif cong == 'all':
+            cong_lines = [l for l in lines]
+        for name in conds:
+            for marker in [
+                           'social', 
+                           'quantity', 
+                           #'all',
+                           ]:
                 for prime in [
                               'prime-proto', 
                               'target-proto', 
@@ -248,17 +256,14 @@ def read_it_social_quantity_tms(args):
                     ### in congruent cases primes and targets are the same
                     if 'target' in prime and cong == 'congruent':
                         continue
-                    if cong == 'congruent':
-                        possible_lines = [l for l in lines if l[header.index('target_category')][:4]==l[header.index('prime')][:4]]
-                    elif cong == 'incongruent':
-                        possible_lines = [l for l in lines if l[header.index('target_category')][:4]!=l[header.index('prime')][:4]]
-                    elif cong == 'all':
-                        possible_lines = [l for l in lines]
                     ### removing excluded subjects
-                    impossible_lines = [l for l in possible_lines if l[header.index('subject')] in excluded[marker]]
-                    #print('removed {} lines'.format(len(impossible_lines)))
-                    assert len(impossible_lines)>0
-                    #possible_lines = [l for l in possible_lines if l[header.index('subject')] not in excluded[marker]]
+                    if marker != 'all':
+                        impossible_lines = [l for l in cong_lines if l[header.index('subject')] in excluded[marker]]
+                        #print('removed {} lines'.format(len(impossible_lines)))
+                        assert len(impossible_lines)>0
+                        possible_lines = [l for l in cong_lines if l[header.index('subject')] not in excluded[marker]]
+                    else:
+                        possible_lines = [l for l in cong_lines]
                     ### not excluding subjects
                     key = 'it_social-quantity_{}#{}-{}-trials-{}_{}'.format(args.stat_approach, marker, cong, prime, name)
                     if marker != 'all':
@@ -286,6 +291,9 @@ def read_it_social_quantity_tms(args):
                     test_vocab = test_vocab.union(set(vocab_w_ones))
                     vocab_w_twos = [w for ws in w_twos for w in transform_italian_word(ws)] 
                     test_vocab = test_vocab.union(set(vocab_w_twos))
+                    #print(prime)
+                    #print(set(vocab_w_twos))
+                    print([key, len(subjects)])
                     all_sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     final_sims = reorganize_tms_sims(all_sims)
     collect_info(final_sims)
@@ -361,10 +369,11 @@ def reorganize_tms_sims(sims):
     full_sims = dict()
     for n, n_data in sims.items():
         full_sims[n] = dict()
+        counter = 0
         for s, ws, rt in n_data:
             if s not in full_sims[n].keys():
-                full_sims[n][s] = dict()
-            full_sims[n][s][ws] = rt
+                full_sims[n][s] = list()
+            full_sims[n][s].append((ws, rt))
     return full_sims
 
 def read_phil_ratings():
@@ -703,7 +712,7 @@ def read_de_sound_act_tms(args):
 def collect_info(full_sims):
     labels = set(full_sims.keys())
     subjects = set([s for subs in full_sims.values() for s in subs.keys()])
-    trials = set([len(s.keys()) for subs in full_sims.values() for s in subs.values()])
+    trials = set([len(set([ws[0] for ws in s])) for subs in full_sims.values() for s in subs.values()])
     print('labels: ')
     print(labels)
     print('subjects: ')
