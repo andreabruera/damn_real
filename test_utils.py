@@ -103,6 +103,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                             curr_words = transform_german_word(word)
                         if args.lang == 'it':
                             curr_words = transform_italian_word(word)
+                        #print(curr_words)
                         trans_words[word] = list()
                         for w in curr_words:
                             if '_' in w:
@@ -111,16 +112,18 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
                                 present_words.index(w)
                                 trans_words[word].append(w)
                             except ValueError:
+                                #print(w)
                                 continue
                         w_ones.extend(trans_words[word])
                 ### second words
+                #print(ws[1])
                 try:
                     w_twos.extend(trans_words[ws[1]])
                 except KeyError:
                     if args.lang == 'de':
-                        curr_words = transform_german_word(word)
+                        curr_words = transform_german_word(ws[1])
                     if args.lang == 'it':
-                        curr_words = transform_italian_word(word)
+                        curr_words = transform_italian_word(ws[1])
                     trans_words[ws[1]] = list()
                     for w in curr_words:
                         if '_' in w:
@@ -156,9 +159,10 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
         if len(w_ones)<1 or len(w_twos)<1:
             marker = False
         if marker:
-            test_sims.append((w_ones, w_twos, val))
-            #print(w_ones)
-            #print(w_twos)
+            test_sims.append((
+                              list(set(w_ones)), list(set(w_twos)), val))
+            #print(set(w_ones))
+            #print(set(w_twos))
     return test_sims, missing_words, trans_words
 
 def compute_corr(model_sims, test_sims, to_be_removed):
@@ -257,6 +261,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
     ws_sims = dict()
     to_be_removed = list()
     print('now pre-computing model dissimilarities...')
+    #print(to_be_computed)
     with tqdm() as counter:
         if 'cond-prob' in args.model or 'surprisal' in args.model:
             for joint_ones, joint_twos in to_be_computed:
@@ -274,6 +279,8 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                 ### negative!
                 if 'log10' in args.model or 'surprisal' in args.model:
                     sim = -numpy.log10(sum(cooc))
+                    if str(sim) == 'nan':
+                        sim = 0
                 else:
                     sim = -sum(cooc)
                 ws_sims[(joint_ones, joint_twos)] = sim

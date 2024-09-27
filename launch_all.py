@@ -1,9 +1,9 @@
 import argparse
 import os
 
-#stat_approach = 'simple'
+stat_approach = 'simple'
 #stat_approach = 'bootstrap'
-stat_approach = 'residualize'
+#stat_approach = 'residualize'
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -76,11 +76,11 @@ for dataset in final_datasets:
     corpora_choices = list()
     for corpus in [
                    'wac',
-                   #'opensubs',
-                   #'cc100',
-                   #'tagged_leipzig',
-                   #'tagged_wiki',
-                   #'tagged_gutenberg',
+                   'opensubs',
+                   'cc100',
+                   'tagged_leipzig',
+                   'tagged_wiki',
+                   'tagged_gutenberg',
                    ]:
         corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
@@ -95,8 +95,8 @@ for dataset in final_datasets:
 
     choices=[
              'fasttext',
-             #'fasttext_aligned',
-             #'conceptnet',
+             'fasttext_aligned',
+             'conceptnet',
              ] + corpora_choices
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))

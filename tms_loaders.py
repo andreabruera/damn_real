@@ -69,7 +69,7 @@ def read_de_pmtg_production_tms(args):
                 missing += 1
                 continue
             lines.append([w.strip() for w in line])
-    print(missing)
+    print('missing words: {}'.format(missing))
     stims = set([l[header.index('stimulation')] for l in lines])
     conds = {
              'u' : 'unrelated',
@@ -81,7 +81,7 @@ def read_de_pmtg_production_tms(args):
     test_vocab = set()
     for name, cond in conds.items():
         for stim in stims:
-            print(name)
+            #print(name)
             key = 'de_pmtg-production_{}#{}-{}'.format(args.stat_approach, cond, stim)
             current_cond = [l for l in lines if l[header.index('condition')].strip() in name and \
                                                 l[header.index('stimulation')] == stim and \
@@ -132,7 +132,7 @@ def read_de_sem_phon_tms(args):
             if '' in line:
                 continue
             if len(line) < len(header)-1:
-                print(line)
+                print('skipping line: {}'.format(line))
                 continue
             ### removing trailing spaces
             line = [w.strip() for w in line]
@@ -140,7 +140,7 @@ def read_de_sem_phon_tms(args):
                 missing += 1
                 continue
             lines.append(line)
-    print(missing)
+    print('missing words: {}'.format(missing))
     print('sem trials containing a NA: {}'.format(len(na_lines)))
     ###
     conditions = set([l[header.index('stim')] for l in lines])
@@ -225,9 +225,9 @@ def read_it_social_quantity_tms(args):
                     excluded[c].append(s)
                 except KeyError:
                     excluded[c] = [s]
-    print(excluded)
+    print('excluded subjects following original paper: {}'.format(excluded))
     prototypes = {k[:4] : tuple([w for w in v]) for k, v in prototypes.items()}
-    print(missing)
+    print('missing words: {}'.format(missing))
     conds = set([l[header.index('condition')] for l in lines])
     all_sims = dict()
     test_vocab = set()
@@ -293,7 +293,7 @@ def read_it_social_quantity_tms(args):
                     test_vocab = test_vocab.union(set(vocab_w_twos))
                     #print(prime)
                     #print(set(vocab_w_twos))
-                    print([key, len(subjects)])
+                    print('available subjects per key: {}'.format([key, len(subjects)]))
                     all_sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     final_sims = reorganize_tms_sims(all_sims)
     collect_info(final_sims)
@@ -321,7 +321,7 @@ def read_it_distr_learn_tms(args):
                 missing += 1
                 continue
             lines.append(line)
-    print(missing)
+    print('missing words: {}'.format(missing))
     conds = set([l[header.index('condition')] for l in lines])
     all_sims = dict()
     all_full_sims = dict()
@@ -403,7 +403,7 @@ def read_phil_ratings():
             except ValueError:
                 pass
             if len(ratings[line[0]].keys()) == 0:
-                print(line[0])
+                print('removing line: {}'.format(line[0]))
                 del ratings[line[0]]
     return ratings
 
@@ -590,14 +590,14 @@ def read_de_sound_act_tms(args):
                 errs += 1
                 continue
             lines.append(line)
-    print(errs)
+    print('number of error trials: {}'.format(errs))
 
     proto_modes = [
                  #'all-all-all', 
                  'all-pos-all',
                  #'all-pos-topten',
                  #'all-pos-topfifty',
-                 'all-neg-all',
+                 #'all-neg-all',
                  'matched-excl-all',
                  #'matched-excl-topten',
                  #'matched-excl-topfifty',
@@ -610,11 +610,14 @@ def read_de_sound_act_tms(args):
                  'opposite-incl-all',
                  #'opposite-incl-topten',
                  #'opposite-incl-topfifty',
+                 'matched-cat-word-all',
+                 'opposite-cat-word-all',
                  ]
     sims = dict()
     test_vocab = set()
     conditions = set([l[header.index('condition')] for l in lines])
     tasks = set([l[header.index('task')] for l in lines])
+    assert len(tasks) == 2
     ### everything together
     for proto_mode in proto_modes:
         for c in conditions:
@@ -626,8 +629,15 @@ def read_de_sound_act_tms(args):
             log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
             ### with prototyping, we actually use words as first items
             #w_ones = [l[header.index('task')] for l in current_cond]
-            w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
-            all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+            if 'cat-word' not in proto_mode:
+                w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
+                all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+            else:
+                if 'matched' in proto_mode:
+                    w_ones = [tuple(transform_german_word(l[header.index('task')])) for l in current_cond]
+                else:
+                    w_ones = [tuple(transform_german_word([tsk for tsk in tasks if tsk!=l[header.index('task')]][0])) for l in current_cond]
+                all_w_ones = [w for w in w_ones]
             test_vocab = test_vocab.union(set([w for ws in all_w_ones for w in ws]))
             ### these are the words subjects actually saw
             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
@@ -636,9 +646,10 @@ def read_de_sound_act_tms(args):
             w_twos = [l[header.index('stimulus')] for l in current_cond]
             sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
             for t in tasks:
-                print('\n')
-                print('prototypes for {}, {}'.format(proto_mode, t))
-                print(return_proto_words(t, proto_mode, prototypes))
+                if 'cat-word' not in proto_mode:
+                    print('\n')
+                    print('number of prototypes for {}, {}'.format(proto_mode, t))
+                    print(len(return_proto_words(t, proto_mode, prototypes)))
                 key = 'de_sound-act-aggregated_{}#{}_{}_{}'.format(args.stat_approach, proto_mode, t, c)
                 ### separate tasks
                 current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t]
@@ -650,12 +661,20 @@ def read_de_sound_act_tms(args):
                 #test_vocab = test_vocab.union(set(vocab_w_ones))
                 ### with prototyping, we actually use words as first items
                 #w_ones = [l[header.index('task')] for l in current_cond]
-                w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
-                all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                if 'cat-word' not in proto_mode:
+                    w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
+                    all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                else:
+                    if 'matched' in proto_mode:
+                        w_ones = [tuple(transform_german_word(l[header.index('task')])) for l in current_cond]
+                    else:
+                        w_ones = [tuple(transform_german_word([tsk for tsk in tasks if tsk!=l[header.index('task')]][0])) for l in current_cond]
+                    all_w_ones = [w for w in w_ones]
                 test_vocab = test_vocab.union(set([w for ws in all_w_ones for w in ws]))
                 vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
                 test_vocab = test_vocab.union(set(vocab_w_twos))
                 w_twos = [l[header.index('stimulus')] for l in current_cond]
+                #print(w_twos)
                 #sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
                 sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     ### if it's not fasttext, we just use aggregate
@@ -682,7 +701,6 @@ def read_de_sound_act_tms(args):
                         w_twos = [l[header.index('stimulus')] for l in current_cond]
                         sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
                         for t in tasks:
-                            print('\n')
                             print('prototypes for {}, {}'.format(proto_mode, t))
                             print(return_proto_words(t, proto_mode, prototypes))
                             key = 'de_sound-act-detailed_{}#{}_{}-{}sound-{}action_{}'.format(args.stat_approach, proto_mode, t, sound, action, c)
