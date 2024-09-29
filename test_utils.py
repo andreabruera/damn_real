@@ -313,7 +313,10 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                     ### negative!
                     if 'log' in args.model:
                         #print('using smoothed log')
-                        if 'social' in args.dataset:
+                        if 'social' in args.dataset or \
+                           'sound' in args.dataset or \
+                           'pmtg' in args.dataset or \
+                           'sem-phon' in args.dataset:
                             #print(w_twos)
                             sim = -numpy.log10(vecs_twos)
                         else:

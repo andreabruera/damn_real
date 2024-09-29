@@ -21,12 +21,22 @@ with tqdm() as counter:
                 continue
             if 'sym' in root: 
                 continue
-            if 'DON' in f: 
-                continue
+            #if 'DON' in f: 
+            #    continue
             #if 'concept' in root: 
             #    continue
             #if 'aligned' in root: 
             #    continue
+            #print(f)
+            #if 'fasttext' not in f or 'wac' not in f:
+            #    continue
+            if 'fasttext' in root and 'align' not in root:
+                pass
+            elif 'wac' in root:
+                pass
+            else:
+                continue
+            print(root)
             with open(os.path.join(root, f)) as i:
                 for l in i:
                     line = l.strip().split('\t')

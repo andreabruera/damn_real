@@ -82,21 +82,21 @@ for dataset in final_datasets:
                    'tagged_wiki',
                    'tagged_gutenberg',
                    ]:
-        corpora_choices.append('{}-ppmi-vecs'.format(corpus))
+        #corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
                      #'neg-raw-abs-prob',
                      'neg-log10-abs-prob',
                      #'neg-sym-raw-cond-prob',
                      #'neg-fwd-raw-cond-prob',
                      #'neg-sym-log10-cond-prob',
-                     'surprisal',
+                     #'surprisal',
                      ]:
             corpora_choices.append('{}-{}'.format(corpus, mode))
 
     choices=[
              'fasttext',
-             'fasttext_aligned',
-             'conceptnet',
+             #'fasttext_aligned',
+             #'conceptnet',
              ] + corpora_choices
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))
