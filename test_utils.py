@@ -196,7 +196,6 @@ def write_res(args, case, dataset_name, corr, trust):
     os.makedirs(out_folder, exist_ok=True)
     out_f = os.path.join(out_folder, '{}.tsv'.format(dataset_name))
     if trust == False:
-
         out_f = out_f.replace('.tsv', '_DONTRUST.tsv')
     with open(out_f, 'w') as o:
         o.write('{}\t{}\t{}\t'.format(args.lang, case, dataset_name))
@@ -459,10 +458,8 @@ def bootstrapper(args, full_data, ):
     if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
         n_iter_sub = max(1, int(min(list(all_subjects.values()))*random.choice(proportions)))
     else:
-        #n_iter_sub = min(10, n_subjects)
-        #n_iter_trials = 20
-        n_iter_sub = 20
-        n_iter_trials = 20
+        n_iter_sub = 18
+        n_iter_trials = 18
     ### here we create 1000
     boot_data = {l : list() for l in labels}
     if args.stat_approach == 'residualize':

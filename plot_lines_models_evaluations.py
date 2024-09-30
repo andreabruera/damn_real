@@ -160,7 +160,7 @@ with tqdm() as counter:
                     ymax = 0.5
                 elif 'sound-act' in task:
                     ymin = -.3
-                    ymax = .1
+                    ymax = .3
                 elif 'distr-learn' in task:
                     ymin = -.1
                     ymax = .3

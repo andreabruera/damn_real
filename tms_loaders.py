@@ -251,6 +251,7 @@ def read_it_social_quantity_tms(args):
                               'prime-proto', 
                               'target-proto', 
                               'target-cat', 
+                              'opposite-target-cat', 
                               'prime-cat',
                               ]:
                     ### in congruent cases primes and targets are the same
@@ -287,6 +288,10 @@ def read_it_social_quantity_tms(args):
                     elif prime == 'target-proto':
                         w_ones = [prototypes[it_mapper[l[header.index('target_category')]][:4]] for l in current_cond]
                         vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
+                    elif prime == 'opposite-target-cat':
+                        ### prime -> opposite target
+                        w_ones = [it_mapper[[k for k in it_mapper.keys() if k!=l[header.index('target_category')]][0]] for l in current_cond]
+                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
                     w_twos = [l[header.index('target')].lower() for l in current_cond]
                     test_vocab = test_vocab.union(set(vocab_w_ones))
                     vocab_w_twos = [w for ws in w_twos for w in transform_italian_word(ws)] 
@@ -647,7 +652,7 @@ def read_de_sound_act_tms(args):
             sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
             for t in tasks:
                 if 'cat-word' not in proto_mode:
-                    print('\n')
+                    #print('\n')
                     print('number of prototypes for {}, {}'.format(proto_mode, t))
                     print(len(return_proto_words(t, proto_mode, prototypes)))
                 key = 'de_sound-act-aggregated_{}#{}_{}_{}'.format(args.stat_approach, proto_mode, t, c)
@@ -692,8 +697,15 @@ def read_de_sound_act_tms(args):
                         log_rts = [numpy.log10(float(l[header.index('log_rt')])) for l in current_cond]
                         ### with prototyping, we actually use words as first items
                         #w_ones = [l[header.index('task')] for l in current_cond]
-                        w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
-                        all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                        if 'cat-word' not in proto_mode:
+                            w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
+                            all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                        else:
+                            if 'matched' in proto_mode:
+                                w_ones = [tuple(transform_german_word(l[header.index('task')])) for l in current_cond]
+                            else:
+                                w_ones = [tuple(transform_german_word([tsk for tsk in tasks if tsk!=l[header.index('task')]][0])) for l in current_cond]
+                            all_w_ones = [w for w in w_ones]
                         test_vocab = test_vocab.union(set([w for ws in all_w_ones for w in ws]))
                         ### these are the words subjects actually saw
                         vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
@@ -701,8 +713,10 @@ def read_de_sound_act_tms(args):
                         w_twos = [l[header.index('stimulus')] for l in current_cond]
                         sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
                         for t in tasks:
-                            print('prototypes for {}, {}'.format(proto_mode, t))
-                            print(return_proto_words(t, proto_mode, prototypes))
+                            if 'cat-word' not in proto_mode:
+                                #print('\n')
+                                print('number of prototypes for {}, {}'.format(proto_mode, t))
+                                print(len(return_proto_words(t, proto_mode, prototypes)))
                             key = 'de_sound-act-detailed_{}#{}_{}-{}sound-{}action_{}'.format(args.stat_approach, proto_mode, t, sound, action, c)
                             ### separate tasks
                             current_cond = [l for l in lines if l[header.index('condition')]==c and l[header.index('task')]==t and l[header.index('action_word')]==action_n and l[header.index('sound_word')]==sound_n]
@@ -714,8 +728,15 @@ def read_de_sound_act_tms(args):
                             #test_vocab = test_vocab.union(set(vocab_w_ones))
                             ### with prototyping, we actually use words as first items
                             #w_ones = [l[header.index('task')] for l in current_cond]
-                            w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
-                            all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                            if 'cat-word' not in proto_mode:
+                                w_ones = [return_proto_words(l[header.index('task')], proto_mode, prototypes) for l in current_cond]
+                                all_w_ones = [transform_german_word(w) for ws in w_ones for w in ws]
+                            else:
+                                if 'matched' in proto_mode:
+                                    w_ones = [tuple(transform_german_word(l[header.index('task')])) for l in current_cond]
+                                else:
+                                    w_ones = [tuple(transform_german_word([tsk for tsk in tasks if tsk!=l[header.index('task')]][0])) for l in current_cond]
+                                all_w_ones = [w for w in w_ones]
                             test_vocab = test_vocab.union(set([w for ws in all_w_ones for w in ws]))
                             vocab_w_twos = [w for l in current_cond for w in transform_german_word(l[header.index('stimulus')])]
                             test_vocab = test_vocab.union(set(vocab_w_twos))

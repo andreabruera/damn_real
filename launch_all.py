@@ -3,7 +3,7 @@ import os
 
 stat_approach = 'simple'
 #stat_approach = 'bootstrap'
-#stat_approach = 'residualize'
+stat_approach = 'residualize'
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -21,12 +21,12 @@ args = parser.parse_args()
 if args.modality == 'fmri':
     datasets = [
                 ### fmri
-                #'fern2-all',
-                #'fern2-areas-all',
-                #'fern1-categories',
-                #'fern1-all',
-                #'fern1-areas-all',
-                #'fern2-categories',
+                'fern2-all',
+                'fern2-areas-all',
+                'fern1-categories',
+                'fern1-all',
+                'fern1-areas-all',
+                'fern2-categories',
                 'de_abstract-fmri',
                 'mitchell2008',
             ]
@@ -76,20 +76,20 @@ for dataset in final_datasets:
     corpora_choices = list()
     for corpus in [
                    'wac',
-                   'opensubs',
-                   'cc100',
-                   'tagged_leipzig',
-                   'tagged_wiki',
-                   'tagged_gutenberg',
+                   #'opensubs',
+                   #'cc100',
+                   #'tagged_leipzig',
+                   #'tagged_wiki',
+                   #'tagged_gutenberg',
                    ]:
-        #corpora_choices.append('{}-ppmi-vecs'.format(corpus))
+        corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
                      #'neg-raw-abs-prob',
                      'neg-log10-abs-prob',
                      #'neg-sym-raw-cond-prob',
                      #'neg-fwd-raw-cond-prob',
                      #'neg-sym-log10-cond-prob',
-                     #'surprisal',
+                     'surprisal',
                      ]:
             corpora_choices.append('{}-{}'.format(corpus, mode))
 
