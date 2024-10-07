@@ -59,41 +59,42 @@ def read_italian_blindsighted(args):
     #sims = {'it_lexical-decision-blindsighted_{}'.format(args.stat_approach) : dict()}
     sims = dict()
     test_vocab = set()
-    for w_typ in [
-                  'abs', 
-                  'vis', 
-                  'multi',
-                  'all'
-                  ]:
-        full_case = 'it_lexical-decision-blindsighted_{}#{}-words'.format(args.stat_approach, w_typ)
-        sims[full_case] = dict()
-        with open(os.path.join('data', 'behavioural', 'it_lexical-decision-blindsighted.tsv')) as i:
-            for l_i, l in enumerate(i):
-                line = l.replace(',', '.').split('\t')
-                #print(line)
-                if l_i == 0:
-                    header = [w.strip() for w in line]
-                assert len(line) == len(header)
-                if line[header.index('Condition')] != 'word':
-                    continue
-                if line[header.index('Group')] != 'SC':
-                    continue
-                if line[header.index('accuracy')] != '1':
-                    continue
-                if w_typ != 'all':
-                    if line[header.index('Type')] != w_typ:
+    for sub_type in ['SC', 'EB']:
+        for w_typ in [
+                      'abs', 
+                      'vis', 
+                      'multi',
+                      'all'
+                      ]:
+            full_case = 'it_lexical-decision-blindsighted_{}#{}_{}-words'.format(sub_type, args.stat_approach, w_typ)
+            sims[full_case] = dict()
+            with open(os.path.join('data', 'behavioural', 'it_lexical-decision-blindsighted.tsv')) as i:
+                for l_i, l in enumerate(i):
+                    line = l.replace(',', '.').split('\t')
+                    #print(line)
+                    if l_i == 0:
+                        header = [w.strip() for w in line]
+                    assert len(line) == len(header)
+                    if line[header.index('Condition')] != 'word':
                         continue
-                word = line[header.index('Stimulus')].lower()
-                sub = line[header.index('SubjectID')]
-                if sub not in sims[full_case].keys():
-                    sims[full_case][sub] = dict()
-                test_vocab = test_vocab.union(set([word, word.capitalize()]))
-                try:
-                    word_rt = float(line[header.index('RT')])
-                except ValueError:
-                    print([sub, word])
-                    continue
-                sims[full_case][sub][word] = word_rt
+                    if line[header.index('Group')] != sub_type:
+                        continue
+                    if line[header.index('accuracy')] != '1':
+                        continue
+                    if w_typ != 'all':
+                        if line[header.index('Type')] != w_typ:
+                            continue
+                    word = line[header.index('Stimulus')].lower()
+                    sub = line[header.index('SubjectID')]
+                    if sub not in sims[full_case].keys():
+                        sims[full_case][sub] = dict()
+                    test_vocab = test_vocab.union(set([word, word.capitalize()]))
+                    try:
+                        word_rt = float(line[header.index('RT')])
+                    except ValueError:
+                        print([sub, word])
+                        continue
+                    sims[full_case][sub][word] = word_rt
     final_sims = dict()
     for case, case_r in sims.items():
         final_sims[case] = dict()

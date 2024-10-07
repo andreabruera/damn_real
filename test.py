@@ -2,7 +2,7 @@ from tqdm import tqdm
 
 from psycholing_norms_loaders import load_lancaster_en_de_it
 from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs, test_count_model, test_coocs_model, test_frequency_model
-from test_utils import args, check_present_words, load_dataset, load_static_model, test_model
+from test_utils import args, check_present_words, load_dataset, load_static_model, load_context_model, test_model
 
 args = args()
 lancaster_ratings, trans_from_en = load_lancaster_en_de_it(args)
@@ -30,6 +30,18 @@ if args.model == 'word_length':
                )
 elif args.model in static_models:
     model, vocab = load_static_model(args)
+    present_words = check_present_words(args, rows, vocab)
+    test_model(
+               args, 
+               args.model,
+               model, 
+               vocab, 
+               datasets, 
+               present_words,
+               trans_from_en,
+               )
+elif 'xlm' in args.model or 'xglm' in args.model or 'llama' in args.model:
+    model, vocab = load_context_model(args)
     present_words = check_present_words(args, rows, vocab)
     test_model(
                args, 
@@ -130,48 +142,48 @@ else:
         filt_freqs = {w : f for w, f in freqs.items() if w in vocab.keys() and vocab[w] in coocs.keys() and vocab[w]!=0}
         sorted_freqs = [w[0] for w in sorted(filt_freqs.items(), key=lambda item: item[1], reverse=True)]
         for freq in tqdm([
-                          #100, 
-                          #200, 
-                          #500, 
-                          #750,
-                          #1000, 
-                          #2500, 
-                          #5000, 
-                          #7500,
-                          #10000, 
-                          #12500, 
-                          #15000, 
-                          #17500,
-                          #20000, 
-                          #25000,
-                          #30000,
-                          #35000,
-                          #40000,
-                          #45000,
-                          #50000,
-                          #60000,
-                          #70000,
-                          #80000,
-                          #90000,
+                          100, 
+                          200, 
+                          500, 
+                          750,
+                          1000, 
+                          2500, 
+                          5000, 
+                          7500,
+                          10000, 
+                          12500, 
+                          15000, 
+                          17500,
+                          20000, 
+                          25000,
+                          30000,
+                          35000,
+                          40000,
+                          45000,
+                          50000,
+                          60000,
+                          70000,
+                          80000,
+                          90000,
                           100000,
                           150000,
                           200000,
-                          #250000,
-                          #300000,
-                          #350000,
-                          #400000,
-                          #450000,
-                          #500000,
-                          #550000,
-                          #600000,
-                          #650000,
-                          #700000,
-                          #750000,
-                          #800000,
-                          #850000,
-                          #900000,
-                          #950000,
-                          #1000000,
+                          250000,
+                          300000,
+                          350000,
+                          400000,
+                          450000,
+                          500000,
+                          550000,
+                          600000,
+                          650000,
+                          700000,
+                          750000,
+                          800000,
+                          850000,
+                          900000,
+                          950000,
+                          1000000,
                           ]):
             if freq > max(vocab.values()):
                 print('too many words requested, skipping!')

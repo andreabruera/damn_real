@@ -21,22 +21,15 @@ with tqdm() as counter:
                 continue
             if 'sym' in root: 
                 continue
-            #if 'DON' in f: 
-            #    continue
-            #if 'concept' in root: 
-            #    continue
-            #if 'aligned' in root: 
-            #    continue
-            #print(f)
-            #if 'fasttext' not in f or 'wac' not in f:
-            #    continue
+            '''
             if 'fasttext' in root and 'align' not in root:
                 pass
             elif 'wac' in root:
                 pass
             else:
                 continue
-            print(root)
+            '''
+            #print(root)
             with open(os.path.join(root, f)) as i:
                 for l in i:
                     line = l.strip().split('\t')
@@ -45,11 +38,16 @@ with tqdm() as counter:
                         results[lang] = dict()
                     model = line[1]
                     if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model:
-                        num = float(model.split('_')[-2])
-                        if 'wiki' in model:
-                            short_model = '_'.join(model.split('_')[2:-2])
+                        if 'lm' in model or 'llama' in model:
+                            num = float(model.split('-')[-1])
+                            num = num*10000
+                            short_model = model.split('_')[0]
                         else:
-                            short_model = '_'.join(model.split('_')[1:-2])
+                            num = float(model.split('_')[-2])
+                            if 'wiki' in model:
+                                short_model = '_'.join(model.split('_')[2:-2])
+                            else:
+                                short_model = '_'.join(model.split('_')[1:-2])
                     dataset = line[2]
                     if 'en_men' in dataset:
                         task = 'simrel_norms'
@@ -176,6 +174,7 @@ with tqdm() as counter:
                 surprs = [k for k in t_res.keys() if 'surpr' in k]
                 abss = [k for k in t_res.keys() if 'abs-prob' in k]
                 mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
+                xs = [k for k in t_res.keys() if 'lm' in k]
                 others = {
                           k : sorted(vals.items(), key=lambda item : item[0]) \
                                   for k, vals in t_res.items() \
@@ -185,16 +184,13 @@ with tqdm() as counter:
                                   'concept' not in k and \
                                   'prob' not in k and \
                                   'surpr' not in k and \
-                                  'length' not in k and \
-                                  #('top' in k
-                                  (
-                                  #'top' in k
-                                  #or '_hi-' in k or '_lo-' in k
-                                  #or 
-                                  'abs' in k and 'random' not in k
-                                  #and 'abs' not in k
-                                  )
+                                  'length' not in k 
+                                  #and \
+                                  #(
+                                  #'abs' in k and 'random' not in k
+                                  #)
                                   }
+                print([k for k in others.keys() if 'lm' in k])
                 ### plotting horizontal lines
                 all_vals = [val[0] for v in others.values() for val in v] + [0.]
                 ax.hlines(
@@ -205,9 +201,9 @@ with tqdm() as counter:
                           )
                 alls = list()
                 ### fasttext
-                ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, 6))
                 #print('fasttext')
                 for ds, style in [(fts, 'solid'), (surprs, 'dotted'), (abss, 'dashdot')]: 
+                    ft_colors = matplotlib.colormaps['hsv'](numpy.linspace(0, 1, len(ds)+1))
                     for ft_i, ft in enumerate(ds):
                         #style = random.choice(['solid', 'dashdot', 'dotted', ])
                         color = ft_colors[ft_i]

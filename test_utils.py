@@ -207,8 +207,10 @@ def check_present_words(args, rows, vocab):
     present_words = list()
     for w in rows:
         ### for fasttext in german we only use uppercase!
-        if w[0].isupper() == False and args.model=='fasttext' and args.lang=='de':
-            continue
+        if w[0].isupper() == False and args.lang=='de':
+            if args.model=='fasttext':
+                #or 'lm' in args.model or 'llama' in args.model:
+                continue
         try:
             vocab.index(w)
         except ValueError:
@@ -458,8 +460,8 @@ def bootstrapper(args, full_data, ):
     if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
         n_iter_sub = max(1, int(min(list(all_subjects.values()))*random.choice(proportions)))
     else:
-        n_iter_sub = 18
-        n_iter_trials = 18
+        n_iter_sub = 20
+        n_iter_trials = 20
     ### here we create 1000
     boot_data = {l : list() for l in labels}
     if args.stat_approach == 'residualize':
@@ -609,9 +611,71 @@ def load_static_model(args):
 
     return model, vocab
 
+def load_context_model(args):
+    print('loading {}'.format(args.model))
+    model = args.model.split('_')[0]
+    layer = int(args.model.split('-')[-1])
+    base_folder = os.path.join(
+                                'collect_word_sentences',
+                                'llm_vectors',
+                                args.lang, 
+                                'wac',
+                                model,
+                                )
+    assert os.path.exists(base_folder)
+    vocab = list()
+    model = dict()
+    for f in os.listdir(base_folder):
+        if 'tsv' not in f:
+            continue
+        with open(os.path.join(base_folder, f)) as i:
+            for l_i, l in enumerate(i):
+                if l_i == 0:
+                    continue
+                line = l.strip().split('\t')
+                word = line[0]
+                #if args.lang == 'de':
+                #    if word[0].isupper() == False:
+                #        continue
+                l = int(line[1])
+                if l == layer:
+                    model[word] = numpy.array(line[2:], dtype=numpy.float64)
+                    vocab.append(word)
+
+    return model, vocab
+
 def args():
     parser = argparse.ArgumentParser()
     corpora_choices = ['word_length']
+    llms = [
+         'llama-1b',
+         'llama-3b',
+         'xglm-7.5b',
+         'xglm-1.7b',
+         'xglm-564m',
+         'xglm-2.9b',
+         'xglm-4.5b',
+         'xlm-roberta-large',
+         'xlm-roberta-xl',
+         'xlm-roberta-xxl',
+         ]
+    for llm in llms:
+        if '1b' in llm:
+            m = 16
+        elif '3b' in llm:
+            m = 28
+        elif 'erta-xl' in llm:
+            m = 36
+        elif '2.9' in llm:
+            m = 48
+        elif '4.5' in llm:
+            m = 48
+        elif '7.5' in llm:
+            m = 48
+        else:
+            m = 24
+        for l in range(m):
+            corpora_choices.append('{}_layer-{}'.format(llm, l))
     for corpus in [
                    'bnc',
                    'wac',

@@ -71,10 +71,15 @@ def read_de_pmtg_production_tms(args):
             lines.append([w.strip() for w in line])
     print('missing words: {}'.format(missing))
     stims = set([l[header.index('stimulation')] for l in lines])
-    conds = {
+    if args.stat_approach != 'residualize':
+        conds = {
              'u' : 'unrelated',
              'r' : 'related',
              'ur' : 'all-but-same',
+             'urt' : 'all',
+             }
+    else:
+        conds = {
              'urt' : 'all',
              }
     all_sims = dict()
@@ -247,13 +252,20 @@ def read_it_social_quantity_tms(args):
                            'quantity', 
                            #'all',
                            ]:
-                for prime in [
+                if args.stat_approach != 'residualize':
+                    primes = [
                               'prime-proto', 
                               'target-proto', 
                               'target-cat', 
                               'opposite-target-cat', 
                               'prime-cat',
-                              ]:
+                              ]
+                else:
+                    primes = [
+                              'target-cat', 
+                              'prime-cat',
+                              ]
+                for prime in primes:
                     ### in congruent cases primes and targets are the same
                     if 'target' in prime and cong == 'congruent':
                         continue
@@ -362,10 +374,11 @@ def read_it_distr_learn_tms(args):
     all_full_sims = reorganize_tms_sims(all_sims)
 
     final_sims = {'it_distr-learn_{}#all-trials_{}'.format(args.stat_approach, k) : v for k, v in all_full_sims.items()}
-    for k, v in related_full_sims.items():
-        final_sims['it_distr-learn_{}#related-trials_{}'.format(args.stat_approach, k)] = v
-    for k, v in unrelated_full_sims.items():
-        final_sims['it_distr-learn_{}#unrelated-trials_{}'.format(args.stat_approach, k)] = v
+    if args.stat_approach != 'residualize':
+        for k, v in related_full_sims.items():
+            final_sims['it_distr-learn_{}#related-trials_{}'.format(args.stat_approach, k)] = v
+        for k, v in unrelated_full_sims.items():
+            final_sims['it_distr-learn_{}#unrelated-trials_{}'.format(args.stat_approach, k)] = v
     collect_info(final_sims)
     
     return final_sims, test_vocab
@@ -597,7 +610,8 @@ def read_de_sound_act_tms(args):
             lines.append(line)
     print('number of error trials: {}'.format(errs))
 
-    proto_modes = [
+    if args.stat_approach != 'residualize':
+        proto_modes = [
                  #'all-all-all', 
                  'all-pos-all',
                  #'all-pos-topten',
@@ -617,6 +631,12 @@ def read_de_sound_act_tms(args):
                  #'opposite-incl-topfifty',
                  'matched-cat-word-all',
                  'opposite-cat-word-all',
+                 ]
+    else:
+        proto_modes = [
+                 'all-pos-all',
+                 'matched-excl-all',
+                 'matched-incl-all',
                  ]
     sims = dict()
     test_vocab = set()
