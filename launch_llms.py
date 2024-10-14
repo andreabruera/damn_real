@@ -58,7 +58,7 @@ elif args.modality == 'behav':
                 'de_behav',
                 #'it_behav',
                 #'it_mouse',
-                #'it_deafhearing',
+                'it_deafhearing',
                 'it_blindsighted',
                 #'picture-naming-seven',
                 'it_anew',
@@ -75,15 +75,16 @@ for dataset in final_datasets:
     
     choices = list()
     llms = [
-         'llama-1b',
-         'llama-3b',
-         'xglm-564m',
-         'xglm-1.7b',
-         'xglm-2.9b',
+         'gpt2',
+         #'llama-1b',
+         #'llama-3b',
+         #'xglm-564m',
+         #'xglm-1.7b',
+         #'xglm-2.9b',
          #'xglm-4.5b',
          #'xglm-7.5b',
-         'xlm-roberta-large',
-         'xlm-roberta-xl',
+         #'xlm-roberta-large',
+         #'xlm-roberta-xl',
          #'xlm-roberta-xxl',
          ]
     for llm in llms:
@@ -99,9 +100,12 @@ for dataset in final_datasets:
             m = 48
         elif '7.5' in llm:
             m = 48
+        elif 'erpt' in llm:
+            m = 36
         else:
             m = 24
-        for l in range(m):
-            choices.append('{}_layer-{}'.format(llm, l))
+        #for l in range(m):
+        #    choices.append('{}_layer-{}'.format(llm, l))
+        choices.append('{}_surprisal'.format(llm))
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))

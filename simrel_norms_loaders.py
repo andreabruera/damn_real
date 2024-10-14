@@ -77,7 +77,7 @@ def read_simlex(args):
         sep = '\t'
     assert os.path.exists(file_path)
     case = '{}_simlex999_{}'.format(args.lang, args.stat_approach)
-    dis_sims = {case : {'all' : dict()}}
+    dis_sims = {case : {'all' : list()}}
     test_vocab = set()
     with open(file_path) as i:
         for l_i, l in enumerate(i):
@@ -96,5 +96,5 @@ def read_simlex(args):
             test_vocab = test_vocab.union(norm_key)
             val = float(line[indices[2]].replace(',', '.'))
             ### transforming to dissimilarity
-            dis_sims[case]['all'][key] = 1 - val
+            dis_sims[case]['all'].append((key, 1 - val))
     return dis_sims, test_vocab

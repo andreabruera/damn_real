@@ -25,6 +25,10 @@ with tqdm() as counter:
                 pass
             elif 'llama' in root:
                 pass
+            elif 'gpt' in root:
+                pass
+            elif 'erpt' in root:
+                pass
             else:
                 continue
             #print(root)

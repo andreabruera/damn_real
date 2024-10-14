@@ -254,10 +254,10 @@ def read_it_social_quantity_tms(args):
                            ]:
                 if args.stat_approach != 'residualize':
                     primes = [
-                              'prime-proto', 
-                              'target-proto', 
+                              #'prime-proto', 
+                              #'target-proto', 
                               'target-cat', 
-                              'opposite-target-cat', 
+                              #'opposite-target-cat', 
                               'prime-cat',
                               ]
                 else:
@@ -617,20 +617,20 @@ def read_de_sound_act_tms(args):
                  #'all-pos-topten',
                  #'all-pos-topfifty',
                  #'all-neg-all',
-                 'matched-excl-all',
+                 #'matched-excl-all',
                  #'matched-excl-topten',
                  #'matched-excl-topfifty',
-                 'matched-incl-all',
+                 #'matched-incl-all',
                  #'matched-incl-topten',
                  #'matched-incl-topfifty',
-                 'opposite-excl-all',
+                 #'opposite-excl-all',
                  #'opposite-excl-topten',
                  #'opposite-excl-topfifty',
-                 'opposite-incl-all',
+                 #'opposite-incl-all',
                  #'opposite-incl-topten',
                  #'opposite-incl-topfifty',
-                 'matched-cat-word-all',
-                 'opposite-cat-word-all',
+                 #'matched-cat-word-all',
+                 #'opposite-cat-word-all',
                  ]
     else:
         proto_modes = [

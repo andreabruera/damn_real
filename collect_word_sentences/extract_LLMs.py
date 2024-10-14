@@ -11,6 +11,7 @@ parser.add_argument('--model',
                     type=str, 
                     required=True,
                      choices=[
+                             'gpt2',
                              'llama-1b',
                              'llama-3b',
                              'xglm-7.5b',

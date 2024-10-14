@@ -2,7 +2,7 @@ from tqdm import tqdm
 
 from psycholing_norms_loaders import load_lancaster_en_de_it
 from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs, test_count_model, test_coocs_model, test_frequency_model
-from test_utils import args, check_present_words, load_dataset, load_static_model, load_context_model, test_model
+from test_utils import args, check_present_words, load_dataset, load_static_model, load_context_model, load_context_surpr, test_model
 
 args = args()
 lancaster_ratings, trans_from_en = load_lancaster_en_de_it(args)
@@ -40,8 +40,11 @@ elif args.model in static_models:
                present_words,
                trans_from_en,
                )
-elif 'xlm' in args.model or 'xglm' in args.model or 'llama' in args.model:
-    model, vocab = load_context_model(args)
+elif 'xlm' in args.model or 'xglm' in args.model or 'llama' in args.model or 'pt' in args.model:
+    if 'surpr' not in args.model:
+        model, vocab = load_context_model(args)
+    else:
+        model, vocab = load_context_surpr(args)
     present_words = check_present_words(args, rows, vocab)
     test_model(
                args, 

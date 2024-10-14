@@ -58,8 +58,11 @@ def read_dirani_n400(args):
                 ### we use dissimilarity!
                 for sub, sim in enumerate(line[2:]):
                     if sub not in dis_sims[dataset].keys():
-                        dis_sims[dataset][sub] = dict()
-                    dis_sims[dataset][sub][(w_one, w_two)] = 1 - float(sim)
+                        dis_sims[dataset][sub] = list()
+                    dis_sims[dataset][sub].append((
+                                                   (w_one, w_two), 
+                                                   1 - float(sim)
+                                                   ))
 
     return dis_sims, test_vocab
 
@@ -117,10 +120,22 @@ def read_kaneshiro_n400(args):
                 ### we use dissimilarity!
                 for sub, sim in enumerate(line[2:]):
                     if sub not in dis_sims[dataset].keys():
-                        dis_sims[dataset][sub] = dict()
+                        dis_sims[dataset][sub] = list()
                     if args.lang != 'en':
-                        dis_sims[dataset][sub][(trans_w_one, trans_w_two)] = 1 - float(sim)
+                        dis_sims[dataset][sub].append((
+                                                      (
+                                                       trans_w_one.split('_')[-1], 
+                                                       trans_w_two.split('_')[-1],
+                                                       ),  
+                                                      1 - float(sim)
+                                                      ))
                     else:
-                        dis_sims[dataset][sub][(line[0], line[1])] = 1 - float(sim)
+                        dis_sims[dataset][sub].append((
+                                                      (
+                                                       line[0].split('_')[-1], 
+                                                       line[1].split('_')[-1],
+                                                       ), 
+                                                      1 - float(sim)
+                                                      ))
 
     return dis_sims, test_vocab

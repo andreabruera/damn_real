@@ -19,7 +19,19 @@ with tqdm() as counter:
         for f in fz:
             if 'raw' in root: 
                 continue
-            if 'sym' in root: 
+            elif 'sym' in root: 
+                continue
+            elif 'lm' in root:
+                continue
+            elif 'pt2' in root and 'surpr' not in root:
+                continue
+            elif '1b' in root:
+                continue
+            elif 'llama' in root and 'surpr' in root:
+                continue
+            elif 'concept' in root:
+                continue
+            elif 'aligned' in root:
                 continue
             '''
             if 'fasttext' in root and 'align' not in root:
@@ -38,7 +50,7 @@ with tqdm() as counter:
                         results[lang] = dict()
                     model = line[1]
                     if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model:
-                        if 'lm' in model or 'llama' in model:
+                        if 'lm' in model or 'llama' in model or 'pt' in model:
                             num = float(model.split('-')[-1])
                             num = num*10000
                             short_model = model.split('_')[0]
@@ -118,9 +130,11 @@ with tqdm() as counter:
                 if 'en_men' in task:
                     pass
                 elif '999' in task:
-                    pass
+                    ymin = -.05
+                    ymax = .9
                 elif '353' in task:
-                    pass
+                    ymin = -.05
+                    ymax = .9
                 elif 'fern' in task:
                     ymin = -.05
                     ymax = .2
@@ -136,6 +150,12 @@ with tqdm() as counter:
                     ymin = -0.05
                     ymax = 0.4
                 elif 'anew-word' in task:
+                    ymin = -0.05
+                    ymax = 0.2
+                elif 'deaf' in task:
+                    ymin = -0.05
+                    ymax = 0.1
+                elif 'blind' in task:
                     ymin = -0.05
                     ymax = 0.2
                 elif 'lexical' in task:

@@ -58,8 +58,8 @@ elif args.modality == 'behav':
                 'de_behav',
                 #'it_behav',
                 #'it_mouse',
-                #'it_deafhearing',
-                #'it_blindsighted',
+                'it_deafhearing',
+                'it_blindsighted',
                 #'picture-naming-seven',
                 'it_anew',
                 ]

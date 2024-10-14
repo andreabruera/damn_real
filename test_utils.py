@@ -239,6 +239,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
             for iter_dataset in dataset:
                 iter_dict = dict()
                 for s, s_data in iter_dataset.items():
+                    #import pdb; pdb.set_trace()
                     test_sims, new_miss, trans_words = check_dataset_words(
                                                               args, 
                                                               dataset_name, 
@@ -277,13 +278,19 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                             cooc.append(model[one][two])
                         except KeyError:
                             continue
+                #print(cooc)
                 ### negative!
-                if 'log10' in args.model or 'surprisal' in args.model:
-                    sim = -numpy.log10(sum(cooc))
+                if 'pt' not in args.model and 'llam' not in args.model and 'lm' not in args.model:
+                    if 'log10' in args.model or 'surprisal' in args.model:
+                        sim = -numpy.log10(sum(cooc))
+                        if str(sim) == 'nan':
+                            sim = 0
+                    else:
+                        sim = -sum(cooc)
+                else:
+                    sim = numpy.nanmean(cooc)
                     if str(sim) == 'nan':
                         sim = 0
-                else:
-                    sim = -sum(cooc)
                 ws_sims[(joint_ones, joint_twos)] = sim
                 counter.update(1)
         else:
@@ -611,6 +618,42 @@ def load_static_model(args):
 
     return model, vocab
 
+def load_context_surpr(args):
+    print('loading {}'.format(args.model))
+    model = args.model.split('_')[0]
+    base_folder = os.path.join(
+                                'collect_word_sentences',
+                                'llm_surprisals',
+                                args.lang, 
+                                model,
+                                )
+    assert os.path.exists(base_folder)
+    vocab = set()
+    model = dict()
+    for f in os.listdir(base_folder):
+        if 'tsv' not in f:
+            continue
+        if args.dataset not in f:
+            continue
+        with open(os.path.join(base_folder, f)) as i:
+            for l_i, l in enumerate(i):
+                if l_i == 0:
+                    continue
+                line = l.strip().split('\t')
+                word_one = line[0].strip()
+                word_two = line[1].strip()
+                s = float(line[2])
+                #s = float(line[3])
+                try:
+                    model[word_one][word_two] = s
+                except KeyError:
+                    model[word_one] = {word_two : s}
+                vocab.add(word_one)
+                vocab.add(word_two)
+    vocab = list(vocab)
+
+    return model, vocab
+
 def load_context_model(args):
     print('loading {}'.format(args.model))
     model = args.model.split('_')[0]
@@ -648,6 +691,7 @@ def args():
     parser = argparse.ArgumentParser()
     corpora_choices = ['word_length']
     llms = [
+         'gpt2',
          'llama-1b',
          'llama-3b',
          'xglm-7.5b',
@@ -672,10 +716,13 @@ def args():
             m = 48
         elif '7.5' in llm:
             m = 48
+        elif 'erpt' in llm:
+            m = 36
         else:
             m = 24
         for l in range(m):
             corpora_choices.append('{}_layer-{}'.format(llm, l))
+        corpora_choices.append('{}_surprisal'.format(llm))
     for corpus in [
                    'bnc',
                    'wac',

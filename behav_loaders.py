@@ -110,16 +110,20 @@ def read_italian_blindsighted(args):
 
 def read_italian_deafhearing(args):
     ### lexical decition times
-    sims = {'it_lexical-decision-deafhearing_{}'.format(args.stat_approach) : dict()}
+    #sims = {'it_lexical-decision-deafhearing_{}'.format(args.stat_approach) : dict()}
+    sims = dict()
     test_vocab = set()
-    for case in sims.keys(): 
+    for sub in ['Hearing', 'LIS', 'SP']:
+        case = 'it_lexical-decision-deafhearing_{}#{}'.format(args.stat_approach, sub)
+        sims[case] = dict()
         short_case = case.split('_')[1]
         with open(os.path.join('data', 'behavioural', 'it_lexical-decision-deafhearing.tsv'.format(short_case))) as i:
             for l_i, l in enumerate(i):
                 line = l.replace(',', '.').split('\t')
                 if l_i == 0:
                     first_header = [w.strip() for w in line]
-                    subs = [h_i for h_i, h in enumerate(first_header) if 'Hearing' in h]
+                    subs = [h_i for h_i, h in enumerate(first_header) if sub in h]
+                    print(subs)
                     continue
                 if l_i == 1:
                     second_header = [w.strip() for w in line]
@@ -134,9 +138,11 @@ def read_italian_deafhearing(args):
                         sims[case][sub] = dict()
                     test_vocab = test_vocab.union(set([word, word.capitalize()]))
                     try:
-                        words_rt = float(line[sub])
+                        words_rt = numpy.log10(float(line[sub]))
                     except ValueError:
-                        print([sub, word])
+                        #print(line[sub])
+                        assert line[sub] in ['\n',  '']
+                        #print([sub, word])
                         continue
                     sims[case][sub][word] = words_rt
     final_sims = dict()

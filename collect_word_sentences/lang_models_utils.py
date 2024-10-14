@@ -4,13 +4,14 @@ import random
 import re
 import torch
 
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoModelForCausalLM, AutoTokenizer
 from tqdm import tqdm
 
 class ContextualizedModelCard:
-    def __init__(self, args):
+    def __init__(self, args, causal=False):
         os.environ["CUDA_VISIBLE_DEVICES"] = "0"
         os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+        self.causal = causal
         self.model_name, self.to_cuda = self.read_names(args)
         self.cuda_device = 'cuda:{}'.format(0)
         self.model = self.load_model()
@@ -19,11 +20,19 @@ class ContextualizedModelCard:
 
     def read_names(self, args):
         to_cuda = False
-        ### llama
+        ### gpt2
+        if args.model == 'gpt2':
+            if args.lang == 'de':
+                model_name = "benjamin/gerpt2-large"
+            elif args.lang == 'it':
+                #model_name = "GroNLP/gpt2-medium-italian-embeddings"
+                model_name = 'LorenzoDeMattei/GePpeTto'
+            to_cuda = True
+        ### llama 1b
         if args.model == 'llama-1b':
             model_name = "meta-llama/Llama-3.2-1B"
             to_cuda = True
-        ### llama
+        ### llama 3b
         if args.model == 'llama-3b':
             model_name = "meta-llama/Llama-3.2-3B"
             to_cuda = True
@@ -61,7 +70,13 @@ class ContextualizedModelCard:
     def load_model(self):
         cache = os.path.join('/', 'data', 'tu_bruera', 'hf_models')
         os.makedirs(cache, exist_ok=True)
-        model = AutoModel.from_pretrained(
+        if not self.causal:
+            model = AutoModel.from_pretrained(
+                                          self.model_name, 
+                                          cache_dir=cache,
+                                          )
+        else:
+            model = AutoModelForCausalLM.from_pretrained(
                                           self.model_name, 
                                           cache_dir=cache,
                                           )
@@ -74,7 +89,7 @@ class ContextualizedModelCard:
             required_shape = self.model.config.d_model
             max_len = self.model.config.max_position_embeddings
             n_layers = self.model.config.num_layers
-        elif 'xlm' in self.model_name or 'llama' in self.model_name:
+        elif 'xlm' in self.model_name or 'llama' in self.model_name or 'pt' in self.model_name or 'Ge' in self.model_name:
             required_shape = self.model.config.hidden_size
             max_len = self.model.config.max_position_embeddings
             n_layers = self.model.config.num_hidden_layers
@@ -108,16 +123,22 @@ def read_all_sentences(args):
         #    continue
         #if 'mitchell' not in f:
         #    continue
-        #if 'social' not in f and 'distr' not in f:
+        #if 'dirani' not in f and 'kaneshiro' not in f:
+        #if 'social' not in f and 'distr' not in f and 'dirani' not in f and 'kaneshiro' not in f and 'anew'  not in f and 'mitchell' not in f and 'blind' not in f and 'behav' not in f and 'seven' not in f:
+        #if 'deaf' not in f:
+        #if 'prod' not in f and 'sound' not in f and 'phon' not in f and 'behav' not in f:
+        #if 'distr' not in f:
+        #if 'blind' not in f and 'anew' not in f and 'behav' not in f and 'distr' not in f and 'social' not in f:
         #if 'blind' not in f and 'anew' not in f and 'behav' not in f:
-        #if 'prod' not in f and 'sound' not in f and 'phon' not in f:
-        if 'dirani' not in f and 'kaneshiro' not in f:
+        if 'behav' not in f and 'abstract' not in f:
             continue
         with open(os.path.join(w_path, f)) as i:
             for l in i:
                 w = l.strip()
                 if w != '':
                     words.append(w)
+    #words = [w for w in words if len(remove_accents(w))!=len(w)]
+    print(sorted(words))
     all_sentences = dict()
     sentences_folder = os.path.join('sentences', args.lang, args.corpus)
 
@@ -156,6 +177,152 @@ def read_all_sentences(args):
     ### sampling 20, so as to avoid bad surprises when extracting...
     all_sentences = {k : random.sample(v, k=min(20, len(v))) for k, v in all_sentences.items()}
     return all_sentences
+
+def remove_accents(check_str):
+    #check_str = check_str.replace('à','').replace('è','').replace('ò','').replace('ú', '').replace('ù', '').replace('é','').replace('á','').replace('ó', '').replace('ö', '').replace('ü', '').replace('ß', '')
+    check_str = re.sub('[^a-zA-z]', '', check_str)
+    return check_str
+
+def extract_surpr(args, model_card, cases):
+
+    entity_vectors = dict()
+
+    with tqdm() as pbar:
+        for dataset, stim_sentences in cases.items():
+            entity_vectors[dataset] = dict()
+            assert len(stim_sentences) >= 1
+            print(dataset)
+            print(len(stim_sentences))
+            for l_i, l in enumerate(stim_sentences):
+                stimulus = l.split()[-1]
+                print(l)
+                inputs = model_card.tokenizer(
+                                   l, 
+                                   return_tensors="pt",
+                                   truncation_strategy='longest_first', 
+                                   max_length=int(model_card.max_len*0.75), 
+                                   truncation=True,
+                                   )
+                print(model_card.tokenizer.convert_ids_to_tokens(inputs['input_ids'][0]))
+                spans = [i_i for i_i, i in enumerate(inputs['input_ids'].numpy().reshape(-1)) if 
+                        i==model_card.tokenizer.convert_tokens_to_ids(['[SEP]'])[0]]
+                assert len(spans) == 1
+                check_tokens = inputs['input_ids'].numpy().reshape(-1)[spans[0]+1:]
+                check_str = ''.join(model_card.tokenizer.convert_ids_to_tokens(check_tokens))
+                print(check_str)
+                if len(remove_accents(stimulus))!=len(stimulus):
+                    if remove_accents(stimulus) not in remove_accents(check_str):
+                        print('early skipping: {}'.format(stimulus))
+                        continue
+                else:
+                    if stimulus not in check_str:
+                        print('early skipping: {}'.format(stimulus))
+                        continue
+                del inputs
+                old_l = '{}'.format(l)
+                l = re.sub(r'\[SEP\]', ' ', l)
+                l = re.sub('\s+', r' ', l)
+                inputs = model_card.tokenizer(
+                                   l, 
+                                   return_tensors="pt",
+                                   truncation_strategy='longest_first', 
+                                   max_length=int(model_card.max_len*0.75), 
+                                   truncation=True,
+                                   )
+                print(model_card.tokenizer.convert_ids_to_tokens(inputs['input_ids'][0]))
+                ### Correcting spans
+                correction = list(range(1, len(spans)+1))
+                if 'll' in args.model or '1.7' in args.model or '2.9' in args.model or 'pt2' in args.model:
+                    spans = [max(0, s-c) for s,c in zip(spans, correction)]
+                print(model_card.tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])[spans[0]:spans[0]+len(check_tokens)])
+                ### final checks...
+                marker = True
+                if len(remove_accents(stimulus))!=len(stimulus):
+                    pass
+                else:
+                    for c_i in range(len(check_tokens)):
+                        try:
+                            if inputs['input_ids'][0][spans[0]+c_i] != check_tokens[c_i]:
+                                marker = False
+                        except IndexError:
+                            marker = False
+                if marker == False:
+                    print('marker error')
+                    continue
+                del inputs
+                try:
+                    inputs = model_card.tokenizer(
+                                       l, 
+                                       return_tensors="pt",
+                                       truncation_strategy='longest_first', 
+                                       #max_length=model_card.max_len, 
+                                       max_length=int(model_card.max_len*0.75), 
+                                       truncation=True,
+                                       )
+                    if model_card.to_cuda:
+                        inputs.to(model_card.cuda_device)
+                except RuntimeError:
+                    del inputs
+                    print('input error')
+                    print(l)
+                    continue
+                print(model_card.tokenizer.convert_ids_to_tokens(inputs['input_ids'][0]))
+                try:
+                    outputs = model_card.model(
+                            **inputs, 
+                                    output_attentions=False,
+                                    output_hidden_states=True, 
+                                    return_dict=True,
+                                    )
+                except RuntimeError:
+                    del inputs
+                    print('output error')
+                    print(l)
+                    continue
+
+                #import pdb; pdb.set_trace()
+                #surp = -1 * torch.log2(torch.softmax(outputs.logits.cpu().detach(), -1).squeeze(0)).numpy()
+                probs = torch.softmax(outputs.logits.cpu().detach(), dim=-1).squeeze(0).numpy()
+                del outputs
+                try:
+                    assert len(check_tokens) == len(range(spans[0], probs.shape[0]))
+                    #assert len(check_tokens) == len(range(spans[0], len(surp)))
+                except AssertionError:
+                    print('error with {}'.format(old_l))
+                    print(check_tokens)
+                    print(check_str)
+                    print(stimulus)
+                    continue
+                print(model_card.tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])[spans[0]:spans[0]+len(check_tokens)])
+                print(model_card.tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])[spans[0]])
+                #surpr = 0
+                tkns = list()
+                surpr = list()
+                for c_t_i, c_t in enumerate(check_tokens):
+                    idx = spans[0]+c_t_i
+                    tkns.append(inputs['input_ids'][0][idx])
+                    surpr.append(probs[idx][c_t])
+                tkns = model_card.tokenizer.convert_ids_to_tokens(tkns)
+                print('final tokens: {}'.format(tkns))
+                #current_surpr = surpr / len(check_tokens)
+                #current_surpr = surpr[-1]
+                #current_surpr = surpr[0]
+                #current_surpr = numpy.average(surpr)
+                current_surpr = -numpy.log2(numpy.prod(surpr))
+                #current_surpr = -numpy.log2(numpy.average(surpr))
+                #current_surpr = surp[spans[0]][c_t]
+                #current_surpr = numpy.average([surp[s_i+1][tok] for s_i, tok in enumerate(inputs['input_ids'][0][1:])])
+                ### we take average surprisal
+                #current_surpr = -numpy.log2(probs)[spans[0]][check_tokens[0]]
+                #current_surpr = -numpy.log2(probs)[spans[0]][check_tokens[0]]
+                #current_entropy = -sum([p*numpy.log2(p) for p in probs[spans[0]-1]])
+                #current_surpr = surp[spans[0]][check_tokens[0]]
+                current_entropy = 'na'
+                entity_vectors[dataset][old_l] = (current_surpr, current_entropy)
+                pbar.update(1)
+                del inputs
+
+    return entity_vectors
 
 def extract_vectors(args, model_card, sentences):
 
@@ -216,7 +383,7 @@ def extract_vectors(args, model_card, sentences):
                                 current_span = (spans[i], spans[i+1])
                             else:
                                 current_span = (spans[i]+1, spans[i+1]+1)
-                        elif 'llama' in model_card.model_name:
+                        elif 'llama' in model_card.model_name or 'pt' in args.model:
                             #current_span = (spans[i], spans[i+1]+1)
                             current_span = (spans[i], spans[i+1])
                             #if spans[i] == 0:
