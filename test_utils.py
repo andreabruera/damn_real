@@ -657,7 +657,11 @@ def load_context_surpr(args):
 def load_context_model(args):
     print('loading {}'.format(args.model))
     model = args.model.split('_')[0]
-    layer = int(args.model.split('-')[-1])
+    if '_best' not in args.model:
+        layer = [int(args.model.split('-')[-1])]
+    else:
+        layer = [8, 9, 10, 11, 12]
+
     base_folder = os.path.join(
                                 'collect_word_sentences',
                                 'llm_vectors',
@@ -681,8 +685,11 @@ def load_context_model(args):
                 #    if word[0].isupper() == False:
                 #        continue
                 l = int(line[1])
-                if l == layer:
-                    model[word] = numpy.array(line[2:], dtype=numpy.float64)
+                if l in layer:
+                    if word in model.keys():
+                        model[word] = numpy.average([model[word].copy(), numpy.array(line[2:], dtype=numpy.float64)], axis=0)
+                    else:
+                        model[word] = numpy.array(line[2:], dtype=numpy.float64)
                     vocab.append(word)
 
     return model, vocab
@@ -723,6 +730,7 @@ def args():
         for l in range(m):
             corpora_choices.append('{}_layer-{}'.format(llm, l))
         corpora_choices.append('{}_surprisal'.format(llm))
+        corpora_choices.append('{}_best'.format(llm))
     for corpus in [
                    'bnc',
                    'wac',

@@ -2,6 +2,7 @@ pickles/
 transformers*
 collect_word_sentences/sentences/
 collect_word_sentences/llm_vectors/
+collect_word_sentences/llm_surprisals/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

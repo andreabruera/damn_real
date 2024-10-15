@@ -1,4 +1,5 @@
 import matplotlib
+import mne
 import numpy
 import os
 import random
@@ -6,11 +7,40 @@ import re
 import scipy
 
 from matplotlib import colormaps, font_manager, pyplot
+from mne import stats
 from scipy import stats
 
 from plot_utils import font_setup
+from tqdm import tqdm
 
-font_folder = '/data/tu_bruera/fonts'
+def permutation_two_samples(one, two):
+    one = one.tolist()
+    assert len(one) == 1000
+    two = two.tolist()
+    assert len(two) == 1000
+    ### permutation test
+    real_diff = abs(numpy.average(one)-numpy.average(two))
+    fake_distr = list()
+    for _ in tqdm(range(1000)):
+        fake = random.sample(one+two, k=len(one+two))
+        fake_one = fake[:int(len(fake)*.5)]
+        fake_two = fake[int(len(fake)*.5):]
+        fake_diff = abs(numpy.average(fake_one)-numpy.average(fake_two))
+        fake_distr.append(fake_diff)
+    ### p-value
+    p_val = (sum([1 for _ in fake_distr if _>real_diff])+1)/(1001)
+    ### t-value
+    # adapted from https://matthew-brett.github.io/cfd2020/permutation/permutation_and_t_test.html
+    pers_errors = [v-numpy.average(one) for v in one]
+    place_errors = [v-numpy.average(two) for v in two]
+    all_errors = pers_errors + place_errors
+    est_error_sd = numpy.sqrt(sum([er**2 for er in all_errors]) / (len(one) + len(two) - 2))
+    sampling_sd_estimate = est_error_sd * numpy.sqrt(1 / len(one) + 1 / len(two))
+    t_val = real_diff/sampling_sd_estimate
+
+    return t_val, p_val
+
+font_folder = '../../fonts'
 font_setup(font_folder)
 
 results = dict()
@@ -19,547 +49,414 @@ for root, direc, fz in os.walk(
                           os.path.join(
                               'test_results',
                               )):
-
+    if 'fasttext' in root and 'alig' not in root:
+        model = 'fasttext'
+        pass
+    elif 'gpt2_surprisal' in root:
+        model = 'GPT2\nsurprisal'
+        pass
+    elif 'wac' in root and '200000' in root:
+        model = 'Wac\nPPMI'
+        pass
+    elif 'wac' in root and 'abs-prob' in root:
+        model = 'Wac\nfrequency'
+        pass
+    elif 'wac' in root and 'surprisal' in root:
+        model = 'Wac\nsurprisal'
+        pass
+    elif 'llama-3b' in root and 'best' in root:
+        model = 'Llama-3.2 3b'
+        pass
+    else:
+        continue
     for f in fz:
+        if 'resid' not in f:
+            continue
         with open(os.path.join(root, f)) as i:
             for l in i:
-                if 'rowincol' in l:
-                    continue
                 line = l.strip().split('\t')
                 lang = line[0]
                 if lang not in results.keys():
                     results[lang] = dict()
-                model = line[1]
-                if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-                    #if 'lancaster' not in l:
-                    #    continue
-                    if 'random' in l:
-                        continue
-                    #if 'hi-' or 'lo-' in l:
-                        continue
-                    num = float(model.split('_')[-2])
-                    if 'wiki' in model:
-                        short_model = '_'.join(model.split('_')[2:-2])
-                    else:
-                        short_model = '_'.join(model.split('_')[1:-2])
-                task = line[2]
+                old_model = line[1]
+                #if 'wac' in old_model and '200000' in old_model:
+                #    num = int(model.split('_')[-2])
+                #    short_model = '_'.join(model.split('_')[1:-2]+[str(num)])
+                all_task = line[2]
                 ### modality
-                assert task[:3] == '{}_'.format(lang)
-                task_setup = task[3:].split('#')[0]
-                if 'distr-learn' in task_setup:
-                    mode = 'tms'
-                elif 'pmtg-prod' in task_setup:
-                    mode = 'tms'
-                elif 'sem-phon' in task_setup:
-                    mode = 'tms'
-                elif 'sound-act' in task_setup:
-                    mode = 'tms'
-                elif 'abstract' in task_setup:
-                    mode = 'fmri'
-                elif 'fern' in task_setup:
-                    mode = 'fmri'
-                elif 'dirani' in task_setup:
-                    mode = 'meeg'
-                elif 'word-naming' in task_setup:
-                    mode = 'behavioural'
-                elif 'lexical-decision' in task_setup:
-                    mode = 'behavioural'
+                assert all_task[:3] == '{}_'.format(lang)
+                task = all_task[3:].split('#')[0].split('_')[0]
+                if 'sem' in task or 'pmtg' in task:
+                    splitter = '-'
                 else:
-                    mode = 'simrel-norms'
-                if mode not in results[lang].keys():
-                    results[lang][mode] = dict()
-                if task not in results[lang][mode].keys():
-                    results[lang][mode][task] = dict()
+                    splitter = '_'
+                case = all_task.split('#')[-1].split(splitter)[0]
+                cond = all_task.split('#')[-1].split(splitter)[-1]
+                cond = '{}{}'.format(cond[0].lower(), cond[1:])
+                if cond == 'cedx':
+                    cond = 'rCereb'
+                if cond == 'cz':
+                    cond = 'vertex'
+                if cond not in ['sham', 'vertex']:
+                    cond = 'TMS\n{}'.format(cond)
+                if 'distr-learn' in all_task:
+                    pass
+                elif 'pmtg-prod' in all_task:
+                    pass
+                elif 'sem-phon' in all_task:
+                    pass
+                elif 'sound-act' in all_task:
+                    if 'all-pos' not in all_task:
+                        continue
+                    if 'all_all' in all_task:
+                        continue
+                    if 'detailed' in all_task:
+                        continue
+                    case = '{}-{}'.format(case, all_task.split('_')[-2])
+                    pass
+                elif 'social' in all_task:
+                    if 'prime-cat' not in all_task:
+                        continue
+                    if 'cong' in all_task:
+                        continue
+                    pass
+                else:
+                    continue
+                #print(all_task)
+                if task not in results[lang].keys():
+                    results[lang][task] = dict()
+                if case not in results[lang][task].keys():
+                    results[lang][task][case] = dict()
+                if cond not in results[lang][task][case].keys():
+                    results[lang][task][case][cond] = dict()
                 non_nan_res = [v if v!='nan' else 0. for v in line[3:]]
                 res = numpy.array(non_nan_res, dtype=numpy.float32)
-                if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model:
-                    if short_model not in results[lang][mode][task].keys():
-                        results[lang][mode][task][short_model] = dict()
-                    results[lang][mode][task][short_model][num] = res
-                else:
-                    results[lang][mode][task][model] = res
-'''
-import pdb; pdb.set_trace()
+                #if 'wac' in model and '200000' in model:
+                #    results[lang][task][case][cond][short_model] = res
+                #else:
+                results[lang][task][case][cond][model] = res
 
-### finding the best models
-model_results = dict()
-for l, l_data in results.items():
-    model_results[l] = dict()
-    ### only brain tasks
-    rel_tasks = [d for d in l_data.keys() if 
-                                           #'353' in d or '999' in d 
-                                           #or
-                                           'fern' in d or 'dira' in d
-                                           ]
-    #assert len(rel_tasks) == 4
-    assert len(rel_tasks) == 4
-    for t in rel_tasks:
-        c_results = list()
-        for model, m_data in l_data[t].items():
-            #print([model, task])
-            if type(m_data) == dict:
-                for num, num_res in m_data.items():
-                    key = '{}_{}'.format(model, num)
-                    #if 'top' not in key:
-                    #    continue
-                    if 'lancaster' not in key:
-                        continue
-                    c_results.append((key, numpy.average(num_res)))
+colors = [
+          ('navy','lightsteelblue',  'royalblue',),
+          ('seagreen', 'mediumaquamarine', 'mediumseagreen'),
+          ('lightskyblue', 'lightblue', 'paleturquoise'),
+          ('mediumvioletred', 'pink', 'palevioletred'),
+          ('mediumorchid', 'thistle', 'plum'),
+          ('darkkhaki', 'wheat', 'khaki'),
+          ]
+
+out_f = 'paper_bars'
+os.makedirs(out_f, exist_ok=True)
+
+for lang, l_results in results.items():
+    for task, t_results in l_results.items():
+        for case, c_results in t_results.items():
+            curr_fold = os.path.join(out_f, lang, task, case)
+            os.makedirs(curr_fold, exist_ok=True)
+            conds = sorted(c_results.keys(), reverse=True)
+            models = set([m for _ in c_results.values() for m in _.keys()])
+            sorted_models = ['Wac\nPPMI', 'fasttext', 'Llama-3.2 3b'] +\
+                            sorted([m for m in models if 'surp' in m], reverse=True) +\
+                            [m for m in models if 'freq' in m]
+                            #sorted([m for m in models if 'surpr' not in m and 'freq' not in m], reverse=True) +\
+            print(sorted_models)
+            assert len(sorted_models) == len(models)
+            xs = list(range(len(models)))
+            if len(conds) == 2:
+                corrections = list(numpy.linspace(-.33, .33, len(conds)))
+                txt_corrections = list(numpy.linspace(-.4, .4, len(conds)))
+                m_sc = 2000
+                t_s = 20
             else:
-                c_results.append((model, numpy.average(m_data)))
-        sorted_results = sorted(c_results, key=lambda item : item[1], reverse=True)
-        for rank, vals in enumerate(sorted_results):
-            model = vals[0]
-            if model not in model_results[l].keys():
-                model_results[l][model] = [rank+1]
-                #model_results[l][model] = [vals[1]]
-            else:
-                model_results[l][model].append(rank+1)
-                #model_results[l][model].append(vals[1])
-
-lang_best = dict()
-overall_best = dict()
-for l, l_data in model_results.items():
-    #print(l_data.keys())
-    sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1])
-    #sorted_ranks = sorted({k : numpy.average(v) for k, v in l_data.items()}.items(), key=lambda item : item[1], reverse=True)
-    print(l)
-    print(sorted_ranks[:10])
-    best_ft = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])
-    best_other = min([r_i for r_i, r in enumerate(sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])
-    print(l)
-    print(sorted_ranks[:20])
-    lang_best[l] = (sorted_ranks[best_ft][0], sorted_ranks[best_other][0])
-    if l == 'en':
-        continue
-    for rank, model in enumerate(sorted_ranks):
-        if model[0] not in overall_best.keys():
-            overall_best[model[0]] = [rank]
-        else:
-            overall_best[model[0]].append(rank)
-overall_sorted_ranks = sorted({k : numpy.average(v) for k, v in overall_best.items()}.items(), key=lambda item : item[1])
-print(overall_sorted_ranks[:10])
-best_ft = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' in r[0] and 'concept' not in r[0]])][0]
-#best_ft = 'conceptnet'
-best_other = overall_sorted_ranks[min([r_i for r_i, r in enumerate(overall_sorted_ranks) if 'fasttext' not in r[0] and 'concept' not in r[0]])][0]
-'''
-best_ft = 'fasttext'
-best_other = 'opensubs_abs_freq_top__50000.0'
-#best_other = 'fasttext'
-#best_other = 'cc100_lancaster_freq_hi-perceptual__2500.0'
-print('using models: {}, {}'.format(best_ft, best_other))
-
-### datasets where the comparisons are very simple
-### just clear-cut pairwise comparisons
-for mode in [
-             'residualize',
-             #'bootstrap', 
-             #'simple',
-             ]:
-    for l, l_data in results.items():
-        if l == 'en':
-            continue
-        out = os.path.join(
-                   'tms_barplots',
-                   l, 
-                   )
-        os.makedirs(out, exist_ok=True)
-        rel_tasks = [k.split('#')[0] for k in l_data['tms'].keys() if mode in k and 'act' not in k]
-        #assert len(rel_tasks) in [1, 2]
-        for t in rel_tasks:
+                corrections = list(numpy.linspace(-.5, .5, len(conds)))
+                txt_corrections = list(numpy.linspace(-.55, .55, len(conds)))
+                m_sc = 1400
+                t_s = 15
             fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
-            ax.set_ylim(bottom=-0.04, top=0.4)
-            curr_ts = sorted([w for w in l_data['tms'].keys() if t in w and mode in w])
-            if len(curr_ts) == 2:
-                xs = [0.5]
-            elif len(curr_ts) == 3:
-                xs = []
-            elif len(curr_ts) == 6:
-                xs = [1.5, 3.5]
-            ax.vlines(
-                      x=xs,
-                      ymin=-.5,
-                      ymax=.5,
-                      linewidth=10,
-                      linestyles='dashed',
-                      color='black',
-                      )
-            xs = [w.split('#')[1] for w in curr_ts]
-            ax.bar(0, 0, color='mediumaquamarine', label='fasttext')
-            ax.bar(0, 0, color='goldenrod', label=best_other)
-            ### results for fasttext
-            #ft_model = lang_best[l][0]
-            ft_model = best_ft
-            ys = [l_data['tms'][c_t][ft_model] for c_t in curr_ts]
-            print(xs)
-            print(len(ys))
-            print([len(y) for y in ys])
-            ax.bar(
-                   [x-0.15 for x in range(len(xs))],
-                   [numpy.average(y) for y in ys],
-                   color='mediumaquamarine',
-                   width=0.25,
-                   )
-            ax.scatter(
-                   [x-0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
-                   ys,
-                   edgecolor='aquamarine',
-                   color='white',
-                   alpha=0.2,
-                   zorder=3.,
-                   )
-            ### p-values
-            for y_i, y in enumerate(ys):
-                for y_two_i, y_two in enumerate(ys):
-                    if y_two_i <= y_i:
-                        continue
-                    if len(ys) == 6:
-                        if y_i % 2 != 0:
-                            continue
-                        if y_two_i>y_i+1:
-                            continue
-                        y_corr = 0.008
+            x_shift = 0
+            xticks = list()
+            counter = -1
+            ps = list()
+            for m_i, m in enumerate(sorted_models):
+                counter += 1
+                for c_i, c in enumerate(conds):
+                    color=colors[m_i][c_i]
+                    xticks.append((counter, m))
+                    
+                    if len(conds) == 2:
+                        w = 0.6
                     else:
-                        y_corr = y_two_i*0.01
-                    #print(y)
-                    #print(y_two)
-                    p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
-                    #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                    if p < 0.99:
-                        ax.text(
-                                x=y_i-.2,
-                                y=-y_corr,
-                                s='{} - p={}'.format(xs[y_two_i], round(p, 3)),
-                                color='mediumaquamarine',
-                                )
-            ### results for other model
-            other_model = best_other
-            first_part = '_'.join(other_model.split('_')[:-1])
-            second_part = float(other_model.split('_')[-1])
-            ### for italian we use a larger vocabulary
-            if l == 'it':
-                second_part = 200000.
-            ys = [l_data['tms'][c_t][first_part][second_part] for c_t in curr_ts]
-            #ys = [l_data['tms'][c_t]['fasttext'] for c_t in curr_ts]
-            ax.bar(
-                   [x+0.15 for x in range(len(xs))],
-                   [numpy.average(y) for y in ys],
-                   color='goldenrod',
-                   width=0.25,
-                   )
-            ax.scatter(
-                   [x+0.15+(random.randint(-100, 100)*0.001) for x in range(len(xs)) for y in ys[x]],
-                   ys,
-                   edgecolor='goldenrod',
-                   color='white',
-                   alpha=0.2,
-                   zorder=3.,
-                   )
-            ### p-values
-            for y_i, y in enumerate(ys):
-                for y_two_i, y_two in enumerate(ys):
-                    if y_two_i <= y_i:
-                        continue
-                    if len(ys) == 6:
-                        if y_i % 2 != 0:
-                            continue
-                        if y_two_i>y_i+1:
-                            continue
-                        y_corr = 0.016
-                    else:
-                        y_corr = y_two_i*0.01
-                    #print(y)
-                    #print(y_two)
-                    if numpy.average(y) > numpy.average(y_two):
-                        alternative='greater'
-                        used_x = y_i
-                    elif numpy.average(y) < numpy.average(y_two):
-                        alternative='less'
-                        used_x = y_two_i
-                    p = scipy.stats.wilcoxon(x=y, y=y_two, alternative=alternative).pvalue
-                    #p = scipy.stats.wilcoxon(x=y, y=y_two).pvalue
-                    #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                    if p < 0.99:
-                        ax.text(
-                                x=y_i+.2,
-                                y=-y_corr,
-                                s='{} - p={}'.format(xs[y_two_i], round(p, 3)),
-                                color='goldenrod',
-                                )
-            ax.legend(fontsize=20,
-                      ncols=2,
-                      loc=9,
-                      )
-            pyplot.ylabel(
-                          ylabel='log(RT) - semantic dissimilarity correlation',
-                          fontsize=23,
-                          fontweight='bold'
-                          )
-            pyplot.yticks(fontsize=20)
-            pyplot.xticks(
-                         ticks=range(len(xs)),
-                         labels=[x.replace('_', ' ').replace('-', '\n') for x in xs],
-                         fontsize=25,
-                         fontweight='bold'
-                         )
-            pyplot.title(
-                         '{}'.format(t.replace('_', ' ')), 
-                         fontsize=30,
-                         )
-            pyplot.savefig(
-                    os.path.join(
-                        out, 
-                       '{}.jpg'.format(t)))
-            pyplot.clf()
-            pyplot.close()
-    ### phil's dataset, where it is not clear how to look at results
-    significance = 0.05
-    for model in [
-                  best_ft, 
-                  best_other,
-                  ]:
-        for l, l_data in results.items():
-            if l != 'de':
-                continue
-            out = os.path.join(
-                       'tms_barplots',
-                       l, 
-                       )
-            os.makedirs(out, exist_ok=True)
-            all_rel_tasks = [k.split('#')[0] for k in l_data['tms'].keys() if mode in k and 'act' in k]
-
-            #print(set(all_rel_tasks))
-            #assert len(set(all_rel_tasks)) == 1
-            for soundact in all_rel_tasks:
-                if model != 'fastext' and 'detailed' in soundact:
-                    continue
-                if 'detailed' in soundact:
-                    jump=8
-                    width_max=3
-                    rotation=90
-                    start=1
-                else:
-                    jump =2
-                    width_max=1.
-                    rotation=0.
-                    start=0
-                indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and mode in w]))
-                #print(cases)
-                #for c in cases:
-                #    #indiv_bars = sorted(['_'.join(w.split('#')[-1].split('_')[1:]) for w in l_data['tms'].keys() if t in w and curr_t])
-                #    #indiv_bars = sorted(set([t.split('_')[0] for t in curr_ts]))
-                #    indiv_bars = sorted(set([w.split('#')[-1].split('_')[0] for w in l_data['tms'].keys() if soundact in w and c in w and mode in w]))
-                #    print(indiv_bars)
-                corrections = {b : v for b, v in zip(indiv_bars, numpy.linspace(-.35, .35, len(indiv_bars)))}
-                #print(corrections)
-                fig, ax = pyplot.subplots(constrained_layout=True, figsize=(20, 10))
-                ax.scatter(
-                           x=0., 
-                           y=1.,
-                           marker='*',
-                           s=100,
-                           color='black',
-                           #alpha=0.,
-                           label='p<{}'.format(significance)
-                           )
-                ax.set_ylim(bottom=-0.3, top=0.3)
-                #xs = [1.5, 3.5]
-                #xticks = sorted(set([w.split('#')[1].split('_')[1] for w in l_data['tms'].keys() if soundact in w and mode in w]))
-                #print(xticks)
-                #xs = [w.split('_tms_')[1] for w in curr_ts]
-                colors_l = [
-                        #'paleturquoise', 
-                        #'mediumaquamarine', 
-                        'forestgreen', 
-                        #'mediumblue',
-                        #'palegoldenrod', 
-                        'palevioletred',
-                        'silver',
-                        'orange', 
-                        'teal',
-                        'magenta',
-                        'black',
-                        'indianred',
-                        'slateblue',
-                        'hotpink',
-                        ]
-                colors = dict()
-                for k, col in zip(corrections.keys(), colors_l):
-                    ax.bar(0, 0, color=col, label=k)
-                    colors[k] = col
-                    #ax.bar(0, 0, color='goldenrod', label=best_other)
-                ### results for fasttext
-                #ft_model = lang_best[l][0]
-                x_ticks = list()
-                for k, corr in corrections.items():
-                    #curr_ts = sorted([w for w in l_data.keys() if t in w and k in w])
-                    curr_ts = sorted([w for w in l_data['tms'].keys() if k in w and soundact in w and mode in w])
-                    if len(x_ticks) == 0:
-                        x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
-                    else:
-                        new_x_ticks = ['\n'.join(w.split('#')[-1].split('_')[1:]) for w in curr_ts]
-                        assert new_x_ticks == x_ticks
-                    if 'fasttext' in model:
-                        ys = [l_data['tms'][c_t][model] for c_t in curr_ts]
-                    else:
-                        first_part = '_'.join(model.split('_')[:-1])
-                        second_part = float(model.split('_')[-1])
-                        ys = [l_data['tms'][c_t][first_part][second_part] for c_t in curr_ts]
-                    width=width_max/len(ys)
+                        w = 0.45
+                    if c_i == 0:
+                        for other_i, other in enumerate(conds[1:]):
+                            two = c_results[other][m]
+                            t_val, p_val = permutation_two_samples(c_results[c][m], two)
+                            ps.append((m, (c, other), p_val, t_val))
+                    ### simple p-value
+                    p = (sum([1 for _ in c_results[c][m] if _<0.])+1)/(len(c_results[c][m])+1)
+                    #print(p)
+                    ps.append((m, c, p))
+                    ### bar
                     ax.bar(
-                           [x+corr for x in range(len(ys))],
-                           [numpy.average(y) for y in ys],
-                           #color='mediumaquamarine',
-                           width=width,
-                           color=colors[k]
+                           m_i+corrections[c_i]+x_shift, 
+                           numpy.average(c_results[c][m]),
+                           width=w,
+                           color=color,
+                           edgecolor='gray',
+                           zorder=2.
                            )
                     ax.scatter(
-                           [x+((random.randint(-8, 8)*0.04)/len(ys))+corr for x in range(len(ys)) for y in ys[x]],
-                           ys,
-                           edgecolor=colors[k],
-                           color='white',
-                           alpha=0.05,
-                           zorder=3.,
+                           [m_i+corrections[c_i]+x_shift+(random.randrange(-m_sc, m_sc)*0.0001) for rand in range(len(c_results[c][m]))], 
+                           c_results[c][m],
+                           color=color,
+                           edgecolor='white',
+                           alpha=0.2,
+                           zorder=2.5
                            )
-                    if 'detailed' in soundact:
-                        for tick in x_ticks[:8]:
-                            assert 'Geraeusch' in tick
-                        for tick in x_ticks[8:16]:
-                            assert 'Handlung' in tick
-                        for tick in x_ticks[16:]:
-                            assert 'Geraeusch' not in tick
-                            assert 'Handlung' not in tick
-                        ax.text(
-                                x=3.5,
-                                y=0.28,
-                                s='sound task',
-                                ha='center',
-                                va='center',
-                                fontweight='bold',
-                                fontsize=25,
-                                )
-                        ax.text(
-                                x=11.5,
-                                y=0.28,
-                                s='action task',
-                                ha='center',
-                                va='center',
-                                fontweight='bold',
-                                fontsize=25,
-                                )
-                        ax.text(
-                                x=19.5,
-                                y=0.28,
-                                s='both tasks',
-                                ha='center',
-                                va='center',
-                                fontweight='bold',
-                                fontsize=25,
-                                )
-                        for _ in range(0, len(x_ticks), 2):
-                            case = x_ticks[_].replace('Geraeusch-', '').replace('Handlung-', '').replace('all-', '')
-                            case = case.split('\n')[0]
-                            next_case = x_ticks[_+1].replace('Geraeusch-', '').replace('Handlung-', '').replace('all-', '')
-                            next_case = next_case.split('\n')[0]
-                            assert case == next_case
-                            ax.text(
-                                    x=_+0.5,
-                                    y=-0.24, 
-                                    s=case,
-                                    fontweight='bold',
-                                    va='center',
-                                    ha='center',
-                                    )
-                        pyplot.xticks(
-                             ticks=range(len(x_ticks)),
-                             labels=[x.split('\n')[-1] for x in x_ticks],
-                             fontsize=20,
-                             fontweight='bold',
-                             rotation=rotation
-                             )
-                    else:
-                        pyplot.xticks(
-                             ticks=range(len(x_ticks)),
-                             labels=[x.replace('Geraeusch-', 'sound-task\n').replace('Handlung-', 'action-task\n') for x in x_ticks],
-                             fontsize=15,
-                             fontweight='bold',
-                             rotation=rotation
-                             )
-                        ### p-values
-                        for y_i, y in enumerate(ys):
-                            for y_two_i, y_two in enumerate(ys):
-                                if y_two_i <= y_i:
-                                    continue
-                                if len(ys) == 6:
-                                    if y_i % 2 != 0:
-                                        continue
-                                    if y_two_i>y_i+1:
-                                        continue
-                                #print(y)
-                                #print(y_two)
-                                ### setting the directionality
-                                if numpy.average(y) > numpy.average(y_two):
-                                    alternative='greater'
-                                    used_x = y_i
-                                elif numpy.average(y) < numpy.average(y_two):
-                                    alternative='less'
-                                    used_x = y_two_i
+                    ax.text(
+                           m_i+txt_corrections[c_i]+x_shift, 
+                           -.08,
+                           s=c,
+                           fontsize=t_s,
+                           ha='center',
+                           va='center',
+                           )
+                x_shift += 1
+                counter += 1
+                if m_i in [2, 4]:
+                    x_shift += 1
+                    counter += 1
+            ### absolute p-values
+            corr_ps = mne.stats.fdr_correction([v[2] for v in ps])[1]
+            assert len(corr_ps) == len(ps)
+            corr_ps = [(ps[i][0], ps[i][1], p) for i, p in enumerate(corr_ps) if type(ps[i][1]!=tuple)]
+            x_shift = 0
+            counter = -1
+            for m_i, m in enumerate(sorted_models):
+                counter += 1
+                for c_i, c in enumerate(conds):
+                    for pm, pc, pp in corr_ps:
+                        if pm == m and pc == c:
+                            if pp < 0.0005:
+                                print(pp)
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift, 
+                                       0.015,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='*',
+                                       s=300
+                                       )
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift+.1, 
+                                       0.01,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='*',
+                                       s=300
+                                       )
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift-.1, 
+                                       0.01,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='*',
+                                       s=300
+                                       )
+                            elif pp < 0.005:
+                                print(pp)
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift-.075, 
+                                       0.01,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='*',
+                                       s=300
+                                       )
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift+.075, 
+                                       0.01,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='*',
+                                       s=300
+                                       )
+                            elif pp < 0.05:
+                                print(pp)
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift, 
+                                       0.01,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='*',
+                                       s=300
+                                       )
+                            elif pp < 0.1:
+                                print(pp)
+                                ax.scatter(
+                                       m_i+corrections[c_i]+x_shift, 
+                                       0.01,
+                                       color='black',
+                                       edgecolor='white',
+                                       zorder=3.,
+                                       marker='v',
+                                       s=100
+                                       )
+                x_shift += 1
+                counter += 1
+                if m_i in [2, 4]:
+                    x_shift += 1
+                    counter += 1
+            ### relative p-values
+            corr_ps = mne.stats.fdr_correction([v[2] for v in ps])[1]
+            corr_ps = [(ps[i][0], ps[i][1], p, ps[i][3]) for i, p in enumerate(corr_ps) if type(ps[i][1])==tuple]
+            x_shift = 0
+            counter = -1
+            for m_i, m in enumerate(sorted_models):
+                counter += 1
+                for c_i, c in enumerate(conds):
+                    for pm, pc, pp, t in corr_ps:
+                        if pm == m and pc[0] == c:
+                            for other_i, other in enumerate(conds[1:]):
+                                if pc[1] == other:
+                                    color=colors[m_i][other_i+1]
+                                    if pp < 0.1:
+                                        ax.vlines(
+                                                  ymin=0.31-(other_i*0.03), 
+                                                  ymax=0.31-(other_i*0.03)-0.01, 
+                                                  x=m_i+corrections[c_i]+x_shift,
+                                                  color=color,
+                                                  linewidth=5.
+                                                  )
+                                        ax.vlines(
+                                                  ymin=0.31-(other_i*0.03), 
+                                                  ymax=0.31-(other_i*0.03)-0.01, 
+                                                  x=m_i+corrections[c_i+1+other_i]+x_shift,
+                                                  color=color,
+                                                  linewidth=5.
+                                                  )
+                                        ax.hlines(
+                                                  xmin=m_i+corrections[c_i]+x_shift-0.025, 
+                                                  xmax=m_i+corrections[c_i+1+other_i]+x_shift+0.03, 
+                                                  y=0.31-(other_i*0.03),
+                                                  color=color,
+                                                  linewidth=5.
+                                                  )
+                                    xmin=m_i+corrections[c_i]+x_shift 
+                                    xmax=m_i+corrections[c_i+1+other_i]+x_shift 
+                                    middle = xmin + ((xmax-xmin)*.5)
+                                    if pp < 0.0005:
+                                        print(pp)
+                                        ax.scatter(
+                                                   middle,
+                                                   y=0.32-(other_i*0.03),
+                                                      color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='*',
+                                                   s=300
+                                                   )
+                                        ax.scatter(
+                                                   middle+.1,
+                                                   y=0.32-(other_i*0.03),
+                                                      color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='*',
+                                                   s=300
+                                                   )
+                                        ax.scatter(
+                                                   middle-.1,
+                                                   y=0.32-(other_i*0.03),
+                                                      color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='*',
+                                                   s=300
+                                                   )
+                                    elif pp < 0.005:
+                                        print(pp)
+                                        ax.scatter(
+                                                   middle-0.075,
+                                                   y=0.32-(other_i*0.03),
+                                                   color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='*',
+                                                   s=300
+                                                   )
+                                        ax.scatter(
+                                                   middle+0.075,
+                                                   y=0.32-(other_i*0.03),
+                                                   color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='*',
+                                                   s=300
+                                                   )
+                                    elif pp < 0.05:
+                                        ax.scatter(
+                                                   middle,
+                                                   y=0.32-(other_i*0.03),
+                                                   color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='*',
+                                                   s=300
+                                                   )
+                                    elif pp < 0.1:
+                                        ax.scatter(
+                                                   middle,
+                                                   y=0.32-(other_i*0.03),
+                                                   color=color,
+                                                   edgecolor='gray',
+                                                   zorder=3.,
+                                                   marker='v',
+                                                   s=100
+                                                   )
+                x_shift += 1
+                counter += 1
+                if m_i in [2, 4]:
+                    x_shift += 1
+                    counter += 1
+            ax.set_ylim(bottom=-.095, top=.36)
+            ax.text(
+                    2.,
+                    0.34,
+                    s='Word vector similarity',
+                    fontsize=25,
+                    fontweight='bold',
+                    ha='center',
+                    )
+            ax.text(
+                    8.,
+                    0.34,
+                    s='Surprisal',
+                    fontsize=25,
+                    fontweight='bold',
+                    ha='center',
+                    )
+            ax.text(
+                    12.,
+                    0.34,
+                    s='Word frequency',
+                    fontsize=25,
+                    fontweight='bold',
+                    ha='center',
+                    )
 
-                                #alternative = 
-                                p = scipy.stats.wilcoxon(x=y, y=y_two, 
-                                                         #alternative=alternative,
-                                                         ).pvalue
-                                #print(p)
-                                #p = scipy.stats.ttest_ind(y, y_two).pvalue
-                                if p < significance:
-                                    #ax.text(
-                                    #        x=y_i-.2+corr,
-                                    #        y=-y_corr,
-                                    #        s='{} - p={}'.format(curr_ts[y_two_i], round(p, 3)),
-                                    #        color='mediumaquamarine',
-                                    #        )
-                                    ax.scatter(
-                                               x=used_x+corr, 
-                                               y=-.2,
-                                               marker='*',
-                                               s=100,
-                                               color=colors[k]
-                                               )
-
-                ax.vlines(
-                        x=[_+.5 for _ in range(jump-1, len(ys)-1)][::jump],
-                          ymin=-.2,
-                          ymax=.24,
-                          linewidth=5,
-                          linestyles='dashed',
-                          color='black',
-                          )
-                ax.vlines(
-                        x=[x for x in [_+.5 for _ in range(start, len(ys)-1)][::2] if x not in [7.5, 15.5]],
-                          ymin=-.2,
-                          ymax=.24,
-                          linewidth=3,
-                          linestyles='dashed',
-                          color='silver',
-                          )
-
-                ax.legend(fontsize=15,
-                          ncols=7,
-                          loc=8,
-                          )
-                pyplot.ylabel(
-                              ylabel='log(RT) - semantic dissimilarity correlation',
-                              fontsize=23,
-                              fontweight='bold'
-                              )
-                pyplot.yticks(fontsize=20)
-                pyplot.title(
-                             '{} - {}'.format(t.replace('_', ' '), model), 
-                             fontsize=30,
-                             )
-                pyplot.savefig(
-                        os.path.join(
-                            out, 
-                           '{}-{}-{}.jpg'.format(mode, soundact, model)))
-                pyplot.clf()
-                pyplot.close()
+            ax.hlines(xmin=-1, xmax=len(models)+x_shift-1, color='black', y=0)
+            ax.hlines(xmin=-1, xmax=len(models)+x_shift-1, color='silver',alpha=0.5,linestyle='dashed', y=[y*0.01 for y in range(-5, 35, 5)], zorder=1)
+            pyplot.ylabel('Spearman correlation (RSA RT-model)', fontsize=23)
+            pyplot.xticks(
+                          [x[0] for x in xticks], 
+                          [x[1] for x in xticks],
+                          fontsize=25,
+                          fontweight='bold')
+            pyplot.savefig(os.path.join(curr_fold, '{}.jpg'.format(case)), dpi=300)
