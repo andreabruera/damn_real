@@ -2,7 +2,7 @@ from tqdm import tqdm
 
 from psycholing_norms_loaders import load_lancaster_en_de_it
 from count_utils import build_ppmi_vecs, read_mitchell_25dims, load_count_coocs, test_count_model, test_coocs_model, test_frequency_model
-from test_utils import args, check_present_words, load_dataset, load_static_model, load_context_model, load_context_surpr, test_model
+from test_utils import args, check_present_words, load_dataset, load_static_model, load_context_model, load_context_surpr, rt, test_model
 
 args = args()
 lancaster_ratings, trans_from_en = load_lancaster_en_de_it(args)
@@ -15,7 +15,20 @@ static_models = [
                  'fasttext_aligned',
                  'conceptnet',
                  ]
-if args.model == 'word_length':
+if args.model == 'response_times':
+    model = dict()
+    vocab = [w for w in rows]
+    present_words = [w for w in rows]
+    rt(
+       args, 
+       args.model,
+       model, 
+       vocab, 
+       datasets, 
+       present_words,
+       trans_from_en,
+       )
+elif args.model == 'word_length':
     model = {k : [len(k)] for k in rows}
     vocab = [w for w in rows]
     present_words = [w for w in rows]

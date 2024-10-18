@@ -178,6 +178,9 @@ for lang, l_results in results.items():
             counter = -1
             ps = list()
             for m_i, m in enumerate(sorted_models):
+                if 'Resp' in m:
+                    gen_avg = numpy.average([v for _ in c_results.values() for __ in _.values() for v in __])
+                    gen_std = numpy.std([v for _ in c_results.values() for __ in _.values() for v in __])
                 counter += 1
                 for c_i, c in enumerate(conds):
                     color=colors[m_i][c_i]

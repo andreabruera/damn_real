@@ -184,7 +184,7 @@ def compute_corr(model_sims, test_sims, to_be_removed):
     #corr = scipy.stats.pearsonr(real, pred).statistic
     return corr
 
-def write_res(args, case, dataset_name, corr, trust):
+def write_res(args, case, dataset_name, corr, trust=True):
     corpus_fold = case.split('_')[1] if 'ppmi' in case else case
     details = '_'.join(case.split('_')[2:]) if 'ppmi' in case else case
     out_folder = os.path.join(
@@ -217,6 +217,30 @@ def check_present_words(args, rows, vocab):
             continue
         present_words.append(w)
     return present_words
+
+def rt(args, case, model, vocab, datasets, present_words, trans_from_en):
+    if args.stat_approach != 'simple':
+        datasets = bootstrapper(args, datasets, )
+    else:
+        datasets = {k : [v] for k, v in datasets.items()}
+    for dataset_name, dataset in datasets.items():
+        corr = list()
+        ### bootstrapping/iterations should be hard-coded now...
+        for iter_dataset in tqdm(dataset):
+            iter_corrs = list()
+            for s, s_data in iter_dataset.items():
+                curr_corr = numpy.average([v[1] for v in s_data])
+                if curr_corr == None:
+                    print('error with {}'.format([args.lang, case, dataset_name]))
+                    continue
+                iter_corrs.append(curr_corr)
+            if args.stat_approach == 'simple':
+                corr.extend(iter_corrs)
+            else:
+                iter_corr = numpy.average(iter_corrs)
+                corr.append(iter_corr)
+
+        write_res(args, case, dataset_name, corr, )
 
 def test_model(args, case, model, vocab, datasets, present_words, trans_from_en):
     trust = social_test(args, model, present_words)
@@ -754,6 +778,7 @@ def args():
     parser.add_argument(
                         '--model',
                         choices=[
+                                 'response_times',
                                  'fasttext',
                                  'fasttext_aligned',
                                  'conceptnet',

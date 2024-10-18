@@ -95,6 +95,7 @@ def read_de_pmtg_production_tms(args):
                                                 ]
             log_rts = [numpy.log10(float(l[header.index('rt')])) for l in current_cond]
             rts = [float(l[header.index('rt')]) for l in current_cond]
+            print(rts)
             subjects = [int(l[header.index('sbj')]) for l in current_cond]
             vocab_w_ones = [w for l in current_cond for w in transform_german_word(l[header.index('picture')].split('.')[0])]
             test_vocab = test_vocab.union(set(vocab_w_ones))
@@ -669,6 +670,7 @@ def read_de_sound_act_tms(args):
             test_vocab = test_vocab.union(set(vocab_w_twos))
             ### prototype -> task
             w_twos = [l[header.index('stimulus')] for l in current_cond]
+            print(log_rts)
             sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
             for t in tasks:
                 if 'cat-word' not in proto_mode:
@@ -701,6 +703,7 @@ def read_de_sound_act_tms(args):
                 w_twos = [l[header.index('stimulus')] for l in current_cond]
                 #print(w_twos)
                 #sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
+                print(log_rts)
                 sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     ### if it's not fasttext, we just use aggregate
     if args.model == 'fasttext':
