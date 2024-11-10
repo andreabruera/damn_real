@@ -302,13 +302,35 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                             cooc.append(model[one][two])
                         except KeyError:
                             continue
+                        ### for most tms cases, surprisal is directional,
+                        ### so one -> two
+                        if 'distr' in args.dataset:
+                            pass
+                        elif 'social' in args.dataset:
+                            pass
+                        elif 'sem' in args.dataset:
+                            pass
+                        #elif 'act' in args.dataset:
+                        #    pass
+                        elif 'prod' in args.dataset:
+                            pass
+                        else:
+                            ### if not directional, one->two and two->one
+                            try:
+                                cooc.append(model[two][one])
+                            except KeyError:
+                                continue
+
+
                 #print(cooc)
                 ### negative!
                 if 'pt' not in args.model and 'llam' not in args.model and 'lm' not in args.model:
                     if 'log10' in args.model or 'surprisal' in args.model:
-                        sim = -numpy.log10(sum(cooc))
+                        ### we smooth by adding 1 to all counts
+                        sim = -numpy.log2(sum(cooc)+1)
                         if str(sim) == 'nan':
-                            sim = 0
+                            #sim = 0
+                            raise RuntimeError()
                     else:
                         sim = -sum(cooc)
                 else:
@@ -723,6 +745,10 @@ def args():
     corpora_choices = ['word_length']
     llms = [
          'gpt2',
+         'gpt2-small',
+         'minervapt-350m',
+         'minervapt-1b',
+         'minervapt-3b',
          'llama-1b',
          'llama-3b',
          'xglm-7.5b',
@@ -749,6 +775,8 @@ def args():
             m = 48
         elif 'erpt' in llm:
             m = 36
+        elif 'iner' in llm:
+            m = 16
         else:
             m = 24
         for l in range(m):

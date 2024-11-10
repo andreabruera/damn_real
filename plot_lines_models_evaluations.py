@@ -21,7 +21,14 @@ with tqdm() as counter:
                 continue
             elif 'sym' in root: 
                 continue
-            elif 'lm' in root:
+            #elif 'lm' in root:
+            #    continue
+            elif 'concept' in root:
+                continue
+            elif 'aligned' in root:
+                continue
+            '''
+            elif 'ppmi' in root and 'wac' not in root:
                 continue
             elif 'pt2' in root and 'surpr' not in root:
                 continue
@@ -29,11 +36,6 @@ with tqdm() as counter:
                 continue
             elif 'llama' in root and 'surpr' in root:
                 continue
-            elif 'concept' in root:
-                continue
-            elif 'aligned' in root:
-                continue
-            '''
             if 'fasttext' in root and 'align' not in root:
                 pass
             elif 'wac' in root:
@@ -44,16 +46,19 @@ with tqdm() as counter:
             #print(root)
             with open(os.path.join(root, f)) as i:
                 for l in i:
+                    #print(l)
                     line = l.strip().split('\t')
                     lang = line[0]
                     if lang not in results.keys():
                         results[lang] = dict()
                     model = line[1]
-                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model:
+                    #print(model)
+                    #if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model and 'best' not in model:
+                    if 'ppmi-vecs' in model or 'layer' in model:
                         if 'lm' in model or 'llama' in model or 'pt' in model:
                             num = float(model.split('-')[-1])
                             num = num*10000
-                            short_model = model.split('_')[0]
+                            short_model = '{}-vecs'.format(model.split('_')[0])
                         else:
                             num = float(model.split('_')[-2])
                             if 'wiki' in model:
@@ -101,7 +106,8 @@ with tqdm() as counter:
                     if dataset not in results[lang][task].keys():
                         results[lang][task][dataset] = dict()
                     res = numpy.array(line[3:], dtype=numpy.float32)
-                    if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model:
+                    #if 'fasttext' not in model and 'mitchell' not in model and 'concept' not in model and 'prob' not in model and 'surprisal' not in model and 'length' not in model and 'best' not in model and ':
+                    if 'ppmi-vecs' in model or 'layer' in model:
                         if short_model not in results[lang][task][dataset].keys():
                             results[lang][task][dataset][short_model] = dict()
                         results[lang][task][dataset][short_model][num] = res
@@ -191,26 +197,16 @@ with tqdm() as counter:
                                           )
                 ### dividing into lines and regular values
                 fts = [k for k in t_res.keys() if 'fast' in k or 'concept' in k or 'length' in k]
-                surprs = [k for k in t_res.keys() if 'surpr' in k]
+                surprs = [k for k in t_res.keys() if 'surpr' in k or 'best' in k]
                 abss = [k for k in t_res.keys() if 'abs-prob' in k]
                 mitchs = [k for k in t_res.keys() if 'mitch' in k and 'rowincol' not in k]
-                xs = [k for k in t_res.keys() if 'lm' in k]
+                xs = [k for k in t_res.keys() if 'vecs' in k]
                 others = {
                           k : sorted(vals.items(), key=lambda item : item[0]) \
                                   for k, vals in t_res.items() \
-                                  if 'fast' not in k and \
-                                  'mitch' not in k and \
-                                  'rowincol' not in k and \
-                                  'concept' not in k and \
-                                  'prob' not in k and \
-                                  'surpr' not in k and \
-                                  'length' not in k 
-                                  #and \
-                                  #(
-                                  #'abs' in k and 'random' not in k
-                                  #)
+                                  if 'vecs' in k
                                   }
-                print([k for k in others.keys() if 'lm' in k])
+                #print([k for k in others.keys() if 'lm' in k])
                 ### plotting horizontal lines
                 all_vals = [val[0] for v in others.values() for val in v] + [0.]
                 ax.hlines(

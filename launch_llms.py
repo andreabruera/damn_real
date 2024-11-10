@@ -1,9 +1,9 @@
 import argparse
 import os
 
-#stat_approach = 'simple'
+stat_approach = 'simple'
 #stat_approach = 'bootstrap'
-stat_approach = 'residualize'
+#stat_approach = 'residualize'
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -75,9 +75,13 @@ for dataset in final_datasets:
     
     choices = list()
     llms = [
+         'gpt2-small',
          #'gpt2',
+         #'minervapt-350m',
+         #'minervapt-1b',
+         #'minervapt-3b',
          #'llama-1b',
-         'llama-3b',
+         #'llama-3b',
          #'xglm-564m',
          #'xglm-1.7b',
          #'xglm-2.9b',
@@ -102,11 +106,19 @@ for dataset in final_datasets:
             m = 48
         elif 'erpt' in llm:
             m = 36
+        elif 'iner' in llm:
+            m = 16
         else:
-            m = 24
+            if args.lang == 'de' and 'small' not in llm:
+                m = 24
+            #elif args.lang == 'it':
+            else:
+                m = 12
+            #else:
+            #    raise RuntimeError()
         #for l in range(m):
         #    choices.append('{}_layer-{}'.format(llm, l))
-        #choices.append('{}_surprisal'.format(llm))
-        choices.append('{}_best'.format(llm))
+        choices.append('{}_surprisal'.format(llm))
+        #choices.append('{}_best'.format(llm))
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))

@@ -33,7 +33,7 @@ if args.modality == 'fmri':
 elif args.modality == 'tms':
     datasets = [
             ### tms
-            #'de_sem-phon',
+            'de_sem-phon',
             'de_pmtg-prod',
             'de_sound-act',
             'it_distr-learn',
@@ -73,7 +73,6 @@ for d in datasets:
 
 for dataset in final_datasets:
     
-    '''
     corpora_choices = list()
     for corpus in [
                    'wac',
@@ -95,11 +94,10 @@ for dataset in final_datasets:
             corpora_choices.append('{}-{}'.format(corpus, mode))
 
     choices=[
-             'fasttext',
-             'fasttext_aligned',
-             'conceptnet',
+             #'fasttext',
+             #'fasttext_aligned',
+             #'conceptnet',
+             #'response_times',
              ] + corpora_choices
-    '''
-    choices = ['response_times']
     for model in choices:
         os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))

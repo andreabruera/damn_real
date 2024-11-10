@@ -39,7 +39,10 @@ with tqdm() as counter:
                     if lang not in results.keys():
                         results[lang] = dict()
                     model = line[1]
-                    num = int(model.split('-')[-1])
+                    if 'surp' not in model and 'best' not in model:
+                        num = int(model.split('-')[-1])
+                    else:
+                        num = model.split('_')[-1]
                     short_model = model.split('_')[0]
                     dataset = line[2]
                     if 'en_men' in dataset:

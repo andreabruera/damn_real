@@ -20,10 +20,21 @@ class ContextualizedModelCard:
 
     def read_names(self, args):
         to_cuda = False
+        if 'minerva' in args.model:
+            if args.model == 'minervapt-3b':
+                model_name = "sapienzanlp/Minerva-3B-base-v1.0"
+            if args.model == 'minervapt-1b':
+                model_name = "sapienzanlp/Minerva-1B-base-v1.0"
+            if args.model == 'minervapt-350m':
+                model_name = "sapienzanlp/Minerva-350M-base-v1.0"
+        to_cuda = True
         ### gpt2
-        if args.model == 'gpt2':
+        if 'gpt2' in args.model:
             if args.lang == 'de':
-                model_name = "benjamin/gerpt2-large"
+                if 'small' in args.model:
+                    model_name = "benjamin/gerpt2"
+                else:
+                    model_name = "benjamin/gerpt2-large"
             elif args.lang == 'it':
                 #model_name = "GroNLP/gpt2-medium-italian-embeddings"
                 model_name = 'LorenzoDeMattei/GePpeTto'
@@ -89,7 +100,7 @@ class ContextualizedModelCard:
             required_shape = self.model.config.d_model
             max_len = self.model.config.max_position_embeddings
             n_layers = self.model.config.num_layers
-        elif 'xlm' in self.model_name or 'llama' in self.model_name or 'pt' in self.model_name or 'Ge' in self.model_name:
+        elif 'xlm' in self.model_name or 'llama' in self.model_name or 'pt' in self.model_name or 'Ge' in self.model_name or 'iner' in self.model_name:
             required_shape = self.model.config.hidden_size
             max_len = self.model.config.max_position_embeddings
             n_layers = self.model.config.num_hidden_layers
@@ -123,14 +134,14 @@ def read_all_sentences(args):
         #    continue
         #if 'mitchell' not in f:
         #    continue
-        #if 'dirani' not in f and 'kaneshiro' not in f:
         #if 'social' not in f and 'distr' not in f and 'dirani' not in f and 'kaneshiro' not in f and 'anew'  not in f and 'mitchell' not in f and 'blind' not in f and 'behav' not in f and 'seven' not in f:
         #if 'deaf' not in f:
         #if 'prod' not in f and 'sound' not in f and 'phon' not in f and 'behav' not in f:
-        #if 'distr' not in f:
-        #if 'blind' not in f and 'anew' not in f and 'behav' not in f and 'distr' not in f and 'social' not in f:
+        #if 'behav' not in f and 'abstract' not in f:
         #if 'blind' not in f and 'anew' not in f and 'behav' not in f:
-        if 'behav' not in f and 'abstract' not in f:
+        #if 'dirani' not in f and 'kaneshiro' not in f and 'mitchell' not in f:
+        #if 'distr' not in f and 'social' not in f:
+        if 'blind' not in f and 'anew' not in f and 'distr' not in f and 'social' not in f and 'deaf' not in f:
             continue
         with open(os.path.join(w_path, f)) as i:
             for l in i:
@@ -195,6 +206,9 @@ def extract_surpr(args, model_card, cases):
             print(len(stim_sentences))
             for l_i, l in enumerate(stim_sentences):
                 stimulus = l.split()[-1]
+                old_l = '{}'.format(l)
+                if 'iner' in args.model:
+                    l = l.replace(' [SEP] ', '[SEP]')
                 print(l)
                 inputs = model_card.tokenizer(
                                    l, 
@@ -219,7 +233,6 @@ def extract_surpr(args, model_card, cases):
                         print('early skipping: {}'.format(stimulus))
                         continue
                 del inputs
-                old_l = '{}'.format(l)
                 l = re.sub(r'\[SEP\]', ' ', l)
                 l = re.sub('\s+', r' ', l)
                 inputs = model_card.tokenizer(
@@ -247,6 +260,7 @@ def extract_surpr(args, model_card, cases):
                         except IndexError:
                             marker = False
                 if marker == False:
+                    import pdb; pdb.set_trace()
                     print('marker error')
                     continue
                 del inputs
@@ -336,6 +350,9 @@ def extract_vectors(args, model_card, sentences):
             #entity_sentences[stimulus] = list()
             assert len(stim_sentences) >= 1
             for l_i, l in enumerate(stim_sentences):
+                old_l = '{}'.format(l)
+                if 'iner' in args.model:
+                    l = l.replace(' [SEP] ', '[SEP]')
                 #print(l)
 
                 inputs = model_card.tokenizer(
@@ -348,16 +365,18 @@ def extract_vectors(args, model_card, sentences):
                 spans = [i_i for i_i, i in enumerate(inputs['input_ids'].numpy().reshape(-1)) if 
                         i==model_card.tokenizer.convert_tokens_to_ids(['[SEP]'])[0]]
                 if len(spans) % 2 != 0:
+                    print(spans)
                     continue
                 try:
                     check_tokens = inputs['input_ids'].numpy().reshape(-1)[spans[0]+1:spans[1]]
                 except IndexError:
+                    print(check_tokens)
                     continue
                 check_str = ''.join(model_card.tokenizer.convert_ids_to_tokens(check_tokens))
                 if stimulus not in check_str:
                     continue
                 del inputs
-                old_l = '{}'.format(l)
+                #print(check_str)
                 l = re.sub(r'\[SEP\]', ' ', l)
                 l = re.sub('\s+', r' ', l)
                 inputs = model_card.tokenizer(
@@ -373,7 +392,11 @@ def extract_vectors(args, model_card, sentences):
                     print(l)
                     continue
                 ### Correcting spans
-                correction = list(range(1, len(spans)+1))
+                if 'iner' in args.model:
+                    start = 0
+                else:
+                    start = 1
+                correction = list(range(start, len(spans)+start))
                 spans = [max(0, s-c) for s,c in zip(spans, correction)]
                 split_spans = list()
                 for i in list(range(len(spans)))[::2]:

@@ -12,6 +12,10 @@ parser.add_argument('--model',
                     required=True,
                      choices=[
                              'gpt2',
+                             'gpt2-small',
+                             'minervapt-350m',
+                             'minervapt-1b',
+                             'minervapt-3b',
                              'llama-1b',
                              'llama-3b',
                              'xglm-7.5b',
@@ -46,21 +50,22 @@ cases = dict()
 for f in os.listdir(w_path):
     if 'tsv' not in f:
         continue
-    #if 'distr' not in f:
-    #if 'distr' not in f and 'social' not in f and 'phon' not in f and 'prod' not in f and 'sound' not in f:
-    #if 'phon' not in f and 'pmtg' not in f:
     #if 'sound' not in f:
     #if  'kan' not in f and 'mitch' not in f and 'dir' not in f:
+    #if 'distr' not in f and 'social' not in f and 'phon' not in f and 'prod' not in f and 'sound' not in f:
     #if 'anew' not in f and 'deaf' not in f and 'blind' not in f:
-    if 'behav' not in f:
+    #if 'distr' not in f and 'social' not in f:
+    if 'phon' not in f and 'pmtg' not in f and 'behav' and 'sound' not in f:
         continue
     case = f.split('#')[0]
     cases[case] = set()
     ws = list()
     with open(os.path.join(w_path, f)) as i:
         for l in i:
-            print(l)
+            #print(l)
             w = [w.strip() for w in l.strip().split('\t')]
+            if w[0].lower() == w[1].lower():
+                continue
             if '' not in w:
                 if args.lang == 'de':
                     cases[case].add('{} [SEP] {}'.format(w[0].capitalize(), w[1].capitalize()))

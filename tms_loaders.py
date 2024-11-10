@@ -287,25 +287,30 @@ def read_it_social_quantity_tms(args):
                     log_rts = [numpy.log10(float(l[header.index('response_time')].replace(',', '.'))) for l in current_cond]
                     rts = [float(l[header.index('response_time')].replace(',', '.')) for l in current_cond]
                     subjects = [int(l[header.index('subject')][1:3]) for l in current_cond]
-                    if prime == 'prime-cat':
-                        ### prime -> target
-                        w_ones = [l[header.index('prime')].lower() for l in current_cond]
-                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
-                    elif prime == 'prime-proto':
-                        w_ones = [prototypes[l[header.index('prime')][:4]] for l in current_cond]
-                        vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
-                    elif prime == 'target-cat':
-                        ### prime -> target
-                        w_ones = [it_mapper[l[header.index('target_category')]] for l in current_cond]
-                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
-                    elif prime == 'target-proto':
-                        w_ones = [prototypes[it_mapper[l[header.index('target_category')]][:4]] for l in current_cond]
-                        vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
-                    elif prime == 'opposite-target-cat':
-                        ### prime -> opposite target
-                        w_ones = [it_mapper[[k for k in it_mapper.keys() if k!=l[header.index('target_category')]][0]] for l in current_cond]
-                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
-                    w_twos = [l[header.index('target')].lower() for l in current_cond]
+                    if 'prime' in prime:
+                        # ones = primes, twos = targets
+                        if prime == 'prime-cat':
+                            ### prime -> target
+                            w_ones = [l[header.index('prime')].lower() for l in current_cond]
+                            vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
+                        elif prime == 'prime-proto':
+                            w_ones = [prototypes[l[header.index('prime')][:4]] for l in current_cond]
+                            vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
+                        w_twos = [l[header.index('target')].lower() for l in current_cond]
+                    elif 'target' in prime:
+                        ### inverting one and twos: ones = targets, twos = required choice
+                        if prime == 'target-cat':
+                            ### prime -> target
+                            w_twos = [it_mapper[l[header.index('target_category')]] for l in current_cond]
+                            vocab_w_twos = [w for ws in w_ones for w in transform_italian_word(ws)] 
+                        elif prime == 'target-proto':
+                            w_twos = [prototypes[it_mapper[l[header.index('target_category')]][:4]] for l in current_cond]
+                            vocab_w_twos = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
+                        elif prime == 'opposite-target-cat':
+                            ### prime -> opposite target
+                            w_twos = [it_mapper[[k for k in it_mapper.keys() if k!=l[header.index('target_category')]][0]] for l in current_cond]
+                            vocab_w_twos = [w for ws in w_ones for w in transform_italian_word(ws)] 
+                        w_ones = [l[header.index('target')].lower() for l in current_cond]
                     test_vocab = test_vocab.union(set(vocab_w_ones))
                     vocab_w_twos = [w for ws in w_twos for w in transform_italian_word(ws)] 
                     test_vocab = test_vocab.union(set(vocab_w_twos))
@@ -618,20 +623,20 @@ def read_de_sound_act_tms(args):
                  #'all-pos-topten',
                  #'all-pos-topfifty',
                  #'all-neg-all',
-                 #'matched-excl-all',
+                 'matched-excl-all',
                  #'matched-excl-topten',
                  #'matched-excl-topfifty',
-                 #'matched-incl-all',
+                 'matched-incl-all',
                  #'matched-incl-topten',
                  #'matched-incl-topfifty',
-                 #'opposite-excl-all',
+                 'opposite-excl-all',
                  #'opposite-excl-topten',
                  #'opposite-excl-topfifty',
-                 #'opposite-incl-all',
+                 'opposite-incl-all',
                  #'opposite-incl-topten',
                  #'opposite-incl-topfifty',
-                 #'matched-cat-word-all',
-                 #'opposite-cat-word-all',
+                 'matched-cat-word-all',
+                 'opposite-cat-word-all',
                  ]
     else:
         proto_modes = [
@@ -670,7 +675,7 @@ def read_de_sound_act_tms(args):
             test_vocab = test_vocab.union(set(vocab_w_twos))
             ### prototype -> task
             w_twos = [l[header.index('stimulus')] for l in current_cond]
-            print(log_rts)
+            #print(log_rts)
             sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
             for t in tasks:
                 if 'cat-word' not in proto_mode:
@@ -703,7 +708,7 @@ def read_de_sound_act_tms(args):
                 w_twos = [l[header.index('stimulus')] for l in current_cond]
                 #print(w_twos)
                 #sims['{}_{}'.format(t, c)]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
-                print(log_rts)
+                #print(log_rts)
                 sims[key]= [(sub, (w_one, w_two), rt) for sub, w_one, w_two, rt in zip(subjects, w_ones, w_twos, log_rts)]
     ### if it's not fasttext, we just use aggregate
     if args.model == 'fasttext':

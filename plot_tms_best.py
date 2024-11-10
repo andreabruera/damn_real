@@ -460,7 +460,7 @@ for lang, l_results in results.items():
             ax[0].set_ylim(bottom=-.095, top=.36)
             ax[0].set_xlim(right=3.)
             ax[1].set_xlim(left=1., right=3.)
-            #ax[1].set_ylim(bottom=-.095, top=.36)
+            '''
             ax[0].text(
                     0.,
                     0.34,
@@ -477,13 +477,32 @@ for lang, l_results in results.items():
                     fontweight='bold',
                     ha='center',
                     )
-
+            '''
+            bottom = gen_avg-(gen_std*6)
+            cut = gen_avg-(gen_std*4)
+            top = gen_avg+(gen_std*3)
+            d = .03
+            kwargs = dict(transform=ax[1].transAxes, color='k', clip_on=False)
+            ax[1].plot(
+                       (-d*3, +d*3), 
+                       (0.2-(d*.5), 0.2+(d*.5)), 
+                       **kwargs,
+                       )
+            ax[1].plot(
+                       (-d*3, +d*3), 
+                       (0.22-(d*.5), 0.22+(d*.5)), 
+                       **kwargs,
+                       )
+            ax[1].spines['left'].set_bounds(cut, top)
+            ax[1].spines['bottom'].set_visible(False)
             for _ in range(2):
+                for a in ['top', 'right']:
+                    ax[_].spines[a].set_visible(False)
                 ax[_].hlines(xmin=-1, xmax=len(models)+x_shift-1, color='black', y=0)
                 ax[_].hlines(xmin=-1, xmax=len(models)+x_shift-1, color='silver',alpha=0.5,linestyle='dashed', y=[y*0.01 for y in range(-5, 35, 5)], zorder=1)
             #pyplot.ylabel('Spearman correlation (RSA RT-model)', fontsize=23)
             ax[0].set_ylabel('Spearman correlation (RSA RT-model)', fontsize=18, labelpad=8.)
-            ax[1].set_ylabel('1+residual log10(RT)', fontsize=18, labelpad=8.)
+           # ax[1].set_ylabel('1+residual log10(RT)', fontsize=18, labelpad=8.)
             #pyplot.xticks(
             print(sorted_models)
             ax[0].set_xticks(
