@@ -36,8 +36,10 @@ class ContextualizedModelCard:
                 else:
                     model_name = "benjamin/gerpt2-large"
             elif args.lang == 'it':
-                #model_name = "GroNLP/gpt2-medium-italian-embeddings"
-                model_name = 'LorenzoDeMattei/GePpeTto'
+                if 'small' in args.model:
+                    model_name = 'LorenzoDeMattei/GePpeTto'
+                else:
+                    model_name = "GroNLP/gpt2-medium-italian-embeddings"
             to_cuda = True
         ### llama 1b
         if args.model == 'llama-1b':
@@ -135,13 +137,13 @@ def read_all_sentences(args):
         #if 'mitchell' not in f:
         #    continue
         #if 'social' not in f and 'distr' not in f and 'dirani' not in f and 'kaneshiro' not in f and 'anew'  not in f and 'mitchell' not in f and 'blind' not in f and 'behav' not in f and 'seven' not in f:
-        #if 'deaf' not in f:
-        #if 'prod' not in f and 'sound' not in f and 'phon' not in f and 'behav' not in f:
         #if 'behav' not in f and 'abstract' not in f:
         #if 'blind' not in f and 'anew' not in f and 'behav' not in f:
         #if 'dirani' not in f and 'kaneshiro' not in f and 'mitchell' not in f:
+        #if 'blind' not in f and 'anew' not in f and 'distr' not in f and 'social' not in f and 'deaf' not in f:
         #if 'distr' not in f and 'social' not in f:
-        if 'blind' not in f and 'anew' not in f and 'distr' not in f and 'social' not in f and 'deaf' not in f:
+        #if 'prod' not in f and 'sound' not in f and 'phon' not in f and 'behav' not in f:
+        if 'anew' not in f:
             continue
         with open(os.path.join(w_path, f)) as i:
             for l in i:
@@ -322,8 +324,9 @@ def extract_surpr(args, model_card, cases):
                 #current_surpr = surpr[-1]
                 #current_surpr = surpr[0]
                 #current_surpr = numpy.average(surpr)
-                current_surpr = -numpy.log2(numpy.prod(surpr))
+                #current_surpr = -numpy.log2(numpy.prod(surpr))
                 #current_surpr = -numpy.log2(numpy.average(surpr))
+                current_surpr = numpy.average([-numpy.log2(s) for s in surpr])
                 #current_surpr = surp[spans[0]][c_t]
                 #current_surpr = numpy.average([surp[s_i+1][tok] for s_i, tok in enumerate(inputs['input_ids'][0][1:])])
                 ### we take average surprisal

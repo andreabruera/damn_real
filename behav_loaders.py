@@ -1,6 +1,7 @@
 import numpy
 import os
 
+from tqdm import tqdm
 from utf_utils import transform_german_word
 
 def read_italian_anew(args):
@@ -42,16 +43,18 @@ def read_italian_anew(args):
                 except KeyError:
                     sims[full_case][sub][word] = [word_rt]
     final_sims = dict()
-    for case, case_r in sims.items():
-        final_sims[case] = dict()
-        for sub, measures in case_r.items():
-            final_sims[case][sub] = dict()
-            for k_one_i, k_one in enumerate(sorted(measures.keys())):
-                for k_two_i, k_two in enumerate(sorted(measures.keys())):
-                    if k_two_i <= k_one_i:
-                        continue
-                    key = tuple(sorted([k_one, k_two]))
-                    final_sims[case][sub][key] = abs(numpy.average(measures[k_one])-numpy.average(measures[k_two]))
+    with tqdm() as cntr:
+        for case, case_r in sims.items():
+            final_sims[case] = dict()
+            for sub, measures in case_r.items():
+                final_sims[case][sub] = list()
+                for k_one_i, k_one in enumerate(sorted(measures.keys())):
+                    for k_two_i, k_two in enumerate(sorted(measures.keys())):
+                        if k_two_i <= k_one_i:
+                            continue
+                        key = tuple(sorted([k_one, k_two]))
+                        final_sims[case][sub].append((key, abs(numpy.average(measures[k_one])-numpy.average(measures[k_two]))))
+                        cntr.update(1)
     return final_sims, test_vocab
 
 def read_italian_blindsighted(args):
@@ -99,13 +102,13 @@ def read_italian_blindsighted(args):
     for case, case_r in sims.items():
         final_sims[case] = dict()
         for sub, measures in case_r.items():
-            final_sims[case][sub] = dict()
+            final_sims[case][sub] = list()
             for k_one_i, k_one in enumerate(sorted(measures.keys())):
                 for k_two_i, k_two in enumerate(sorted(measures.keys())):
                     if k_two_i <= k_one_i:
                         continue
                     key = tuple(sorted([k_one, k_two]))
-                    final_sims[case][sub][key] = abs(measures[k_one]-measures[k_two])
+                    final_sims[case][sub].append((key, abs(measures[k_one]-measures[k_two])))
     return final_sims, test_vocab
 
 def read_italian_deafhearing(args):
@@ -149,13 +152,13 @@ def read_italian_deafhearing(args):
     for case, case_r in sims.items():
         final_sims[case] = dict()
         for sub, measures in case_r.items():
-            final_sims[case][sub] = dict()
+            final_sims[case][sub] = list()
             for k_one_i, k_one in enumerate(sorted(measures.keys())):
                 for k_two_i, k_two in enumerate(sorted(measures.keys())):
                     if k_two_i <= k_one_i:
                         continue
                     key = tuple(sorted([k_one, k_two]))
-                    final_sims[case][sub][key] = abs(measures[k_one]-measures[k_two])
+                    final_sims[case][sub].append((key, abs(measures[k_one]-measures[k_two])))
     return final_sims, test_vocab
 
 def read_italian_mouse(args):
@@ -241,7 +244,7 @@ def read_italian_behav(args):
 
 def read_german_behav(args):
     ### lexical decition times
-    sims = {'de_word-naming_{}'.format(args.stat_approach) : {'all' : dict()}, 'de_lexical-decision_{}'.format(args.stat_approach) : {'all' : dict()}}
+    sims = {'de_word-naming_{}'.format(args.stat_approach) : {'all' : list()}, 'de_lexical-decision_{}'.format(args.stat_approach) : {'all' : list()}}
     test_vocab = set()
     for case in sims.keys(): 
         short_case = case.split('_')[1]
@@ -268,5 +271,5 @@ def read_german_behav(args):
                 if k_two_i <= k_one_i:
                     continue
                 key = tuple(sorted([k_one, k_two]))
-                sims[case]['all'][key] = abs(measures[k_one]-measures[k_two])
+                sims[case]['all'].append((key, abs(measures[k_one]-measures[k_two])))
     return sims, test_vocab

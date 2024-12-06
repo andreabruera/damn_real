@@ -9,7 +9,7 @@ import scipy
 import sklearn
 
 from scipy import spatial
-from sklearn import linear_model
+from sklearn import linear_model, metrics
 from tqdm import tqdm
 
 from fmri_loaders import read_abstract_ipc, read_fern, read_fern_areas, read_fern_categories, read_mitchell2008
@@ -45,6 +45,7 @@ def social_test(args, model, present_words):
 
 def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en, trans_words):
     #print('checking if words appear in the dictionary...')
+    #import pdb; pdb.set_trace()
     missing_words = set()
     test_sims = list()
     if type(dataset) != list:
@@ -165,7 +166,7 @@ def check_dataset_words(args, dataset_name, dataset, present_words, trans_from_e
             #print(set(w_twos))
     return test_sims, missing_words, trans_words
 
-def compute_corr(model_sims, test_sims, to_be_removed):
+def compute_corr(args, model_sims, test_sims, to_be_removed):
     #test_sims, missing_words = check_dataset_words(args, dataset_name, dataset, present_words, trans_from_en,)
     assert len(test_sims) > 0
     real = list()
@@ -180,15 +181,81 @@ def compute_corr(model_sims, test_sims, to_be_removed):
             continue
         real.append(v)
         pred.append(model_sims[joint_key])
-    corr = scipy.stats.spearmanr(real, pred).statistic
-    #corr = scipy.stats.pearsonr(real, pred).statistic
-    return corr
+    if args.approach == 'correlation' or ('social' not in args.dataset and 'distr' not in args.dataset and 'sem-phon' not in args.dataset and 'pmtg' not in args.dataset and 'sound' not in args.dataset):
+        corr = scipy.stats.spearmanr(real, pred).statistic
+        #corr = scipy.stats.pearsonr(real, pred).statistic
+        return corr
+    elif args.approach == 'rsa':
+        ### RSA
+        ### squaring the matrix
+        sq_real = list()
+        sq_pred = list()
+        for i in range(len(real)):
+            for i_two in range(len(real)):
+                if i_two <= i:
+                    continue
+                sq_real.append(abs(real[i]-real[i_two]))
+                sq_pred.append(abs(pred[i]-pred[i_two]))
+        corr = scipy.stats.spearmanr(sq_real, sq_pred).statistic
+        return corr
+    ### different out...
+    elif args.approach == 'rsa_encoding':
+        #rescale_real = [(p-min(real))/(max(real)-min(real)) for p in real]
+        #rescale_pred = [(p-min(pred))/(max(pred)-min(pred)) for p in pred]
+        #assert max(rescale_pred) == 1.
+        #assert min(rescale_pred) == 0.
+        r_avg = numpy.average(real)
+        r_std = numpy.std(real)
+        rescale_real = [float((p-r_avg)/r_std) for p in real]
+        p_avg = numpy.average(pred)
+        p_std = numpy.std(pred)
+        rescale_pred = [float((p-p_avg)/p_std) for p in pred]
+        rng = numpy.random.default_rng()
+        splits = rng.choice(
+                             range(len(real)),
+                             replace=True,
+                             size=(
+                                   ### 20% test
+                                   4,
+                                   ### 10 repetitions
+                                   10
+                                   ),
+                             )
+        ins = list()
+        outs = list()
+        for split in splits:
+            train_real = [rescale_real[_] for _ in range(len(real)) if _ not in split]
+            train_pred = [rescale_pred[_] for _ in range(len(rescale_pred)) if _ not in split]
+            #train_pred = random.sample(train_pred, k=len(train_pred))
+            spl_i = list()
+            spl_o = list()
+            for test_idx in split:
+                test_item_real = rescale_real[test_idx]
+                test_item_pred = rescale_pred[test_idx]
+                #denom = [float(1-abs(test_item_pred-pr)) for pr in train_pred]
+                denom = [-abs(test_item_pred-pr) for pr in train_pred]
+                assert len(denom) == len(train_pred)
+                #assert max(denom) <= 1.
+                #assert min(denom) >= -1.
+                o = sum([tr*d for d, tr in zip(denom, train_real)])/sum(denom)
+                if str(spl_i) == 'nan':
+                    import pdb; pdb.set_trace()
+                spl_i.append(test_item_real)
+                spl_o.append(o)
+                if str(spl_o) == 'nan':
+                    import pdb; pdb.set_trace()
+            ins.append(spl_i)
+            outs.append(spl_o)
+        return ins, outs
 
 def write_res(args, case, dataset_name, corr, trust=True):
     corpus_fold = case.split('_')[1] if 'ppmi' in case else case
     details = '_'.join(case.split('_')[2:]) if 'ppmi' in case else case
     out_folder = os.path.join(
                               'test_results',
+                              args.approach,
+                              args.stat_approach,
+                              args.evaluation,
                               args.lang, 
                               corpus_fold, 
                               details,
@@ -257,13 +324,12 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
         trans_words = dict()
         for dataset_name, dataset in datasets.items():
             assert type(dataset) == list
-            assert len(dataset) in [1, 1000]
+            assert len(dataset) in [1, 10, 1000]
             all_sims_data[dataset_name] = list()
             missing_words = set()
             for iter_dataset in dataset:
                 iter_dict = dict()
                 for s, s_data in iter_dataset.items():
-                    #import pdb; pdb.set_trace()
                     test_sims, new_miss, trans_words = check_dataset_words(
                                                               args, 
                                                               dataset_name, 
@@ -289,6 +355,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
     print('now pre-computing model dissimilarities...')
     #print(to_be_computed)
     with tqdm() as counter:
+        ### probabilities / frequencies
         if 'cond-prob' in args.model or 'surprisal' in args.model:
             for joint_ones, joint_twos in to_be_computed:
                 ### first words
@@ -347,7 +414,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                 try:
                     vecs_ones = ws_vecs[w_ones]
                 except KeyError:
-                    if 'abs-prob' in args.model or 'length' in args.model:
+                    if 'abs-prob' in args.model:
                         ws_vecs[w_ones] = numpy.sum([model[w] for w in w_ones], axis=0)
                     else:
                         ws_vecs[w_ones] = numpy.average([model[w] for w in w_ones], axis=0)
@@ -358,12 +425,15 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                 try:
                     vecs_twos = ws_vecs[w_twos]
                 except KeyError:
-                    if 'abs-prob' in args.model or 'length' in args.model:
+                    if 'abs-prob' in args.model:
                         ws_vecs[w_twos] = numpy.sum([model[w] for w in w_twos], axis=0)
                     else:
                         ws_vecs[w_twos] = numpy.average([model[w] for w in w_twos], axis=0)
                     vecs_twos = ws_vecs[w_twos]
-                if 'abs-prob' in args.model or 'length' in args.model:
+                ### for length, we sum
+                if  'length' in args.model:
+                    sim = sum([vecs_ones, vecs_twos])
+                elif 'abs-prob' in args.model:
                     ### negative!
                     if 'log' in args.model:
                         #print('using smoothed log')
@@ -385,7 +455,7 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
                 else:
                     sim = scipy.spatial.distance.cosine(vecs_ones, vecs_twos)
                 if 'social' in args.dataset:
-                    if 'abs-prob' in args.model or 'length' in args.model:
+                    if 'abs-prob' in args.model:
                         #print('checking')
                         if 'log' in args.model:
                             assert sim == -numpy.log10(ws_vecs[w_twos])
@@ -417,16 +487,46 @@ def test_model(args, case, model, vocab, datasets, present_words, trans_from_en)
         for iter_dataset in tqdm(dataset):
             iter_corrs = list()
             for s, s_data in iter_dataset.items():
-                curr_corr = compute_corr(ws_sims, s_data, to_be_removed)
+                curr_corr = compute_corr(args, ws_sims, s_data, to_be_removed)
                 if curr_corr == None:
                     print('error with {}'.format([args.lang, case, dataset_name]))
                     continue
                 iter_corrs.append(curr_corr)
-            if args.stat_approach == 'simple':
-                corr.extend(iter_corrs)
-            else:
-                iter_corr = numpy.average(iter_corrs)
-                corr.append(iter_corr)
+            if args.approach in ['rsa', 'correlation']:
+                if args.stat_approach == 'simple':
+                    corr.extend(iter_corrs)
+                else:
+                    iter_corr = numpy.average(iter_corrs)
+                    corr.append(iter_corr)
+            elif args.approach == 'rsa_encoding':
+                #print('encoding')
+                iter_corrs = numpy.array(iter_corrs)
+                if args.stat_approach == 'bootstrap':
+                    assert iter_corrs.shape == (20, 2, 4, 10)
+                ins = iter_corrs[:, 0, :, :]
+                outs = iter_corrs[:, 1, :, :]
+                enc_corrs = list()
+                for _ in range(ins.shape[-1]):
+                    for __ in range(outs.shape[-2]):
+                        #c = scipy.stats.spearmanr(ins[:, __, _], outs[:, __, _]).statistic
+                        if args.evaluation == 'r2':
+                            if __ > 0:
+                                continue
+                            #import pdb; pdb.set_trace()
+                            r2s = list()
+                            for ___ in range(outs.shape[0]):
+                                #c = sklearn.metrics.r2_score(ins[___, :, _], outs[___, :, _])
+                                c = sklearn.metrics.mean_squared_error(ins[___, :, _], outs[___, :, _])
+                                r2s.append(c)
+                            c = numpy.average(r2s)
+                        elif args.evaluation == 'squared_error':
+                            c = sklearn.metrics.mean_squared_error(ins[:, __, _], outs[:, __, _])
+                        elif args.evaluation == 'spearman':
+                            c = scipy.stats.spearmanr(ins[:, __, _], outs[:, __, _]).statistic
+                        else:
+                            raise RuntimeError()
+                        enc_corrs.append(c)
+                corr.append(numpy.average(enc_corrs))
 
         print('\n')
         print('{} model'.format(case))
@@ -477,6 +577,7 @@ def bootstrapper(args, full_data, ):
     ### labels
     labels = list(full_data.keys())
     all_subjects = {k : list(v.keys()) for k, v in full_data.items()}
+    all_trials = {k : [len(vs) for vs in v.values()] for k, v in full_data.items()}
     #if 'all' in subjects and args.stat_approach ==  'residualize':
     #    raise RuntimeError('single subject not implemented')
     '''
@@ -509,18 +610,26 @@ def bootstrapper(args, full_data, ):
                 'picture-naming-seven',
                 'it_anew-lexical-decision',
                 'it_anew-word-naming',
+                'it_anew',
             ]
-    if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
-        n_iter_sub = max(1, int(min(list(all_subjects.values()))*random.choice(proportions)))
-    else:
-        n_iter_sub = 20
-        n_iter_trials = 20
+    #if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
+    #    n_iter_sub = max(1, int(min(list(all_subjects.values()))*random.choice(proportions)))
+    #else:
+    n_iter_sub = 20
+    n_iter_trials = 20
+    for k, v in all_subjects.items():
+        if len(v) < n_iter_sub:
+            print('max number of subjects for {}: {}'.format(k, len(v)))
+    for k, vs in all_trials.items():
+        smaller_ns = [_ for _ in vs if _ <n_iter_trials]
+        if len(smaller_ns) > 0:
+            print('insufficient number of trials for {} of subjects: {}'.format(len(smaller_ns)/len(vs), smaller_ns))
     ### here we create 1000
     boot_data = {l : list() for l in labels}
     if args.stat_approach == 'residualize':
         print('residualizing...')
-    for _ in range(1000):
-        iter_subs = {l : random.sample(subjects, k=n_iter_sub) for l, subjects in all_subjects.items()}
+    for _ in tqdm(range(1000)):
+        iter_subs = {l : random.sample(subjects, k=min(n_iter_sub, len(subjects))) for l, subjects in all_subjects.items()}
         ### for tms we fix ns=15,20
         if args.dataset not in tms_datasets and args.dataset not in behav_datasets:
             iter_data_idxs = {l : 
@@ -540,16 +649,32 @@ def bootstrapper(args, full_data, ):
         ### residualization
         if args.stat_approach == 'residualize':
             struct_train_data = {l : {s : [(full_data[l][s][k][0], full_data[l][s][k][1]) for k in range(len(full_data[l][s])) if k not in iter_data_idxs[l][s]] for s in iter_subs[l]} for l in labels}
-            flat_train_data = [(l, s, rt) for l, l_res in struct_train_data.items() for s, s_res in l_res.items() for k, rt in s_res]
+            flat_train_data = [(l, s, k, rt) for l, l_res in struct_train_data.items() for s, s_res in l_res.items() for k, rt in s_res]
             flat_test_data = [(l, s, k, rt) for l, l_res in iter_data.items() for s, s_res in l_res.items() for k, rt in s_res]
             model = sklearn.linear_model.LinearRegression()
             ### we remove tms/sham -> t[0] per subject -> t[1]
             model.fit(
-                      [[labels.index(t[0]), t[1]] for t in flat_train_data],
-                      [[t[2]] for t in flat_train_data],
+                      ### input
+                      [
+                       [
+                        ### word(s) length
+                        len(''.join(t[2])),
+                        ### tms/sham-vertex
+                        #labels.index(t[0]), 
+                        ### subject
+                        #t[1], 
+                        ] for t in flat_train_data],
+                      ###target
+                      [
+                       [
+                        ### rt
+                        t[3]
+                        ] for t in flat_train_data],
                       )
             preds = model.predict(
-                                  [[labels.index(t[0]),t[1]] for t in flat_test_data]
+                                  [[
+                                    #labels.index(t[0]),t[1], i
+                                    len(''.join(t[2]))] for t in flat_test_data]
                                   )
             #print(preds)
             #print([t[3] for t in flat_test_data])
@@ -571,6 +696,9 @@ def check_args(args):
         raise RuntimeError()
     if 'lexical' in args.dataset or 'naming' in args.dataset or 'behav' in args.dataset:
         if args.stat_approach == 'residualize':
+            raise RuntimeError()
+    if args.approach != 'rsa_encoding':
+        if args.evaluation != 'spearman':
             raise RuntimeError()
 
 def load_dataset(args, trans_from_en):
@@ -742,7 +870,7 @@ def load_context_model(args):
 
 def args():
     parser = argparse.ArgumentParser()
-    corpora_choices = ['word_length']
+    corpora_choices = ['word_length', 'levenshtein']
     llms = [
          'gpt2',
          'gpt2-small',
@@ -861,6 +989,16 @@ def args():
     parser.add_argument(
                         '--stat_approach',
                         choices=['simple', 'bootstrap', 'residualize'],
+                        required=True,
+                        )
+    parser.add_argument(
+                        '--approach',
+                        choices=['rsa', 'correlation', 'rsa_encoding'],
+                        required=True,
+                        )
+    parser.add_argument(
+                        '--evaluation',
+                        choices=['spearman', 'r2', 'squared_error'],
                         required=True,
                         )
     #senses = ['auditory', 'gustatory', 'haptic', 'olfactory', 'visual', 'hand_arm']   

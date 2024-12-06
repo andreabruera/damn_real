@@ -463,3 +463,4 @@ for lang, l_results in results.items():
                           fontsize=25,
                           fontweight='bold')
             pyplot.savefig(os.path.join(curr_fold, '{}.jpg'.format(case)), dpi=300)
+            pyplot.savefig(os.path.join(curr_fold, '{}.svg'.format(case)),)

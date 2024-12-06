@@ -55,7 +55,8 @@ for f in os.listdir(w_path):
     #if 'distr' not in f and 'social' not in f and 'phon' not in f and 'prod' not in f and 'sound' not in f:
     #if 'anew' not in f and 'deaf' not in f and 'blind' not in f:
     #if 'distr' not in f and 'social' not in f:
-    if 'phon' not in f and 'pmtg' not in f and 'behav' and 'sound' not in f:
+    #if 'phon' not in f and 'pmtg' not in f and 'sound' not in f:
+    if 'anew' not in f:
         continue
     case = f.split('#')[0]
     cases[case] = set()

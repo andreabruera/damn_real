@@ -139,16 +139,17 @@ for root, direc, fz in os.walk(
                 #if 'wac' in model and '200000' in model:
                 #    results[lang][task][case][cond][short_model] = res
                 #else:
+                print(model.replace('\n', ' '))
                 results[lang][task][case][cond][model] = res
 
-colors = [
-          ('navy','lightsteelblue',  'royalblue',),
-          ('seagreen', 'mediumaquamarine', 'mediumseagreen'),
-          ('lightskyblue', 'lightblue', 'paleturquoise'),
-          ('mediumvioletred', 'pink', 'palevioletred'),
-          ('mediumorchid', 'thistle', 'plum'),
-          ('darkkhaki', 'wheat', 'khaki'),
-          ]
+colors = {
+          'Wac PPMI' : ('navy','lightsteelblue',  'royalblue',),
+          'fasttext' : ('seagreen', 'mediumaquamarine', 'mediumseagreen'),
+          'Llama-3.2 3b' : ('lightskyblue', 'lightblue', 'paleturquoise'),
+          'Wac surprisal' : ('mediumvioletred', 'pink', 'palevioletred'),
+          'GPT2 surprisal' : ('mediumorchid', 'thistle', 'plum'),
+          'Response times' : ('darkkhaki', 'wheat', 'khaki'),
+          }
 
 out_f = 'paper_bars_bests'
 os.makedirs(out_f, exist_ok=True)
@@ -205,7 +206,7 @@ for lang, l_results in results.items():
                     m_i = -1
                 counter += 1
                 for c_i, c in enumerate(conds):
-                    color=colors[m_i][c_i]
+                    color=colors[m.replace('\n', ' ')][c_i]
                     xticks.append((counter, m))
                     
                     if len(conds) == 2:
@@ -502,7 +503,7 @@ for lang, l_results in results.items():
                 ax[_].hlines(xmin=-1, xmax=len(models)+x_shift-1, color='silver',alpha=0.5,linestyle='dashed', y=[y*0.01 for y in range(-5, 35, 5)], zorder=1)
             #pyplot.ylabel('Spearman correlation (RSA RT-model)', fontsize=23)
             ax[0].set_ylabel('Spearman correlation (RSA RT-model)', fontsize=18, labelpad=8.)
-           # ax[1].set_ylabel('1+residual log10(RT)', fontsize=18, labelpad=8.)
+            ax[1].set_ylabel('1+residual log10(RT)', fontsize=18, labelpad=8.)
             #pyplot.xticks(
             print(sorted_models)
             ax[0].set_xticks(
@@ -516,4 +517,5 @@ for lang, l_results in results.items():
                       fontsize=20,
                       fontweight='bold')
             fig.tight_layout()
-            pyplot.savefig(os.path.join(curr_fold, '{}.jpg'.format(case)), dpi=300)
+            pyplot.savefig(os.path.join(curr_fold, '{}.jpg'.format(case)), dpi=1200)
+            pyplot.savefig(os.path.join(curr_fold, '{}.svg'.format(case)),)

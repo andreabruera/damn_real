@@ -12,6 +12,7 @@ parser.add_argument('--model',
                     required=True,
                      choices=[
                              'gpt2',
+                             'gpt2-small',
                              'minervapt-1b',
                              'minervapt-3b',
                              'minervapt-350m',

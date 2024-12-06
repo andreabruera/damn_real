@@ -71,7 +71,7 @@ def read_de_pmtg_production_tms(args):
             lines.append([w.strip() for w in line])
     print('missing words: {}'.format(missing))
     stims = set([l[header.index('stimulation')] for l in lines])
-    if args.stat_approach != 'residualize':
+    if args.stat_approach not in ['residualize', 'bootstrap']:
         conds = {
              'u' : 'unrelated',
              'r' : 'related',
@@ -238,7 +238,7 @@ def read_it_social_quantity_tms(args):
     all_sims = dict()
     test_vocab = set()
     for cong in [
-                 'congruent', 'incongruent', 
+                 #'congruent', 'incongruent', 
                  'all',
                  ]:
         if cong == 'congruent':
@@ -253,17 +253,18 @@ def read_it_social_quantity_tms(args):
                            'quantity', 
                            #'all',
                            ]:
-                if args.stat_approach != 'residualize':
+                test_vocab.add(marker)
+                if args.stat_approach not in ['residualize', 'bootstrap']:
                     primes = [
                               #'prime-proto', 
                               #'target-proto', 
-                              'target-cat', 
+                              #'target-cat', 
                               #'opposite-target-cat', 
                               'prime-cat',
                               ]
                 else:
                     primes = [
-                              'target-cat', 
+                              #'target-cat', 
                               'prime-cat',
                               ]
                 for prime in primes:
@@ -298,6 +299,8 @@ def read_it_social_quantity_tms(args):
                             vocab_w_ones = [w for ws in w_ones for wz in ws for w in transform_italian_word(wz)] 
                         w_twos = [l[header.index('target')].lower() for l in current_cond]
                     elif 'target' in prime:
+                        w_ones = [l[header.index('target')].lower() for l in current_cond]
+                        vocab_w_ones = [w for ws in w_ones for w in transform_italian_word(ws)] 
                         ### inverting one and twos: ones = targets, twos = required choice
                         if prime == 'target-cat':
                             ### prime -> target
@@ -310,7 +313,6 @@ def read_it_social_quantity_tms(args):
                             ### prime -> opposite target
                             w_twos = [it_mapper[[k for k in it_mapper.keys() if k!=l[header.index('target_category')]][0]] for l in current_cond]
                             vocab_w_twos = [w for ws in w_ones for w in transform_italian_word(ws)] 
-                        w_ones = [l[header.index('target')].lower() for l in current_cond]
                     test_vocab = test_vocab.union(set(vocab_w_ones))
                     vocab_w_twos = [w for ws in w_twos for w in transform_italian_word(ws)] 
                     test_vocab = test_vocab.union(set(vocab_w_twos))
@@ -380,7 +382,7 @@ def read_it_distr_learn_tms(args):
     all_full_sims = reorganize_tms_sims(all_sims)
 
     final_sims = {'it_distr-learn_{}#all-trials_{}'.format(args.stat_approach, k) : v for k, v in all_full_sims.items()}
-    if args.stat_approach != 'residualize':
+    if args.stat_approach not in ['residualize', 'bootstrap']:
         for k, v in related_full_sims.items():
             final_sims['it_distr-learn_{}#related-trials_{}'.format(args.stat_approach, k)] = v
         for k, v in unrelated_full_sims.items():
@@ -616,7 +618,7 @@ def read_de_sound_act_tms(args):
             lines.append(line)
     print('number of error trials: {}'.format(errs))
 
-    if args.stat_approach != 'residualize':
+    if args.stat_approach not in ['residualize', 'bootstrap']:
         proto_modes = [
                  #'all-all-all', 
                  'all-pos-all',

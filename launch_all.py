@@ -1,9 +1,17 @@
 import argparse
 import os
 
-stat_approach = 'simple'
-#stat_approach = 'bootstrap'
+#stat_approach = 'simple'
+stat_approach = 'bootstrap'
 #stat_approach = 'residualize'
+
+#approach = 'rsa_encoding'
+approach = 'rsa'
+#approach = 'correlation'
+
+evaluation = 'spearman'
+#evaluation = 'squared_error'
+#evaluation = 'r2'
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -13,7 +21,13 @@ parser.add_argument(
                      )
 parser.add_argument(
                      '--modality', 
-                     choices=['behav', 'tms', 'fmri', 'meeg', 'simrel'],
+                     choices=[
+                              'behav', 
+                              'tms', 
+                              'fmri', 
+                              'meeg', 
+                              'simrel',
+                              ],
                      required=True,
                      )
 args = parser.parse_args()
@@ -58,8 +72,8 @@ elif args.modality == 'behav':
                 'de_behav',
                 #'it_behav',
                 #'it_mouse',
-                'it_deafhearing',
-                'it_blindsighted',
+                #'it_deafhearing',
+                #'it_blindsighted',
                 #'picture-naming-seven',
                 'it_anew',
                 ]
@@ -78,26 +92,85 @@ for dataset in final_datasets:
                    'wac',
                    'opensubs',
                    'cc100',
-                   'tagged_leipzig',
-                   'tagged_wiki',
-                   'tagged_gutenberg',
+                   #'tagged_leipzig',
+                   #'tagged_wiki',
+                   #'tagged_gutenberg',
                    ]:
         corpora_choices.append('{}-ppmi-vecs'.format(corpus))
         for mode in [
+                     'surprisal',
                      #'neg-raw-abs-prob',
                      'neg-log10-abs-prob',
                      #'neg-sym-raw-cond-prob',
                      #'neg-fwd-raw-cond-prob',
                      #'neg-sym-log10-cond-prob',
-                     'surprisal',
                      ]:
             corpora_choices.append('{}-{}'.format(corpus, mode))
-
-    choices=[
+            #pass
+    choices = list()
+    llms = [
+         #'minervapt-350m',
+         #'minervapt-1b',
+         #'minervapt-3b',
+         #'llama-1b',
+         #'xglm-564m',
+         #'xglm-1.7b',
+         #'xglm-2.9b',
+         #'xglm-4.5b',
+         #'xglm-7.5b',
+         #'xlm-roberta-large',
+         #'xlm-roberta-xl',
+         #'xlm-roberta-xxl',
+         #'gpt2-small',
+         #'gpt2',
+         #'llama-3b',
+         ]
+    for llm in llms:
+        if '1b' in llm:
+            m = 16
+        elif '3b' in llm:
+            m = 28
+        elif 'erta-xl' in llm:
+            m = 36
+        elif '2.9' in llm:
+            m = 48
+        elif '4.5' in llm:
+            m = 48
+        elif '7.5' in llm:
+            m = 48
+        elif 'erpt' in llm:
+            m = 36
+        elif 'iner' in llm:
+            m = 16
+        else:
+            if args.lang == 'de' and 'small' not in llm:
+                m = 24
+            else:
+                m = 12
+        choices.append('{}_surprisal'.format(llm))
+        #choices.append('{}_best'.format(llm))
+        for l in range(m):
+            choices.append('{}_layer-{}'.format(llm, l))
+    choices= choices + [
              #'fasttext',
              #'fasttext_aligned',
              #'conceptnet',
              #'response_times',
+             #'word_length',
              ] + corpora_choices
     for model in choices:
-        os.system('python3 test.py --lang {} --model {} --dataset {} --stat_approach {}'.format(args.lang, model, dataset, stat_approach))
+        os.system(
+                  'python3 test.py '\
+                  '--lang {} '\
+                  '--model {} '\
+                  '--dataset {} '\
+                  '--stat_approach {} '\
+                  '--approach {} '\
+                  '--evaluation {}'.format(
+                              args.lang, 
+                              model, 
+                              dataset, 
+                              stat_approach, 
+                              approach,
+                              evaluation,)
+                  )
